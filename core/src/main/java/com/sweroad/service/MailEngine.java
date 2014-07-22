@@ -14,6 +14,7 @@ import org.springframework.ui.velocity.VelocityEngineUtils;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+
 import java.util.Map;
 
 /**
@@ -50,7 +51,7 @@ public class MailEngine {
      * @param templateName the Velocity template to use (relative to classpath)
      * @param model a map containing key/value pairs
      */
-    public void sendMessage(SimpleMailMessage msg, String templateName, Map model) {
+    public void sendMessage(SimpleMailMessage msg, String templateName, Map<String, Object> model) {
         String result = null;
 
         try {

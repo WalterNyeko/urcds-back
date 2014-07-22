@@ -1,5 +1,13 @@
 package com.sweroad.webapp.taglib;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.tagext.TagSupport;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.validator.Field;
@@ -15,13 +23,6 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.support.RequestContext;
 import org.springmodules.validation.commons.ValidatorFactory;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.tagext.TagSupport;
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
 
 
 /**
@@ -85,7 +86,7 @@ public class LabelTag extends TagSupport {
         }
 
         Errors errors = requestContext.getErrors(formName, false);
-        List fes = null;
+        List<?> fes = null;
         if (errors != null) {
             fes = errors.getFieldErrors(fieldName);
             //String errorMsg = getErrorMessages(fes);
@@ -225,13 +226,13 @@ public class LabelTag extends TagSupport {
                 .getAttribute(DispatcherServlet.WEB_APPLICATION_CONTEXT_ATTRIBUTE);
         ValidatorFactory factory = null;
         try {
-            factory = (ValidatorFactory) BeanFactoryUtils
+            factory = BeanFactoryUtils
                     .beanOfTypeIncludingAncestors(ctx, ValidatorFactory.class, true, true);
         } catch (NoSuchBeanDefinitionException e) {
             // look in main application context (i.e. applicationContext.xml)
             ctx = WebApplicationContextUtils
                     .getRequiredWebApplicationContext(pageContext.getServletContext());
-            factory = (ValidatorFactory) BeanFactoryUtils
+            factory = BeanFactoryUtils
                     .beanOfTypeIncludingAncestors(ctx, ValidatorFactory.class, true, true);
         }
         return factory.getValidatorResources();

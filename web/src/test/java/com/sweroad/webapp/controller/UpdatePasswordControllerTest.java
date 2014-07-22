@@ -6,14 +6,15 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.apache.commons.lang.RandomStringUtils;
-import com.sweroad.model.User;
-import com.sweroad.service.UserManager;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.web.servlet.ModelAndView;
 import org.subethamail.wiser.Wiser;
+
+import com.sweroad.model.User;
+import com.sweroad.service.UserManager;
 
 @ContextConfiguration(locations = {
  "classpath:/applicationContext-resources.xml",
@@ -48,7 +49,8 @@ public class UpdatePasswordControllerTest extends BaseControllerTestCase {
         assertNotNull(request.getSession().getAttribute(BaseFormController.MESSAGES_KEY));
     }
 
-    @Test
+    @SuppressWarnings("deprecation")
+	@Test
     public void testShowUpdatePasswordForm() throws Exception {
         String username = "admin";
         MockHttpServletRequest request = newGet("/updatePassword");
@@ -60,7 +62,8 @@ public class UpdatePasswordControllerTest extends BaseControllerTestCase {
 
     }
 
-    @Test
+    @SuppressWarnings("deprecation")
+	@Test
     public void testShowResetPasswordForm() throws Exception {
         String username = "admin";
         User user = userManager.getUserByUsername(username);
@@ -76,7 +79,8 @@ public class UpdatePasswordControllerTest extends BaseControllerTestCase {
         assertNull(request.getSession().getAttribute(BaseFormController.ERRORS_MESSAGES_KEY));
     }
 
-    @Test
+    @SuppressWarnings("unused")
+	@Test
     public void testShowResetPasswordFormBadToken() throws Exception {
         String username = "admin";
         String badtoken = RandomStringUtils.random(32);
@@ -90,7 +94,8 @@ public class UpdatePasswordControllerTest extends BaseControllerTestCase {
         assertNotNull(request.getSession().getAttribute(BaseFormController.ERRORS_MESSAGES_KEY));
     }
 
-    @Test
+    @SuppressWarnings({ "unused", "deprecation" })
+	@Test
     public void testResetPassword() throws Exception {
         String username = "admin";
         User user = userManager.getUserByUsername(username);
@@ -115,7 +120,8 @@ public class UpdatePasswordControllerTest extends BaseControllerTestCase {
         assertNull(request.getSession().getAttribute(BaseFormController.ERRORS_MESSAGES_KEY));
     }
 
-    @Test
+    @SuppressWarnings({ "unused", "deprecation" })
+	@Test
     public void testResetPasswordBadToken() throws Exception {
         String username = "admin";
         String badToken = RandomStringUtils.random(32);
@@ -132,7 +138,8 @@ public class UpdatePasswordControllerTest extends BaseControllerTestCase {
         assertNotNull(request.getSession().getAttribute(BaseFormController.ERRORS_MESSAGES_KEY));
     }
 
-    @Test
+    @SuppressWarnings({ "unused", "deprecation" })
+	@Test
     public void testUpdatePassword() throws Exception {
         String username = "admin";
         String currentPassword = "admin";
@@ -150,7 +157,8 @@ public class UpdatePasswordControllerTest extends BaseControllerTestCase {
         assertNull(request.getSession().getAttribute(BaseFormController.ERRORS_MESSAGES_KEY));
     }
 
-    @Test
+    @SuppressWarnings({ "unused", "deprecation" })
+	@Test
     public void testUpdatePasswordBadCurrentPassword() throws Exception {
         String username = "admin";
         String currentPassword = "bad";

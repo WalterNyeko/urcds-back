@@ -1,14 +1,13 @@
 package com.sweroad.service.impl;
 
+import java.io.Serializable;
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
 import com.sweroad.dao.GenericDao;
 import com.sweroad.service.GenericManager;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class serves as the Base class for all other Managers - namely to hold
@@ -111,8 +110,7 @@ public class GenericManagerImpl<T, PK extends Serializable> implements GenericMa
      * <p/>
      * Search implementation using Hibernate Search.
      */
-    @SuppressWarnings("unchecked")
-    public List<T> search(String q, Class clazz) {
+    public List<T> search(String q, Class<?> clazz) {
         if (q == null || "".equals(q.trim())) {
             return getAll();
         }

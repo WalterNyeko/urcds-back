@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="1.496" errors="0" skipped="0" tests="9" name="com.sweroad.dao.UserDaoTest">
+<testsuite failures="0" time="0.651" errors="0" skipped="0" tests="9" name="com.sweroad.dao.UserDaoTest">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.7.0_60.jdk/Contents/Home/jre/lib"/>
@@ -16,7 +16,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.os.patch.level" value="unknown"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="user.dir" value="/Users/Frank/Projects/sweroad/rcds/rcds"/>
+    <property name="user.dir" value="/Users/Frank/Projects/sweroad/rcds"/>
     <property name="java.runtime.version" value="1.7.0_60-b19"/>
     <property name="java.awt.graphicsenv" value="sun.awt.CGraphicsEnvironment"/>
     <property name="java.endorsed.dirs" value="/Library/Java/JavaVirtualMachines/jdk1.7.0_60.jdk/Contents/Home/jre/lib/endorsed"/>
@@ -32,7 +32,7 @@
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.class.version" value="51.0"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
-    <property name="os.version" value="10.9.3"/>
+    <property name="os.version" value="10.9.4"/>
     <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="user.home" value="/Users/Frank"/>
     <property name="user.timezone" value="Africa/Juba"/>
@@ -63,13 +63,13 @@
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase time="0.248" classname="com.sweroad.dao.UserDaoTest" name="testAddUserRole"/>
-  <testcase time="0.041" classname="com.sweroad.dao.UserDaoTest" name="testUpdateUser"/>
-  <testcase time="0.029" classname="com.sweroad.dao.UserDaoTest" name="testGetUser"/>
-  <testcase time="0.023" classname="com.sweroad.dao.UserDaoTest" name="testGetUserInvalid"/>
-  <testcase time="0.016" classname="com.sweroad.dao.UserDaoTest" name="testUserNotExists"/>
-  <testcase time="0.018" classname="com.sweroad.dao.UserDaoTest" name="testUserExists"/>
-  <testcase time="1.017" classname="com.sweroad.dao.UserDaoTest" name="testUserSearch"/>
-  <testcase time="0.038" classname="com.sweroad.dao.UserDaoTest" name="testAddAndRemoveUser"/>
-  <testcase time="0.066" classname="com.sweroad.dao.UserDaoTest" name="testGetUserPassword"/>
+  <testcase time="0.063" classname="com.sweroad.dao.UserDaoTest" name="testAddUserRole"/>
+  <testcase time="0.033" classname="com.sweroad.dao.UserDaoTest" name="testUpdateUser"/>
+  <testcase time="0.018" classname="com.sweroad.dao.UserDaoTest" name="testGetUser"/>
+  <testcase time="0.019" classname="com.sweroad.dao.UserDaoTest" name="testGetUserInvalid"/>
+  <testcase time="0.014" classname="com.sweroad.dao.UserDaoTest" name="testUserNotExists"/>
+  <testcase time="0.022" classname="com.sweroad.dao.UserDaoTest" name="testUserExists"/>
+  <testcase time="0.362" classname="com.sweroad.dao.UserDaoTest" name="testUserSearch"/>
+  <testcase time="0.098" classname="com.sweroad.dao.UserDaoTest" name="testAddAndRemoveUser"/>
+  <testcase time="0.022" classname="com.sweroad.dao.UserDaoTest" name="testGetUserPassword"/>
 </testsuite>

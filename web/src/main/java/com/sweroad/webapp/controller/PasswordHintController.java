@@ -2,10 +2,12 @@ package com.sweroad.webapp.controller;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
 import com.sweroad.model.User;
 import com.sweroad.service.MailEngine;
 import com.sweroad.service.UserManager;
 import com.sweroad.webapp.util.RequestUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -19,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -102,9 +105,9 @@ public class PasswordHintController {
 
     @SuppressWarnings("unchecked")
     public void saveError(HttpServletRequest request, String error) {
-        List errors = (List) request.getSession().getAttribute("errors");
+        List<String> errors = (List<String>) request.getSession().getAttribute("errors");
         if (errors == null) {
-            errors = new ArrayList();
+            errors = new ArrayList<String>();
         }
         errors.add(error);
         request.getSession().setAttribute("errors", errors);
@@ -113,9 +116,9 @@ public class PasswordHintController {
     // this method is also in BaseForm Controller
     @SuppressWarnings("unchecked")
     public void saveMessage(HttpServletRequest request, String msg) {
-        List messages = (List) request.getSession().getAttribute(BaseFormController.MESSAGES_KEY);
+        List<String> messages = (List<String>) request.getSession().getAttribute(BaseFormController.MESSAGES_KEY);
         if (messages == null) {
-            messages = new ArrayList();
+            messages = new ArrayList<String>();
         }
         messages.add(msg);
         request.getSession().setAttribute(BaseFormController.MESSAGES_KEY, messages);

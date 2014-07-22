@@ -49,7 +49,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Table(name = "app_user")
 @Indexed
 @XmlRootElement
-public class User extends BaseObject implements Serializable, UserDetails {
+public class User extends BaseModel implements Serializable, UserDetails {
     private static final long serialVersionUID = 3832626162173359411L;
 
     private Long id;

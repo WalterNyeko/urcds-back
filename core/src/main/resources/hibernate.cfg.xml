@@ -8,5 +8,25 @@
     <session-factory>
         <mapping class="com.sweroad.model.User"/>
         <mapping class="com.sweroad.model.Role"/>
+        <mapping class="com.sweroad.model.Casualty"/>
+        <mapping class="com.sweroad.model.CasualtyClass"/>
+        <mapping class="com.sweroad.model.CasualtyType"/>
+        <mapping class="com.sweroad.model.CollisionType"/>
+        <mapping class="com.sweroad.model.Crash"/>
+        <mapping class="com.sweroad.model.CrashCause"/>
+        <mapping class="com.sweroad.model.CrashSeverity"/>
+        <mapping class="com.sweroad.model.District"/>
+        <mapping class="com.sweroad.model.Driver"/>
+        <mapping class="com.sweroad.model.GpsCoordinate"/>
+        <mapping class="com.sweroad.model.JunctionType"/>
+        <mapping class="com.sweroad.model.PoliceStation"/>
+        <mapping class="com.sweroad.model.RoadSurface"/>
+        <mapping class="com.sweroad.model.RoadwayCharacter"/>
+        <mapping class="com.sweroad.model.SurfaceCondition"/>
+        <mapping class="com.sweroad.model.SurfaceType"/>
+        <mapping class="com.sweroad.model.Vehicle"/>
+        <mapping class="com.sweroad.model.VehicleFailureType"/>
+        <mapping class="com.sweroad.model.VehicleType"/>
+        <mapping class="com.sweroad.model.Weather"/>
     </session-factory>
 </hibernate-configuration>

@@ -26,7 +26,7 @@ public class TimestampConverter extends DateConverter {
      * @param value the String value
      * @return a converted date
      */
-    protected Object convertToDate(Class type, Object value) {
+    protected Object convertToDate(Class<?> type, Object value) {
         DateFormat df = new SimpleDateFormat(TS_FORMAT);
         if (value instanceof String) {
             try {
@@ -50,7 +50,7 @@ public class TimestampConverter extends DateConverter {
      * @param value the date instance
      * @return string version of date using default date pattern
      */
-    protected Object convertToString(Class type, Object value) {
+    protected Object convertToString(Class<?> type, Object value) {
         DateFormat df = new SimpleDateFormat(TS_FORMAT);
         if (value instanceof Date) {
             try {

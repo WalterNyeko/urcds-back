@@ -1,15 +1,16 @@
 package com.sweroad.service;
 
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import com.sweroad.util.ConvertUtil;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
-
 import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
+
+import com.sweroad.util.ConvertUtil;
 
 @ContextConfiguration(locations = {
         "classpath:/applicationContext-resources.xml", "classpath:/applicationContext-dao.xml",
@@ -57,7 +58,7 @@ public abstract class BaseManagerTestCase extends AbstractTransactionalJUnit4Spr
     protected Object populate(Object obj) throws Exception {
         // loop through all the beans methods and set its properties from
         // its .properties file
-        Map map = ConvertUtil.convertBundleToMap(rb);
+    	Map<String, String> map = ConvertUtil.convertBundleToMap(rb);
 
         BeanUtils.copyProperties(obj, map);
 

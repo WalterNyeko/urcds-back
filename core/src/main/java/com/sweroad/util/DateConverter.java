@@ -23,8 +23,8 @@ public class DateConverter implements Converter {
      * @param value value to convert
      * @return Converted value for property population
      */
-    @SuppressWarnings("unchecked")
-    public Object convert(final Class type, final Object value) {
+    @SuppressWarnings("rawtypes")
+	public Object convert(final Class type, final Object value) {
         if (value == null) {
             return null;
         } else if (type == Timestamp.class) {

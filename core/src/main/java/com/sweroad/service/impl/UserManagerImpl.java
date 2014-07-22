@@ -1,12 +1,12 @@
 package com.sweroad.service.impl;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.jws.WebService;
+
 import org.apache.commons.lang.StringUtils;
-import com.sweroad.dao.UserDao;
-import com.sweroad.model.User;
-import com.sweroad.service.MailEngine;
-import com.sweroad.service.UserExistsException;
-import com.sweroad.service.UserManager;
-import com.sweroad.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.SimpleMailMessage;
@@ -14,11 +14,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.jws.WebService;
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.sweroad.dao.UserDao;
+import com.sweroad.model.User;
+import com.sweroad.service.MailEngine;
+import com.sweroad.service.UserExistsException;
+import com.sweroad.service.UserManager;
+import com.sweroad.service.UserService;
 
 
 /**
@@ -234,7 +235,7 @@ public class UserManagerImpl extends GenericManagerImpl<User, Long> implements U
     private void sendUserEmail(final User user, final String template, final String url) {
         message.setTo(user.getFullName() + "<" + user.getEmail() + ">");
 
-        final Map<String, Serializable> model = new HashMap<String, Serializable>();
+        final Map<String, Object> model = new HashMap<String, Object>();
         model.put("user", user);
         model.put("applicationURL", url);
 

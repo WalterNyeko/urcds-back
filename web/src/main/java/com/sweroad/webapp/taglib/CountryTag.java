@@ -1,10 +1,12 @@
 package com.sweroad.webapp.taglib;
 
 import com.sweroad.model.LabelValue;
+
 import org.displaytag.tags.el.ExpressionEvaluator;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
+
 import java.io.IOException;
 import java.text.Collator;
 import java.util.ArrayList;
@@ -88,7 +90,7 @@ public class CountryTag extends TagSupport {
         }
 
         Locale userLocale = pageContext.getRequest().getLocale();
-        List countries = this.buildCountryList(userLocale);
+        List<?> countries = this.buildCountryList(userLocale);
 
         if (scope != null) {
             if (scope.equals("page")) {
@@ -111,7 +113,7 @@ public class CountryTag extends TagSupport {
                 sb.append(eval.evalString("prompt", prompt) + "</option>\n");
             }
 
-            for (Iterator i = countries.iterator(); i.hasNext();) {
+            for (Iterator<?> i = countries.iterator(); i.hasNext();) {
                 LabelValue country = (LabelValue) i.next();
                 sb.append("    <option value=\"" + country.getValue() + "\"");
 
@@ -152,11 +154,11 @@ public class CountryTag extends TagSupport {
      *
      * @return List of LabelValues for all available countries.
      */
-    protected List buildCountryList(Locale locale) {
+    protected List<LabelValue> buildCountryList(Locale locale) {
         final String EMPTY = "";
         final Locale[] available = Locale.getAvailableLocales();
 
-        List countries = new ArrayList();
+        List<LabelValue> countries = new ArrayList<LabelValue>();
 
         for (int i = 0; i < available.length; i++) {
             final String iso = available[i].getCountry();
@@ -180,8 +182,8 @@ public class CountryTag extends TagSupport {
      * Class to compare LabelValues using their labels with
      * locale-sensitive behaviour.
      */
-    public class LabelValueComparator implements Comparator {
-        private Comparator c;
+    public class LabelValueComparator implements Comparator<Object> {
+        private Comparator<Object> c;
 
         /**
          * Creates a new LabelValueComparator object.

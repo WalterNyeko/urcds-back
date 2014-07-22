@@ -2,7 +2,9 @@ package com.sweroad.webapp.controller;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
 import com.sweroad.webapp.listener.StartupListener;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -10,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,10 +48,10 @@ public class ReloadController {
 
         if (referer != null) {
             log.info("reload complete, reloading user back to: " + referer);
-            List<String> messages = (List) request.getSession().getAttribute(BaseFormController.MESSAGES_KEY);
+            List<String> messages = (List<String>) request.getSession().getAttribute(BaseFormController.MESSAGES_KEY);
 
             if (messages == null) {
-                messages = new ArrayList();
+                messages = new ArrayList<String>();
             }
 
             messages.add("Reloading options completed successfully.");

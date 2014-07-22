@@ -1,11 +1,18 @@
 package com.sweroad.webapp.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import com.sweroad.Constants;
-import com.sweroad.model.User;
-import com.sweroad.service.MailEngine;
-import com.sweroad.service.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.beans.propertyeditors.CustomNumberEditor;
@@ -18,16 +25,10 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import com.sweroad.Constants;
+import com.sweroad.model.User;
+import com.sweroad.service.MailEngine;
+import com.sweroad.service.UserManager;
 
 /**
  * Implementation of <strong>SimpleFormController</strong> that contains
@@ -72,9 +73,9 @@ public class BaseFormController implements ServletContextAware {
 
     @SuppressWarnings("unchecked")
     public void saveError(HttpServletRequest request, String error) {
-        List errors = (List) request.getSession().getAttribute(ERRORS_MESSAGES_KEY);
+        List<String> errors = (List<String>) request.getSession().getAttribute(ERRORS_MESSAGES_KEY);
         if (errors == null) {
-            errors = new ArrayList();
+            errors = new ArrayList<String>();
         }
         errors.add(error);
         request.getSession().setAttribute(ERRORS_MESSAGES_KEY, errors);
@@ -82,10 +83,10 @@ public class BaseFormController implements ServletContextAware {
     
     @SuppressWarnings("unchecked")
     public void saveMessage(HttpServletRequest request, String msg) {
-        List messages = (List) request.getSession().getAttribute(MESSAGES_KEY);
+        List<String> messages = (List<String>) request.getSession().getAttribute(MESSAGES_KEY);
 
         if (messages == null) {
-            messages = new ArrayList();
+            messages = new ArrayList<String>();
         }
 
         messages.add(msg);
@@ -136,12 +137,13 @@ public class BaseFormController implements ServletContextAware {
      *
      * @return the user's populated form from the session
      */
-    public Map getConfiguration() {
-        Map config = (HashMap) servletContext.getAttribute(Constants.CONFIG);
+    @SuppressWarnings("unchecked")
+	public Map<Object, Object> getConfiguration() {
+        Map<Object, Object> config = (HashMap<Object, Object>) servletContext.getAttribute(Constants.CONFIG);
 
         // so unit tests don't puke when nothing's been set
         if (config == null) {
-            return new HashMap();
+            return new HashMap<Object, Object>();
         }
 
         return config;
@@ -181,7 +183,7 @@ public class BaseFormController implements ServletContextAware {
 
         message.setTo(user.getFullName() + "<" + user.getEmail() + ">");
 
-        Map<String, Serializable> model = new HashMap<String, Serializable>();
+        Map<String, Object> model = new HashMap<String, Object>();
         model.put("user", user);
 
         // TODO: once you figure out how to get the global resource bundle in

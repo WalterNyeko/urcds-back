@@ -130,12 +130,12 @@ public class StartupListener implements ServletContextListener {
         log.debug("Drop-down initialization complete [OK]");
 
         // Any manager extending GenericManager will do:
-        GenericManager manager = (GenericManager) ctx.getBean("userManager");
+        GenericManager<?, ?> manager = (GenericManager<?, ?>) ctx.getBean("userManager");
         doReindexing(manager);
         log.debug("Full text search reindexing complete [OK]");
     }
 
-    private static void doReindexing(GenericManager manager) {
+    private static void doReindexing(GenericManager<?, ?> manager) {
         manager.reindexAll(false);
     }
 

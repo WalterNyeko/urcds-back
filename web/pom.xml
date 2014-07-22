@@ -12,7 +12,7 @@
     
     <artifactId>rcds-web</artifactId>
     <packaging>war</packaging>
-    <name>AppFuse Modular Application - Web (Spring MVC)</name>
+    <name>Road Crash Data System - Web</name>
 
     <build>
         <plugins>

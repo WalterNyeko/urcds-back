@@ -1,19 +1,25 @@
 package com.sweroad.service.impl;
 
-import com.sweroad.Constants;
-import com.sweroad.dao.RoleDao;
-import com.sweroad.dao.UserDao;
-import com.sweroad.model.Role;
-import com.sweroad.model.User;
-import com.sweroad.service.UserExistsException;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willDoNothing;
+import static org.mockito.BDDMockito.willThrow;
+import static org.mockito.Mockito.verify;
+
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static org.junit.Assert.*;
-import static org.mockito.BDDMockito.*;
+import com.sweroad.Constants;
+import com.sweroad.dao.UserDao;
+import com.sweroad.model.Role;
+import com.sweroad.model.User;
+import com.sweroad.service.UserExistsException;
 
 public class UserManagerImplTest extends BaseManagerMockTestCase {
     //~ Instance fields ========================================================

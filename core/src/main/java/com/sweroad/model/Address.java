@@ -18,7 +18,7 @@ import org.hibernate.search.annotations.Indexed;
  */
 @Embeddable
 @Indexed
-public class Address extends BaseObject implements Serializable {
+public class Address extends BaseModel implements Serializable {
     private static final long serialVersionUID = 3617859655330969141L;
     private String address;
     private String city;

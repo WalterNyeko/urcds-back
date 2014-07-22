@@ -119,4 +119,476 @@
             <value description="role_id">-2</value>
         </row>
     </table>
+    <!-- Look up data -->
+    <table name="casualty_class">
+    	<column>name</column>
+    	<row>
+    		<value description="name">Pedestrian</value>
+   		</row>
+   		<row>
+    		<value description="name">Passenger on motorcycle</value>
+   		</row>
+   		<row>
+    		<value description="name">Bicycle passenger</value>
+   		</row>
+   		<row>
+    		<value description="name">Car passenger</value>
+   		</row>
+   		<row>
+    		<value description="name">Passenger Light omnibus</value>
+   		</row>
+   		<row>
+    		<value description="name">Passenger medium omnibus</value>
+   		</row>
+   		<row>
+    		<value description="name">Passenger heavy omnibus</value>
+   		</row>
+   		<row>
+    		<value description="name">Other passengers</value>
+   		</row>
+   		<row>
+    		<value description="name">Unknown</value>
+    	</row>
+    </table>
+    <table name="casualty_type">
+    	<column>name</column>
+    	<row>
+    		<value description="name">Fatal</value>
+   		</row>
+   		<row>
+    		<value description="name">Serious</value>
+   		</row>
+   		<row>
+    		<value description="name">Slight</value>
+   		</row>
+   		<row>
+    		<value description="name">Not injured</value>
+    	</row>
+    </table>
+    <table name="collision_type">
+    	<column>name</column>
+    	<row>
+    		<value description="name">Hit pedestrian</value>
+   		</row>
+   		<row>
+    		<value description="name">Rear end</value>
+   		</row>
+   		<row>
+    		<value description="name">Single vehicle, off road</value>
+   		</row>
+   		<row>
+    		<value description="name">Side swipe</value>
+   		</row>
+   		<row>
+    		<value description="name">Single vehicle, hit object</value>
+   		</row>
+   		<row>
+    		<value description="name">Angle</value>
+   		</row>
+   		<row>
+    		<value description="name">Head-on collision</value>
+   		</row>
+   		<row>
+    		<value description="name">Others</value>
+    	</row>
+    </table>
+    <table name="crash_cause">
+    	<column>name</column>
+    	<row>
+    		<value description="name">Careless overtaking</value>
+   		</row>
+   		<row>
+    		<value description="name">Sudden entrance from a roadside</value>
+   		</row>
+   		<row>
+    		<value description="name">Careless pedestrian</value>
+   		</row>
+   		<row>
+    		<value description="name">Following too close (Tail-gating)</value>
+   		</row>
+   		<row>
+    		<value description="name">Over speeding</value>
+   		</row>
+   		<row>
+    		<value description="name">Passenger falls from vehicle</value>
+   		</row>
+   		<row>
+    		<value description="name">Passing too close</value>
+   		</row>
+   		<row>
+    		<value description="name">Dangerous loading</value>
+   		</row>
+   		<row>
+    		<value description="name">Vehicle mechanical defects</value>
+   		</row>
+   		<row>
+    		<value description="name">Violating traffic direction</value>
+   		</row>
+   		<row>
+    		<value description="name">Under influence of alcohol/drugs</value>
+   		</row>
+   		<row>
+    		<value description="name">Dazzled by lights of another vehicle</value>
+   		</row>
+   		<row>
+    		<value description="name">Neglecting right of way or stop sign</value>
+   		</row>
+   		<row>
+    		<value description="name">Fatigue, illness</value>
+   		</row>
+   		<row>
+    		<value description="name">Obstacle on carriage way</value>
+   		</row>
+   		<row>
+    		<value description="name">Sudden turning</value>
+   		</row>
+   		<row>
+    		<value description="name">Using mobile phone</value>
+   		</row>
+   		<row>
+    		<value description="name">Unknown cause (Hit &amp;&amp; Run)</value>
+    	</row>
+    </table>
+    <table name="crash_severity">
+    	<column>name</column>
+    	<row>
+    		<value description="name">Fatal</value>
+   		</row>
+   		<row>
+    		<value description="name">Serious</value>
+   		</row>
+   		<row>
+    		<value description="name">Slight</value>
+   		</row>
+   		<row>
+    		<value description="name">Damage Only</value>
+    	</row>
+    </table>
+    <table name="district">
+    	<column>name</column>
+    	<row>
+    		<value description="name">Lugazi</value>
+   		</row>
+   		<row>
+    		<value description="name">Mpigi</value>
+   		</row>
+   		<row>
+    		<value description="name">Kampala</value>
+   		</row>
+   		<row>
+    		<value description="name">Wakiso</value>
+    	</row>
+    </table>
+    <table name="junction_type">
+    	<column>name</column>
+    	<row>
+    		<value description="name">Not in junction</value>
+   		</row>
+   		<row>
+    		<value description="name">Cross roads</value>
+   		</row>
+   		<row>
+    		<value description="name">Railway level crossing</value>
+   		</row>
+   		<row>
+    		<value description="name">Roundabout</value>
+   		</row>
+   		<row>
+    		<value description="name">Road junction (T/Y)</value>
+   		</row>
+   		<row>
+    		<value description="name">Other</value>
+    	</row>
+    </table>
+    <table name="police_station">
+    	<column>name</column>
+    	<column>district_id</column>
+    	<row>
+    		<value description="name">Lugazi Police Station</value>
+    		<value description="district_id">1</value>
+   		</row>
+   		<row>
+    		<value description="name">Mpigi Police Station</value>
+    		<value description="district_id">2</value>
+   		</row>
+   		<row>
+    		<value description="name">Kampala CPS</value>
+    		<value description="district_id">3</value>
+   		</row>
+   		<row>
+    		<value description="name">Entebbe Police Station</value>
+    		<value description="district_id">4</value>
+    	</row>
+    </table><table name="road_surface">
+    	<column>name</column>
+    	<row>
+    		<value description="name">Wet</value>
+   		</row>
+   		<row>
+    		<value description="name">Dry</value>
+   		</row>
+    </table>
+    <table name="roadway_character">
+    	<column>name</column>
+    	<row>
+    		<value description="name">Straight slight curve</value>
+   		</row>
+   		<row>
+    		<value description="name">Blind bend</value>
+   		</row>
+   		<row>
+    		<value description="name">Curve</value>
+   		</row>
+   		<row>
+    		<value description="name">Hillcrest</value>
+    	</row>
+    </table>
+    <table name="surface_condition">
+    	<column>name</column>
+    	<row>
+    		<value description="name">Good</value>
+   		</row>
+   		<row>
+    		<value description="name">Defective, needs repair</value>
+   		</row>
+   		<row>
+    		<value description="name">Bad, urgent repair</value>
+   		</row>
+    </table>
+    <table name="surface_type">
+    	<column>name</column>
+    	<row>
+    		<value description="name">Tar</value>
+   		</row>
+   		<row>
+    		<value description="name">Macadam</value>
+   		</row>
+   		<row>
+    		<value description="name">Murram</value>
+   		</row>
+    </table>
+    <table name="vehicle_failure_type">
+    	<column>name</column>
+    	<row>
+    		<value description="name">No mechanical defects</value>
+   		</row>
+   		<row>
+    		<value description="name">Tyre blow out</value>
+   		</row>
+   		<row>
+    		<value description="name">Headlight failure</value>
+   		</row>
+   		<row>
+    		<value description="name">Brake failure</value>
+    	</row>
+    	<row>
+    		<value description="name">Steering wheel failure</value>
+    	</row>
+    	<row>
+    		<value description="name">Other failure</value>
+    	</row>
+    </table>
+    <table name="vehicle_type">
+    	<column>name</column>
+    	<row>
+    		<value description="name">Motor car</value>
+   		</row>
+   		<row>
+    		<value description="name">Trailers &amp;&amp; Semi-Trailer</value>
+   		</row>
+   		<row>
+    		<value description="name">Dual-purpose vehicles</value>
+   		</row>
+   		<row>
+    		<value description="name">Fuel Truck</value>
+   		</row>
+   		<row>
+    		<value description="name">Light Omnibus</value>
+   		</row>
+   		<row>
+    		<value description="name">Engineering Plant</value>
+   		</row>
+   		<row>
+    		<value description="name">Medium Omnibus</value>
+   		</row>
+   		<row>
+    		<value description="name">Tractor</value>
+   		</row>
+   		<row>
+    		<value description="name">Heavy Omnibus</value>
+   		</row>
+   		<row>
+    		<value description="name">Motorcycle</value>
+   		</row>
+   		<row>
+    		<value description="name">Light Goods Vehicle</value>
+   		</row>
+   		<row>
+    		<value description="name">Pedal cycle</value>
+   		</row>
+   		<row>
+    		<value description="name">Medium Goods Vehicle</value>
+   		</row>
+   		<row>
+    		<value description="name">Pedestrian-controlled Vehicle</value>
+   		</row>
+   		<row>
+    		<value description="name">Heavy Goods Vehicle</value>
+   		</row>
+   		<row>
+    		<value description="name">Unknown</value>
+    	</row>
+    </table>
+    <table name="weather">
+    	<column>name</column>
+    	<row>
+    		<value description="name">Clear</value>
+   		</row>
+   		<row>
+    		<value description="name">Rain</value>
+   		</row>
+   		<row>
+    		<value description="name">Mist</value>
+   		</row>
+    </table>
+    <!-- End of lookup data -->
+    <table name="driver">
+    	<column>age</column>
+    	<column>gender</column>
+    	<column>belt_used</column>
+    	<column>license_number</column>
+    	<column>license_valid</column>
+    	<column>casualty_type_id</column>
+    	<row>
+    		<value description="age">27</value>
+    		<value description="gender">M</value>
+    		<value description="belt_used">0</value>
+    		<value description="license_number">123456</value>
+    		<value description="license_valid">1</value>
+    		<value description="casualty_type_id">2</value>
+   		</row>
+   		<row>
+    		<value description="age">53</value>
+    		<value description="gender">M</value>
+    		<value description="belt_used">1</value>
+    		<value description="license_number">123789</value>
+    		<value description="license_valid">1</value>
+    		<value description="casualty_type_id">3</value>
+   		</row>
+    </table>
+    <table name="vehicle">
+    	<column>number</column>
+    	<column>driver_id</column>
+    	<column>vehicle_type_id</column>
+    	<column>company_name</column>
+    	<row>
+    		<value description="number">1</value>
+    		<value description="driver_id">1</value>
+    		<value description="vehicle_type_id">1</value>
+   		</row>
+   		<row>
+    		<value description="number">2</value>
+    		<value description="driver_id">2</value>
+    		<value description="vehicle_type_id">7</value>
+    		<value description="company_name">Total Uganda</value>
+   		</row>
+    </table>    
+    <table name="casualty">
+    	<column>age</column>
+    	<column>gender</column>
+    	<column>belt_or_helmet_used</column>
+    	<column>casualty_class_id</column>
+    	<column>casualty_type_id</column>
+    	<column>vehicle_id</column>
+    	<row>
+    		<value description="age">25</value>
+    		<value description="gender">F</value>
+    		<value description="belt_or_helmet_used">1</value>
+    		<value description="casualty_class_id">4</value>
+    		<value description="casualty_type_id">3</value>
+    		<value description="vehicle_id">1</value>
+   		</row>
+   		<row>
+    		<value description="age">30</value>
+    		<value description="gender">M</value>
+    		<value description="belt_or_helmet_used">0</value>
+    		<value description="casualty_class_id">1</value>
+    		<value description="casualty_type_id">2</value>
+    		<value description="vehicle_id">1</value>
+   		</row>
+    </table>
+    <table name="gps_coordinate">
+    	<column>latitude</column>
+    	<column>longitude</column>
+    	<row>
+    		<value description="latitude">N 0&#176;23&#8242;00&#8243;</value>
+    		<value description="longitude">E 32&#176;55&#8242;27&#8243;</value>
+   		</row>
+  		</table>	
+    <table name="crash">
+    	<column>crash_date_time</column>
+    	<column>crash_place</column>
+    	<column>date_created</column>
+    	<column>road</column>
+    	<column>road_number</column>
+    	<column>tar_no</column>
+    	<column>town_or_village</column>
+    	<column>collision_type_id</column>
+    	<column>crash_severity_id</column>
+    	<column>gps_coordinate_id</column>
+    	<column>junction_type_id</column>
+    	<column>main_crash_cause_id</column>
+    	<column>police_station_id</column>
+    	<column>road_surface_id</column>
+    	<column>roadway_character_id</column>
+    	<column>surface_condition_id</column>
+    	<column>surface_type_id</column>
+    	<column>vehicle_failure_type_id</column>
+    	<column>weather_id</column>
+    	<row>
+    		<value description="crash_date_time">2014-06-03 16:21:00</value>
+    		<value description="crash_place">Kayanja</value>
+    		<value description="date_created">2014-06-03 18:15:00</value>
+    		<value description="road">Kampala-Jinja</value>
+    		<value description="road_number">15</value>
+    		<value description="tar_no">A1509/LGZ</value>
+    		<value description="town_or_village">Kayanja</value>
+    		<value description="collision_type_id">6</value>
+    		<value description="crash_severity_id">2</value>
+    		<value description="gps_coordinate_id">1</value>
+    		<value description="junction_type_id">1</value>
+    		<value description="main_crash_cause_id">1</value>
+    		<value description="police_station_id">1</value>
+    		<value description="road_surface_id">2</value>
+    		<value description="roadway_character_id">2</value>
+    		<value description="surface_condition_id">1</value>
+    		<value description="surface_type_id">1</value>
+    		<value description="vehicle_failure_type_id">1</value>
+    		<value description="weather_id">1</value>
+   		</row>
+    </table>
+    <table name="crash_casualty">
+    	<column>crash_id</column>
+    	<column>casualty_id</column>
+    	<row>
+    		<value description="crash_id">1</value>
+    		<value description="casualty_id">1</value>
+    	</row>
+    	<row>
+    		<value description="crash_id">1</value>
+    		<value description="casualty_id">2</value>
+    	</row>
+    </table>
+    <table name="crash_vehicle">
+    	<column>crash_id</column>
+    	<column>vehicle_id</column>
+    	<row>
+    		<value description="crash_id">1</value>
+    		<value description="vehicle_id">1</value>
+    	</row>
+    	<row>
+    		<value description="crash_id">1</value>
+    		<value description="vehicle_id">2</value>
+    	</row>
+    </table>
 </dataset>

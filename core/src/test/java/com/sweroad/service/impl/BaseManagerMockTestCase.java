@@ -1,15 +1,16 @@
 package com.sweroad.service.impl;
 
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import com.sweroad.util.ConvertUtil;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
-
 import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
+
+import com.sweroad.util.ConvertUtil;
 
 /**
  * A mock class for testing using Mockito.
@@ -53,7 +54,7 @@ public abstract class BaseManagerMockTestCase {
     protected Object populate(Object obj) throws Exception {
         // loop through all the beans methods and set its properties from
         // its .properties file
-        Map map = ConvertUtil.convertBundleToMap(rb);
+        Map<String, String> map = ConvertUtil.convertBundleToMap(rb);
 
         BeanUtils.copyProperties(obj, map);
 

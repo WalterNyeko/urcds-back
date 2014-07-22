@@ -3,6 +3,8 @@ package com.sweroad.dao;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.sweroad.model.Role;
+
 import java.util.List;
 
 import static org.junit.Assert.assertTrue;
@@ -17,7 +19,7 @@ public class LookupDaoTest extends BaseDaoTestCase {
 
     @Test
     public void testGetRoles() {
-        List roles = lookupDao.getRoles();
+        List<Role> roles = lookupDao.getRoles();
         log.debug(roles);
         assertTrue(roles.size() > 0);
     }

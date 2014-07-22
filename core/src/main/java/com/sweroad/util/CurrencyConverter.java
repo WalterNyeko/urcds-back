@@ -1,13 +1,13 @@
 package com.sweroad.util;
 
+import java.text.DecimalFormat;
+import java.text.ParseException;
+
 import org.apache.commons.beanutils.ConversionException;
 import org.apache.commons.beanutils.Converter;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import java.text.DecimalFormat;
-import java.text.ParseException;
 
 /**
  * This class is converts a Double to a double-digit String
@@ -30,7 +30,8 @@ public class CurrencyConverter implements Converter {
      * @param value the object to convert
      * @return object the converted object (Double or String)
      */
-    public final Object convert(final Class type, final Object value) {
+    @SuppressWarnings("rawtypes")
+	public final Object convert(final Class type, final Object value) {
         // for a null value, return null
         if (value == null) {
             return null;

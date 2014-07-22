@@ -12,7 +12,7 @@
     
     <artifactId>rcds-core</artifactId>
     <packaging>jar</packaging>
-    <name>AppFuse Modular Application - Core</name>
+    <name>Road Crash Data System - Core</name>
     
     <build>
         <plugins>

@@ -66,7 +66,7 @@ public interface GenericManager<T, PK extends Serializable> {
      * @param clazz type of class to search for.
      * @return a list of matched objects
      */
-    List<T> search(String searchTerm, Class clazz);
+    List<T> search(String searchTerm, Class<?> clazz);
     /**
      * Generic method to regenerate full text index of the persistent class T
      */

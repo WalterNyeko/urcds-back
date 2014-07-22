@@ -1,21 +1,16 @@
 package com.sweroad.dao.hibernate;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import com.sweroad.dao.GenericDao;
-import com.sweroad.dao.SearchException;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
-import org.springframework.orm.ObjectRetrievalFailureException;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+
 import javax.annotation.Resource;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.queryParser.ParseException;
@@ -24,8 +19,15 @@ import org.hibernate.HibernateException;
 import org.hibernate.IdentifierLoadAccess;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.orm.ObjectRetrievalFailureException;
+
+import com.sweroad.dao.GenericDao;
+import com.sweroad.dao.SearchException;
 
 /**
  * This class serves as the Base class for all other DAOs - namely to hold
@@ -108,7 +110,6 @@ public class GenericDaoHibernate<T, PK extends Serializable> implements GenericD
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("unchecked")
     public List<T> getAllDistinct() {
         Collection<T> result = new LinkedHashSet<T>(getAll());
         return new ArrayList<T>(result);
@@ -117,7 +118,8 @@ public class GenericDaoHibernate<T, PK extends Serializable> implements GenericD
     /**
      * {@inheritDoc}
      */
-    public List<T> search(String searchTerm) throws SearchException {
+    @SuppressWarnings("unchecked")
+	public List<T> search(String searchTerm) throws SearchException {
         Session sess = getSession();
         FullTextSession txtSession = Search.getFullTextSession(sess);
 
@@ -180,7 +182,8 @@ public class GenericDaoHibernate<T, PK extends Serializable> implements GenericD
     /**
      * {@inheritDoc}
      */
-    public void remove(PK id) {
+    @SuppressWarnings("unchecked")
+	public void remove(PK id) {
         Session sess = getSession();
         IdentifierLoadAccess byId = sess.byId(persistentClass);
         T entity = (T) byId.load(id);

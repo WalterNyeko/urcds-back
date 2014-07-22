@@ -1,12 +1,13 @@
 package com.sweroad.dao.hibernate;
 
-import com.sweroad.dao.RoleDao;
-import com.sweroad.model.Role;
 import java.util.List;
-import org.hibernate.Query;
+
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
+
+import com.sweroad.dao.RoleDao;
+import com.sweroad.model.Role;
 
 
 /**
@@ -30,7 +31,7 @@ public class RoleDaoHibernate extends GenericDaoHibernate<Role, Long> implements
      * {@inheritDoc}
      */
     public Role getRoleByName(String rolename) {
-        List roles = getSession().createCriteria(Role.class).add(Restrictions.eq("name", rolename)).list();
+        List<?> roles = getSession().createCriteria(Role.class).add(Restrictions.eq("name", rolename)).list();
         if (roles.isEmpty()) {
             return null;
         } else {
