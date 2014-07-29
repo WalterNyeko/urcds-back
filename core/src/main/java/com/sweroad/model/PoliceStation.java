@@ -81,9 +81,18 @@ public class PoliceStation extends BaseModel {
 
 	@Override
 	public boolean equals(Object o) {
-		return this.equals(o);
-	}
+		if (this == o) {
+            return true;
+        }
+        if (!(o instanceof PoliceStation)) {
+            return false;
+        }
 
+        final PoliceStation policeStation = (PoliceStation) o;
+
+        return policeStation != null ? id.equals(policeStation.getId()) : false;
+	}
+	
 	@Override
 	public int hashCode() {
 		return 0;

@@ -54,12 +54,20 @@ public class CrashCause extends BaseModel {
 
 	@Override
 	public boolean equals(Object o) {
-		return this.equals(o);
+		if (this == o) {
+            return true;
+        }
+        if (!(o instanceof CrashCause)) {
+            return false;
+        }
+
+        final CrashCause crashCause = (CrashCause) o;
+
+        return crashCause != null ? id.equals(crashCause.getId()) : false;
 	}
 
 	@Override
 	public int hashCode() {
-		return 0;
+		return id.hashCode();
 	}
-
 }

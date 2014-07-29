@@ -58,9 +58,18 @@ public class RoadSurface extends BaseModel {
 
 	@Override
 	public boolean equals(Object o) {
-		return this.equals(o);
-	}
+		if (this == o) {
+            return true;
+        }
+        if (!(o instanceof RoadSurface)) {
+            return false;
+        }
 
+        final RoadSurface roadSurface = (RoadSurface) o;
+
+        return roadSurface != null ? id.equals(roadSurface.getId()) : false;
+	}
+	
 	@Override
 	public int hashCode() {
 		return 0;

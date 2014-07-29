@@ -3,7 +3,9 @@
 /Users/Frank/Projects/sweroad/rcds/web/src/test/java/com/sweroad/webapp/controller/UserControllerTest.java
 /Users/Frank/Projects/sweroad/rcds/web/src/test/java/com/sweroad/webapp/controller/UserFormControllerTest.java
 /Users/Frank/Projects/sweroad/rcds/web/src/test/java/com/sweroad/webapp/controller/BaseControllerTestCase.java
+/Users/Frank/Projects/sweroad/rcds/web/src/test/java/com/sweroad/webapp/controller/CrashControllerTest.java
 /Users/Frank/Projects/sweroad/rcds/web/src/test/java/com/sweroad/webapp/controller/PasswordHintControllerTest.java
 /Users/Frank/Projects/sweroad/rcds/web/src/test/java/com/sweroad/webapp/filter/MockFilterChain.java
 /Users/Frank/Projects/sweroad/rcds/web/src/test/java/com/sweroad/webapp/listener/StartupListenerTest.java
+/Users/Frank/Projects/sweroad/rcds/web/src/test/java/com/sweroad/webapp/controller/CrashFormControllerTest.java
 /Users/Frank/Projects/sweroad/rcds/web/src/test/java/com/sweroad/webapp/controller/UpdatePasswordControllerTest.java

@@ -1,3 +1,4 @@
+com/sweroad/webapp/controller/CrashController.class
 com/sweroad/webapp/taglib/CountryTag$LabelValueComparator.class
 com/sweroad/webapp/jsp/EscapeXml.class
 com/sweroad/webapp/controller/SignupController.class
@@ -15,6 +16,7 @@ com/sweroad/webapp/controller/FileUploadController.class
 com/sweroad/webapp/controller/UpdatePasswordController.class
 com/sweroad/webapp/controller/UserFormController.class
 com/sweroad/webapp/spring/ValidatorExtensionPostProcessor.class
+com/sweroad/webapp/controller/CrashFormController.class
 com/sweroad/webapp/jsp/EscapeXmlELResolverListener.class
 com/sweroad/webapp/taglib/LabelTag.class
 com/sweroad/webapp/controller/PasswordHintController.class

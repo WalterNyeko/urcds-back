@@ -93,7 +93,8 @@ public class Vehicle extends BaseModel {
 
 	@Override
 	public boolean equals(Object o) {
-		return this.equals(o);
+		Vehicle vehicle = (Vehicle) o;
+		return this.id.equals(vehicle.getId());
 	}
 
 	@Override

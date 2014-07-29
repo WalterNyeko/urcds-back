@@ -54,12 +54,20 @@ public class JunctionType extends BaseModel {
 
 	@Override
 	public boolean equals(Object o) {
-		return this.equals(o);
-	}
+		if (this == o) {
+            return true;
+        }
+        if (!(o instanceof JunctionType)) {
+            return false;
+        }
 
+        final JunctionType junctionType = (JunctionType) o;
+
+        return junctionType != null ? name.equalsIgnoreCase(junctionType.getName()) : false;
+	}
+	
 	@Override
 	public int hashCode() {
 		return 0;
 	}
-
 }

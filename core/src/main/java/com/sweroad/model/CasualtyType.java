@@ -54,12 +54,20 @@ public class CasualtyType extends BaseModel {
 
 	@Override
 	public boolean equals(Object o) {
-		return this.equals(o);
+		if (this == o) {
+            return true;
+        }
+        if (!(o instanceof CasualtyType)) {
+            return false;
+        }
+
+        final CasualtyType casualtyType = (CasualtyType) o;
+
+        return casualtyType != null ? id.equals(casualtyType.getId()) : false;
 	}
 
 	@Override
 	public int hashCode() {
-		return 0;
+		return id.hashCode();
 	}
-
 }

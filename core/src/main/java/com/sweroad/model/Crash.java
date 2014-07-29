@@ -568,12 +568,20 @@ public class Crash extends BaseModel {
 
 	@Override
 	public boolean equals(Object o) {
-		return this.equals(o);
+		if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Crash)) {
+            return false;
+        }
+
+        final Crash crash = (Crash) o;
+
+        return crash != null ? id.equals(crash.getId()) : false;
 	}
 	
 	@Override
 	public int hashCode() {
 		return 0;
-	}
-	
+	}	
 }

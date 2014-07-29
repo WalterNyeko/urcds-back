@@ -60,9 +60,18 @@ public class Weather extends BaseModel {
 
 	@Override
 	public boolean equals(Object o) {
-		return this.equals(o);
-	}
+		if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Weather)) {
+            return false;
+        }
 
+        final Weather weather = (Weather) o;
+
+        return weather != null ? name.equalsIgnoreCase(weather.getName()) : false;
+	}
+	
 	@Override
 	public int hashCode() {
 		return 0;

@@ -61,9 +61,18 @@ public class SurfaceCondition extends BaseModel {
 
 	@Override
 	public boolean equals(Object o) {
-		return this.equals(o);
-	}
+		if (this == o) {
+            return true;
+        }
+        if (!(o instanceof SurfaceCondition)) {
+            return false;
+        }
 
+        final SurfaceCondition surfaceCondition = (SurfaceCondition) o;
+
+        return surfaceCondition != null ? name.equalsIgnoreCase(surfaceCondition.getName()) : false;
+	}
+	
 	@Override
 	public int hashCode() {
 		return 0;

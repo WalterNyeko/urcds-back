@@ -138,11 +138,20 @@ public class Driver extends BaseModel {
 
 	@Override
 	public boolean equals(Object o) {
-		return this.equals(o);
+		if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Driver)) {
+            return false;
+        }
+
+        final Driver driver = (Driver) o;
+
+        return driver != null ? id.equals(driver.getId()) : false;
 	}
 
 	@Override
 	public int hashCode() {
-		return 0;
+		return id.hashCode();
 	}
 }

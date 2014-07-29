@@ -54,9 +54,18 @@ public class RoadwayCharacter extends BaseModel {
 
 	@Override
 	public boolean equals(Object o) {
-		return this.equals(o);
-	}
+		if (this == o) {
+            return true;
+        }
+        if (!(o instanceof RoadwayCharacter)) {
+            return false;
+        }
 
+        final RoadwayCharacter roadwayCharacter = (RoadwayCharacter) o;
+
+        return roadwayCharacter != null ? id.equals(roadwayCharacter.getId()) : false;
+	}
+	
 	@Override
 	public int hashCode() {
 		return 0;

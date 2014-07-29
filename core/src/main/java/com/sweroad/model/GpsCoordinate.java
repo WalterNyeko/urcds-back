@@ -70,11 +70,20 @@ public class GpsCoordinate extends BaseModel {
 
 	@Override
 	public boolean equals(Object o) {
-		return this.equals(o);
+		if (this == o) {
+            return true;
+        }
+        if (!(o instanceof GpsCoordinate)) {
+            return false;
+        }
+
+        final GpsCoordinate gpsCoordinate = (GpsCoordinate) o;
+
+        return gpsCoordinate != null ? id.equals(gpsCoordinate.getId()) : false;
 	}
 
 	@Override
 	public int hashCode() {
-		return 0;
+		return id.hashCode();
 	}
 }

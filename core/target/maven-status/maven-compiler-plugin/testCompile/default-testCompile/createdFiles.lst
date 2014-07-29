@@ -1,6 +1,7 @@
 com/sweroad/service/impl/LookupManagerImplTest.class
 com/sweroad/service/impl/PasswordTokenManagerTest.class
 com/sweroad/service/MailEngineTest.class
+com/sweroad/dao/CrashDaoTest.class
 com/sweroad/service/impl/PersistentPasswordTokenManagerTest.class
 com/sweroad/dao/hibernate/HibernateConfigurationTest.class
 com/sweroad/util/DateUtilTest.class
@@ -17,4 +18,5 @@ com/sweroad/dao/LookupDaoTest.class
 com/sweroad/util/DateConverterTest$1.class
 com/sweroad/service/UserManagerTest.class
 com/sweroad/dao/UserDaoTest.class
+com/sweroad/service/impl/CrashManagerImplTest.class
 com/sweroad/dao/BaseDaoTestCase.class

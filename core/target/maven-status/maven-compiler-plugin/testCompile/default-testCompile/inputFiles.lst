@@ -10,10 +10,12 @@
 /Users/Frank/Projects/sweroad/rcds/core/src/test/java/com/sweroad/dao/GenericDaoTest.java
 /Users/Frank/Projects/sweroad/rcds/core/src/test/java/com/sweroad/dao/UserDaoTest.java
 /Users/Frank/Projects/sweroad/rcds/core/src/test/java/com/sweroad/util/DateUtilTest.java
+/Users/Frank/Projects/sweroad/rcds/core/src/test/java/com/sweroad/service/impl/CrashManagerImplTest.java
 /Users/Frank/Projects/sweroad/rcds/core/src/test/java/com/sweroad/dao/LookupDaoTest.java
 /Users/Frank/Projects/sweroad/rcds/core/src/test/java/com/sweroad/service/MockUserDetailsService.java
 /Users/Frank/Projects/sweroad/rcds/core/src/test/java/com/sweroad/service/UserExistsExceptionTest.java
 /Users/Frank/Projects/sweroad/rcds/core/src/test/java/com/sweroad/service/impl/PersistentPasswordTokenManagerTest.java
+/Users/Frank/Projects/sweroad/rcds/core/src/test/java/com/sweroad/dao/CrashDaoTest.java
 /Users/Frank/Projects/sweroad/rcds/core/src/test/java/com/sweroad/service/impl/BaseManagerMockTestCase.java
 /Users/Frank/Projects/sweroad/rcds/core/src/test/java/com/sweroad/service/BaseManagerTestCase.java
 /Users/Frank/Projects/sweroad/rcds/core/src/test/java/com/sweroad/service/impl/UserSecurityAdviceTest.java

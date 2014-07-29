@@ -50,7 +50,7 @@ public class BaseFormController implements ServletContextAware {
     protected String templateName = "accountCreated.vm";
     protected String cancelView;
     protected String successView;
-
+    
     private MessageSourceAccessor messages;
     private ServletContext servletContext;
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="0.651" errors="0" skipped="0" tests="9" name="com.sweroad.dao.UserDaoTest">
+<testsuite failures="0" time="1.073" errors="0" skipped="0" tests="9" name="com.sweroad.dao.UserDaoTest">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.7.0_60.jdk/Contents/Home/jre/lib"/>
@@ -63,13 +63,13 @@
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase time="0.063" classname="com.sweroad.dao.UserDaoTest" name="testAddUserRole"/>
-  <testcase time="0.033" classname="com.sweroad.dao.UserDaoTest" name="testUpdateUser"/>
-  <testcase time="0.018" classname="com.sweroad.dao.UserDaoTest" name="testGetUser"/>
-  <testcase time="0.019" classname="com.sweroad.dao.UserDaoTest" name="testGetUserInvalid"/>
-  <testcase time="0.014" classname="com.sweroad.dao.UserDaoTest" name="testUserNotExists"/>
-  <testcase time="0.022" classname="com.sweroad.dao.UserDaoTest" name="testUserExists"/>
-  <testcase time="0.362" classname="com.sweroad.dao.UserDaoTest" name="testUserSearch"/>
-  <testcase time="0.098" classname="com.sweroad.dao.UserDaoTest" name="testAddAndRemoveUser"/>
-  <testcase time="0.022" classname="com.sweroad.dao.UserDaoTest" name="testGetUserPassword"/>
+  <testcase time="0.21" classname="com.sweroad.dao.UserDaoTest" name="testAddUserRole"/>
+  <testcase time="0.055" classname="com.sweroad.dao.UserDaoTest" name="testUpdateUser"/>
+  <testcase time="0.015" classname="com.sweroad.dao.UserDaoTest" name="testGetUser"/>
+  <testcase time="0.013" classname="com.sweroad.dao.UserDaoTest" name="testGetUserInvalid"/>
+  <testcase time="0.013" classname="com.sweroad.dao.UserDaoTest" name="testUserNotExists"/>
+  <testcase time="0.015" classname="com.sweroad.dao.UserDaoTest" name="testUserExists"/>
+  <testcase time="0.655" classname="com.sweroad.dao.UserDaoTest" name="testUserSearch"/>
+  <testcase time="0.047" classname="com.sweroad.dao.UserDaoTest" name="testAddAndRemoveUser"/>
+  <testcase time="0.05" classname="com.sweroad.dao.UserDaoTest" name="testGetUserPassword"/>
 </testsuite>

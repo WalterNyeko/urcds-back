@@ -63,6 +63,6 @@
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase time="0.023" classname="com.sweroad.webapp.controller.UserControllerTest" name="testHandleRequest"/>
-  <testcase time="0.213" classname="com.sweroad.webapp.controller.UserControllerTest" name="testSearch"/>
+  <testcase time="0.018" classname="com.sweroad.webapp.controller.UserControllerTest" name="testHandleRequest"/>
+  <testcase time="0.218" classname="com.sweroad.webapp.controller.UserControllerTest" name="testSearch"/>
 </testsuite>

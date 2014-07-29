@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="0.014" errors="0" skipped="0" tests="8" name="com.sweroad.util.DateConverterTest">
+<testsuite failures="0" time="0.016" errors="0" skipped="0" tests="8" name="com.sweroad.util.DateConverterTest">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.7.0_60.jdk/Contents/Home/jre/lib"/>
@@ -64,11 +64,11 @@
     <property name="sun.cpu.isalist" value=""/>
   </properties>
   <testcase time="0" classname="com.sweroad.util.DateConverterTest" name="testConvertDateWithNull"/>
-  <testcase time="0.012" classname="com.sweroad.util.DateConverterTest" name="testInternationalization"/>
-  <testcase time="0" classname="com.sweroad.util.DateConverterTest" name="testConvertStringToTimestamp"/>
-  <testcase time="0.001" classname="com.sweroad.util.DateConverterTest" name="testConvertTimestampToString"/>
-  <testcase time="0" classname="com.sweroad.util.DateConverterTest" name="testConvertNotSupported"/>
-  <testcase time="0.001" classname="com.sweroad.util.DateConverterTest" name="testConvertStringToDate"/>
+  <testcase time="0.014" classname="com.sweroad.util.DateConverterTest" name="testInternationalization"/>
+  <testcase time="0.001" classname="com.sweroad.util.DateConverterTest" name="testConvertStringToTimestamp"/>
+  <testcase time="0" classname="com.sweroad.util.DateConverterTest" name="testConvertTimestampToString"/>
+  <testcase time="0.001" classname="com.sweroad.util.DateConverterTest" name="testConvertNotSupported"/>
+  <testcase time="0" classname="com.sweroad.util.DateConverterTest" name="testConvertStringToDate"/>
   <testcase time="0" classname="com.sweroad.util.DateConverterTest" name="testConvertStringToString"/>
   <testcase time="0" classname="com.sweroad.util.DateConverterTest" name="testConvertDateToString"/>
 </testsuite>

@@ -18,8 +18,10 @@
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/model/Vehicle.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/service/impl/RoleManagerImpl.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/model/SurfaceCondition.java
+/Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/service/VehicleManager.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/service/impl/GenericManagerImpl.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/dao/SearchException.java
+/Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/service/CrashManager.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/model/CrashSeverity.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/dao/GenericDao.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/dao/hibernate/LookupDaoHibernate.java
@@ -27,6 +29,7 @@
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/model/Casualty.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/util/TimestampConverter.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/service/impl/UserManagerImpl.java
+/Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/dao/CrashDao.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/model/SurfaceType.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/model/RoadSurface.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/service/impl/PasswordTokenManager.java
@@ -44,9 +47,10 @@
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/model/CrashCause.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/model/GpsCoordinate.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/model/BaseModel.java
-/Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/service/UserService.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/service/MailEngine.java
+/Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/service/UserService.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/service/GenericManager.java
+/Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/service/CasualtyManager.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/model/CasualtyClass.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/dao/spring/HibernateExtensionPostProcessor.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/dao/hibernate/HibernateSearchTools.java
@@ -54,4 +58,6 @@
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/dao/LookupDao.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/service/impl/PasswordTokenManagerImpl.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/service/impl/LookupManagerImpl.java
+/Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/service/impl/CrashManagerImpl.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/model/Role.java
+/Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/dao/hibernate/CrashDaoHibernate.java

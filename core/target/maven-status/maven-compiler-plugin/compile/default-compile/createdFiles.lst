@@ -3,12 +3,14 @@ com/sweroad/model/District.class
 com/sweroad/model/CrashCause.class
 com/sweroad/model/Address.class
 com/sweroad/util/DateConverter.class
+com/sweroad/service/impl/CrashManagerImpl.class
 com/sweroad/model/Weather.class
 com/sweroad/model/Crash.class
 com/sweroad/dao/hibernate/RoleDaoHibernate.class
 com/sweroad/service/impl/PersistentPasswordTokenManagerImpl.class
 com/sweroad/model/CasualtyClass.class
 com/sweroad/dao/GenericDao.class
+com/sweroad/service/CasualtyManager.class
 com/sweroad/model/CollisionType.class
 com/sweroad/dao/hibernate/LookupDaoHibernate.class
 com/sweroad/service/impl/PasswordTokenManagerImpl.class
@@ -34,9 +36,12 @@ com/sweroad/util/CurrencyConverter.class
 com/sweroad/util/DateUtil.class
 com/sweroad/service/UserSecurityAdvice.class
 com/sweroad/dao/UserDao.class
+com/sweroad/service/CrashManager.class
 com/sweroad/model/VehicleType.class
+com/sweroad/dao/hibernate/CrashDaoHibernate.class
 com/sweroad/service/UserExistsException.class
 com/sweroad/model/CrashSeverity.class
+com/sweroad/dao/CrashDao.class
 com/sweroad/model/PoliceStation.class
 com/sweroad/service/UserService.class
 com/sweroad/model/BaseModel.class
@@ -48,6 +53,7 @@ com/sweroad/dao/hibernate/GenericDaoHibernate.class
 com/sweroad/model/RoadSurface.class
 com/sweroad/model/User.class
 com/sweroad/dao/RoleDao.class
+com/sweroad/service/VehicleManager.class
 com/sweroad/model/CasualtyType.class
 com/sweroad/dao/spring/HibernateExtensionPostProcessor.class
 com/sweroad/model/VehicleFailureType.class

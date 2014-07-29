@@ -54,12 +54,20 @@ public class CrashSeverity extends BaseModel {
 
 	@Override
 	public boolean equals(Object o) {
-		return this.equals(o);
+		if (this == o) {
+            return true;
+        }
+        if (!(o instanceof CrashSeverity)) {
+            return false;
+        }
+
+        final CrashSeverity crashSeverity = (CrashSeverity) o;
+
+        return crashSeverity != null ? id.equals(crashSeverity.getId()) : false;
 	}
 
 	@Override
 	public int hashCode() {
-		return 0;
+		return id.hashCode();
 	}
-
 }

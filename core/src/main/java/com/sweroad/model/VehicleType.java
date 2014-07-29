@@ -54,12 +54,20 @@ public class VehicleType extends BaseModel {
 
 	@Override
 	public boolean equals(Object o) {
-		return this.equals(o);
-	}
+		if (this == o) {
+            return true;
+        }
+        if (!(o instanceof VehicleType)) {
+            return false;
+        }
 
+        final VehicleType vehicleType = (VehicleType) o;
+
+        return vehicleType != null ? name.equalsIgnoreCase(vehicleType.getName()) : false;
+	}
+	
 	@Override
 	public int hashCode() {
 		return 0;
 	}
-
 }

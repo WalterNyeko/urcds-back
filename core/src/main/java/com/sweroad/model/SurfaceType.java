@@ -57,9 +57,18 @@ public class SurfaceType {
 
 	@Override
 	public boolean equals(Object o) {
-		return this.equals(o);
-	}
+		if (this == o) {
+            return true;
+        }
+        if (!(o instanceof SurfaceType)) {
+            return false;
+        }
 
+        final SurfaceType surfaceType = (SurfaceType) o;
+
+        return surfaceType != null ? name.equalsIgnoreCase(surfaceType.getName()) : false;
+	}
+	
 	@Override
 	public int hashCode() {
 		return 0;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="0.155" errors="0" skipped="0" tests="5" name="com.sweroad.dao.RoleDaoTest">
+<testsuite failures="0" time="0.255" errors="0" skipped="0" tests="5" name="com.sweroad.dao.RoleDaoTest">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.7.0_60.jdk/Contents/Home/jre/lib"/>
@@ -63,9 +63,9 @@
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase time="0.064" classname="com.sweroad.dao.RoleDaoTest" name="testUpdateRole"/>
-  <testcase time="0.02" classname="com.sweroad.dao.RoleDaoTest" name="testGetRole"/>
-  <testcase time="0.019" classname="com.sweroad.dao.RoleDaoTest" name="testGetRoleInvalid"/>
-  <testcase time="0.034" classname="com.sweroad.dao.RoleDaoTest" name="testAddAndRemoveRole"/>
-  <testcase time="0.018" classname="com.sweroad.dao.RoleDaoTest" name="testFindByNamedQuery"/>
+  <testcase time="0.097" classname="com.sweroad.dao.RoleDaoTest" name="testUpdateRole"/>
+  <testcase time="0.017" classname="com.sweroad.dao.RoleDaoTest" name="testGetRole"/>
+  <testcase time="0.013" classname="com.sweroad.dao.RoleDaoTest" name="testGetRoleInvalid"/>
+  <testcase time="0.112" classname="com.sweroad.dao.RoleDaoTest" name="testAddAndRemoveRole"/>
+  <testcase time="0.016" classname="com.sweroad.dao.RoleDaoTest" name="testFindByNamedQuery"/>
 </testsuite>
