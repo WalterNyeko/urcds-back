@@ -9,6 +9,7 @@
         </li>
     </c:if>
     <menu:displayMenu name="Home"/>
+    <menu:displayMenu name="CrashMenu"/>
     <menu:displayMenu name="UserMenu"/>
     <menu:displayMenu name="AdminMenu"/>
     <menu:displayMenu name="Logout"/>

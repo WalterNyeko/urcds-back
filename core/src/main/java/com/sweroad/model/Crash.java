@@ -3,6 +3,7 @@
  */
 package com.sweroad.model;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -92,7 +93,7 @@ public class Crash extends BaseModel {
             joinColumns = { @JoinColumn(name = "crash_id", referencedColumnName = "id") },
             inverseJoinColumns = @JoinColumn(name = "vehicle_id", referencedColumnName = "id")
     )
-	private List<Vehicle> vehicles;
+	private List<Vehicle> vehicles = new ArrayList<Vehicle>();
 	@OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @Fetch(FetchMode.SELECT)    
     @JoinTable(
@@ -573,7 +574,24 @@ public class Crash extends BaseModel {
 	}
 	
 	public void addCasualty(Casualty casualty) {
-		getCasualties().add(casualty);
+		casualties.add(casualty);
+	}
+	
+	public void addVehicle(Vehicle vehicle) {
+		vehicles.add(vehicle);
+	}
+	
+	public int getCasualtyCount() {
+		return casualties.size();
+	}
+	
+	public int getVehicleCount() {
+		return vehicles.size();
+	}
+	
+	public String getCrashDisplayDate() {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		return sdf.format(crashDateTime); 
 	}
 
 	@Override

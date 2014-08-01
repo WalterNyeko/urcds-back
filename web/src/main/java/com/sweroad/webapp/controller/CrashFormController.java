@@ -142,7 +142,7 @@ public class CrashFormController extends BaseFormController {
 	}
 	
 	private void addVehicleToCrash(Vehicle vehicle, Crash crash) {
-		if (crash.getVehicles() == null) {
+		if (crash.getVehicles() == null || crash.getVehicleCount() == 0) {
 			crash.setVehicles(new ArrayList<Vehicle>());
 			vehicle.setId(new Long(1));
 			vehicle.setNumber(1);
@@ -155,7 +155,7 @@ public class CrashFormController extends BaseFormController {
 			vehicle.getDriver().setId(vehicle.getId());
 		}	
 		setVehicleType(vehicle);
-		crash.getVehicles().add(vehicle);
+		crash.addVehicle(vehicle);
 	}
 	
 	private void setVehicleType(Vehicle vehicle) {
