@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.DataBinder;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sweroad.model.Crash;
@@ -55,8 +53,7 @@ public class CrashFormControllerTest extends BaseControllerTestCase {
 		request.addParameter("delete", "");
 		crash = new Crash();
 		crash.setId(5L);
-		BindingResult errors = new DataBinder("crash").getBindingResult();
-		crashForm.onSubmit(crash, errors, request, new MockHttpServletResponse());
+		crashForm.onSubmit(request, new MockHttpServletResponse());
 		
 		//assertNotNull(request.getSession().getAttribute("successMessages"));
 	}

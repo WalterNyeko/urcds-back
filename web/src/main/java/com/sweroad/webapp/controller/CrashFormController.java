@@ -1,8 +1,8 @@
 package com.sweroad.webapp.controller;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,22 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.sweroad.model.CasualtyClass;
-import com.sweroad.model.CasualtyType;
-import com.sweroad.model.CollisionType;
 import com.sweroad.model.Crash;
-import com.sweroad.model.CrashCause;
-import com.sweroad.model.CrashSeverity;
-import com.sweroad.model.District;
-import com.sweroad.model.JunctionType;
-import com.sweroad.model.PoliceStation;
-import com.sweroad.model.RoadSurface;
-import com.sweroad.model.RoadwayCharacter;
-import com.sweroad.model.SurfaceCondition;
-import com.sweroad.model.SurfaceType;
-import com.sweroad.model.VehicleFailureType;
+import com.sweroad.model.Vehicle;
 import com.sweroad.model.VehicleType;
-import com.sweroad.model.Weather;
 import com.sweroad.service.CrashManager;
 import com.sweroad.service.GenericManager;
 
@@ -42,35 +29,7 @@ public class CrashFormController extends BaseFormController {
 	@Autowired
 	private CrashManager crashManager;	
 	@Autowired
-	private GenericManager<CrashSeverity, Long> crashSeverityManager;
-	@Autowired
-	private GenericManager<CollisionType, Long> collisionTypeManager;
-	@Autowired
-	private GenericManager<CrashCause, Long> crashCauseManager;
-	@Autowired
-	private GenericManager<VehicleFailureType, Long> vehicleFailureTypeManager;
-	@Autowired
-	private GenericManager<Weather, Long> weatherManager;
-	@Autowired
-	private GenericManager<SurfaceCondition, Long> surfaceConditionManager;
-	@Autowired
-	private GenericManager<RoadSurface, Long> roadSurfaceManager;
-	@Autowired
-	private GenericManager<SurfaceType, Long> surfaceTypeManager;
-	@Autowired
-	private GenericManager<RoadwayCharacter, Long> roadwayCharacterManager;
-	@Autowired
-	private GenericManager<JunctionType, Long> junctionTypeManager;
-	@Autowired
 	private GenericManager<VehicleType, Long> vehicleTypeManager;
-	@Autowired
-	private GenericManager<CasualtyClass, Long> casualtyClassManager;
-	@Autowired
-	private GenericManager<CasualtyType, Long> casualtyTypeManager;
-	@Autowired
-	private GenericManager<PoliceStation, Long> policeStationManager;
-	@Autowired
-	private GenericManager<District, Long> districtManager;
 	
 	public CrashFormController() {
 		setCancelView("redirect:crashes");
@@ -85,56 +44,124 @@ public class CrashFormController extends BaseFormController {
 		String id = request.getParameter("id");
 		if(!StringUtils.isBlank(id)) {
 			crash = crashManager.get(new Long(id));
+			request.getSession().setAttribute("crash", crash);
 		} else {
 			crash = new Crash();
 		}
 		mav.addObject("crash", crash);
-		mav.addAllObjects(referenceData(request));
+		mav.addAllObjects(crashManager.getReferenceData());
+		return mav;
+	}
+	
+	@ModelAttribute
+	@RequestMapping(value = "/crashform2", method = RequestMethod.POST)
+	protected ModelAndView showForm2(Crash crash, BindingResult errors,
+			HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+	
+		ModelAndView mav = new ModelAndView("crashform2");
+		mergeWithSession(crash, request);
+		request.getSession().setAttribute("crash", crash);
+		mav.addObject("crash", crash);
+		mav.addAllObjects(crashManager.getReferenceData());
 		return mav;
 	}
 
-	public void onSubmit(Crash crash, BindingResult errors,
-			HttpServletRequest request,
-			HttpServletResponse response) {
-		
+	private void mergeWithSession(Crash crash, HttpServletRequest request) {
+		if (request.getSession().getAttribute("crash") != null) {
+			Crash sessionCrash = (Crash) request.getSession().getAttribute("crash");
+			crash.setId(sessionCrash.getId());
+			crash.setVehicles(sessionCrash.getVehicles());
+			crash.setCasualties(sessionCrash.getCasualties());
+		}
 	}
 	
-	@SuppressWarnings("rawtypes")
-	private Map<String, List> referenceData(HttpServletRequest request) throws Exception {
-		Map<String, List> referenceData = new HashMap<String, List>();
-		//Add reference data to map for use in the UI
-		List<CrashSeverity> crashSeverities = crashSeverityManager.getAllDistinct();
-		List<CollisionType> collisionTypes = collisionTypeManager.getAllDistinct();
-		List<CrashCause> crashCauses = crashCauseManager.getAllDistinct();
-		List<VehicleFailureType> vehicleFailureTypes = vehicleFailureTypeManager.getAllDistinct();
-		List<Weather> weathers = weatherManager.getAllDistinct();
-		List<SurfaceCondition> surfaceConditions = surfaceConditionManager.getAllDistinct();
-		List<RoadSurface> roadSurfaces = roadSurfaceManager.getAllDistinct();
-		List<SurfaceType> surfaceTypes = surfaceTypeManager.getAllDistinct();
-		List<RoadwayCharacter> roadwayCharacters = roadwayCharacterManager.getAllDistinct();
-		List<JunctionType> junctionTypes = junctionTypeManager.getAllDistinct();
-		List<PoliceStation> policeStations = policeStationManager.getAllDistinct();
-		List<District> districts = districtManager.getAllDistinct();
-		
-		log.debug("I have managed to get them; CrashSeverities: " + crashSeverities.size());
-		log.debug("I have managed to get them; Districts: " + districts.size());
-		
-		referenceData.put("crashSeverities", crashSeverities);
-		referenceData.put("collisionTypes", collisionTypes);
-		referenceData.put("crashCauses", crashCauses);
-		referenceData.put("vehicleFailureTypes", vehicleFailureTypes);
-		referenceData.put("weathers", weathers);
-		referenceData.put("surfaceConditions", surfaceConditions);
-		referenceData.put("roadSurfaces", roadSurfaces);
-		referenceData.put("surfaceTypes", surfaceTypes);
-		referenceData.put("roadwayCharacters", roadwayCharacters);
-		referenceData.put("junctionTypes", junctionTypes);
-		referenceData.put("districts", districts);
-		referenceData.put("policeStations", policeStations);
-		
-		return referenceData;
+	@ModelAttribute
+	@RequestMapping(value = "/crashform2", method = RequestMethod.GET)
+	protected ModelAndView crashForm2(HttpServletRequest request) throws Exception {
+	
+		ModelAndView mav = new ModelAndView("crashform2");
+		Crash crash = (Crash) request.getSession().getAttribute("crash");
+		if (crash == null) {
+			crash = new Crash();
+		}
+		mav.addObject("crash", crash);
+		mav.addAllObjects(crashManager.getReferenceData());
+		return mav;
 	}
-	
-	
 
+	@ModelAttribute
+	@RequestMapping(value = "/crashformsubmit", method = RequestMethod.GET)
+	public void onSubmit(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Crash crash = (Crash) request.getSession().getAttribute("crash");
+		crash.setCrashDateTime(new Date());
+		crashManager.saveCrash(crash);
+		request.getSession().removeAttribute("crash");
+	    response.sendRedirect("/crashes");
+	}
+	
+	@ModelAttribute
+	@RequestMapping(value = "/crashformvehicle", method = RequestMethod.GET)
+	protected ModelAndView vehicleForm(HttpServletRequest request) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		Vehicle vehicle;
+		String id = request.getParameter("id");
+		Crash crash = (Crash) request.getSession().getAttribute("crash");
+		
+		if(!StringUtils.isBlank(id) && crash != null && crash.getVehicles() != null) {
+			vehicle = getVehicleFromSet(Long.parseLong(id), crash.getVehicles());
+			if (vehicle == null) {
+				vehicle = new Vehicle();
+			}
+		} else {
+			vehicle = new Vehicle();
+		}
+		mav.addObject("vehicle", vehicle);
+		mav.addAllObjects(crashManager.getReferenceData());
+		return mav;
+	}
+	
+	@ModelAttribute
+	@RequestMapping(value = "/crashformvehicle", method = RequestMethod.POST)
+	protected ModelAndView vehicleForm(Vehicle vehicle, BindingResult errors,
+			HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		Crash crash = (Crash) request.getSession().getAttribute("crash");
+		addVehicleToCrash(vehicle, crash);
+		request.getSession().setAttribute("crash", crash);
+		return showForm2(crash, errors, request, response);
+	}
+	
+	private Vehicle getVehicleFromSet(long id, List<Vehicle> vehicles) {
+		for(Vehicle vehicle : vehicles) {
+			if (vehicle.getId().longValue() == id) {
+				return vehicle;
+			}
+		}
+		return null;
+	}
+	
+	private void addVehicleToCrash(Vehicle vehicle, Crash crash) {
+		if (crash.getVehicles() == null) {
+			crash.setVehicles(new ArrayList<Vehicle>());
+			vehicle.setId(new Long(1));
+			vehicle.setNumber(1);
+		} else {
+			long vehicleId = crash.getVehicles().size() + 1;
+			vehicle.setId(vehicleId);	
+			vehicle.setNumber((int)vehicleId);
+		}
+		if (vehicle.getDriver() != null) {
+			vehicle.getDriver().setId(vehicle.getId());
+		}	
+		setVehicleType(vehicle);
+		crash.getVehicles().add(vehicle);
+	}
+	
+	private void setVehicleType(Vehicle vehicle) {
+		if (vehicle.getVehicleType() != null) {
+			VehicleType vt = vehicleTypeManager.get(vehicle.getVehicleType().getId());
+			vehicle.setVehicleType(vt);
+		}
+	}
 }

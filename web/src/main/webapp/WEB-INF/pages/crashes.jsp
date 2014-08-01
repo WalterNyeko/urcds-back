@@ -14,7 +14,7 @@
 		</a>
 	</div>
 	<display:table name="crashList" class="table table-condensed table-striped table-hover" requestURI="" id="crashList" export="true" pagesize="25">
-		<display:column property="id" sortable="true" href="crashreport" media="html" paramId="id" paramProperty="id" titleKey="crash.id"/>
+		<display:column property="id" sortable="true" href="crashform" media="html" paramId="id" paramProperty="id" titleKey="crash.id"/>
 		<display:column property="tarNo" sortable="true" titleKey="crash.tarNo"/>
 		<display:column property="townOrVillage" sortable="true" titleKey="crash.townOrVillage"/>
 		<display:column property="road" sortable="true" titleKey="crash.road"/>

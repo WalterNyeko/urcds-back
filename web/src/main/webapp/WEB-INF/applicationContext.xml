@@ -133,6 +133,22 @@
 	        </bean>
 	    </constructor-arg>
      </bean>
+     <bean id="driverManager" class="com.sweroad.service.impl.GenericManagerImpl">
+	    <constructor-arg>
+	        <bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
+	            <constructor-arg value="com.sweroad.model.Driver"/>
+	            <property name="sessionFactory" ref="sessionFactory"/>
+	        </bean>
+	    </constructor-arg>
+     </bean>
+     <bean id="vehicleManager" class="com.sweroad.service.impl.GenericManagerImpl">
+	    <constructor-arg>
+	        <bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
+	            <constructor-arg value="com.sweroad.model.Vehicle"/>
+	            <property name="sessionFactory" ref="sessionFactory"/>
+	        </bean>
+	    </constructor-arg>
+     </bean>
      
     <!-- Configure and Alternative PasswordTokenManager -->
 	<!-- <bean id="passwordTokenManager" class="com.sweroad.service.impl.PersistentPasswordTokenManagerImpl" autowire="default" /> -->

@@ -1,5 +1,7 @@
 package com.sweroad.model;
 
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,6 +34,16 @@ public class Driver extends BaseModel {
 	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "casualty_type_id", nullable = false)
 	private CasualtyType casualtyType;
+	@Column(name = "date_created", nullable = false)
+	private Date dateCreated;
+	@Column(name = "date_updated")
+	private Date dateUpdated;
+	@ManyToOne
+	@JoinColumn(name = "created_by")
+	private User createdBy;
+	@ManyToOne
+	@JoinColumn(name = "updated_by")
+	private User updatedBy;
 
 	/**
 	 * @return the id
@@ -131,6 +143,62 @@ public class Driver extends BaseModel {
 		this.casualtyType = casualtyType;
 	}
 	
+	/**
+	 * @return the dateCreated
+	 */
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	/**
+	 * @param dateCreated the dateCreated to set
+	 */
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	/**
+	 * @return the dateUpdated
+	 */
+	public Date getDateUpdated() {
+		return dateUpdated;
+	}
+
+	/**
+	 * @param dateUpdated the dateUpdated to set
+	 */
+	public void setDateUpdated(Date dateUpdated) {
+		this.dateUpdated = dateUpdated;
+	}
+
+	/**
+	 * @return the createdBy
+	 */
+	public User getCreatedBy() {
+		return createdBy;
+	}
+
+	/**
+	 * @param createdBy the createdBy to set
+	 */
+	public void setCreatedBy(User createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	/**
+	 * @return the updatedBy
+	 */
+	public User getUpdatedBy() {
+		return updatedBy;
+	}
+
+	/**
+	 * @param updatedBy the updatedBy to set
+	 */
+	public void setUpdatedBy(User updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
 	@Override
 	public String toString() {
 		return String.format("Vehicle {%s}", licenseValid);
@@ -147,7 +215,7 @@ public class Driver extends BaseModel {
 
         final Driver driver = (Driver) o;
 
-        return driver != null ? id.equals(driver.getId()) : false;
+        return driver != null && id != null ? id.equals(driver.getId()) : false;
 	}
 
 	@Override

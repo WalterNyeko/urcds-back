@@ -3,9 +3,9 @@
  */
 package com.sweroad.model;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -51,6 +51,7 @@ public class Crash extends BaseModel {
 	private String crashPlace;
 	@Column(name = "crash_date_time")
 	private Date crashDateTime;
+	private String crashDateTimeString;
 	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "gps_coordinate_id")
 	private GpsCoordinate gpsCoordinate;
@@ -84,22 +85,22 @@ public class Crash extends BaseModel {
 	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "junction_type_id")
 	private JunctionType junctionType;
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @Fetch(FetchMode.SELECT)    
     @JoinTable(
             name = "crash_vehicle",
             joinColumns = { @JoinColumn(name = "crash_id", referencedColumnName = "id") },
             inverseJoinColumns = @JoinColumn(name = "vehicle_id", referencedColumnName = "id")
     )
-	private Set<Vehicle> vehicles;
-	@OneToMany(fetch = FetchType.EAGER)
+	private List<Vehicle> vehicles;
+	@OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @Fetch(FetchMode.SELECT)    
     @JoinTable(
             name = "crash_casualty",
             joinColumns = { @JoinColumn(name = "crash_id", referencedColumnName = "id") },
             inverseJoinColumns = @JoinColumn(name = "casualty_id", referencedColumnName = "id")
     )
-	private Set<Casualty> casualties = new HashSet<Casualty>();
+	private List<Casualty> casualties = new ArrayList<Casualty>();
 	@Column(name = "reporting_officer_name")
 	private String reportingOfficerName;
 	@Column(name = "reporting_officer_rank")
@@ -126,14 +127,14 @@ public class Crash extends BaseModel {
 	/**
 	 * @return the casualties
 	 */
-	public Set<Casualty> getCasualties() {
+	public List<Casualty> getCasualties() {
 		return casualties;
 	}
 
 	/**
 	 * @param casualties the casualties to set
 	 */
-	public void setCasualties(Set<Casualty> casualties) {
+	public void setCasualties(List<Casualty> casualties) {
 		this.casualties = casualties;
 	}
 
@@ -247,6 +248,20 @@ public class Crash extends BaseModel {
 	 */
 	public void setCrashDateTime(Date crashDateTime) {
 		this.crashDateTime = crashDateTime;
+	}
+
+	/**
+	 * @return the crashDateTimeString
+	 */
+	public String getCrashDateTimeString() {
+		return crashDateTimeString;
+	}
+
+	/**
+	 * @param crashDateTimeString the crashDateTimeString to set
+	 */
+	public void setCrashDateTimeString(String crashDateTimeString) {
+		this.crashDateTimeString = crashDateTimeString;
 	}
 
 	/**
@@ -406,14 +421,14 @@ public class Crash extends BaseModel {
 	/**
 	 * @return the crashVehicles
 	 */
-	public Set<Vehicle> getVehicles() {
+	public List<Vehicle> getVehicles() {
 		return vehicles;
 	}
 
 	/**
 	 * @param crashVehicles the crashVehicles to set
 	 */
-	public void setVehicles(Set<Vehicle> vehicles) {
+	public void setVehicles(List<Vehicle> vehicles) {
 		this.vehicles = vehicles;
 	}
 
@@ -577,7 +592,7 @@ public class Crash extends BaseModel {
 
         final Crash crash = (Crash) o;
 
-        return crash != null ? id.equals(crash.getId()) : false;
+        return crash != null && id != null ? id.equals(crash.getId()) : false;
 	}
 	
 	@Override

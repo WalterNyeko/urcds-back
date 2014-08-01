@@ -459,6 +459,7 @@
     	<column>license_number</column>
     	<column>license_valid</column>
     	<column>casualty_type_id</column>
+    	<column>date_created</column>
     	<row>
     		<value description="age">27</value>
     		<value description="gender">M</value>
@@ -466,6 +467,7 @@
     		<value description="license_number">123456</value>
     		<value description="license_valid">1</value>
     		<value description="casualty_type_id">2</value>
+    		<value description="date_created">2014-06-03 18:15:00</value>
    		</row>
    		<row>
     		<value description="age">53</value>
@@ -474,6 +476,7 @@
     		<value description="license_number">123789</value>
     		<value description="license_valid">1</value>
     		<value description="casualty_type_id">3</value>
+    		<value description="date_created">2014-06-04 18:15:00</value>
    		</row>
     </table>
     <table name="vehicle">
@@ -481,16 +484,20 @@
     	<column>driver_id</column>
     	<column>vehicle_type_id</column>
     	<column>company_name</column>
+    	<column>date_created</column>
     	<row>
     		<value description="number">1</value>
     		<value description="driver_id">1</value>
     		<value description="vehicle_type_id">1</value>
+    		<value description="company_name"></value>
+    		<value description="date_created">2014-06-03 18:15:00</value>
    		</row>
    		<row>
     		<value description="number">2</value>
     		<value description="driver_id">2</value>
     		<value description="vehicle_type_id">7</value>
     		<value description="company_name">Total Uganda</value>
+    		<value description="date_created">2014-06-05 18:15:00</value>
    		</row>
     </table>    
     <table name="casualty">

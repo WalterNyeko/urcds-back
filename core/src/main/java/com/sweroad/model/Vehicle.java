@@ -1,5 +1,7 @@
 package com.sweroad.model;
 
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,6 +31,16 @@ public class Vehicle extends BaseModel {
 	private Driver driver;
 	@Column(name = "company_name")
 	private String companyName;
+	@Column(name = "date_created", nullable = false)
+	private Date dateCreated;
+	@Column(name = "date_updated")
+	private Date dateUpdated;
+	@ManyToOne
+	@JoinColumn(name = "created_by")
+	private User createdBy;
+	@ManyToOne
+	@JoinColumn(name = "updated_by")
+	private User updatedBy;
 
 	/**
 	 * @return the number
@@ -86,6 +98,76 @@ public class Vehicle extends BaseModel {
 		this.vehicleType = vehicleType;
 	}
 
+	/**
+	 * @return the companyName
+	 */
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	/**
+	 * @param companyName the companyName to set
+	 */
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+
+	/**
+	 * @return the dateCreated
+	 */
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	/**
+	 * @param dateCreated the dateCreated to set
+	 */
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	/**
+	 * @return the dateUpdated
+	 */
+	public Date getDateUpdated() {
+		return dateUpdated;
+	}
+
+	/**
+	 * @param dateUpdated the dateUpdated to set
+	 */
+	public void setDateUpdated(Date dateUpdated) {
+		this.dateUpdated = dateUpdated;
+	}
+
+	/**
+	 * @return the createdBy
+	 */
+	public User getCreatedBy() {
+		return createdBy;
+	}
+
+	/**
+	 * @param createdBy the createdBy to set
+	 */
+	public void setCreatedBy(User createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	/**
+	 * @return the updatedBy
+	 */
+	public User getUpdatedBy() {
+		return updatedBy;
+	}
+
+	/**
+	 * @param updatedBy the updatedBy to set
+	 */
+	public void setUpdatedBy(User updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
 	@Override
 	public String toString() {
 		return String.format("Vehicle {%s}", number);
@@ -93,8 +175,16 @@ public class Vehicle extends BaseModel {
 
 	@Override
 	public boolean equals(Object o) {
-		Vehicle vehicle = (Vehicle) o;
-		return this.id.equals(vehicle.getId());
+		if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Vehicle)) {
+            return false;
+        }
+
+        final Vehicle vehicle = (Vehicle) o;
+
+        return vehicle != null && id != null ? id.equals(vehicle.getId()) : false;
 	}
 
 	@Override
