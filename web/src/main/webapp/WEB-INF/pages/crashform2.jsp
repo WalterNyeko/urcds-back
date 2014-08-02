@@ -17,7 +17,7 @@
 								<table width="100%" class="crashform-gray">
 									<tr>
 										<th>
-											<appfuse:label styleClass="form-label" key="crash.vehicle"/>&nbsp; ${vehicle.number}
+											<appfuse:label styleClass="control-label" key="crash.vehicle"/>&nbsp;${vehicle.number}
 										</th>
 									</tr>
 									<tr>
@@ -25,7 +25,7 @@
 											<table width="100%" class="crashform-blue">
 												<tr>
 													<td colspan="2">
-														<appfuse:label styleClass="form-label" key="crashForm.vehicleType"/>
+														<appfuse:label styleClass="control-label" key="crashForm.vehicleType"/>
 													</td>
 												</tr>
 												<tr>
@@ -42,18 +42,18 @@
 								<table width="100%" class="crashform-gray">
 									<tr>
 										<th>
-											<appfuse:label styleClass="form-label" key="crash.driver"/>&nbsp;${vehicle.number}
+											<appfuse:label styleClass="control-label" key="crash.driver"/>&nbsp;${vehicle.number}
 										</th>
 									</tr>
 									<tr>
 										<td width="100%">
 											<table width="100%" class="crashform-blue">
 												<tr>
-													<th width="30%"><appfuse:label styleClass="form-label" key="crashForm.licenseType"/></th>
-													<th width="15%"><appfuse:label styleClass="form-label" key="crashForm.driverSex"/></th>
-													<th width="15%"><appfuse:label styleClass="form-label" key="crashForm.driverAge"/></th>
-													<th width="15%"><appfuse:label styleClass="form-label" key="crashForm.driverBeltUsed"/></th>
-													<th width="25%"><appfuse:label styleClass="form-label" key="crashForm.driverCasualty"/></th>
+													<th width="30%"><appfuse:label styleClass="control-label" key="crashForm.licenseType"/></th>
+													<th width="15%"><appfuse:label styleClass="control-label" key="crashForm.driverSex"/></th>
+													<th width="15%"><appfuse:label styleClass="control-label" key="crashForm.driverAge"/></th>
+													<th width="15%"><appfuse:label styleClass="control-label" key="crashForm.driverBeltUsed"/></th>
+													<th width="25%"><appfuse:label styleClass="control-label" key="crashForm.driverCasualty"/></th>
 												</tr>
 												<tr>
 													<td>
@@ -117,7 +117,7 @@
 							</td>
 						</tr>	
 						<tr>
-							<td colspan="2">
+							<td colspan="2" style="color: #000;">
 								<appfuse:label styleClass="form-label" key="crashForm.driverIfHeavyOminbus"/>:&nbsp;&nbsp;
 								${vehicle.companyName}
 							</td>
@@ -126,7 +126,7 @@
 				</c:if>
 				<tr>
 					<td>
-						<a class="btn btn-primary" href="/crashformvehicle">
+						<a href="/crashformvehicle">
 					        <i class="icon-ok"></i> 
 					        <fmt:message key="button.addVehicle"/>
 				        </a>
@@ -138,20 +138,20 @@
 							<table width="100%" class="crashform-gray">
 								<tr>
 									<th width="100%">
-										<appfuse:label styleClass="form-label" key="crash.pedestrianAndPassengerCasualties"/>
+										<appfuse:label styleClass="control-label" key="crash.pedestrianAndPassengerCasualties"/>
 									</th>
 								</tr>
 								<tr>
 									<td width="100%">
 										<table width="100%" class="crashform-blue">
 											<tr>
-												<th>&nbsp;</th>
-												<th><appfuse:label styleClass="form-label" key="crashForm.pedestrianOrPassengerCasualty"/></th>
-												<th><appfuse:label styleClass="form-label" key="crashForm.pedestrianOrPassengerSex"/></th>
-												<th><appfuse:label styleClass="form-label" key="crashForm.pedestrianOrPassengerAge"/></th>
-												<th><appfuse:label styleClass="form-label" key="crashForm.pedestrianOrPassengerClass"/></th>
-												<th><appfuse:label styleClass="form-label" key="crashForm.passengerVehicleNo"/></th>
-												<th><appfuse:label styleClass="form-label" key="crashForm.passengerBeltUsed"/></th>
+												<th><appfuse:label styleClass="control-label" key="crashForm.victim"/></th>
+												<th><appfuse:label styleClass="control-label" key="crashForm.pedestrianOrPassengerCasualty"/></th>
+												<th><appfuse:label styleClass="control-label" key="crashForm.pedestrianOrPassengerSex"/></th>
+												<th><appfuse:label styleClass="control-label" key="crashForm.pedestrianOrPassengerAge"/></th>
+												<th><appfuse:label styleClass="control-label" key="crashForm.pedestrianOrPassengerClass"/></th>
+												<th><appfuse:label styleClass="control-label" key="crashForm.passengerVehicleNo"/></th>
+												<th><appfuse:label styleClass="control-label" key="crashForm.passengerBeltUsed"/></th>
 											</tr>
 											<c:forEach var="casualty" items="${crash.casualties}" varStatus="status">
 												<tr>
@@ -191,18 +191,22 @@
 				</c:if>
 				<tr>
 					<td>
-						<a class="btn btn-primary" href="/crashformcasualty">
+						<a href="/crashformcasualty">
 					        <i class="icon-ok"></i> 
 					        <fmt:message key="button.addCasualty"/>
 				        </a>
 					</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
 					<td align="right">
 						<a class="btn btn-primary" href="/crashformsubmit">
 					        <i class="icon-ok"></i> 
 					        <fmt:message key="button.saveCrashData"/>
 				        </a>
 					</td>
-				</tr>
+				</tr>				
 			</table>
 		</div>
 	</form:form>

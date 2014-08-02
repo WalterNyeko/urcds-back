@@ -18,6 +18,9 @@ body {
 
 body#login {
     padding-bottom: 40px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
 }
 
 .navbar .brand:hover {

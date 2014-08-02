@@ -15,7 +15,7 @@
 						<table width="100%" class="crashform-gray">
 							<tr>
 								<th>
-									<appfuse:label styleClass="form-label" key="crash.vehicle"/>
+									<appfuse:label styleClass="control-label" key="crash.vehicle"/>
 								</th>
 							</tr>
 							<tr>
@@ -23,7 +23,7 @@
 									<table width="100%" class="crashform-blue">
 										<tr>
 											<td colspan="2">
-												<appfuse:label styleClass="form-label" key="crashForm.vehicleType"/>
+												<appfuse:label styleClass="control-label" key="crashForm.vehicleType"/>
 											</td>
 										</tr>
 										<tr>
@@ -43,7 +43,7 @@
 					</td>
 				</tr>	
 				<tr>
-					<td>
+					<td style="color: #000;">
 						<appfuse:label styleClass="form-label" key="crashForm.driverIfHeavyOminbus"/>:&nbsp;&nbsp;
 						<form:input cssClass="form-control" path="companyName" id="companyName"/>
 					</td>
@@ -53,18 +53,18 @@
 						<table width="100%" class="crashform-gray">
 							<tr>
 								<th>
-									<appfuse:label styleClass="form-label" key="crash.driver"/>&nbsp;${vehicle.number}
+									<appfuse:label styleClass="control-label" key="crash.driver"/>&nbsp;${vehicle.number}
 								</th>
 							</tr>
 							<tr>
 								<td width="100%">
 									<table width="100%" class="crashform-blue">
 										<tr>
-											<th><appfuse:label styleClass="form-label" key="crashForm.licenseType"/></th>
-											<th><appfuse:label styleClass="form-label" key="crashForm.driverSex"/></th>
-											<th><appfuse:label styleClass="form-label" key="crashForm.driverAge"/></th>
-											<th><appfuse:label styleClass="form-label" key="crashForm.driverBeltUsed"/></th>
-											<th><appfuse:label styleClass="form-label" key="crashForm.driverCasualty"/></th>
+											<th><appfuse:label styleClass="control-label" key="crashForm.licenseType"/></th>
+											<th><appfuse:label styleClass="control-label" key="crashForm.driverSex"/></th>
+											<th><appfuse:label styleClass="control-label" key="crashForm.driverAge"/></th>
+											<th><appfuse:label styleClass="control-label" key="crashForm.driverBeltUsed"/></th>
+											<th><appfuse:label styleClass="control-label" key="crashForm.driverCasualty"/></th>
 										</tr>
 										<tr>
 											<td>

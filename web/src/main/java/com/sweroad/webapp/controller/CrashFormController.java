@@ -68,7 +68,7 @@ public class CrashFormController extends BaseFormController {
 	}
 
 	private void mergeWithSession(Crash crash, HttpServletRequest request) {
-		if (request.getSession().getAttribute("crash") != null) {
+		if (request.getSession().getAttribute("crash") != null && crash.getId() != null) {
 			Crash sessionCrash = (Crash) request.getSession().getAttribute("crash");
 			crash.setId(sessionCrash.getId());
 			crash.setVehicles(sessionCrash.getVehicles());
