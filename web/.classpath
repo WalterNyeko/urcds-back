@@ -108,6 +108,14 @@
   <classpathentry kind="var" path="M2_REPO/com/lowagie/itext/1.3/itext-1.3.jar"/>
   <classpathentry kind="var" path="M2_REPO/junit/junit/4.11/junit-4.11.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/mockito/mockito-all/1.9.5/mockito-all-1.9.5.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/powermock/powermock-module-junit4/1.5.5/powermock-module-junit4-1.5.5.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/powermock/powermock-module-junit4-common/1.5.5/powermock-module-junit4-common-1.5.5.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/powermock/powermock-core/1.5.5/powermock-core-1.5.5.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/powermock/powermock-reflect/1.5.5/powermock-reflect-1.5.5.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/objenesis/objenesis/1.0/objenesis-1.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/powermock/powermock-api-mockito/1.5.5/powermock-api-mockito-1.5.5.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/powermock/powermock-api-support/1.5.5/powermock-api-support-1.5.5.jar"/>
   <classpathentry kind="var" path="M2_REPO/net/sf/ehcache/ehcache-web/2.0.4/ehcache-web-2.0.4.jar"/>
   <classpathentry kind="var" path="M2_REPO/opensymphony/sitemesh/2.4.2/sitemesh-2.4.2.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/velocity/velocity-tools/2.0/velocity-tools-2.0.jar"/>
@@ -137,6 +145,7 @@
   <classpathentry kind="var" path="M2_REPO/org/webjars/bootswatch/3.0.0/bootswatch-3.0.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/webjars/bootstrap/3.0.2/bootstrap-3.0.2.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/webjars/bootstrap-datepicker/1.2.0/bootstrap-datepicker-1.2.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/webjars/bootstrap-datetimepicker/2.3.1/bootstrap-datetimepicker-2.3.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/ro/isdc/wro4j/wro4j-core/1.7.5/wro4j-core-1.7.5.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/commons/commons-lang3/3.1/commons-lang3-3.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/struts-menu/struts-menu/2.4.3/struts-menu-2.4.3.jar"/>
@@ -144,5 +153,4 @@
   <classpathentry kind="var" path="M2_REPO/velocity/velocity-dep/1.4/velocity-dep-1.4.jar"/>
   <classpathentry kind="var" path="M2_REPO/velocity-tools/velocity-tools-view/1.0/velocity-tools-view-1.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/mockito/mockito-core/1.9.5/mockito-core-1.9.5.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/objenesis/objenesis/1.0/objenesis-1.0.jar"/>
 </classpath>

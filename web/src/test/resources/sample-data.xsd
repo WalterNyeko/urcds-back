@@ -1,24 +1,2 @@
-<?xml version="1.0" encoding="utf-16"?>
-<xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <xsd:element name="dataset" type="datasetType" />
-  <xsd:complexType name="datasetType">
-    <xsd:sequence>
-      <xsd:element maxOccurs="unbounded" name="table" type="tableType" />
-    </xsd:sequence>
-  </xsd:complexType>
-  <xsd:complexType name="tableType">
-    <xsd:sequence>
-      <xsd:element maxOccurs="unbounded" name="column" type="xsd:string" />
-      <xsd:element maxOccurs="unbounded" name="row" type="rowType" />
-    </xsd:sequence>
-    <xsd:attribute name="name" type="xsd:string" />
-  </xsd:complexType>
-  <xsd:complexType name="rowType">
-    <xsd:sequence>
-      <xsd:element maxOccurs="unbounded" name="value" type="valueType" />
-    </xsd:sequence>
-  </xsd:complexType>
-  <xsd:complexType name="valueType">
-    <xsd:attribute name="description" type="xsd:string" />
-  </xsd:complexType>
-</xsd:schema>
+
+㰿硭氠癥牳楯渽∱⸰∠敮捯摩湧㴢畴昭ㄶ∿㸊㱸獤㩳捨敭愠慴瑲楢畴敆潲浄敦慵汴㴢畮煵慬楦楥搢⁥汥浥湴䙯牭䑥晡畬琽≱畡汩晩敤∠癥牳楯渽∱⸰∠硭汮猺硳搽≨瑴瀺⼯睷眮眳⹯牧⼲〰ㄯ塍䱓捨敭愢㸊†㱸獤㩥汥浥湴⁮慭攽≤慴慳整∠瑹灥㴢摡瑡獥瑔祰攢 㸊†㱸獤㩣潭灬數呹灥⁮慭攽≤慴慳整呹灥∾ਠ†‼硳携獥煵敮捥㸊†††㱸獤㩥汥浥湴⁭慸佣捵牳㴢畮扯畮摥搢⁮慭攽≴慢汥∠瑹灥㴢瑡扬敔祰攢 㸊††㰯硳携獥煵敮捥㸊†㰯硳携捯浰汥硔祰放ਠ‼硳携捯浰汥硔祰攠湡浥㴢瑡扬敔祰攢㸊††㱸獤㩳敱略湣放ਠ††‼硳携敬敭敮琠浡硏捣畲猽≵湢潵湤敤∠湡浥㴢捯汵浮∠瑹灥㴢硳携獴物湧∠⼾ਠ††‼硳携敬敭敮琠浡硏捣畲猽≵湢潵湤敤∠湡浥㴢牯眢⁴祰攽≲潷呹灥∠⼾ਠ†‼⽸獤㩳敱略湣放ਠ†‼硳携慴瑲楢畴攠湡浥㴢湡浥∠瑹灥㴢硳携獴物湧∠⼾ਠ‼⽸獤㩣潭灬數呹灥㸊†㱸獤㩣潭灬數呹灥⁮慭攽≲潷呹灥∾ਠ†‼硳携獥煵敮捥㸊†††㱸獤㩥汥浥湴⁭慸佣捵牳㴢畮扯畮摥搢⁮慭攽≶慬略∠瑹灥㴢癡汵敔祰攢 㸊††㰯硳携獥煵敮捥㸊†㰯硳携捯浰汥硔祰放ਠ‼硳携捯浰汥硔祰攠湡浥㴢癡汵敔祰攢㸊††㱸獤㩡瑴物扵瑥⁮慭攽≤敳捲楰瑩潮∠瑹灥㴢硳携獴物湧∠⼾ਠ‼⽸獤㩣潭灬數呹灥㸊㰯硳携獣桥浡�

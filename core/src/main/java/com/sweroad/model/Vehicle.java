@@ -18,15 +18,16 @@ public class Vehicle extends BaseModel {
 	 * 
 	 */
 	private static final long serialVersionUID = 2725420586814515518L;
-	
-	@Id @GeneratedValue(strategy = GenerationType.AUTO)
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@Column(nullable = false)
 	private Integer number;
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "vehicle_type_id", nullable = false)
 	private VehicleType vehicleType;
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "driver_id", nullable = false)
 	private Driver driver;
 	@Column(name = "company_name")
@@ -50,7 +51,8 @@ public class Vehicle extends BaseModel {
 	}
 
 	/**
-	 * @param number the number to set
+	 * @param number
+	 *            the number to set
 	 */
 	public void setNumber(Integer number) {
 		this.number = number;
@@ -64,7 +66,8 @@ public class Vehicle extends BaseModel {
 	}
 
 	/**
-	 * @param driver the driver to set
+	 * @param driver
+	 *            the driver to set
 	 */
 	public void setDriver(Driver driver) {
 		this.driver = driver;
@@ -78,7 +81,8 @@ public class Vehicle extends BaseModel {
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(Long id) {
 		this.id = id;
@@ -92,7 +96,8 @@ public class Vehicle extends BaseModel {
 	}
 
 	/**
-	 * @param vehicleType the vehicleType to set
+	 * @param vehicleType
+	 *            the vehicleType to set
 	 */
 	public void setVehicleType(VehicleType vehicleType) {
 		this.vehicleType = vehicleType;
@@ -106,7 +111,8 @@ public class Vehicle extends BaseModel {
 	}
 
 	/**
-	 * @param companyName the companyName to set
+	 * @param companyName
+	 *            the companyName to set
 	 */
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
@@ -120,7 +126,8 @@ public class Vehicle extends BaseModel {
 	}
 
 	/**
-	 * @param dateCreated the dateCreated to set
+	 * @param dateCreated
+	 *            the dateCreated to set
 	 */
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
@@ -134,7 +141,8 @@ public class Vehicle extends BaseModel {
 	}
 
 	/**
-	 * @param dateUpdated the dateUpdated to set
+	 * @param dateUpdated
+	 *            the dateUpdated to set
 	 */
 	public void setDateUpdated(Date dateUpdated) {
 		this.dateUpdated = dateUpdated;
@@ -148,7 +156,8 @@ public class Vehicle extends BaseModel {
 	}
 
 	/**
-	 * @param createdBy the createdBy to set
+	 * @param createdBy
+	 *            the createdBy to set
 	 */
 	public void setCreatedBy(User createdBy) {
 		this.createdBy = createdBy;
@@ -162,7 +171,8 @@ public class Vehicle extends BaseModel {
 	}
 
 	/**
-	 * @param updatedBy the updatedBy to set
+	 * @param updatedBy
+	 *            the updatedBy to set
 	 */
 	public void setUpdatedBy(User updatedBy) {
 		this.updatedBy = updatedBy;
@@ -176,15 +186,23 @@ public class Vehicle extends BaseModel {
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Vehicle)) {
-            return false;
-        }
+			return true;
+		}
+		if (!(o instanceof Vehicle)) {
+			return false;
+		}
 
-        final Vehicle vehicle = (Vehicle) o;
+		final Vehicle vehicle = (Vehicle) o;
 
-        return vehicle != null && id != null ? id.equals(vehicle.getId()) : false;
+		if (vehicle != null) {
+			if (id != null && id.equals(vehicle.getId())) {
+				return true;
+			}
+			if (driver != null && driver.equals(vehicle.getDriver())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override

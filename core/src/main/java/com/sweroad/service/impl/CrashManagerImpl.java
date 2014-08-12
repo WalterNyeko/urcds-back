@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sweroad.dao.CrashDao;
+import com.sweroad.model.Casualty;
 import com.sweroad.model.CasualtyClass;
 import com.sweroad.model.CasualtyType;
 import com.sweroad.model.CollisionType;
@@ -31,7 +32,8 @@ import com.sweroad.service.CrashManager;
 import com.sweroad.service.GenericManager;
 
 @Service("crashManager")
-public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements CrashManager {
+public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
+		CrashManager {
 
 	private CrashDao crashDao;
 	@Autowired
@@ -68,19 +70,24 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
 	private GenericManager<Driver, Long> driverManager;
 	@Autowired
 	private GenericManager<Vehicle, Long> vehicleManager;
-	
+	@Autowired
+	private GenericManager<Casualty, Long> casualtyManager;
+
 	@Autowired
 	public CrashManagerImpl(CrashDao crashDao) {
 		super(crashDao);
 		this.crashDao = crashDao;
 	}
+
 	@Override
 	public Crash findByTarNo(String tarNo) {
 		return crashDao.findByTarNo(tarNo);
 	}
+
 	@Override
-	public Crash saveCrash(Crash crash) {		
+	public Crash saveCrash(Crash crash) {
 		saveCrashVehicles(crash);
+		saveCrashCasualties(crash);
 		if (crash.getDateCreated() == null) {
 			crash.setDateCreated(new Date());
 		} else {
@@ -89,7 +96,7 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
 		setCrashParams(crash);
 		return super.save(crash);
 	}
-	
+
 	private void saveCrashVehicles(Crash crash) {
 		if (crash.getVehicles() != null) {
 			for (Vehicle vehicle : crash.getVehicles()) {
@@ -120,75 +127,121 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
 			vehicle.setDriver(driver);
 		}
 	}
-	
+
+	private void saveCrashCasualties(Crash crash) {
+		if (crash.getCasualties() != null) {
+			for (Casualty casualty : crash.getCasualties()) {
+				if (casualty.getDateCreated() == null) {
+					casualty.setDateCreated(new Date());
+					casualty.setId(null);
+				} else {
+					casualty.setDateUpdated(new Date());
+				}
+				setCasualtyParams(casualty);
+				casualty = casualtyManager.save(casualty);
+			}
+		}
+	}
+
 	private void setCrashParams(Crash crash) {
 		if (crash.getCollisionType() != null) {
-			crash.setCollisionType(collisionTypeManager.get(crash.getCollisionType().getId()));
+			crash.setCollisionType(collisionTypeManager.get(crash
+					.getCollisionType().getId()));
 		}
 		if (crash.getCrashSeverity() != null) {
-			crash.setCrashSeverity(crashSeverityManager.get(crash.getCrashSeverity().getId()));
+			crash.setCrashSeverity(crashSeverityManager.get(crash
+					.getCrashSeverity().getId()));
 		}
 		if (crash.getJunctionType() != null) {
-			crash.setJunctionType(junctionTypeManager.get(crash.getJunctionType().getId()));
+			crash.setJunctionType(junctionTypeManager.get(crash
+					.getJunctionType().getId()));
 		}
 		if (crash.getMainCrashCause() != null) {
-			crash.setMainCrashCause(crashCauseManager.get(crash.getMainCrashCause().getId()));
+			crash.setMainCrashCause(crashCauseManager.get(crash
+					.getMainCrashCause().getId()));
 		}
 		if (crash.getPoliceStation() != null) {
-			crash.setPoliceStation(policeStationManager.get(crash.getPoliceStation().getId()));
+			crash.setPoliceStation(policeStationManager.get(crash
+					.getPoliceStation().getId()));
 		}
 		if (crash.getRoadSurface() != null) {
-			crash.setRoadSurface(roadSurfaceManager.get(crash.getRoadSurface().getId()));
+			crash.setRoadSurface(roadSurfaceManager.get(crash.getRoadSurface()
+					.getId()));
 		}
 		if (crash.getRoadwayCharacter() != null) {
-			crash.setRoadwayCharacter(roadwayCharacterManager.get(crash.getRoadwayCharacter().getId()));
+			crash.setRoadwayCharacter(roadwayCharacterManager.get(crash
+					.getRoadwayCharacter().getId()));
 		}
 		if (crash.getSurfaceCondition() != null) {
-			crash.setSurfaceCondition(surfaceConditionManager.get(crash.getSurfaceCondition().getId()));
+			crash.setSurfaceCondition(surfaceConditionManager.get(crash
+					.getSurfaceCondition().getId()));
 		}
 		if (crash.getSurfaceType() != null) {
-			crash.setSurfaceType(surfaceTypeManager.get(crash.getSurfaceType().getId()));
+			crash.setSurfaceType(surfaceTypeManager.get(crash.getSurfaceType()
+					.getId()));
 		}
 		if (crash.getVehicleFailureType() != null) {
-			crash.setVehicleFailureType(vehicleFailureTypeManager.get(crash.getVehicleFailureType().getId()));
+			crash.setVehicleFailureType(vehicleFailureTypeManager.get(crash
+					.getVehicleFailureType().getId()));
 		}
 		if (crash.getWeather() != null) {
 			crash.setWeather(weatherManager.get(crash.getWeather().getId()));
 		}
 	}
-	
+
 	private void setDriverParams(Driver driver) {
 		if (driver.getCasualtyType() != null) {
-			driver.setCasualtyType(casualtyTypeManager.get(driver.getCasualtyType().getId()));
+			driver.setCasualtyType(casualtyTypeManager.get(driver
+					.getCasualtyType().getId()));
 		}
 	}
-	
+
 	private void setVehicleParams(Vehicle vehicle) {
 		if (vehicle.getVehicleType() != null) {
-			vehicle.setVehicleType(vehicleTypeManager.get(vehicle.getVehicleType().getId()));
+			vehicle.setVehicleType(vehicleTypeManager.get(vehicle
+					.getVehicleType().getId()));
 		}
 	}
-	
+
+	private void setCasualtyParams(Casualty casualty) {
+		if (casualty.getCasualtyClass() != null) {
+			casualty.setCasualtyClass(casualtyClassManager.get(casualty
+					.getCasualtyClass().getId()));
+		}
+		if (casualty.getCasualtyType() != null) {
+			casualty.setCasualtyType(casualtyTypeManager.get(casualty
+					.getCasualtyClass().getId()));
+		}
+
+	}
+
 	@Override
 	@SuppressWarnings("rawtypes")
 	public Map<String, List> getReferenceData() {
 		Map<String, List> referenceData = new HashMap<String, List>();
-		//Add reference data to map for use in the UI
-		List<CrashSeverity> crashSeverities = crashSeverityManager.getAllDistinct();
-		List<CollisionType> collisionTypes = collisionTypeManager.getAllDistinct();
+		// Add reference data to map for use in the UI
+		List<CrashSeverity> crashSeverities = crashSeverityManager
+				.getAllDistinct();
+		List<CollisionType> collisionTypes = collisionTypeManager
+				.getAllDistinct();
 		List<CrashCause> crashCauses = crashCauseManager.getAllDistinct();
-		List<VehicleFailureType> vehicleFailureTypes = vehicleFailureTypeManager.getAllDistinct();
+		List<VehicleFailureType> vehicleFailureTypes = vehicleFailureTypeManager
+				.getAllDistinct();
 		List<Weather> weathers = weatherManager.getAllDistinct();
-		List<SurfaceCondition> surfaceConditions = surfaceConditionManager.getAllDistinct();
+		List<SurfaceCondition> surfaceConditions = surfaceConditionManager
+				.getAllDistinct();
 		List<RoadSurface> roadSurfaces = roadSurfaceManager.getAllDistinct();
 		List<SurfaceType> surfaceTypes = surfaceTypeManager.getAllDistinct();
-		List<RoadwayCharacter> roadwayCharacters = roadwayCharacterManager.getAllDistinct();
+		List<RoadwayCharacter> roadwayCharacters = roadwayCharacterManager
+				.getAllDistinct();
 		List<JunctionType> junctionTypes = junctionTypeManager.getAllDistinct();
-		List<PoliceStation> policeStations = policeStationManager.getAllDistinct();
+		List<PoliceStation> policeStations = policeStationManager
+				.getAllDistinct();
 		List<District> districts = districtManager.getAllDistinct();
 		List<VehicleType> vehicleTypes = vehicleTypeManager.getAllDistinct();
 		List<CasualtyType> casualtyTypes = casualtyTypeManager.getAllDistinct();
-		List<CasualtyClass> casualtyClasses = casualtyClassManager.getAllDistinct();
+		List<CasualtyClass> casualtyClasses = casualtyClassManager
+				.getAllDistinct();
 
 		referenceData.put("crashSeverities", crashSeverities);
 		referenceData.put("collisionTypes", collisionTypes);
@@ -205,7 +258,7 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
 		referenceData.put("vehicleTypes", vehicleTypes);
 		referenceData.put("casualtyTypes", casualtyTypes);
 		referenceData.put("casualtyClasses", casualtyClasses);
-		
+
 		return referenceData;
 	}
 }

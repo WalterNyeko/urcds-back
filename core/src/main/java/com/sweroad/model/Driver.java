@@ -11,27 +11,28 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-@Entity(name="driver")
+@Entity(name = "driver")
 public class Driver extends BaseModel {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2725420586814515518L;
-	
-	@Id @GeneratedValue(strategy = GenerationType.AUTO)
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@Column(name = "license_valid")
 	private Boolean licenseValid;
 	@Column(name = "license_number")
 	private String licenseNumber;
 	@Column(name = "gender")
-	private String Gender;
+	private String gender;
 	@Column(name = "age")
-	private Integer Age;
+	private Integer age;
 	@Column(name = "belt_used")
-	private Boolean beltUsed;	
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	private Boolean beltUsed;
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "casualty_type_id", nullable = false)
 	private CasualtyType casualtyType;
 	@Column(name = "date_created", nullable = false)
@@ -53,7 +54,8 @@ public class Driver extends BaseModel {
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(Long id) {
 		this.id = id;
@@ -67,7 +69,8 @@ public class Driver extends BaseModel {
 	}
 
 	/**
-	 * @param licenseNumber the licenseNumber to set
+	 * @param licenseNumber
+	 *            the licenseNumber to set
 	 */
 	public void setLicenseNumber(String licenseNumber) {
 		this.licenseNumber = licenseNumber;
@@ -77,28 +80,30 @@ public class Driver extends BaseModel {
 	 * @return the gender
 	 */
 	public String getGender() {
-		return Gender;
+		return gender;
 	}
 
 	/**
-	 * @param gender the gender to set
+	 * @param gender
+	 *            the gender to set
 	 */
 	public void setGender(String gender) {
-		Gender = gender;
+		this.gender = gender;
 	}
 
 	/**
 	 * @return the age
 	 */
 	public Integer getAge() {
-		return Age;
+		return age;
 	}
 
 	/**
-	 * @param age the age to set
+	 * @param age
+	 *            the age to set
 	 */
 	public void setAge(Integer age) {
-		Age = age;
+		this.age = age;
 	}
 
 	/**
@@ -109,7 +114,8 @@ public class Driver extends BaseModel {
 	}
 
 	/**
-	 * @param beltUsed the beltUsed to set
+	 * @param beltUsed
+	 *            the beltUsed to set
 	 */
 	public void setBeltUsed(Boolean beltUsed) {
 		this.beltUsed = beltUsed;
@@ -121,9 +127,10 @@ public class Driver extends BaseModel {
 	public Boolean getLicenseValid() {
 		return licenseValid;
 	}
-	
+
 	/**
-	 * @param licenseValid the licenseValid to set
+	 * @param licenseValid
+	 *            the licenseValid to set
 	 */
 	public void setLicenseValid(Boolean licenseValid) {
 		this.licenseValid = licenseValid;
@@ -137,12 +144,13 @@ public class Driver extends BaseModel {
 	}
 
 	/**
-	 * @param casualtyType the casualtyType to set
+	 * @param casualtyType
+	 *            the casualtyType to set
 	 */
 	public void setCasualtyType(CasualtyType casualtyType) {
 		this.casualtyType = casualtyType;
 	}
-	
+
 	/**
 	 * @return the dateCreated
 	 */
@@ -151,7 +159,8 @@ public class Driver extends BaseModel {
 	}
 
 	/**
-	 * @param dateCreated the dateCreated to set
+	 * @param dateCreated
+	 *            the dateCreated to set
 	 */
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
@@ -165,7 +174,8 @@ public class Driver extends BaseModel {
 	}
 
 	/**
-	 * @param dateUpdated the dateUpdated to set
+	 * @param dateUpdated
+	 *            the dateUpdated to set
 	 */
 	public void setDateUpdated(Date dateUpdated) {
 		this.dateUpdated = dateUpdated;
@@ -179,7 +189,8 @@ public class Driver extends BaseModel {
 	}
 
 	/**
-	 * @param createdBy the createdBy to set
+	 * @param createdBy
+	 *            the createdBy to set
 	 */
 	public void setCreatedBy(User createdBy) {
 		this.createdBy = createdBy;
@@ -193,7 +204,8 @@ public class Driver extends BaseModel {
 	}
 
 	/**
-	 * @param updatedBy the updatedBy to set
+	 * @param updatedBy
+	 *            the updatedBy to set
 	 */
 	public void setUpdatedBy(User updatedBy) {
 		this.updatedBy = updatedBy;
@@ -207,15 +219,25 @@ public class Driver extends BaseModel {
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Driver)) {
-            return false;
-        }
-
-        final Driver driver = (Driver) o;
-
-        return driver != null && id != null ? id.equals(driver.getId()) : false;
+			return true;
+		}
+		if (!(o instanceof Driver)) {
+			return false;
+		}
+		final Driver driver = (Driver) o;
+		if (driver != null) {
+			if (id != null && id.equals(driver.getId())) {
+				return true;
+			}
+			if (licenseNumber != null && licenseNumber.equals(driver.licenseNumber)) {
+				if (age != null && age.equals(driver.getAge())){
+					if(gender != null && gender.equals(driver.getGender())){
+						return true;
+					}
+				}				
+			}
+		}
+		return false;
 	}
 
 	@Override

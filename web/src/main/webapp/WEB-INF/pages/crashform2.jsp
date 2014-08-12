@@ -1,185 +1,192 @@
 <%@ include file="/common/taglibs.jsp"%>
 <head>
-	<title><fmt:message key="crashForm.title"/></title>
-	<meta name="menue" content="CrashMenu"/>
+<title><fmt:message key="crashForm.title" /></title>
+<meta name="menue" content="CrashMenu" />
 </head>
 <div class="col-sm-2">
-	<h2><fmt:message key="crashForm.heading"/></h2>
+	<h2>
+		<fmt:message key="crashForm.heading" />
+	</h2>
+	<p>
+		<appfuse:label styleClass="control-label" key="crashForm.tarNo" />
+		: ${crash.tarNo}
+	</p>
 </div>
 <div class="col-sm-10">
-	<form:form commandName="crash" method="post" action="/crashformsubmit" id="crashform" autocomplete="off" cssClass="well" onsubmit="return validateCrash(this)">
+	<form:form commandName="crash" method="post" action="/crashformsubmit"
+		id="crashform" autocomplete="off" cssClass="well"
+		onsubmit="return validateCrash(this)">
 		<div class="col-sm-15">
 			<table cellpadding="4" width="100%">
-				<c:if test="${crash.vehicles ne null }">				
-					<c:forEach var="vehicle" items="${crash.vehicles}" varStatus="status">
+				<c:if test="${crash.vehicles ne null }">
+					<c:forEach var="vehicle" items="${crash.vehicles}"
+						varStatus="status">
 						<tr>
-							<td width="25%" valign="top">
+							<td width="25%" valign="top"><c:if
+									test="${status.index > 0}">
+									<br />
+								</c:if>
 								<table width="100%" class="crashform-gray">
 									<tr>
-										<th>
-											<appfuse:label styleClass="control-label" key="crash.vehicle"/>&nbsp;${vehicle.number}
-										</th>
+										<th><appfuse:label styleClass="control-label"
+												key="crash.vehicle" />&nbsp;${vehicle.number}</th>
 									</tr>
 									<tr>
 										<td width="100%">
 											<table width="100%" class="crashform-blue">
 												<tr>
-													<td colspan="2">
-														<appfuse:label styleClass="control-label" key="crashForm.vehicleType"/>
-													</td>
+													<th><appfuse:label styleClass="control-label"
+															key="crashForm.vehicleType" /></th>
 												</tr>
 												<tr>
-													<td width="50%" style="border-left: none; border-bottom: none">
-														${vehicle.vehicleType.name} 
-													</td>
+													<td width="100%"
+														style="border-left: none; border-bottom: none">
+														${vehicle.vehicleType.name}</td>
 												</tr>
 											</table>
 										</td>
 									</tr>
-								</table>
-							</td>
-							<td width="75%" valign="top">
+								</table></td>
+							<td width="75%" valign="top"><c:if
+									test="${status.index > 0}">
+									<br />
+								</c:if>
 								<table width="100%" class="crashform-gray">
 									<tr>
-										<th>
-											<appfuse:label styleClass="control-label" key="crash.driver"/>&nbsp;${vehicle.number}
-										</th>
+										<th><appfuse:label styleClass="control-label"
+												key="crash.driver" />&nbsp;${vehicle.number}</th>
 									</tr>
 									<tr>
 										<td width="100%">
 											<table width="100%" class="crashform-blue">
 												<tr>
-													<th width="30%"><appfuse:label styleClass="control-label" key="crashForm.licenseType"/></th>
-													<th width="15%"><appfuse:label styleClass="control-label" key="crashForm.driverSex"/></th>
-													<th width="15%"><appfuse:label styleClass="control-label" key="crashForm.driverAge"/></th>
-													<th width="15%"><appfuse:label styleClass="control-label" key="crashForm.driverBeltUsed"/></th>
-													<th width="25%"><appfuse:label styleClass="control-label" key="crashForm.driverCasualty"/></th>
+													<th width="30%"><appfuse:label
+															styleClass="control-label" key="crashForm.licenseType" /></th>
+													<th width="15%"><appfuse:label
+															styleClass="control-label" key="crashForm.driverSex" /></th>
+													<th width="15%"><appfuse:label
+															styleClass="control-label" key="crashForm.driverAge" /></th>
+													<th width="15%"><appfuse:label
+															styleClass="control-label" key="crashForm.driverBeltUsed" /></th>
+													<th width="25%"><appfuse:label
+															styleClass="control-label" key="crashForm.driverCasualty" /></th>
 												</tr>
 												<tr>
-													<td>
-														<input type="radio" name="licenseType" ${vehicle.driver ne null and vehicle.driver.licenseValid ne null and vehicle.driver.licenseValid eq true ? "checked" : ""}/><appfuse:label styleClass="form-label" key="rcds.validLicense"/>
-													</td>
-													<td>
-														<input type="radio" name="gender" ${vehicle.driver ne null and vehicle.driver.gender ne null and vehicle.driver.gender eq "M" ? "checked" : ""}/><appfuse:label styleClass="form-label" key="rcds.male"/>
-													</td>
-													<td>
-														<appfuse:label styleClass="form-label" key="rcds.years"/>
-													</td>
-													<td>
-														<input type="radio" name="beltUsed" ${vehicle.driver ne null and vehicle.driver.beltUsed ne null and vehicle.driver.beltUsed eq true ? "checked" : ""}/><appfuse:label styleClass="form-label" key="rcds.yes"/>
-													</td>
-													<td rowspan="4">
-														<c:forEach var="casualtyType" items="${casualtyTypes}">
-															<form:radiobutton path="vehicles[${status.index}].driver.casualtyType.id" value="${casualtyType.id}"/>&nbsp;&nbsp;${casualtyType.name}<br/>
-														</c:forEach>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<form:input cssClass="form-control" path="vehicles[${status.index}].driver.licenseNumber" id="licenseNumber"/>
-													</td>
-													<td>
-														<input type="radio" name="gender" ${vehicle.driver ne null and vehicle.driver.gender ne null and vehicle.driver.gender eq "F" ? "checked" : ""}/><appfuse:label styleClass="form-label" key="rcds.female"/>
-													</td>
-													<td>
-														<form:input cssClass="form-control" path="vehicles[${status.index}].driver.age" id="age"/>
-													</td>
-													<td>
-														<input type="radio" name="beltUsed" ${vehicle.driver ne null and vehicle.driver.beltUsed ne null and vehicle.driver.beltUsed eq false ? "checked" : ""}/><appfuse:label styleClass="form-label" key="rcds.no"/>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<input type="radio" name="licenseType" ${vehicle.driver ne null and vehicle.driver.licenseValid ne null and vehicle.driver.licenseValid eq false ? "checked" : ""}/><appfuse:label styleClass="form-label" key="rcds.noValidLicense"/>
-													</td>
-													<td>
-														<input type="radio" name="gender" ${vehicle.driver ne null and vehicle.driver.gender eq null ? "checked" : ""}/><appfuse:label styleClass="form-label" key="rcds.unknown"/>
-													</td>
-													<td>
-														&nbsp;
-													</td>
-													<td>
-														<input type="radio" name="beltUsed" ${vehicle.driver ne null and vehicle.driver.beltUsed eq null ? "checked" : ""}/><appfuse:label styleClass="form-label" key="rcds.unknown"/>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<input type="radio" name="licenseType" ${vehicle.driver ne null and vehicle.driver.licenseValid eq null ? "checked" : ""}/><appfuse:label styleClass="form-label" key="rcds.unknown"/>
-													</td>
-													<td>&nbsp;</td>
-													<td>&nbsp;</td>
-													<td>&nbsp;</td>
+													<td><c:choose>
+															<c:when
+																test="${vehicle.driver ne null and vehicle.driver.licenseValid ne null and vehicle.driver.licenseValid eq true}">
+																<appfuse:label styleClass="form-label"
+																	key="rcds.validLicense" />
+																<br />
+																<i><appfuse:label styleClass="form-label"
+																		key="crash.licenseNumber" />:&nbsp;&nbsp;${vehicle.driver.licenseNumber}</i>
+															</c:when>
+															<c:when
+																test="${vehicle.driver ne null and vehicle.driver.licenseValid ne null and vehicle.driver.licenseValid eq false}">
+																<appfuse:label styleClass="form-label"
+																	key="rcds.noValidLicense" />
+															</c:when>
+															<c:otherwise>
+																<appfuse:label styleClass="form-label"
+																	key="rcds.unknown" />
+															</c:otherwise>
+														</c:choose></td>
+													<td><c:choose>
+															<c:when
+																test="${vehicle.driver ne null and vehicle.driver.gender ne null and vehicle.driver.gender eq 'M'}">
+																<appfuse:label styleClass="form-label" key="rcds.male" />
+															</c:when>
+															<c:when
+																test="${vehicle.driver ne null and vehicle.driver.gender ne null and vehicle.driver.gender eq 'F'}">
+																<appfuse:label styleClass="form-label" key="rcds.female" />
+															</c:when>
+															<c:otherwise>
+																<appfuse:label styleClass="form-label"
+																	key="rcds.unknown" />
+															</c:otherwise>
+														</c:choose></td>
+													<td align="right">${vehicle.driver.age}</td>
+													<td><c:choose>
+															<c:when
+																test="${vehicle.driver ne null and vehicle.driver.beltUsed ne null and vehicle.driver.beltUsed eq true}">
+																<appfuse:label styleClass="form-label" key="rcds.yes" />
+															</c:when>
+															<c:when
+																test="${vehicle.driver ne null and vehicle.driver.beltUsed ne null and vehicle.driver.beltUsed eq false}">
+																<appfuse:label styleClass="form-label" key="rcds.no" />
+															</c:when>
+															<c:otherwise>
+																<appfuse:label styleClass="form-label"
+																	key="rcds.unknown" />
+															</c:otherwise>
+														</c:choose></td>
+													<td rowspan="4"><c:if
+															test="${vehicle.driver ne null and vehicle.driver.casualtyType ne night }">
+															${vehicle.driver.casualtyType.name}
+														</c:if></td>
 												</tr>
 											</table>
 										</td>
 									</tr>
-								</table>
-							</td>
-						</tr>	
+								</table></td>
+						</tr>
 						<tr>
-							<td colspan="2" style="color: #000;">
-								<appfuse:label styleClass="form-label" key="crashForm.driverIfHeavyOminbus"/>:&nbsp;&nbsp;
-								${vehicle.companyName}
-							</td>
-						</tr>						
+							<td colspan="2"
+								style="color: #000; border-bottom: 1px solid #000;"><appfuse:label
+									styleClass="form-label" key="crashForm.driverIfHeavyOminbus" />:&nbsp;&nbsp;
+								${vehicle.companyName}</td>
+						</tr>
 					</c:forEach>
 				</c:if>
 				<tr>
-					<td>
-						<a href="/crashformvehicle">
-					        <i class="icon-ok"></i> 
-					        <fmt:message key="button.addVehicle"/>
-				        </a>
-					</td>
+					<td><a href="/crashformvehicle"> <i class="icon-ok"></i> <fmt:message
+								key="button.addVehicle" />
+					</a></td>
 				</tr>
-				<c:if test="${crash.casualties ne null}">					
+				<c:if
+					test="${crash.casualties ne null and not empty crash.casualties}">
 					<tr>
 						<td colspan="2">
 							<table width="100%" class="crashform-gray">
 								<tr>
-									<th width="100%">
-										<appfuse:label styleClass="control-label" key="crash.pedestrianAndPassengerCasualties"/>
-									</th>
+									<th width="100%"><appfuse:label styleClass="control-label"
+											key="crash.pedestrianAndPassengerCasualties" /></th>
 								</tr>
 								<tr>
 									<td width="100%">
 										<table width="100%" class="crashform-blue">
 											<tr>
-												<th><appfuse:label styleClass="control-label" key="crashForm.victim"/></th>
-												<th><appfuse:label styleClass="control-label" key="crashForm.pedestrianOrPassengerCasualty"/></th>
-												<th><appfuse:label styleClass="control-label" key="crashForm.pedestrianOrPassengerSex"/></th>
-												<th><appfuse:label styleClass="control-label" key="crashForm.pedestrianOrPassengerAge"/></th>
-												<th><appfuse:label styleClass="control-label" key="crashForm.pedestrianOrPassengerClass"/></th>
-												<th><appfuse:label styleClass="control-label" key="crashForm.passengerVehicleNo"/></th>
-												<th><appfuse:label styleClass="control-label" key="crashForm.passengerBeltUsed"/></th>
+												<th><appfuse:label styleClass="control-label"
+														key="crashForm.victim" /></th>
+												<th><appfuse:label styleClass="control-label"
+														key="crashForm.pedestrianOrPassengerCasualty" /></th>
+												<th><appfuse:label styleClass="control-label"
+														key="crashForm.pedestrianOrPassengerSex" /></th>
+												<th><appfuse:label styleClass="control-label"
+														key="crashForm.pedestrianOrPassengerAge" /></th>
+												<th><appfuse:label styleClass="control-label"
+														key="crashForm.pedestrianOrPassengerClass" /></th>
+												<th><appfuse:label styleClass="control-label"
+														key="crashForm.passengerVehicleNo" /></th>
+												<th><appfuse:label styleClass="control-label"
+														key="crashForm.passengerBeltUsed" /></th>
 											</tr>
-											<c:forEach var="casualty" items="${crash.casualties}" varStatus="status">
+											<c:forEach var="casualty" items="${crash.casualties}"
+												varStatus="status">
 												<tr>
-													<td>
-														<appfuse:label styleClass="form-label" key="crash.person"/>&nbsp;${status.index + 1}
-													</td>
-													<td>
-														${casualty.casualtyType.name}
-													</td>
-													<td>
-														${casualty.gender}
-													</td>
-													<td align="right">
-														${casualty.age}
-													</td>
-													<td>
-														${casualty.casualtyClass.name}
-													</td>
-													<td>
-														<c:if test="${casualty.vehicle ne null}">
-															${casualty.vehicle.number}
-														</c:if>														
-													</td>
-													<td>
-														<c:if test="${casualty.beltOrHelmetUsed ne null}">
+													<td><appfuse:label styleClass="form-label"
+															key="crash.person" />&nbsp;${status.index + 1}</td>
+													<td>${casualty.casualtyType.name}</td>
+													<td>${casualty.gender}</td>
+													<td align="right">${casualty.age}</td>
+													<td>${casualty.casualtyClass.name}</td>
+													<td><c:if test="${casualty.vehicle ne null}">
+															<appfuse:label styleClass="form-label"
+																key="crash.vehicle" />&nbsp;${casualty.vehicle.number}
+														</c:if></td>
+													<td><c:if test="${casualty.beltOrHelmetUsed ne null}">
 															${casualty.beltOrHelmetUsed eq true ? "Yes" : "No"}
-														</c:if>														
-													</td>
+														</c:if></td>
 												</tr>
 											</c:forEach>
 										</table>
@@ -190,23 +197,27 @@
 					</tr>
 				</c:if>
 				<tr>
-					<td>
-						<a href="/crashformcasualty">
-					        <i class="icon-ok"></i> 
-					        <fmt:message key="button.addCasualty"/>
-				        </a>
-					</td>
+					<td><a href="/crashformcasualty"> <i class="icon-ok"></i>
+							<fmt:message key="button.addCasualty" />
+					</a></td>
 					<td></td>
 				</tr>
 				<tr>
-					<td></td>
-					<td align="right">
-						<a class="btn btn-primary" href="/crashformsubmit">
-					        <i class="icon-ok"></i> 
-					        <fmt:message key="button.saveCrashData"/>
-				        </a>
+					<td>
+						<a class="btn btn-default" href="/crashform?id=${crash.id}&back=true"> 
+							<i class="icon-ok"></i>
+							<fmt:message key="button.back" />
+						</a>
 					</td>
-				</tr>				
+					<td align="right">
+						<c:if test="${crash.id eq 0 }">
+							<a class="btn btn-primary" href="/crashformsubmit">
+								<i class="icon-ok"></i> 
+								<fmt:message key="button.saveCrashData" />
+							</a>
+						</c:if>
+					</td>
+				</tr>
 			</table>
 		</div>
 	</form:form>

@@ -25,21 +25,21 @@ import org.hibernate.annotations.FetchMode;
 
 /**
  * @author Frank
- *
+ * 
  */
 @Entity(name = "crash")
 public class Crash extends BaseModel {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2144213374837809344L;
-	
-	@Id @GeneratedValue(strategy = GenerationType.AUTO)
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@Column(name = "tar_no", nullable = false)
 	private String tarNo;
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, optional = false)
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, optional = false)
 	@JoinColumn(name = "police_station_id", nullable = false)
 	private PoliceStation policeStation;
 	@Column(name = "town_or_village", nullable = false)
@@ -53,54 +53,46 @@ public class Crash extends BaseModel {
 	@Column(name = "crash_date_time")
 	private Date crashDateTime;
 	private String crashDateTimeString;
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "gps_coordinate_id")
 	private GpsCoordinate gpsCoordinate;
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "crash_severity_id")
 	private CrashSeverity crashSeverity;
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "collision_type_id")
 	private CollisionType collisionType;
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "main_crash_cause_id")
 	private CrashCause mainCrashCause;
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "vehicle_failure_type_id")
 	private VehicleFailureType vehicleFailureType;
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "weather_id")
 	private Weather weather;
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "surface_condition_id")
 	private SurfaceCondition surfaceCondition;
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "road_surface_id")
 	private RoadSurface roadSurface;
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "surface_type_id")
 	private SurfaceType surfaceType;
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "roadway_character_id")
 	private RoadwayCharacter roadwayCharacter;
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "junction_type_id")
 	private JunctionType junctionType;
-	@OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    @Fetch(FetchMode.SELECT)    
-    @JoinTable(
-            name = "crash_vehicle",
-            joinColumns = { @JoinColumn(name = "crash_id", referencedColumnName = "id") },
-            inverseJoinColumns = @JoinColumn(name = "vehicle_id", referencedColumnName = "id")
-    )
+	@OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	@Fetch(FetchMode.SELECT)
+	@JoinTable(name = "crash_vehicle", joinColumns = { @JoinColumn(name = "crash_id", referencedColumnName = "id") }, inverseJoinColumns = @JoinColumn(name = "vehicle_id", referencedColumnName = "id"))
 	private List<Vehicle> vehicles = new ArrayList<Vehicle>();
-	@OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    @Fetch(FetchMode.SELECT)    
-    @JoinTable(
-            name = "crash_casualty",
-            joinColumns = { @JoinColumn(name = "crash_id", referencedColumnName = "id") },
-            inverseJoinColumns = @JoinColumn(name = "casualty_id", referencedColumnName = "id")
-    )
+	@OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	@Fetch(FetchMode.SELECT)
+	@JoinTable(name = "crash_casualty", joinColumns = { @JoinColumn(name = "crash_id", referencedColumnName = "id") }, inverseJoinColumns = @JoinColumn(name = "casualty_id", referencedColumnName = "id"))
 	private List<Casualty> casualties = new ArrayList<Casualty>();
 	@Column(name = "reporting_officer_name")
 	private String reportingOfficerName;
@@ -124,7 +116,7 @@ public class Crash extends BaseModel {
 	@ManyToOne
 	@JoinColumn(name = "updated_by")
 	private User updatedBy;
-	
+
 	/**
 	 * @return the casualties
 	 */
@@ -133,7 +125,8 @@ public class Crash extends BaseModel {
 	}
 
 	/**
-	 * @param casualties the casualties to set
+	 * @param casualties
+	 *            the casualties to set
 	 */
 	public void setCasualties(List<Casualty> casualties) {
 		this.casualties = casualties;
@@ -147,7 +140,8 @@ public class Crash extends BaseModel {
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(Long id) {
 		this.id = id;
@@ -161,7 +155,8 @@ public class Crash extends BaseModel {
 	}
 
 	/**
-	 * @param tarNo the tarNo to set
+	 * @param tarNo
+	 *            the tarNo to set
 	 */
 	public void setTarNo(String tarNo) {
 		this.tarNo = tarNo;
@@ -175,7 +170,8 @@ public class Crash extends BaseModel {
 	}
 
 	/**
-	 * @param policeStation the policeStation to set
+	 * @param policeStation
+	 *            the policeStation to set
 	 */
 	public void setPoliceStation(PoliceStation policeStation) {
 		this.policeStation = policeStation;
@@ -189,7 +185,8 @@ public class Crash extends BaseModel {
 	}
 
 	/**
-	 * @param townOrVillage the townOrVillage to set
+	 * @param townOrVillage
+	 *            the townOrVillage to set
 	 */
 	public void setTownOrVillage(String townOrVillage) {
 		this.townOrVillage = townOrVillage;
@@ -203,7 +200,8 @@ public class Crash extends BaseModel {
 	}
 
 	/**
-	 * @param road the road to set
+	 * @param road
+	 *            the road to set
 	 */
 	public void setRoad(String road) {
 		this.road = road;
@@ -217,7 +215,8 @@ public class Crash extends BaseModel {
 	}
 
 	/**
-	 * @param roadNumber the roadNumber to set
+	 * @param roadNumber
+	 *            the roadNumber to set
 	 */
 	public void setRoadNumber(String roadNumber) {
 		this.roadNumber = roadNumber;
@@ -231,7 +230,8 @@ public class Crash extends BaseModel {
 	}
 
 	/**
-	 * @param crashPlace the crashPlace to set
+	 * @param crashPlace
+	 *            the crashPlace to set
 	 */
 	public void setCrashPlace(String crashPlace) {
 		this.crashPlace = crashPlace;
@@ -245,7 +245,8 @@ public class Crash extends BaseModel {
 	}
 
 	/**
-	 * @param crashDateTime the crashDateTime to set
+	 * @param crashDateTime
+	 *            the crashDateTime to set
 	 */
 	public void setCrashDateTime(Date crashDateTime) {
 		this.crashDateTime = crashDateTime;
@@ -259,7 +260,8 @@ public class Crash extends BaseModel {
 	}
 
 	/**
-	 * @param crashDateTimeString the crashDateTimeString to set
+	 * @param crashDateTimeString
+	 *            the crashDateTimeString to set
 	 */
 	public void setCrashDateTimeString(String crashDateTimeString) {
 		this.crashDateTimeString = crashDateTimeString;
@@ -273,7 +275,8 @@ public class Crash extends BaseModel {
 	}
 
 	/**
-	 * @param gpsCoordinate the gpsCoordinate to set
+	 * @param gpsCoordinate
+	 *            the gpsCoordinate to set
 	 */
 	public void setGpsCoordinate(GpsCoordinate gpsCoordinate) {
 		this.gpsCoordinate = gpsCoordinate;
@@ -287,7 +290,8 @@ public class Crash extends BaseModel {
 	}
 
 	/**
-	 * @param crashSeverity the crashSeverity to set
+	 * @param crashSeverity
+	 *            the crashSeverity to set
 	 */
 	public void setCrashSeverity(CrashSeverity crashSeverity) {
 		this.crashSeverity = crashSeverity;
@@ -301,7 +305,8 @@ public class Crash extends BaseModel {
 	}
 
 	/**
-	 * @param collisionType the collisionType to set
+	 * @param collisionType
+	 *            the collisionType to set
 	 */
 	public void setCollisionType(CollisionType collisionType) {
 		this.collisionType = collisionType;
@@ -315,7 +320,8 @@ public class Crash extends BaseModel {
 	}
 
 	/**
-	 * @param mainCrashCause the mainCrashCause to set
+	 * @param mainCrashCause
+	 *            the mainCrashCause to set
 	 */
 	public void setMainCrashCause(CrashCause mainCrashCause) {
 		this.mainCrashCause = mainCrashCause;
@@ -329,7 +335,8 @@ public class Crash extends BaseModel {
 	}
 
 	/**
-	 * @param vehicleFailureType the vehicleFailureType to set
+	 * @param vehicleFailureType
+	 *            the vehicleFailureType to set
 	 */
 	public void setVehicleFailureType(VehicleFailureType vehicleFailureType) {
 		this.vehicleFailureType = vehicleFailureType;
@@ -343,7 +350,8 @@ public class Crash extends BaseModel {
 	}
 
 	/**
-	 * @param weather the weather to set
+	 * @param weather
+	 *            the weather to set
 	 */
 	public void setWeather(Weather weather) {
 		this.weather = weather;
@@ -357,7 +365,8 @@ public class Crash extends BaseModel {
 	}
 
 	/**
-	 * @param surfaceCondition the surfaceCondition to set
+	 * @param surfaceCondition
+	 *            the surfaceCondition to set
 	 */
 	public void setSurfaceCondition(SurfaceCondition surfaceCondition) {
 		this.surfaceCondition = surfaceCondition;
@@ -371,7 +380,8 @@ public class Crash extends BaseModel {
 	}
 
 	/**
-	 * @param roadSurface the roadSurface to set
+	 * @param roadSurface
+	 *            the roadSurface to set
 	 */
 	public void setRoadSurface(RoadSurface roadSurface) {
 		this.roadSurface = roadSurface;
@@ -385,7 +395,8 @@ public class Crash extends BaseModel {
 	}
 
 	/**
-	 * @param surfaceType the surfaceType to set
+	 * @param surfaceType
+	 *            the surfaceType to set
 	 */
 	public void setSurfaceType(SurfaceType surfaceType) {
 		this.surfaceType = surfaceType;
@@ -399,7 +410,8 @@ public class Crash extends BaseModel {
 	}
 
 	/**
-	 * @param roadwayCharacter the roadwayCharacter to set
+	 * @param roadwayCharacter
+	 *            the roadwayCharacter to set
 	 */
 	public void setRoadwayCharacter(RoadwayCharacter roadwayCharacter) {
 		this.roadwayCharacter = roadwayCharacter;
@@ -413,7 +425,8 @@ public class Crash extends BaseModel {
 	}
 
 	/**
-	 * @param junctionType the junctionType to set
+	 * @param junctionType
+	 *            the junctionType to set
 	 */
 	public void setJunctionType(JunctionType junctionType) {
 		this.junctionType = junctionType;
@@ -427,7 +440,8 @@ public class Crash extends BaseModel {
 	}
 
 	/**
-	 * @param crashVehicles the crashVehicles to set
+	 * @param crashVehicles
+	 *            the crashVehicles to set
 	 */
 	public void setVehicles(List<Vehicle> vehicles) {
 		this.vehicles = vehicles;
@@ -441,7 +455,8 @@ public class Crash extends BaseModel {
 	}
 
 	/**
-	 * @param reportingOfficerName the reportingOfficerName to set
+	 * @param reportingOfficerName
+	 *            the reportingOfficerName to set
 	 */
 	public void setReportingOfficerName(String reportingOfficerName) {
 		this.reportingOfficerName = reportingOfficerName;
@@ -455,7 +470,8 @@ public class Crash extends BaseModel {
 	}
 
 	/**
-	 * @param reportingOfficerRank the reportingOfficerRank to set
+	 * @param reportingOfficerRank
+	 *            the reportingOfficerRank to set
 	 */
 	public void setReportingOfficerRank(String reportingOfficerRank) {
 		this.reportingOfficerRank = reportingOfficerRank;
@@ -469,7 +485,8 @@ public class Crash extends BaseModel {
 	}
 
 	/**
-	 * @param reportingDate the reportingDate to set
+	 * @param reportingDate
+	 *            the reportingDate to set
 	 */
 	public void setReportingDate(Date reportingDate) {
 		this.reportingDate = reportingDate;
@@ -483,7 +500,8 @@ public class Crash extends BaseModel {
 	}
 
 	/**
-	 * @param supervisingOfficerName the supervisingOfficerName to set
+	 * @param supervisingOfficerName
+	 *            the supervisingOfficerName to set
 	 */
 	public void setSupervisingOfficerName(String supervisingOfficerName) {
 		this.supervisingOfficerName = supervisingOfficerName;
@@ -497,7 +515,8 @@ public class Crash extends BaseModel {
 	}
 
 	/**
-	 * @param supervisingOfficerRank the supervisingOfficerRank to set
+	 * @param supervisingOfficerRank
+	 *            the supervisingOfficerRank to set
 	 */
 	public void setSupervisingOfficerRank(String supervisingOfficerRank) {
 		this.supervisingOfficerRank = supervisingOfficerRank;
@@ -511,7 +530,8 @@ public class Crash extends BaseModel {
 	}
 
 	/**
-	 * @param supervisingDate the supervisingDate to set
+	 * @param supervisingDate
+	 *            the supervisingDate to set
 	 */
 	public void setSupervisingDate(Date supervisingDate) {
 		this.supervisingDate = supervisingDate;
@@ -525,7 +545,8 @@ public class Crash extends BaseModel {
 	}
 
 	/**
-	 * @param dateCreated the dateCreated to set
+	 * @param dateCreated
+	 *            the dateCreated to set
 	 */
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
@@ -539,7 +560,8 @@ public class Crash extends BaseModel {
 	}
 
 	/**
-	 * @param dateUpdated the dateUpdated to set
+	 * @param dateUpdated
+	 *            the dateUpdated to set
 	 */
 	public void setDateUpdated(Date dateUpdated) {
 		this.dateUpdated = dateUpdated;
@@ -553,7 +575,8 @@ public class Crash extends BaseModel {
 	}
 
 	/**
-	 * @param createdBy the createdBy to set
+	 * @param createdBy
+	 *            the createdBy to set
 	 */
 	public void setCreatedBy(User createdBy) {
 		this.createdBy = createdBy;
@@ -567,31 +590,32 @@ public class Crash extends BaseModel {
 	}
 
 	/**
-	 * @param updatedBy the updatedBy to set
+	 * @param updatedBy
+	 *            the updatedBy to set
 	 */
 	public void setUpdatedBy(User updatedBy) {
 		this.updatedBy = updatedBy;
 	}
-	
+
 	public void addCasualty(Casualty casualty) {
 		casualties.add(casualty);
 	}
-	
+
 	public void addVehicle(Vehicle vehicle) {
 		vehicles.add(vehicle);
 	}
-	
+
 	public int getCasualtyCount() {
 		return casualties.size();
 	}
-	
+
 	public int getVehicleCount() {
 		return vehicles.size();
 	}
-	
+
 	public String getCrashDisplayDate() {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-		return sdf.format(crashDateTime); 
+		return sdf.format(crashDateTime);
 	}
 
 	@Override
@@ -602,19 +626,17 @@ public class Crash extends BaseModel {
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Crash)) {
-            return false;
-        }
-
-        final Crash crash = (Crash) o;
-
-        return crash != null && id != null ? id.equals(crash.getId()) : false;
+			return true;
+		}
+		if (!(o instanceof Crash)) {
+			return false;
+		}
+		final Crash crash = (Crash) o;
+		return crash != null && id != null ? id.equals(crash.getId()) : false;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return 0;
-	}	
+	}
 }

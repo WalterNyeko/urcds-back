@@ -17,6 +17,7 @@ com/sweroad/webapp/controller/UpdatePasswordController.class
 com/sweroad/webapp/controller/UserFormController.class
 com/sweroad/webapp/spring/ValidatorExtensionPostProcessor.class
 com/sweroad/webapp/controller/CrashFormController.class
+com/sweroad/webapp/util/CrashValidator.class
 com/sweroad/webapp/jsp/EscapeXmlELResolverListener.class
 com/sweroad/webapp/taglib/LabelTag.class
 com/sweroad/webapp/controller/PasswordHintController.class
