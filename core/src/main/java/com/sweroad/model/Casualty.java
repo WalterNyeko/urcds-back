@@ -13,29 +13,30 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="casualty")
+@Table(name = "casualty")
 public class Casualty extends BaseModel {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2725420586814515518L;
-	
-	@Id @GeneratedValue(strategy = GenerationType.AUTO)
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@Column(name = "gender")
 	private String Gender;
 	@Column(name = "age")
 	private Integer Age;
 	@Column(name = "belt_or_helmet_used")
-	private Boolean beltOrHelmetUsed;	
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	private Boolean beltOrHelmetUsed;
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "casualty_type_id", nullable = false)
 	private CasualtyType casualtyType;
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "vehicle_id")
 	private Vehicle vehicle;
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "casualty_class_id", nullable = false)
 	private CasualtyClass casualtyClass;
 	@Column(name = "date_created", nullable = false)
@@ -57,7 +58,8 @@ public class Casualty extends BaseModel {
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(Long id) {
 		this.id = id;
@@ -71,7 +73,8 @@ public class Casualty extends BaseModel {
 	}
 
 	/**
-	 * @param gender the gender to set
+	 * @param gender
+	 *            the gender to set
 	 */
 	public void setGender(String gender) {
 		Gender = gender;
@@ -85,7 +88,8 @@ public class Casualty extends BaseModel {
 	}
 
 	/**
-	 * @param age the age to set
+	 * @param age
+	 *            the age to set
 	 */
 	public void setAge(Integer age) {
 		Age = age;
@@ -99,7 +103,8 @@ public class Casualty extends BaseModel {
 	}
 
 	/**
-	 * @param beltOrHelmetUsed the beltOrHelmetUsed to set
+	 * @param beltOrHelmetUsed
+	 *            the beltOrHelmetUsed to set
 	 */
 	public void setBeltOrHelmetUsed(Boolean beltOrHelmetUsed) {
 		this.beltOrHelmetUsed = beltOrHelmetUsed;
@@ -113,12 +118,13 @@ public class Casualty extends BaseModel {
 	}
 
 	/**
-	 * @param casualtyType the casualtyType to set
+	 * @param casualtyType
+	 *            the casualtyType to set
 	 */
 	public void setCasualtyType(CasualtyType casualtyType) {
 		this.casualtyType = casualtyType;
 	}
-	
+
 	/**
 	 * @return the casualtyClass
 	 */
@@ -127,7 +133,8 @@ public class Casualty extends BaseModel {
 	}
 
 	/**
-	 * @param casualtyClass the casualtyClass to set
+	 * @param casualtyClass
+	 *            the casualtyClass to set
 	 */
 	public void setCasualtyClass(CasualtyClass casualtyClass) {
 		this.casualtyClass = casualtyClass;
@@ -141,7 +148,8 @@ public class Casualty extends BaseModel {
 	}
 
 	/**
-	 * @param vehicle the vehicle to set
+	 * @param vehicle
+	 *            the vehicle to set
 	 */
 	public void setVehicle(Vehicle vehicle) {
 		this.vehicle = vehicle;
@@ -155,7 +163,8 @@ public class Casualty extends BaseModel {
 	}
 
 	/**
-	 * @param dateCreated the dateCreated to set
+	 * @param dateCreated
+	 *            the dateCreated to set
 	 */
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
@@ -169,7 +178,8 @@ public class Casualty extends BaseModel {
 	}
 
 	/**
-	 * @param dateUpdated the dateUpdated to set
+	 * @param dateUpdated
+	 *            the dateUpdated to set
 	 */
 	public void setDateUpdated(Date dateUpdated) {
 		this.dateUpdated = dateUpdated;
@@ -183,7 +193,8 @@ public class Casualty extends BaseModel {
 	}
 
 	/**
-	 * @param createdBy the createdBy to set
+	 * @param createdBy
+	 *            the createdBy to set
 	 */
 	public void setCreatedBy(User createdBy) {
 		this.createdBy = createdBy;
@@ -197,7 +208,8 @@ public class Casualty extends BaseModel {
 	}
 
 	/**
-	 * @param updatedBy the updatedBy to set
+	 * @param updatedBy
+	 *            the updatedBy to set
 	 */
 	public void setUpdatedBy(User updatedBy) {
 		this.updatedBy = updatedBy;
@@ -211,15 +223,15 @@ public class Casualty extends BaseModel {
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Casualty)) {
-            return false;
-        }
+			return true;
+		}
+		if (!(o instanceof Casualty)) {
+			return false;
+		}
 
-        final Casualty casualty = (Casualty) o;
+		final Casualty casualty = (Casualty) o;
 
-        return casualty != null ? id.equals(casualty.getId()) : false;
+		return casualty != null ? id.equals(casualty.getId()) : false;
 	}
 
 	@Override

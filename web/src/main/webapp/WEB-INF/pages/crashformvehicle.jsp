@@ -12,6 +12,11 @@
 	<form:form commandName="vehicle" method="post"
 		action="/crashformvehicle" id="vehicleform" autocomplete="off"
 		cssClass="well" onsubmit="return validateVehicle(this)">
+		<form:hidden path="id" />
+	    <form:hidden path="dateCreated"/>
+	    <form:hidden path="number" />
+	    <form:hidden path="driver.id" />
+	    <form:hidden path="driver.dateCreated" />
 		<div class="col-sm-15">
 			<table cellpadding="4" width="100%">
 				<tr>

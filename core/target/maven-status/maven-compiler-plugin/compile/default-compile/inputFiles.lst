@@ -60,4 +60,5 @@
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/service/impl/LookupManagerImpl.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/service/impl/CrashManagerImpl.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/model/Role.java
+/Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/util/RcdsUtil.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/dao/hibernate/CrashDaoHibernate.java

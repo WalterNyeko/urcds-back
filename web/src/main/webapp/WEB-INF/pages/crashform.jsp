@@ -9,6 +9,7 @@
 	</h2>
 </div>
 <div class="col-sm-10">
+	<form:errors path="*" cssClass="alert alert-danger alert-dismissable" element="div"/>
 	<form:form commandName="crash" method="post" action="/crashform2"
 		id="crashform" autocomplete="off" cssClass="well"
 		onsubmit="return validateCrash(this)">
@@ -21,11 +22,9 @@
 								<td width="50%"><appfuse:label styleClass="form-label"
 										key="crashForm.tarNo" /></td>
 								<td width="50%"><spring:bind path="crash.tarNo">
-										<div
-											class="col-sm-15 form-group${(not empty status.errorMessage) ? ' has-error' : ''}">
+										<div class="col-sm-15 form-group${(not empty status.errorMessage) ? ' has-error' : ''}">
 									</spring:bind> <form:input cssClass="form-control" path="tarNo" id="tarNo"
-										autofocus="true" /> <form:errors path="tarNo"
-										cssClass="help-block" /> <form:hidden path="id" />
+										autofocus="true" /> <form:errors path="tarNo" cssClass="help-block" /> <form:hidden path="id" />
 									</div></td>
 							</tr>
 							<tr>
@@ -124,7 +123,7 @@
 										<table cellpadding="0" cellspacing="0" width="100%">
 											<tr>
 												<td>
-													<input type="text" id="crashDateTimeString" name="crashDateTimeString" class="form-control"/>
+													<input type="text" id="crashDateTimeString" name="crashDateTimeString" class="form-control" value="${crash.crashDateTimeString}"/>
 												</td>
 												<td>
 													<span class="input-group-addon">
@@ -406,15 +405,17 @@
 				</tr>
 				<tr>
 					<td>
-						<a class="btn btn-default" href="<c:url value='/crashes'/>"> 
+						<a class="btn btn-default" href="<c:url value='/crashes'/>" onclick="bCancel=true;"> 
 							<i class="icon-ok"></i>
 							<fmt:message key="button.cancel" />
 						</a>
 					</td>
 					<td align="right"><input type="submit" class="btn btn-primary"
-						value="<fmt:message key='button.next'/>"></td>
+						value="<fmt:message key='button.next'/>" onclick="bCancel=false;"></td>
 				</tr>
 			</table>
 		</div>
 	</form:form>
 </div>
+<v:javascript formName="crash" cdata="false" dynamicJavascript="true" staticJavascript="false"/>
+<script type="text/javascript" src="<c:url value='/scripts/validator.jsp'/>"></script>

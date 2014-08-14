@@ -1,4 +1,5 @@
 com/sweroad/service/impl/LookupManagerImplTest.class
+com/sweroad/service/CrashManagerTest.class
 com/sweroad/service/impl/PasswordTokenManagerTest.class
 com/sweroad/service/MailEngineTest.class
 com/sweroad/dao/CrashDaoTest.class

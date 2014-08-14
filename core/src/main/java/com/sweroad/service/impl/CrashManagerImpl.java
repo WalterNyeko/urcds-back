@@ -1,5 +1,6 @@
 package com.sweroad.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +31,7 @@ import com.sweroad.model.VehicleType;
 import com.sweroad.model.Weather;
 import com.sweroad.service.CrashManager;
 import com.sweroad.service.GenericManager;
+import com.sweroad.util.RcdsUtil;
 
 @Service("crashManager")
 public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
@@ -80,6 +82,15 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
 	}
 
 	@Override
+	public Crash get(Long id) {
+		Crash crash = super.get(id);
+		if (crash.getCrashDateTime() != null) {
+			crash.setCrashDateTimeString(crash.getCrashDisplayDate());
+		}
+		return crash;
+	}
+
+	@Override
 	public Crash findByTarNo(String tarNo) {
 		return crashDao.findByTarNo(tarNo);
 	}
@@ -92,6 +103,9 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
 			crash.setDateCreated(new Date());
 		} else {
 			crash.setDateUpdated(new Date());
+			Crash dbCrash = super.get(crash.getId());
+			deleteRemovedVehicles(dbCrash, crash);
+			deleteRemovedCasualties(dbCrash, crash);
 		}
 		setCrashParams(crash);
 		return super.save(crash);
@@ -210,7 +224,7 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
 		}
 		if (casualty.getCasualtyType() != null) {
 			casualty.setCasualtyType(casualtyTypeManager.get(casualty
-					.getCasualtyClass().getId()));
+					.getCasualtyType().getId()));
 		}
 
 	}
@@ -260,5 +274,87 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
 		referenceData.put("casualtyClasses", casualtyClasses);
 
 		return referenceData;
+	}
+
+	@Override
+	public void removeCasualtyFromCrash(Crash crash, Long casualtyId) {
+		for (Casualty casualty : crash.getCasualties()) {
+			if (casualty.getId().equals(casualtyId)) {
+				crash.getCasualties().remove(casualty);
+				break;
+			}
+		}
+	}
+
+	@Override
+	public void removeCasualtiesFromCrash(Crash crash, List<Long> casualtyIds) {
+		for (Long casualtyId : casualtyIds) {
+			removeCasualtyFromCrash(crash, casualtyId);
+		}
+	}
+
+	@Override
+	public void removeVehicleFromCrash(Crash crash, Long vehicleId) {
+		for (Vehicle vehicle : crash.getVehicles()) {
+			if (vehicle.getId().equals(vehicleId)) {
+				removeVehicleCasualtiesFromCrash(crash, vehicle);
+				crash.getVehicles().remove(vehicle);
+				break;
+			}
+		}
+	}
+
+	private void removeVehicleCasualtiesFromCrash(Crash crash, Vehicle vehicle) {
+		List<Long> casualtyIds = new ArrayList<Long>();
+		for (Casualty casualty : crash.getCasualties()) {
+			if (casualty.getVehicle() != null
+					&& casualty.getVehicle().equals(vehicle)) {
+				casualtyIds.add(casualty.getId());
+			}
+		}
+		removeCasualtiesFromCrash(crash, casualtyIds);
+	}
+
+	private void deleteRemovedVehicles(Crash dbCrash, Crash crash) {
+		
+		List<Vehicle> deletedVehicleIds = getVehiclesForDeletion(dbCrash, crash);
+		for (Vehicle vehicle : deletedVehicleIds) {
+			vehicleManager.remove(vehicle);
+			driverManager.remove(vehicle.getDriver());
+		}
+	}
+
+	private List<Vehicle> getVehiclesForDeletion(Crash dbCrash, Crash crashInEdit) {
+		
+		List<Vehicle> vehiclesToDelete = new ArrayList<Vehicle>();
+		RcdsUtil<Vehicle> vehicleUtil = new RcdsUtil<Vehicle>();
+		for (Vehicle vehicle : dbCrash.getVehicles()) {
+			if (!vehicleUtil.itemExistsInList(vehicle,
+					crashInEdit.getVehicles())) {
+				vehiclesToDelete.add(vehicle);
+			}
+		}
+		return vehiclesToDelete;
+	}
+	
+private void deleteRemovedCasualties(Crash dbCrash, Crash crash) {
+		
+		List<Casualty> deletedVehicleIds = getCasualtiesForDeletion(dbCrash, crash);
+		for (Casualty casualty : deletedVehicleIds) {
+			casualtyManager.remove(casualty);
+		}
+	}
+
+	private List<Casualty> getCasualtiesForDeletion(Crash dbCrash, Crash crashInEdit) {
+		
+		List<Casualty> casualtiesToDelete = new ArrayList<Casualty>();
+		RcdsUtil<Casualty> casualtyUtil = new RcdsUtil<Casualty>();
+		for (Casualty casualty : dbCrash.getCasualties()) {
+			if (!casualtyUtil.itemExistsInList(casualty,
+					crashInEdit.getCasualties())) {
+				casualtiesToDelete.add(casualty);
+			}
+		}
+		return casualtiesToDelete;
 	}
 }

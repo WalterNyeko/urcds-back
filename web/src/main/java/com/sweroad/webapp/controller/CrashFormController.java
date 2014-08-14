@@ -1,8 +1,6 @@
 package com.sweroad.webapp.controller;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +25,7 @@ import com.sweroad.model.Vehicle;
 import com.sweroad.model.VehicleType;
 import com.sweroad.service.CrashManager;
 import com.sweroad.service.GenericManager;
-import com.sweroad.webapp.util.CrashValidator;
+import com.sweroad.webapp.util.CrashFormHelper;
 
 @Controller
 @RequestMapping("/crashform*")
@@ -41,6 +39,7 @@ public class CrashFormController extends BaseFormController {
 	private GenericManager<CasualtyClass, Long> casualtyClassManager;
 	@Autowired
 	private GenericManager<CasualtyType, Long> casualtyTypeManager;
+	private final static Long DEFAULT_ID = 0L;
 
 	public CrashFormController() {
 		setCancelView("redirect:crashes");
@@ -64,7 +63,7 @@ public class CrashFormController extends BaseFormController {
 			}
 		} else {
 			crash = new Crash();
-			crash.setId(0L);
+			crash.setId(DEFAULT_ID);
 		}
 		mav.addObject("crash", crash);
 		mav.addAllObjects(crashManager.getReferenceData());
@@ -75,7 +74,8 @@ public class CrashFormController extends BaseFormController {
 		Crash crash;
 		String back = request.getParameter("back");
 		if (!StringUtils.isBlank(back)) {
-			Crash sessionCrash = (Crash) request.getSession().getAttribute("crash");
+			Crash sessionCrash = (Crash) request.getSession().getAttribute(
+					"crash");
 			if (sessionCrash != null && sessionCrash.getId().equals(crashId)) {
 				crash = sessionCrash;
 			} else {
@@ -144,18 +144,19 @@ public class CrashFormController extends BaseFormController {
 	protected ModelAndView vehicleForm(HttpServletRequest request)
 			throws Exception {
 		ModelAndView mav = new ModelAndView();
-		Vehicle vehicle;
+		Vehicle vehicle = new Vehicle();
 		String id = request.getParameter("id");
 		Crash crash = (Crash) request.getSession().getAttribute("crash");
 
 		if (!StringUtils.isBlank(id) && crash != null
 				&& crash.getVehicles() != null) {
 			vehicle = getVehicleFromSet(Long.parseLong(id), crash.getVehicles());
-			if (vehicle == null) {
-				vehicle = new Vehicle();
-			}
-		} else {
+		}
+		if (vehicle.getId() == null) {
 			vehicle = new Vehicle();
+			vehicle.setId(DEFAULT_ID);
+			vehicle.setDriver(new Driver());
+			vehicle.getDriver().setId(DEFAULT_ID);
 		}
 		mav.addObject("vehicle", vehicle);
 		mav.addAllObjects(crashManager.getReferenceData());
@@ -168,7 +169,11 @@ public class CrashFormController extends BaseFormController {
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		Crash crash = (Crash) request.getSession().getAttribute("crash");
-		addVehicleToCrash(vehicle, crash);
+		if (vehicle.getId().equals(DEFAULT_ID)) {
+			addVehicleToCrash(vehicle, crash);
+		} else {
+			updateCrashVehicle(vehicle, crash);
+		}
 		request.getSession().setAttribute("crash", crash);
 		return showForm2(crash, errors, request, response);
 	}
@@ -179,7 +184,11 @@ public class CrashFormController extends BaseFormController {
 			BindingResult errors, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		Crash crash = (Crash) request.getSession().getAttribute("crash");
-		addCasualtyToCrash(casualty, crash);
+		if (casualty.getId().equals(DEFAULT_ID)) {
+			addCasualtyToCrash(casualty, crash);
+		} else {
+			updateCrashCasualty(casualty, crash);
+		}
 		request.getSession().setAttribute("crash", crash);
 		return showForm2(crash, errors, request, response);
 	}
@@ -190,7 +199,7 @@ public class CrashFormController extends BaseFormController {
 	protected ModelAndView casualtyForm(HttpServletRequest request)
 			throws Exception {
 		ModelAndView mav = new ModelAndView();
-		Casualty casualty;
+		Casualty casualty = new Casualty();
 		String id = request.getParameter("id");
 		Crash crash = (Crash) request.getSession().getAttribute("crash");
 
@@ -198,17 +207,43 @@ public class CrashFormController extends BaseFormController {
 				&& crash.getVehicles() != null) {
 			casualty = getCasualtyFromSet(Long.parseLong(id),
 					crash.getCasualties());
-			if (casualty == null) {
-				casualty = new Casualty();
-			}
-		} else {
+		}
+		if (casualty.getId() == null) {
 			casualty = new Casualty();
+			casualty.setId(DEFAULT_ID);
 		}
 		mav.addObject("casualty", casualty);
 		Map<String, List> referenceData = crashManager.getReferenceData();
 		referenceData.put("vehicles", crash.getVehicles());
 		mav.addAllObjects(referenceData);
 		return mav;
+	}
+
+	@ModelAttribute
+	@RequestMapping(value = "/crashformcasualtydelete", method = RequestMethod.GET)
+	protected ModelAndView deleteCasualty(HttpServletRequest request)
+			throws Exception {
+		String id = request.getParameter("id");
+		if (!StringUtils.isBlank(id)) {
+			Crash crash = (Crash) request.getSession().getAttribute("crash");
+			crashManager.removeCasualtyFromCrash(crash, Long.parseLong(id));
+			request.getSession().setAttribute("crash", crash);
+		}
+		return crashForm2(request);
+	}
+
+	@ModelAttribute
+	@RequestMapping(value = "/crashformvehicledelete", method = RequestMethod.GET)
+	protected ModelAndView deleteVehicle(HttpServletRequest request)
+			throws Exception {
+		String id = request.getParameter("id");
+		if (!StringUtils.isBlank(id)) {
+			Crash crash = (Crash) request.getSession().getAttribute("crash");
+			crashManager.removeVehicleFromCrash(crash, Long.parseLong(id));
+			CrashFormHelper.resetVehicleNumbers(crash);
+			request.getSession().setAttribute("crash", crash);
+		}
+		return crashForm2(request);
 	}
 
 	private Vehicle getVehicleFromSet(long id, List<Vehicle> vehicles) {
@@ -230,19 +265,15 @@ public class CrashFormController extends BaseFormController {
 	}
 
 	private void addVehicleToCrash(Vehicle vehicle, Crash crash) {
-		if (CrashValidator.vehicleAlreadyExistsInList(crash.getVehicles(),
+		if (CrashFormHelper.vehicleAlreadyExistsInList(crash.getVehicles(),
 				vehicle)) {
 			return;
 		}
-		if (crash.getVehicles() == null || crash.getVehicleCount() == 0) {
-			crash.setVehicles(new ArrayList<Vehicle>());
-			vehicle.setId(new Long(1));
-			vehicle.setNumber(1);
-		} else {
-			long vehicleId = crash.getVehicles().size() + 1;
-			vehicle.setId(vehicleId);
-			vehicle.setNumber((int) vehicleId);
-		}
+		long vehicleId = CrashFormHelper.getCrashsMaximumVehicleId(crash) + 1;
+		int number = crash.getVehicles().size() + 1;
+		vehicle.setId(vehicleId);
+		vehicle.setNumber(number);
+
 		if (vehicle.getDriver() != null) {
 			vehicle.getDriver().setId(vehicle.getId());
 			setDriverCasualtyType(vehicle.getDriver());
@@ -251,20 +282,38 @@ public class CrashFormController extends BaseFormController {
 		crash.addVehicle(vehicle);
 	}
 
+	private void updateCrashVehicle(Vehicle vehicle, Crash crash) {
+		setDriverCasualtyType(vehicle.getDriver());
+		setVehicleType(vehicle);
+		List<Vehicle> crashVehicles = crash.getVehicles();
+		for (int i = 0; i < crashVehicles.size(); i++) {
+			if (crashVehicles.get(i).getId().equals(vehicle.getId())) {
+				crashVehicles.set(i, vehicle);
+			}
+		}
+		crash.setVehicles(crashVehicles);
+	}
+
 	private void addCasualtyToCrash(Casualty casualty, Crash crash) {
-		if (CrashValidator.casualtyAlreadyExistsInList(crash.getCasualties(),
+		if (CrashFormHelper.casualtyAlreadyExistsInList(crash.getCasualties(),
 				casualty)) {
 			return;
 		}
-		if (crash.getCasualties() == null || crash.getCasualties().size() == 0) {
-			crash.setCasualties(new ArrayList<Casualty>());
-			casualty.setId(new Long(1));
-		} else {
-			long id = crash.getCasualties().size() + 1;
-			casualty.setId(id);
-		}
+		long id = CrashFormHelper.getCrashsMaximumCasualtyId(crash) + 1;
+		casualty.setId(id);
 		setCasualtyParams(casualty, crash);
 		crash.addCasualty(casualty);
+	}
+
+	private void updateCrashCasualty(Casualty casualty, Crash crash) {
+		setCasualtyParams(casualty, crash);
+		List<Casualty> crashCasualties = crash.getCasualties();
+		for (int i = 0; i < crashCasualties.size(); i++) {
+			if (crashCasualties.get(i).getId().equals(casualty.getId())) {
+				crashCasualties.set(i, casualty);
+			}
+		}
+		crash.setCasualties(crashCasualties);
 	}
 
 	private void setVehicleType(Vehicle vehicle) {
@@ -294,12 +343,15 @@ public class CrashFormController extends BaseFormController {
 					.getCasualtyType().getId());
 			casualty.setCasualtyType(casualtyType);
 		}
-		if (casualty.getVehicle() != null) {
+		if (casualty.getVehicle() != null
+				&& casualty.getVehicle().getId() != null) {
 			for (Vehicle vehicle : crash.getVehicles()) {
 				if (casualty.getVehicle().getId().equals(vehicle.getId())) {
 					casualty.setVehicle(vehicle);
 				}
 			}
+		} else {
+			casualty.setVehicle(null);
 		}
 	}
 }

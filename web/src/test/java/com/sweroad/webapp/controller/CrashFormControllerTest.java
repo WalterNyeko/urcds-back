@@ -97,4 +97,38 @@ public class CrashFormControllerTest extends BaseControllerTestCase {
 				&& newSessionCrash.getVehicles().size() == 1;
 		assertTrue(crashesMerged);
 	}
+
+	@Test
+	public void testDeleteCasualty() throws Exception {
+		log.debug("testing delete casualty...");
+		request = newGet("/crashformcasualtydelete");
+		request.addParameter("id", "2");
+		Crash crash = new Crash();
+		crash.addCasualty(new Casualty());
+		crash.addCasualty(new Casualty());
+		crash.getCasualties().get(0).setId(1L);
+		crash.getCasualties().get(1).setId(2L);
+		request.getSession().setAttribute("crash", crash);
+		crashForm.deleteCasualty(request);
+		Crash newSessionCrash = (Crash) request.getSession().getAttribute(
+				"crash");
+		assertEquals(1, newSessionCrash.getCasualties().size());
+	}
+	
+	@Test
+	public void testDeleteVehilce() throws Exception {
+		log.debug("testing delete vehicle...");
+		request = newGet("/crashformvehicledelete");
+		request.addParameter("id", "2");
+		Crash crash = new Crash();
+		crash.addVehicle(new Vehicle());
+		crash.addVehicle(new Vehicle());
+		crash.getVehicles().get(0).setId(1L);
+		crash.getVehicles().get(1).setId(2L);
+		request.getSession().setAttribute("crash", crash);
+		crashForm.deleteVehicle(request);
+		Crash newSessionCrash = (Crash) request.getSession().getAttribute(
+				"crash");
+		assertEquals(1, newSessionCrash.getVehicles().size());
+	}
 }

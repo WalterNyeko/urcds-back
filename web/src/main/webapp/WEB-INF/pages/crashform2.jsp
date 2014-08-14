@@ -22,7 +22,7 @@
 					<c:forEach var="vehicle" items="${crash.vehicles}"
 						varStatus="status">
 						<tr>
-							<td width="25%" valign="top"><c:if
+							<td width="25%" valign="top" align="center"><c:if
 									test="${status.index > 0}">
 									<br />
 								</c:if>
@@ -46,7 +46,17 @@
 											</table>
 										</td>
 									</tr>
-								</table></td>
+								</table>
+								<a href="/crashformvehicle?id=${vehicle.id}">
+									<i class="icon-edit"></i>
+									<fmt:message key="button.edit" />
+								</a>
+								|
+								<a href="/crashformvehicledelete?id=${vehicle.id}" onclick="return confirmMessage('<fmt:message key="rcds.confirmDelete" />');">
+									<i class="icon-delete"></i>
+									<fmt:message key="button.delete" />
+								</a>
+							</td>
 							<td width="75%" valign="top"><c:if
 									test="${status.index > 0}">
 									<br />
@@ -170,6 +180,8 @@
 														key="crashForm.passengerVehicleNo" /></th>
 												<th><appfuse:label styleClass="control-label"
 														key="crashForm.passengerBeltUsed" /></th>
+												<th><appfuse:label styleClass="control-label"
+														key="rcds.actions" /></th>
 											</tr>
 											<c:forEach var="casualty" items="${crash.casualties}"
 												varStatus="status">
@@ -177,16 +189,34 @@
 													<td><appfuse:label styleClass="form-label"
 															key="crash.person" />&nbsp;${status.index + 1}</td>
 													<td>${casualty.casualtyType.name}</td>
-													<td>${casualty.gender}</td>
+													<td align="center">${casualty.gender}</td>
 													<td align="right">${casualty.age}</td>
 													<td>${casualty.casualtyClass.name}</td>
-													<td><c:if test="${casualty.vehicle ne null}">
+													<td><c:if test="${casualty.vehicle ne null and casualty.vehicle.id ne null}">
 															<appfuse:label styleClass="form-label"
 																key="crash.vehicle" />&nbsp;${casualty.vehicle.number}
 														</c:if></td>
-													<td><c:if test="${casualty.beltOrHelmetUsed ne null}">
-															${casualty.beltOrHelmetUsed eq true ? "Yes" : "No"}
-														</c:if></td>
+													<td>	
+														<c:choose>
+															<c:when test="${casualty.beltOrHelmetUsed ne null}">
+																${casualty.beltOrHelmetUsed eq true ? "Yes" : "No"}
+															</c:when>
+															<c:otherwise>
+																Unknown
+															</c:otherwise>
+														</c:choose>
+													</td>
+													<td align="center">
+														<a href="/crashformcasualty?id=${casualty.id}">
+															<i class="icon-edit"></i>
+															<fmt:message key="button.edit" />
+														</a>
+														|
+														<a href="/crashformcasualtydelete?id=${casualty.id}" onclick="return confirmMessage('<fmt:message key="rcds.confirmDelete" />');">
+															<i class="icon-delete"></i>
+															<fmt:message key="button.delete" />
+														</a>
+													</td>
 												</tr>
 											</c:forEach>
 										</table>
@@ -209,13 +239,18 @@
 							<fmt:message key="button.back" />
 						</a>
 					</td>
-					<td align="right">
-						<c:if test="${crash.id eq 0 }">
-							<a class="btn btn-primary" href="/crashformsubmit">
-								<i class="icon-ok"></i> 
-								<fmt:message key="button.saveCrashData" />
-							</a>
-						</c:if>
+					<td align="right">						
+						<a class="btn btn-primary" href="/crashformsubmit">
+							<i class="icon-ok"></i> 
+							<c:choose>
+								<c:when test="${crash.id eq 0 }">
+									<fmt:message key="button.saveCrashData" />
+								</c:when>
+								<c:otherwise>
+									<fmt:message key="button.updateCrashData" />
+								</c:otherwise>
+							</c:choose>							
+						</a>
 					</td>
 				</tr>
 			</table>

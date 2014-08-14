@@ -16,4 +16,10 @@ public interface CrashManager extends GenericManager<Crash, Long> {
 	
 	@SuppressWarnings("rawtypes")
 	Map<String, List> getReferenceData();
+	
+	void removeCasualtyFromCrash(Crash crash, Long casualtyId);
+
+	void removeVehicleFromCrash(Crash crash, Long vehicleId);
+	
+	void removeCasualtiesFromCrash(Crash crash, List<Long> casualtyIds);
 }

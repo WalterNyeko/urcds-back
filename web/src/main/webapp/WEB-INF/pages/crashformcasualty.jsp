@@ -25,54 +25,74 @@
 								<td width="100%">
 									<table width="100%" class="crashform-blue">
 										<tr>
-											<th><appfuse:label styleClass="control-label"
-													key="crashForm.pedestrianOrPassengerCasualty" /></th>
-											<th><appfuse:label styleClass="control-label"
-													key="crashForm.pedestrianOrPassengerSex" /></th>
-											<th><appfuse:label styleClass="control-label"
-													key="crashForm.pedestrianOrPassengerAge" /></th>
-											<th><appfuse:label styleClass="control-label"
-													key="crashForm.pedestrianOrPassengerClass" /></th>
-											<th><appfuse:label styleClass="control-label"
-													key="crashForm.passengerVehicleNo" /></th>
-											<th><appfuse:label styleClass="control-label"
-													key="crashForm.passengerBeltUsed" /></th>
+											<th width="15%">
+												<appfuse:label styleClass="control-label"
+													key="crashForm.pedestrianOrPassengerCasualty" />
+											</th>
+											<th width="15%">
+												<appfuse:label styleClass="control-label"
+													key="crashForm.pedestrianOrPassengerSex" />
+											</th>
+											<th width="15%">
+												<appfuse:label styleClass="control-label"
+													key="crashForm.driverAge" />
+											</th>
+											<th width="25%">
+												<appfuse:label styleClass="control-label"
+													key="crashForm.pedestrianOrPassengerClass" />
+											</th>
+											<th width="15%">
+												<appfuse:label styleClass="control-label"
+													key="crashForm.passengerVehicleNo" />
+											</th>
+											<th width="15%">
+												<appfuse:label styleClass="control-label"
+													key="crashForm.passengerBeltUsed" />
+											</th>
 										</tr>
 										<tr>
-											<td><c:forEach var="casualtyType"
+											<td>
+												 <form:hidden path="id" />
+												 <form:hidden path="dateCreated"/>
+												<c:forEach var="casualtyType"
 													items="${casualtyTypes}">
 													<c:if test="${casualtyType.id ne 4}">
 														<form:radiobutton path="casualtyType.id"
 															value="${casualtyType.id}" />&nbsp;&nbsp;${casualtyType.name}<br />
 													</c:if>
-												</c:forEach></td>
-											<td><form:radiobutton path="gender" value="M" />
+												</c:forEach>
+											</td>
+											<td><form:radiobutton path="gender" value="M" />&nbsp;
 												<appfuse:label styleClass="form-label" key="rcds.male" /> <br />
-												<form:radiobutton path="gender" value="F" />
+												<form:radiobutton path="gender" value="F" />&nbsp;
 												<appfuse:label styleClass="form-label" key="rcds.female" />
 											</td>
-											<td align="right"><appfuse:label styleClass="form-label"
-													key="rcds.years" />:<br /> <form:input
-													cssClass="form-control" path="age" id="age" /></td>
+											<td align="right">
+												<form:input cssClass="form-control right-al" path="age" id="age" />
+											</td>
 											<td><c:forEach var="casualtyClass"
 													items="${casualtyClasses}">
 													<form:radiobutton path="casualtyClass.id"
 														value="${casualtyClass.id}" />&nbsp;&nbsp;${casualtyClass.name}<br />
 												</c:forEach></td>
-											<td><form:radiobutton path="vehicle.id" value="" />
+											<td>
+												<form:radiobutton path="vehicle.id" value="" />&nbsp;
 												<appfuse:label styleClass="form-label" key="rcds.na" /><br />
 												<c:forEach var="vehicle" items="${vehicles}">
 													<form:radiobutton path="vehicle.id" value="${vehicle.id}" />&nbsp;&nbsp;<appfuse:label
 														styleClass="form-label" key="crash.vehicle" />&nbsp;${vehicle.number}<br />
-												</c:forEach></td>
-											<td><form:radiobutton path="beltOrHelmetUsed" value="1" />
+												</c:forEach>
+											</td>
+											<td>
+												<form:radiobutton path="beltOrHelmetUsed" value="1" />&nbsp;
 												<appfuse:label styleClass="form-label" key="rcds.yes" /><br />
-												<form:radiobutton path="beltOrHelmetUsed" value="0" />
+												<form:radiobutton path="beltOrHelmetUsed" value="0" />&nbsp;
 												<appfuse:label styleClass="form-label" key="rcds.no" /><br />
-												<form:radiobutton path="beltOrHelmetUsed" value="-1" />
+												<form:radiobutton path="beltOrHelmetUsed" value="" />&nbsp;
 												<appfuse:label styleClass="form-label" key="rcds.unknown" /><br />
-												<form:radiobutton path="beltOrHelmetUsed" value="" />
-												<appfuse:label styleClass="form-label" key="rcds.na" /></td>
+												<form:radiobutton path="beltOrHelmetUsed" value="" />&nbsp;
+												<appfuse:label styleClass="form-label" key="rcds.na" />
+											</td>
 										</tr>
 									</table>
 								</td>
