@@ -50,5 +50,13 @@
 				<arg key="user.password" />
 			</field>
 		</form>
+		<form name="crash">
+		    <field property="tarNo" depends="required">
+		        <arg key="crash.tarNo"/>
+		    </field>
+		    <!-- <field property="policeStation" depends="required">
+		        <arg key="crash.policeStation"/>
+		    </field> -->
+		</form>
 	</formset>
 </form-validation>
