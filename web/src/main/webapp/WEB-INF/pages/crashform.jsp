@@ -112,34 +112,40 @@
 							</tr>
 							<tr>
 								<td>
-									<%-- <spring:bind path="crash.crashDateTimeString">
+									<%--<spring:bind path="crash.crashDateTimeString">
 										<div
 											class="form-group${(not empty status.errorMessage) ? ' has-error' : ''}">
 									</spring:bind> <form:input cssClass="form-control" path="crashDateTimeString"
 										id="crashDateTime" autofocus="true" /> <form:errors
 										path="crashDateTimeString" cssClass="help-block" />
-									</div> --%>
-									<div id="datetimepicker1" class="input-group date">
-										<table cellpadding="0" cellspacing="0" width="100%">
-											<tr>
-												<td>
-													<input type="text" id="crashDateTimeString" name="crashDateTimeString" class="form-control" value="${crash.crashDateTimeString}"/>
-												</td>
-												<td>
-													<span class="input-group-addon">
-														<span class="glyphicon glyphicon-calendar"></span>
-                    								</span>											
-												</td>
-											</tr>
-										</table>
-									</div>
+									</div> --%>									
+									<input type="text" id="crashDateTimeString" name="crashDateTimeString" class="form-control" value="${crash.crashDateTimeString}"/>									
 									<script type="text/javascript">
 									  $(function() {
-									    $('#datetimepicker1').datetimepicker({
-									    	format: "dd/mm/yyyy hh:mm"									    	
+									    $('#crashDateTimeString').datepicker({
+									    	dateFormat: "dd/mm/yy",
+									    	autoSize: true,
+									    	inline: true,  
+								            showOtherMonths: true,  
+								            dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+								            showAnim: "fold"
 									    });
 									  });
+									  function appendTime(select) {
+										  var date = $('#crashDateTimeString').val();
+										  if (date.trim() == "") {
+											  return;
+										  }
+										  var dateParts = date.split(" ");
+										  if (dateParts.length > 1) {
+											  date = dateParts[0];
+										  }
+										  date = date + " " + $(select).val();
+										  $('#crashDateTimeString').val(date);
+									  }
 									</script>
+									<br/>
+									<%@ include file="/common/timeselect.jsp"%>
 								</td>
 							</tr>
 							<tr>
