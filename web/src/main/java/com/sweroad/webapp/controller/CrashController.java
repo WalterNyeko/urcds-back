@@ -8,22 +8,25 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sweroad.model.Crash;
+import com.sweroad.service.CrashManager;
 import com.sweroad.service.GenericManager;
 
 @Controller
 @RequestMapping("/crash*")
 public class CrashController {
 
-	private GenericManager<Crash, Long> crashManager;
-	
 	@Autowired
-	public void setCrashManager(@Qualifier("crashManager") GenericManager<Crash, Long> crashManager) {
-		this.crashManager = crashManager;
-	}
+	private CrashManager crashManager;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView handleRequest() throws Exception {
-		return new ModelAndView().addObject(crashManager.getAll());
+		return new ModelAndView("crashes").addObject(crashManager.getAll());
+	}
+	
+	@RequestMapping(value = "/crashexcel", method = RequestMethod.GET)
+	public ModelAndView generateExcel() throws Exception {
+		String excelFile = crashManager.generateCrashDataExcel();
+		return handleRequest();
 	}
 
 }

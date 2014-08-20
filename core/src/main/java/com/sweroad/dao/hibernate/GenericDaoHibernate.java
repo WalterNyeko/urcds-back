@@ -198,10 +198,11 @@ public class GenericDaoHibernate<T, PK extends Serializable> implements GenericD
         Session sess = getSession();
         Query namedQuery = sess.getNamedQuery(queryName);
 
-        for (String s : queryParams.keySet()) {
-            namedQuery.setParameter(s, queryParams.get(s));
+        if (queryParams != null) {
+        	for (String s : queryParams.keySet()) {
+                namedQuery.setParameter(s, queryParams.get(s));
+            }
         }
-
         return namedQuery.list();
     }
 

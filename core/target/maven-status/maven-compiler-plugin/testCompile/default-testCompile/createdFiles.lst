@@ -9,6 +9,7 @@ com/sweroad/util/DateUtilTest.class
 com/sweroad/service/MockUserDetailsService.class
 com/sweroad/service/BaseManagerTestCase.class
 com/sweroad/service/impl/UserSecurityAdviceTest.class
+com/sweroad/service/CrashExcelServiceTest.class
 com/sweroad/service/UserExistsExceptionTest.class
 com/sweroad/util/DateConverterTest.class
 com/sweroad/service/impl/UserManagerImplTest.class

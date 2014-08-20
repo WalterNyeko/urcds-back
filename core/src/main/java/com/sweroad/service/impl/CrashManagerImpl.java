@@ -1,5 +1,6 @@
 package com.sweroad.service.impl;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -29,6 +30,7 @@ import com.sweroad.model.Vehicle;
 import com.sweroad.model.VehicleFailureType;
 import com.sweroad.model.VehicleType;
 import com.sweroad.model.Weather;
+import com.sweroad.service.CrashExcelService;
 import com.sweroad.service.CrashManager;
 import com.sweroad.service.GenericManager;
 import com.sweroad.util.RcdsUtil;
@@ -74,7 +76,9 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
 	private GenericManager<Vehicle, Long> vehicleManager;
 	@Autowired
 	private GenericManager<Casualty, Long> casualtyManager;
-
+	@Autowired
+	private CrashExcelService crashExcelService;
+	
 	@Autowired
 	public CrashManagerImpl(CrashDao crashDao) {
 		super(crashDao);
@@ -356,5 +360,11 @@ private void deleteRemovedCasualties(Crash dbCrash, Crash crash) {
 			}
 		}
 		return casualtiesToDelete;
+	}
+
+	@Override
+	public String generateCrashDataExcel() throws IOException {
+		List<Crash> crashes = crashDao.findByNamedQuery(Crash.FIND_CRASHES_ORDER_BY_DATE, null);
+		return crashExcelService.generateCrashExcelFile(crashes);
 	}
 }

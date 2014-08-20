@@ -5,6 +5,7 @@
 /Users/Frank/Projects/sweroad/rcds/core/src/test/java/com/sweroad/dao/hibernate/HibernateConfigurationTest.java
 /Users/Frank/Projects/sweroad/rcds/core/src/test/java/com/sweroad/service/impl/LookupManagerImplTest.java
 /Users/Frank/Projects/sweroad/rcds/core/src/test/java/com/sweroad/service/CrashManagerTest.java
+/Users/Frank/Projects/sweroad/rcds/core/src/test/java/com/sweroad/service/CrashExcelServiceTest.java
 /Users/Frank/Projects/sweroad/rcds/core/src/test/java/com/sweroad/service/MailEngineTest.java
 /Users/Frank/Projects/sweroad/rcds/core/src/test/java/com/sweroad/dao/RoleDaoTest.java
 /Users/Frank/Projects/sweroad/rcds/core/src/test/java/com/sweroad/service/UserManagerTest.java

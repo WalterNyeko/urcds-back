@@ -5,6 +5,7 @@ package com.sweroad.model;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -18,22 +19,33 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+
+import com.sweroad.util.Constants;
 
 /**
  * @author Frank
  * 
  */
-@Entity(name = "crash")
+@Entity
+@Table(name = "crash")
+@NamedQueries({
+		@NamedQuery(name = Crash.FIND_CRASHES_ORDER_BY_DATE, query = "from Crash c order by c.crashDateTime"),
+		@NamedQuery(name = Crash.FIND_CRASHES_ORDER_BY_DATE_DESC, query = "from Crash c order by c.crashDateTime desc") })
 public class Crash extends BaseModel {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2144213374837809344L;
+	public static final String FIND_CRASHES_ORDER_BY_DATE = "findCrashesOrderByDate";
+	public static final String FIND_CRASHES_ORDER_BY_DATE_DESC = "findCrashesOrderByDateDesc";
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -614,8 +626,61 @@ public class Crash extends BaseModel {
 	}
 
 	public String getCrashDisplayDate() {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-		return sdf.format(crashDateTime);
+		if (crashDateTime != null) {
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+			return sdf.format(crashDateTime);
+		}
+		return "";
+	}
+
+	public Integer getCrashYear() {
+		if (crashDateTime != null) {
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(crashDateTime);
+			return cal.get(Calendar.YEAR);
+		}
+		return null;
+	}
+
+	public Integer getCrashMonth() {
+		if (crashDateTime != null) {
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(crashDateTime);
+			return cal.get(Calendar.MONTH) + 1;
+		}
+		return null;
+	}
+
+	public Integer getCrashDayOfMonth() {
+		if (crashDateTime != null) {
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(crashDateTime);
+			return cal.get(Calendar.DAY_OF_MONTH);
+		}
+		return null;
+	}
+
+	public String getCrashDayOfWeek() {
+		if (crashDateTime != null) {
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(crashDateTime);
+			return Constants.DAYS_OF_WEEK[cal.get(Calendar.DAY_OF_WEEK)];
+		}
+		return "";
+	}
+
+	public String getCrashTime() {
+		if (crashDateTime != null) {
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(crashDateTime);
+			String hours = cal.get(Calendar.HOUR_OF_DAY) < 10 ? "0"
+					+ cal.get(Calendar.HOUR_OF_DAY) : ""
+					+ cal.get(Calendar.HOUR_OF_DAY);
+			String minutes = cal.get(Calendar.MINUTE) < 10 ? "0"
+					+ cal.get(Calendar.MINUTE) : "" + cal.get(Calendar.MINUTE);
+			return String.format("%s:%s", hours, minutes);
+		}
+		return null;
 	}
 
 	@Override

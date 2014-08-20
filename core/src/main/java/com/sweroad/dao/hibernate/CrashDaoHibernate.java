@@ -18,7 +18,7 @@ public class CrashDaoHibernate extends GenericDaoHibernate<Crash, Long> implemen
 	@Override
 	public Crash findByTarNo(String tarNo) {
 		List<Crash> crashList = getSession().createCriteria(Crash.class).add(Restrictions.eq("tarNo", tarNo)).list();
-		if (crashList.size() > 0) {
+		if (crashList.size() > 0) { 
 			return crashList.get(0);
 		}
 		return null;

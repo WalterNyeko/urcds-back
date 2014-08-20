@@ -1,5 +1,6 @@
 package com.sweroad.service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -22,4 +23,6 @@ public interface CrashManager extends GenericManager<Crash, Long> {
 	void removeVehicleFromCrash(Crash crash, Long vehicleId);
 	
 	void removeCasualtiesFromCrash(Crash crash, List<Long> casualtyIds);
+	
+	String generateCrashDataExcel() throws IOException;
 }

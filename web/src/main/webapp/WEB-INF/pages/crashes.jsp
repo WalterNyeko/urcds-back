@@ -10,6 +10,9 @@
 	<div id="actions" class="btn=group">
 		<a href="<c:url value='/crashform'/>"> <fmt:message
 				key="button.addCrash" />
+		</a> | 
+		<a href="<c:url value='/crashexcel'/>"> <fmt:message
+				key="button.exportToExcel" />
 		</a>
 	</div>
 	<display:table name="crashList"
