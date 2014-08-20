@@ -363,8 +363,8 @@ private void deleteRemovedCasualties(Crash dbCrash, Crash crash) {
 	}
 
 	@Override
-	public String generateCrashDataExcel() throws IOException {
+	public void generateCrashDataExcel(String filename) throws IOException {
 		List<Crash> crashes = crashDao.findByNamedQuery(Crash.FIND_CRASHES_ORDER_BY_DATE, null);
-		return crashExcelService.generateCrashExcelFile(crashes);
+		crashExcelService.generateAndWriteCrashExcelToFile(crashes, filename);
 	}
 }

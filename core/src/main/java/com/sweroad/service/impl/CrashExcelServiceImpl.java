@@ -28,16 +28,6 @@ public class CrashExcelServiceImpl implements CrashExcelService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String generateCrashExcelFile(List<Crash> crashes)
-			throws IOException {
-		Workbook workbook = generateCrashExcelWorkBook(crashes);
-		return writeWorkBookToFile(workbook);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public Workbook generateCrashExcelWorkBook(List<Crash> crashes) {
 		workbook = new XSSFWorkbook();
 		Sheet crashSheet = workbook.createSheet("List of Crashes");
@@ -49,10 +39,12 @@ public class CrashExcelServiceImpl implements CrashExcelService {
 		int index = 1;
 		for (Crash crash : crashes) {
 			addCrashRow(crashSheet, crash, index++);
+			Integer injuredDriverCount = 0;
 			for (Vehicle vehicle : crash.getVehicles()) {
-				addCrashVehicle(vehicleSheet, vehicle, crash);
+				addCrashVehicle(vehicleSheet, casualtySheet, vehicle, crash,
+						injuredDriverCount);
 			}
-			int casualtyIndex = 1;
+			int casualtyIndex = injuredDriverCount + 1;
 			for (Casualty casualty : crash.getCasualties()) {
 				addCrashCasualty(casualtySheet, casualty, crash,
 						casualtyIndex++);
@@ -60,6 +52,13 @@ public class CrashExcelServiceImpl implements CrashExcelService {
 		}
 		autoSizeColumns();
 		return workbook;
+	}
+
+	@Override
+	public void generateAndWriteCrashExcelToFile(List<Crash> crashes,
+			String filename) throws IOException {
+		Workbook workbook = generateCrashExcelWorkBook(crashes);
+		writeWorkBookToFile(workbook, filename);
 	}
 
 	private void createHeaderRowForCasualties(Sheet casualtySheet) {
@@ -130,14 +129,14 @@ public class CrashExcelServiceImpl implements CrashExcelService {
 		cell.getCellStyle().setAlignment(CellStyle.ALIGN_CENTER);
 		Font font = workbook.createFont();
 		font.setBoldweight(Font.BOLDWEIGHT_BOLD);
-		font.setFontHeightInPoints((short)14);
+		font.setFontHeightInPoints((short) 14);
 		cell.getCellStyle().setFont(font);
 		cell.getCellStyle().setBorderTop(CellStyle.BORDER_THIN);
 		cell.getCellStyle().setBorderLeft(CellStyle.BORDER_THIN);
 		cell.getCellStyle().setBorderRight(CellStyle.BORDER_THIN);
 		cell.getCellStyle().setBorderBottom(CellStyle.BORDER_THIN);
 	}
-	
+
 	private void autoSizeColumns() {
 		for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
 			Sheet sheet = workbook.getSheetAt(i);
@@ -233,8 +232,8 @@ public class CrashExcelServiceImpl implements CrashExcelService {
 		cell.setCellStyle(cellStyle);
 	}
 
-	private void addCrashVehicle(Sheet vehicleSheet, Vehicle vehicle,
-			Crash crash) {
+	private void addCrashVehicle(Sheet vehicleSheet, Sheet casualtySheet,
+			Vehicle vehicle, Crash crash, Integer injuredDriverCount) {
 		Integer index = vehicleSheet.getPhysicalNumberOfRows();
 		Row row = vehicleSheet.createRow(index);
 		int cellIndex = 0;
@@ -269,6 +268,8 @@ public class CrashExcelServiceImpl implements CrashExcelService {
 					vehicle.getDriver().getCasualtyType() != null ? vehicle
 							.getDriver().getCasualtyType().getName() : "",
 					Cell.CELL_TYPE_STRING, null);
+			addCasualtyVehicleDriver(casualtySheet, vehicle, crash,
+					injuredDriverCount);
 		} else {
 			int i = 0;
 			while (i < 6) {
@@ -318,13 +319,20 @@ public class CrashExcelServiceImpl implements CrashExcelService {
 				Cell.CELL_TYPE_STRING, null);
 	}
 
-	private String writeWorkBookToFile(Workbook workbook) throws IOException {
-		// Write workbook in file system
-		String fileName = "/Users/Frank/Desktop/rcds_crashes.xls";
+	private void addCasualtyVehicleDriver(Sheet casualtySheet, Vehicle vehicle,
+			Crash crash, Integer injuredDriverCount) {
+		Casualty casualty = vehicle.getDriver().toCasualty(vehicle);
+		if (casualty != null) {
+			injuredDriverCount++;
+			addCrashCasualty(casualtySheet, casualty, crash, injuredDriverCount);
+		}
+	}
+
+	private void writeWorkBookToFile(Workbook workbook, String fileName)
+			throws IOException {
 		FileOutputStream out = new FileOutputStream(new File(fileName));
 		workbook.write(out);
 		out.close();
-		return fileName;
 	}
 
 	private CellStyle getRightAlignStyle() {

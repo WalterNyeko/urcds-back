@@ -11,21 +11,26 @@ import com.sweroad.model.Crash;
 public interface CrashExcelService {
 
 	/**
-	 * Generates Excel file containing crash data and returns filename.
+	 * Generates Excel Workbook containing crash data
 	 * 
 	 * @param crashes
 	 *            List of crashes from db
-	 * @return File name of excel file
+	 * @return Excel Workbook
+	 */
+	@Transactional
+	Workbook generateCrashExcelWorkBook(List<Crash> crashes);
+
+	/***
+	 * Generates Excel Workbook containing crash data and writes it to file
+	 * 
+	 * @param crashes
+	 *            List of crashes from db
+	 * @param filename
+	 *            File name (with full path) to save excel under
 	 * @throws IOException
 	 *             Throw in case of read/write failure
 	 */
 	@Transactional
-	String generateCrashExcelFile(List<Crash> crashes) throws IOException;
-
-	/**
-	 * Generates Excel Workbook containing crash data
-	 * @param crashes List of crashes from db
-	 * @return Excel Workbook
-	 */
-	Workbook generateCrashExcelWorkBook(List<Crash> crashes);
+	void generateAndWriteCrashExcelToFile(List<Crash> crashes, String filename)
+			throws IOException;
 }

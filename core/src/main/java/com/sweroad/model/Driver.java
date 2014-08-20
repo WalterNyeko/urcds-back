@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.sweroad.util.Constants;
+
 @Entity(name = "driver")
 public class Driver extends BaseModel {
 
@@ -211,6 +213,25 @@ public class Driver extends BaseModel {
 		this.updatedBy = updatedBy;
 	}
 
+	public Casualty toCasualty(Vehicle vehicle) {
+		if (this.casualtyType == null) {
+			return null;
+		}
+		if (this.casualtyType.getId().equals(Constants.NOT_INJURED_ID)) {
+			return null;
+		}
+		CasualtyClass cc = new CasualtyClass();
+		cc.setName("Driver");
+		Casualty casualty = new Casualty();
+		casualty.setAge(age);
+		casualty.setBeltOrHelmetUsed(beltUsed);
+		casualty.setCasualtyClass(cc);
+		casualty.setCasualtyType(casualtyType);
+		casualty.setGender(gender);
+		casualty.setVehicle(vehicle);
+		return casualty;
+	}
+
 	@Override
 	public String toString() {
 		return String.format("Vehicle {%s}", licenseValid);
@@ -229,12 +250,13 @@ public class Driver extends BaseModel {
 			if (id != null && id.equals(driver.getId())) {
 				return true;
 			}
-			if (licenseNumber != null && licenseNumber.equals(driver.licenseNumber)) {
-				if (age != null && age.equals(driver.getAge())){
-					if(gender != null && gender.equals(driver.getGender())){
+			if (licenseNumber != null
+					&& licenseNumber.equals(driver.licenseNumber)) {
+				if (age != null && age.equals(driver.getAge())) {
+					if (gender != null && gender.equals(driver.getGender())) {
 						return true;
 					}
-				}				
+				}
 			}
 		}
 		return false;

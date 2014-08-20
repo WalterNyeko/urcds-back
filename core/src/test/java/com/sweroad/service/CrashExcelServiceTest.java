@@ -12,7 +12,9 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.sweroad.model.Casualty;
+import com.sweroad.model.CasualtyType;
 import com.sweroad.model.Crash;
+import com.sweroad.model.Driver;
 import com.sweroad.model.Vehicle;
 
 public class CrashExcelServiceTest extends BaseManagerTestCase {
@@ -20,10 +22,13 @@ public class CrashExcelServiceTest extends BaseManagerTestCase {
 	@Autowired
 	private CrashExcelService crashExcelService;
 	private List<Crash> crashes;
+	private CasualtyType casualtyType;
 
 	@Before
 	public void setUp() {
 		crashes = new ArrayList<Crash>();
+		casualtyType = new CasualtyType();
+		casualtyType.setId(3L);
 		addCrashToList(2, 1);
 		addCrashToList(1, 2);
 		addCrashToList(10, 3);
@@ -44,6 +49,8 @@ public class CrashExcelServiceTest extends BaseManagerTestCase {
 			crashes.get(index).addVehicle(new Vehicle());
 			i++;
 		}
+		crashes.get(0).getVehicles().get(0).setDriver(new Driver());
+		crashes.get(0).getVehicles().get(0).getDriver().setCasualtyType(casualtyType);
 	}
 
 	@Test
@@ -76,6 +83,6 @@ public class CrashExcelServiceTest extends BaseManagerTestCase {
 	public void testThat3rdSheetOfGeneratedWorkbookHasCorrectNumberOfRows() {
 		Workbook workbook = crashExcelService
 				.generateCrashExcelWorkBook(crashes);
-		assertEquals(15, workbook.getSheetAt(2).getPhysicalNumberOfRows());
+		assertEquals(16, workbook.getSheetAt(2).getPhysicalNumberOfRows());
 	}
 }
