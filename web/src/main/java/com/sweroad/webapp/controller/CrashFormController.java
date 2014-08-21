@@ -64,6 +64,9 @@ public class CrashFormController extends BaseFormController {
 		} else {
 			crash = new Crash();
 			crash.setId(DEFAULT_ID);
+			if (request.getSession().getAttribute("crash") != null) {
+				request.getSession().removeAttribute("crash");
+			}
 		}
 		mav.addObject("crash", crash);
 		mav.addAllObjects(crashManager.getReferenceData());
@@ -132,8 +135,13 @@ public class CrashFormController extends BaseFormController {
 	public void onSubmit(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		Crash crash = (Crash) request.getSession().getAttribute("crash");
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm");
-		crash.setCrashDateTime(formatter.parse(crash.getCrashDateTimeString()));
+		if (crash.getCrashDateTimeString() != null
+				&& !"".equals(crash.getCrashDateTimeString())) {
+			SimpleDateFormat formatter = new SimpleDateFormat(
+					"dd/MM/yyyy hh:mm");
+			crash.setCrashDateTime(formatter.parse(crash
+					.getCrashDateTimeString()));
+		}
 		crashManager.saveCrash(crash);
 		request.getSession().removeAttribute("crash");
 		response.sendRedirect("/crashes");

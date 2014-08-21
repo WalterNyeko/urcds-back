@@ -54,7 +54,7 @@ public class Crash extends BaseModel {
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, optional = false)
 	@JoinColumn(name = "police_station_id", nullable = false)
 	private PoliceStation policeStation;
-	@Column(name = "town_or_village", nullable = false)
+	@Column(name = "town_or_village")
 	private String townOrVillage;
 	@Column
 	private String road;

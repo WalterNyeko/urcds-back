@@ -1,7 +1,16 @@
 <%@ include file="/common/taglibs.jsp"%>
+<fmt:message key="crashForm.vehicleType" var="vehicleTypeLabel" />
+<fmt:message key="crashForm.driverCasualtyLabel" var="driverCasualtyTypeLabel" />
 <head>
 <title><fmt:message key="vehicleForm.title" /></title>
 <meta name="menue" content="CrashMenu" />
+<script type="text/javascript">
+	$( document ).ready(function() {
+		$(".submit").click(function(){
+		    return validateFields();
+		});	
+	});		
+</script>
 </head>
 <div class="col-sm-2">
 	<h2>
@@ -30,8 +39,10 @@
 								<td width="100%">
 									<table width="100%" class="crashform-blue">
 										<tr>
-											<td colspan="2"><appfuse:label
-													styleClass="control-label" key="crashForm.vehicleType" /></td>
+											<td colspan="2">
+												<appfuse:label styleClass="control-label" key="crashForm.vehicleType" />
+												<input type="hidden" value="vehicleType.id" class="rb-helper" data-labelName="${vehicleTypeLabel}" />
+											</td>
 										</tr>
 										<tr>
 											<c:forEach var="vehicleType" items="${vehicleTypes}"
@@ -45,6 +56,7 @@
 													path="vehicleType.id" value="${vehicleType.id}" />&nbsp;&nbsp;${vehicleType.name}
 											</td>
 											</c:forEach>
+											
 										</tr>
 									</table>
 								</td>
@@ -95,7 +107,9 @@
 													items="${casualtyTypes}">
 													<form:radiobutton path="driver.casualtyType.id"
 														value="${casualtyType.id}" />&nbsp;&nbsp;${casualtyType.name}<br />
-												</c:forEach></td>
+												</c:forEach>
+												<input type="hidden" value="driver.casualtyType.id" class="rb-helper" data-labelName="${driverCasualtyTypeLabel}" />	
+												</td>
 										</tr>
 										<tr>
 											<td><appfuse:label styleClass="form-label"
@@ -147,7 +161,7 @@
 											key="button.cancel" />
 								</a></td>
 								<td width="50%" align="right"><input type="submit"
-									class="btn btn-primary"
+									class="btn btn-primary submit"
 									value="<fmt:message key='button.save'/>"></td>
 							</tr>
 						</table>

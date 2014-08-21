@@ -1,7 +1,16 @@
 <%@ include file="/common/taglibs.jsp"%>
+<fmt:message key="crashForm.tarNo" var="tarNoLabel" />
+<fmt:message key="crashForm.policeStation" var="policeStationLabel" />
 <head>
 <title><fmt:message key="crashForm.title" /></title>
 <meta name="menu" content="CrashMenu" />
+<script type="text/javascript">
+	$( document ).ready(function() {
+		$(".submit").click(function(){
+		    return validateFields();
+		});	
+	});		
+</script>
 </head>
 <div class="col-sm-2">
 	<h2>
@@ -11,8 +20,7 @@
 <div class="col-sm-10">
 	<form:errors path="*" cssClass="alert alert-danger alert-dismissable" element="div"/>
 	<form:form commandName="crash" method="post" action="/crashform2"
-		id="crashform" autocomplete="off" cssClass="well"
-		onsubmit="return validateCrash(this)">
+		id="crashForm" autocomplete="off" cssClass="well">
 		<div class="col-sm-15">
 			<table cellpadding="4" width="100%">
 				<tr>
@@ -23,7 +31,8 @@
 										key="crashForm.tarNo" /></td>
 								<td width="50%"><spring:bind path="crash.tarNo">
 										<div class="col-sm-15 form-group${(not empty status.errorMessage) ? ' has-error' : ''}">
-									</spring:bind> <form:input cssClass="form-control" path="tarNo" id="tarNo"
+									</spring:bind> 
+									<form:input cssClass="form-control req-val" path="tarNo" id="tarNo" data-labelName="${tarNoLabel}"
 										autofocus="true" /> <form:errors path="tarNo" cssClass="help-block" /> <form:hidden path="id" />
 									</div></td>
 							</tr>
@@ -33,7 +42,7 @@
 								<td><spring:bind path="crash.policeStation">
 										<div
 											class="col-sm-15 form-group${(not empty status.errorMessage) ? ' has-error' : ''}">
-									</spring:bind> <form:select path="policeStation.id" cssClass="form-control">
+									</spring:bind> <form:select path="policeStation.id" cssClass="form-control req-val" data-labelName="${policeStationLabel}">
 										<form:option value="">
 											<fmt:message key="rcds.pleaseSelect" />
 										</form:option>
@@ -416,12 +425,10 @@
 							<fmt:message key="button.cancel" />
 						</a>
 					</td>
-					<td align="right"><input type="submit" class="btn btn-primary"
+					<td align="right"><input type="submit" class="btn btn-primary submit"
 						value="<fmt:message key='button.next'/>" onclick="bCancel=false;"></td>
 				</tr>
 			</table>
 		</div>
 	</form:form>
 </div>
-<v:javascript formName="crash" cdata="false" dynamicJavascript="true" staticJavascript="false"/>
-<script type="text/javascript" src="<c:url value='/scripts/validator.jsp'/>"></script>

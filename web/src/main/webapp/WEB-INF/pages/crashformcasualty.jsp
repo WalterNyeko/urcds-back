@@ -1,7 +1,16 @@
 <%@ include file="/common/taglibs.jsp"%>
+<fmt:message key="crashForm.pedestrianOrPassengerCasualty" var="casualtyTypeLabel" />
+<fmt:message key="crashForm.pedestrianOrPassengerClass" var="casualtyClassLabel" />
 <head>
 <title><fmt:message key="casulatyForm.title" /></title>
 <meta name="menue" content="CrashMenu" />
+<script type="text/javascript">
+	$( document ).ready(function() {
+		$(".submit").click(function(){
+		    return validateFields();
+		});	
+	});		
+</script>
 </head>
 <div class="col-sm-2">
 	<h2>
@@ -54,6 +63,7 @@
 											<td>
 												 <form:hidden path="id" />
 												 <form:hidden path="dateCreated"/>
+												 <input type="hidden" value="casualtyType.id" class="rb-helper" data-labelName="${casualtyTypeLabel}" />
 												<c:forEach var="casualtyType"
 													items="${casualtyTypes}">
 													<c:if test="${casualtyType.id ne 4}">
@@ -70,7 +80,9 @@
 											<td align="right">
 												<form:input cssClass="form-control right-al" path="age" id="age" />
 											</td>
-											<td><c:forEach var="casualtyClass"
+											<td>
+												<input type="hidden" value="casualtyClass.id" class="rb-helper" data-labelName="${casualtyClassLabel}" />
+												<c:forEach var="casualtyClass"
 													items="${casualtyClasses}">
 													<form:radiobutton path="casualtyClass.id"
 														value="${casualtyClass.id}" />&nbsp;&nbsp;${casualtyClass.name}<br />
@@ -109,7 +121,7 @@
 											key="button.cancel" />
 								</a></td>
 								<td width="50%" align="right"><input type="submit"
-									class="btn btn-primary"
+									class="btn btn-primary submit"
 									value="<fmt:message key='button.save'/>"></td>
 							</tr>
 						</table>

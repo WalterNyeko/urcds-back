@@ -54,9 +54,6 @@
 		    <field property="tarNo" depends="required">
 		        <arg key="crash.tarNo"/>
 		    </field>
-		    <!-- <field property="policeStation" depends="required">
-		        <arg key="crash.policeStation"/>
-		    </field> -->
 		</form>
 	</formset>
 </form-validation>
