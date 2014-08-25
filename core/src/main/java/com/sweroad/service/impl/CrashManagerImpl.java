@@ -127,14 +127,24 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
 		if (crash.getVehicles() != null) {
 			for (Vehicle vehicle : crash.getVehicles()) {
 				saveVehicleDriver(vehicle);
+				long vehicleId = vehicle.getId();
 				if (vehicle.getDateCreated() == null) {
 					vehicle.setDateCreated(new Date());
 					vehicle.setId(null);
 				} else {
 					vehicle.setDateUpdated(new Date());
 				}
-				setVehicleParams(vehicle);
+				setVehicleParams(vehicle);				
 				vehicle = vehicleManager.save(vehicle);
+				updateReferencedCasualty(crash, vehicleId, vehicle);
+			}
+		}
+	}
+
+	private void updateReferencedCasualty(Crash crash, long vehicleId, Vehicle vehicle) {
+		for(Casualty casualty : crash.getCasualties()) {
+			if (casualty.getVehicle()!=null && casualty.getVehicle().getId().equals(vehicleId)){
+				casualty.setVehicle(vehicle);
 			}
 		}
 	}
@@ -148,7 +158,6 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
 			} else {
 				driver.setDateUpdated(new Date());
 			}
-			setDriverParams(driver);
 			driver = driverManager.save(driver);
 			vehicle.setDriver(driver);
 		}
@@ -212,13 +221,6 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
 		}
 		if (crash.getWeather() != null) {
 			crash.setWeather(weatherManager.get(crash.getWeather().getId()));
-		}
-	}
-
-	private void setDriverParams(Driver driver) {
-		if (driver.getCasualtyType() != null) {
-			driver.setCasualtyType(casualtyTypeManager.get(driver
-					.getCasualtyType().getId()));
 		}
 	}
 

@@ -89,7 +89,7 @@ function createOptions(divId, chartTitle) {
 		},
 		tooltip : {
 			formatter : function() {
-				return '<b>' + this.point.name + '</b>: ' + this.percentage
+				return '<b>' + this.point.name + '</b>: ' + Highcharts.numberFormat(this.percentage, 2)
 						+ ' %';
 			}
 		},
@@ -103,7 +103,7 @@ function createOptions(divId, chartTitle) {
 					connectorColor : '#000000',
 					formatter : function() {
 						return '<b>' + this.point.name + '</b>: '
-								+ this.percentage + ' %';
+								+ Highcharts.numberFormat(this.percentage, 2) + ' %';
 					}
 				}
 			}

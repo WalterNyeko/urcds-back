@@ -30,9 +30,9 @@ public class CrashExcelServiceImpl implements CrashExcelService {
 	@Override
 	public Workbook generateCrashExcelWorkBook(List<Crash> crashes) {
 		workbook = new XSSFWorkbook();
-		Sheet crashSheet = workbook.createSheet("List of Crashes");
-		Sheet vehicleSheet = workbook.createSheet("Crash Vehicles");
-		Sheet casualtySheet = workbook.createSheet("Crash Casualties");
+		Sheet crashSheet = workbook.createSheet("Crash Data");
+		Sheet vehicleSheet = workbook.createSheet("Vehicle Data");
+		Sheet casualtySheet = workbook.createSheet("Casualty Data");
 		createHeaderRowForCrashes(crashSheet);
 		createHeaderRowForVehicles(vehicleSheet);
 		createHeaderRowForCasualties(casualtySheet);
@@ -66,7 +66,6 @@ public class CrashExcelServiceImpl implements CrashExcelService {
 		int index = 0;
 		addHeaderCell(row, index++, "No.");
 		addHeaderCell(row, index++, "Crash TAR No.");
-		addHeaderCell(row, index++, "Casualty No.");
 		addHeaderCell(row, index++, "Casualty Type");
 		addHeaderCell(row, index++, "Casualty Sex");
 		addHeaderCell(row, index++, "Casualty Age");
@@ -290,8 +289,6 @@ public class CrashExcelServiceImpl implements CrashExcelService {
 				getRightAlignStyle());
 		addRowCell(row, cellIndex++, crash.getTarNo(), Cell.CELL_TYPE_STRING,
 				null);
-		addRowCell(row, cellIndex++, casualtyNum.toString(),
-				Cell.CELL_TYPE_NUMERIC, getRightAlignStyle());
 		addRowCell(row, cellIndex++,
 				casualty.getCasualtyType() != null ? casualty.getCasualtyType()
 						.getName() : "", Cell.CELL_TYPE_STRING, null);
