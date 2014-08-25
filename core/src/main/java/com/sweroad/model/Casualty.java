@@ -33,7 +33,7 @@ public class Casualty extends BaseModel {
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "casualty_type_id", nullable = false)
 	private CasualtyType casualtyType;
-	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@ManyToOne(cascade = { CascadeType.PERSIST })
 	@JoinColumn(name = "vehicle_id")
 	private Vehicle vehicle;
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })

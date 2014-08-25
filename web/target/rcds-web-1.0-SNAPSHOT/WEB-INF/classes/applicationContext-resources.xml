@@ -23,12 +23,12 @@
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost/rcds?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;autoReconnect=true" />
+		<!--<property name="url" value="jdbc:mysql://localhost/rcds?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;autoReconnect=true" />
 		<property name="username" value="root" />
-		<property name="password" value="" />
-		<!-- <property name="url" value="jdbc:mysql://127.4.169.130:3306/rcds" />
+		<property name="password" value="" />-->
+		<property name="url" value="jdbc:mysql://127.4.169.130:3306/rcds" />
 		<property name="username" value="adminnxVYZkq" />
-		<property name="password" value="Qpm_WUy5FcHW" /> -->
+		<property name="password" value="Qpm_WUy5FcHW" />
 		<property name="maxActive" value="100" />
 		<property name="maxWait" value="1000" />
 		<property name="poolPreparedStatements" value="true" />
