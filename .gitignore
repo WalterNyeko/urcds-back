@@ -2,4 +2,4 @@
 classes/
 target/
 \*.class
-core/com.sweroad.model.User/\*.\*
+core/com.sweroad.model.User/
