@@ -2,6 +2,7 @@ package com.sweroad.service.impl;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -92,6 +93,13 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
 			crash.setCrashDateTimeString(crash.getCrashDisplayDate());
 		}
 		return crash;
+	}
+	
+	@Override
+	public List<Crash> getAll(){
+		List<Crash> crashes = super.getAll();
+		Collections.sort(crashes);
+		return crashes;
 	}
 
 	@Override

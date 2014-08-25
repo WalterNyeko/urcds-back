@@ -1,6 +1,7 @@
 package com.sweroad.webapp.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -112,6 +113,7 @@ public class CrashFormController extends BaseFormController {
 			crash.setId(sessionCrash.getId());
 			crash.setVehicles(sessionCrash.getVehicles());
 			crash.setCasualties(sessionCrash.getCasualties());
+			Collections.sort(crash.getVehicles());
 		}
 	}
 
@@ -124,6 +126,8 @@ public class CrashFormController extends BaseFormController {
 		Crash crash = (Crash) request.getSession().getAttribute("crash");
 		if (crash == null) {
 			crash = new Crash();
+		} else {
+			Collections.sort(crash.getVehicles());
 		}
 		mav.addObject("crash", crash);
 		mav.addAllObjects(crashManager.getReferenceData());

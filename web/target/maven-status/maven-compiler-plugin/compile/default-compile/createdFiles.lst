@@ -23,6 +23,7 @@ com/sweroad/webapp/controller/PasswordHintController.class
 com/sweroad/webapp/listener/StartupListener.class
 com/sweroad/webapp/taglib/ConstantsTag.class
 com/sweroad/webapp/util/CrashFormHelper.class
+com/sweroad/webapp/controller/ChartController.class
 com/sweroad/webapp/util/ValidationUtil.class
 com/sweroad/webapp/util/RequestUtil.class
 com/sweroad/webapp/listener/UserCounterListener.class

@@ -75,3 +75,64 @@ function validateFields() {
 	}
 	return true;
 }
+
+function createOptions(divId, chartTitle) {
+	var options = {
+		chart : {
+			renderTo : divId,
+			plotBackgroundColor : null,
+			plotBorderWidth : null,
+			plotShadow : false
+		},
+		title : {
+			text : chartTitle
+		},
+		tooltip : {
+			formatter : function() {
+				return '<b>' + this.point.name + '</b>: ' + this.percentage
+						+ ' %';
+			}
+		},
+		plotOptions : {
+			pie : {
+				allowPointSelect : true,
+				cursor : 'pointer',
+				dataLabels : {
+					enabled : true,
+					color : '#000000',
+					connectorColor : '#000000',
+					formatter : function() {
+						return '<b>' + this.point.name + '</b>: '
+								+ this.percentage + ' %';
+					}
+				}
+			}
+		},
+		series : []
+	};
+	return options;
+}
+
+function loadCrashSeverityChart() {
+	$.ajax({
+		url : "/crashchartseverity",
+		success : function(result) {
+			var options = createOptions("container-severity",
+					"Crash Severity");
+			options.series = $.parseJSON(result);
+			var chart = new Highcharts.Chart(options);
+		}
+	});
+}
+
+function loadCrashCauseChart() {
+	$.ajax({
+		url : "/crashchartcause",
+		success : function(result) {
+			var options = createOptions("container-cause",
+					"Main Cause of Crash");
+			options.series = $.parseJSON(result);
+			var chart = new Highcharts.Chart(options);
+		}
+	});
+}

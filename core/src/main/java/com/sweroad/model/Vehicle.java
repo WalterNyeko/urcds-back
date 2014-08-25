@@ -12,7 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity(name = "vehicle")
-public class Vehicle extends BaseModel {
+public class Vehicle extends BaseModel implements Comparable<Vehicle> {
 
 	/**
 	 * 
@@ -208,5 +208,22 @@ public class Vehicle extends BaseModel {
 	@Override
 	public int hashCode() {
 		return 0;
+	}
+
+	@Override
+	public int compareTo(Vehicle vehicle) {
+		final int BEFORE = -1;
+		final int EQUAL = 0;
+		final int AFTER = 1;
+		if (vehicle.getNumber() == null || number == null) {
+			return BEFORE;
+		}
+		if (number.intValue() == vehicle.getNumber().intValue()) {
+			return EQUAL;
+		}
+		if (number.intValue() < vehicle.getNumber().intValue()) {
+			return BEFORE;
+		}
+		return AFTER;
 	}
 }

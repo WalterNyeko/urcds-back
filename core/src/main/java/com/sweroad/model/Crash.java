@@ -38,7 +38,7 @@ import com.sweroad.util.Constants;
 @NamedQueries({
 		@NamedQuery(name = Crash.FIND_CRASHES_ORDER_BY_DATE, query = "from Crash c order by c.crashDateTime"),
 		@NamedQuery(name = Crash.FIND_CRASHES_ORDER_BY_DATE_DESC, query = "from Crash c order by c.crashDateTime desc") })
-public class Crash extends BaseModel {
+public class Crash extends BaseModel implements Comparable<Crash> {
 
 	/**
 	 * 
@@ -703,5 +703,22 @@ public class Crash extends BaseModel {
 	@Override
 	public int hashCode() {
 		return 0;
+	}
+
+	@Override
+	public int compareTo(Crash crash) {
+		final int BEFORE = -1;
+		final int EQUAL = 0;
+		final int AFTER = 1;
+		if (crash.getId() == null || id == null) {
+			return BEFORE;
+		}
+		if (id.longValue() == crash.getId().longValue()) {
+			return EQUAL;
+		}
+		if (id.longValue() < crash.getId().longValue()) {
+			return BEFORE;
+		}
+		return AFTER;
 	}
 }
