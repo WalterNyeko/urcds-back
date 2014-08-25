@@ -5,8 +5,8 @@
     <groupId>com.sweroad</groupId>
     <artifactId>rcds</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.0-SNAPSHOT</version>
-    <name>Road Crash Data System</name>
+    <version>1.0.1-SNAPSHOT</version>
+    <name>Road Crash Data Systems</name>
     <url>http://www.sweroad.com</url>
 
     <prerequisites>
