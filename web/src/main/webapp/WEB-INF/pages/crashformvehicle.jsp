@@ -95,14 +95,14 @@
 										<tr>
 											<td><form:radiobutton path="driver.licenseValid"
 													value="1" />
-												<appfuse:label styleClass="form-label"
+												&nbsp;<appfuse:label styleClass="form-label"
 													key="rcds.validLicense" /></td>
 											<td><form:radiobutton path="driver.gender" value="M" />
-												<appfuse:label styleClass="form-label" key="rcds.male" /></td>
+												&nbsp;<appfuse:label styleClass="form-label" key="rcds.male" /></td>
 											<td><appfuse:label styleClass="form-label"
 													key="rcds.years" /></td>
 											<td><form:radiobutton path="driver.beltUsed" value="1" />
-												<appfuse:label styleClass="form-label" key="rcds.yes" /></td>
+												&nbsp;<appfuse:label styleClass="form-label" key="rcds.yes" /></td>
 											<td rowspan="4"><c:forEach var="casualtyType"
 													items="${casualtyTypes}">
 													<form:radiobutton path="driver.casualtyType.id"
@@ -117,30 +117,30 @@
 													cssClass="form-control" path="driver.licenseNumber"
 													id="licenseNumber" /></td>
 											<td><form:radiobutton path="driver.gender" value="F" />
-												<appfuse:label styleClass="form-label" key="rcds.female" />
+												&nbsp;<appfuse:label styleClass="form-label" key="rcds.female" />
 											</td>
 											<td><form:input cssClass="form-control"
 													path="driver.age" id="age" /></td>
 											<td><form:radiobutton path="driver.beltUsed" value="0" />
-												<appfuse:label styleClass="form-label" key="rcds.no" /></td>
+												&nbsp;<appfuse:label styleClass="form-label" key="rcds.no" /></td>
 										</tr>
 										<tr>
 											<td><form:radiobutton path="driver.licenseValid"
 													value="0" />
-												<appfuse:label styleClass="form-label"
+												&nbsp;<appfuse:label styleClass="form-label"
 													key="rcds.noValidLicense" /></td>
 											<td><form:radiobutton path="driver.gender" value="" />
-												<appfuse:label styleClass="form-label" key="rcds.unknown" />
+												&nbsp;<appfuse:label styleClass="form-label" key="rcds.unknown" />
 											</td>
 											<td>&nbsp;</td>
 											<td><form:radiobutton path="driver.beltUsed" value="" />
-												<appfuse:label styleClass="form-label" key="rcds.unknown" />
+												&nbsp;<appfuse:label styleClass="form-label" key="rcds.unknown" />
 											</td>
 										</tr>
 										<tr>
 											<td><form:radiobutton path="driver.licenseValid"
 													value="" />
-												<appfuse:label styleClass="form-label" key="rcds.unknown" />
+												&nbsp;<appfuse:label styleClass="form-label" key="rcds.unknown" />
 											</td>
 											<td>&nbsp;</td>
 											<td>&nbsp;</td>

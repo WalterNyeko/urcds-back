@@ -56,7 +56,7 @@ public class CrashController extends BaseFormController {
 			dirPath.mkdirs();
 		}
 		return uploadDir + "rcds_crashes_genby_" + request.getRemoteUser()
-				+ ".xls";
+				+ ".xlsx";
 	}
 
 	private void downloadFile(HttpServletResponse response, String excelFile)

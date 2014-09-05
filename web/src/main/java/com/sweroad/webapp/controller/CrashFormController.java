@@ -1,7 +1,9 @@
 package com.sweroad.webapp.controller;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -141,14 +143,26 @@ public class CrashFormController extends BaseFormController {
 		Crash crash = (Crash) request.getSession().getAttribute("crash");
 		if (crash.getCrashDateTimeString() != null
 				&& !"".equals(crash.getCrashDateTimeString())) {
-			SimpleDateFormat formatter = new SimpleDateFormat(
-					"dd/MM/yyyy hh:mm");
-			crash.setCrashDateTime(formatter.parse(crash
+			crash.setCrashDateTime(parseDate(crash
 					.getCrashDateTimeString()));
 		}
 		crashManager.saveCrash(crash);
 		request.getSession().removeAttribute("crash");
 		response.sendRedirect("/crashes");
+	}
+	
+	private Date parseDate(String crashDateString) {
+		SimpleDateFormat formatter = new SimpleDateFormat(
+				"dd/MM/yyyy hh:mm");
+		try{
+			return formatter.parse(crashDateString);
+		} catch (ParseException e) {
+			try{
+				return formatter.parse(crashDateString + " 12:00");
+			} catch (Exception ex){
+				return null;
+			}
+		} 		
 	}
 
 	@ModelAttribute

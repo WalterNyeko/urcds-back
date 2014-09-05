@@ -1,5 +1,6 @@
 package com.sweroad.service.impl;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -11,6 +12,8 @@ import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
@@ -36,18 +39,20 @@ public class CrashExcelServiceImpl implements CrashExcelService {
 		createHeaderRowForCrashes(crashSheet);
 		createHeaderRowForVehicles(vehicleSheet);
 		createHeaderRowForCasualties(casualtySheet);
+		XSSFColor color;
 		int index = 1;
 		for (Crash crash : crashes) {
-			addCrashRow(crashSheet, crash, index++);
+			color = getAlternateColor(index);
+			addCrashRow(crashSheet, crash, index++, color);
 			Integer injuredDriverCount = 0;
 			for (Vehicle vehicle : crash.getVehicles()) {
 				addCrashVehicle(vehicleSheet, casualtySheet, vehicle, crash,
-						injuredDriverCount);
+						injuredDriverCount, color);
 			}
 			int casualtyIndex = injuredDriverCount + 1;
 			for (Casualty casualty : crash.getCasualties()) {
 				addCrashCasualty(casualtySheet, casualty, crash,
-						casualtyIndex++);
+						casualtyIndex++, color);
 			}
 		}
 		autoSizeColumns();
@@ -59,6 +64,13 @@ public class CrashExcelServiceImpl implements CrashExcelService {
 			String filename) throws IOException {
 		Workbook workbook = generateCrashExcelWorkBook(crashes);
 		writeWorkBookToFile(workbook, filename);
+	}
+
+	private XSSFColor getAlternateColor(int index) {
+		if (index % 2 == 0) {
+			return new XSSFColor(Color.CYAN);
+		}
+		return new XSSFColor(Color.LIGHT_GRAY);
 	}
 
 	private void createHeaderRowForCasualties(Sheet casualtySheet) {
@@ -145,76 +157,86 @@ public class CrashExcelServiceImpl implements CrashExcelService {
 		}
 	}
 
-	private void addCrashRow(Sheet crashSheet, Crash crash, Integer index) {
+	private void addCrashRow(Sheet crashSheet, Crash crash, Integer index,
+			XSSFColor color) {
 		Row row = crashSheet.createRow(index);
 		int cellIndex = 0;
 		addRowCell(row, cellIndex++, index.toString(), Cell.CELL_TYPE_NUMERIC,
-				getRightAlignStyle());
+				getRightAlignStyle(), color);
 		addRowCell(row, cellIndex++, crash.getTarNo(), Cell.CELL_TYPE_STRING,
-				null);
+				null, color);
 		addRowCell(row, cellIndex++, crash.getPoliceStation() != null ? crash
-				.getPoliceStation().getName() : "", Cell.CELL_TYPE_STRING, null);
+				.getPoliceStation().getName() : "", Cell.CELL_TYPE_STRING,
+				null, color);
 		addRowCell(row, cellIndex++, crash.getPoliceStation() != null ? crash
 				.getPoliceStation().getDistrict().getName() : "",
-				Cell.CELL_TYPE_STRING, null);
+				Cell.CELL_TYPE_STRING, null, color);
 		addRowCell(row, cellIndex++, crash.getTownOrVillage(),
-				Cell.CELL_TYPE_STRING, null);
+				Cell.CELL_TYPE_STRING, null, color);
 		addRowCell(row, cellIndex++, crash.getRoad(), Cell.CELL_TYPE_STRING,
-				null);
+				null, color);
 		addRowCell(row, cellIndex++, crash.getRoadNumber(),
-				Cell.CELL_TYPE_STRING, null);
+				Cell.CELL_TYPE_STRING, null, color);
 		addRowCell(row, cellIndex++, crash.getCrashPlace(),
-				Cell.CELL_TYPE_STRING, null);
+				Cell.CELL_TYPE_STRING, null, color);
 		addRowCell(row, cellIndex++, crash.getCrashDisplayDate(),
-				Cell.CELL_TYPE_STRING, getRightAlignStyle());
+				Cell.CELL_TYPE_STRING, getRightAlignStyle(), color);
 		addRowCell(row, cellIndex++, crash.getCrashYear() != null ? crash
-				.getCrashYear().toString() : "", Cell.CELL_TYPE_NUMERIC, null);
+				.getCrashYear().toString() : "", Cell.CELL_TYPE_NUMERIC, null,
+				color);
 		addRowCell(row, cellIndex++, crash.getCrashMonth() != null ? crash
-				.getCrashMonth().toString() : "", Cell.CELL_TYPE_NUMERIC, null);
+				.getCrashMonth().toString() : "", Cell.CELL_TYPE_NUMERIC, null,
+				color);
 		addRowCell(row, cellIndex++, crash.getCrashDayOfMonth() != null ? crash
 				.getCrashDayOfMonth().toString() : "", Cell.CELL_TYPE_NUMERIC,
-				null);
+				null, color);
 		addRowCell(row, cellIndex++, crash.getCrashTime(),
-				Cell.CELL_TYPE_STRING, getCenterAlignStyle());
+				Cell.CELL_TYPE_STRING, getCenterAlignStyle(), color);
 		addRowCell(row, cellIndex++, crash.getCrashDayOfWeek(),
-				Cell.CELL_TYPE_STRING, null);
+				Cell.CELL_TYPE_STRING, null, color);
 		addRowCell(row, cellIndex++, crash.getGpsCoordinate() != null ? crash
 				.getGpsCoordinate().getLatitude() : "", Cell.CELL_TYPE_STRING,
-				null);
+				null, color);
 		addRowCell(row, cellIndex++, crash.getGpsCoordinate() != null ? crash
 				.getGpsCoordinate().getLongitude() : "", Cell.CELL_TYPE_STRING,
-				null);
+				null, color);
 		addRowCell(row, cellIndex++, crash.getCrashSeverity() != null ? crash
-				.getCrashSeverity().getName() : "", Cell.CELL_TYPE_STRING, null);
+				.getCrashSeverity().getName() : "", Cell.CELL_TYPE_STRING,
+				null, color);
 		addRowCell(row, cellIndex++, crash.getCollisionType() != null ? crash
-				.getCollisionType().getName() : "", Cell.CELL_TYPE_STRING, null);
+				.getCollisionType().getName() : "", Cell.CELL_TYPE_STRING,
+				null, color);
 		addRowCell(row, cellIndex++, crash.getMainCrashCause() != null ? crash
 				.getMainCrashCause().getName() : "", Cell.CELL_TYPE_STRING,
-				null);
+				null, color);
 		addRowCell(row, cellIndex++,
 				crash.getVehicleFailureType() != null ? crash
 						.getVehicleFailureType().getName() : "",
-				Cell.CELL_TYPE_STRING, null);
+				Cell.CELL_TYPE_STRING, null, color);
 		addRowCell(row, cellIndex++, crash.getWeather() != null ? crash
-				.getWeather().getName() : "", Cell.CELL_TYPE_STRING, null);
+				.getWeather().getName() : "", Cell.CELL_TYPE_STRING, null,
+				color);
 		addRowCell(row, cellIndex++,
 				crash.getSurfaceCondition() != null ? crash
 						.getSurfaceCondition().getName() : "",
-				Cell.CELL_TYPE_STRING, null);
+				Cell.CELL_TYPE_STRING, null, color);
 		addRowCell(row, cellIndex++, crash.getRoadSurface() != null ? crash
-				.getRoadSurface().getName() : "", Cell.CELL_TYPE_STRING, null);
+				.getRoadSurface().getName() : "", Cell.CELL_TYPE_STRING, null,
+				color);
 		addRowCell(row, cellIndex++, crash.getSurfaceType() != null ? crash
-				.getSurfaceType().getName() : "", Cell.CELL_TYPE_STRING, null);
+				.getSurfaceType().getName() : "", Cell.CELL_TYPE_STRING, null,
+				color);
 		addRowCell(row, cellIndex++,
 				crash.getRoadwayCharacter() != null ? crash
 						.getRoadwayCharacter().getName() : "",
-				Cell.CELL_TYPE_STRING, null);
+				Cell.CELL_TYPE_STRING, null, color);
 		addRowCell(row, cellIndex++, crash.getJunctionType() != null ? crash
-				.getJunctionType().getName() : "", Cell.CELL_TYPE_STRING, null);
+				.getJunctionType().getName() : "", Cell.CELL_TYPE_STRING, null,
+				color);
 	}
 
 	private void addRowCell(Row row, int cellIndex, String value, int cellType,
-			CellStyle cellStyle) {
+			XSSFCellStyle cellStyle, XSSFColor color) {
 		Cell cell = row.createCell(cellIndex++, cellType);
 		if (cellType == Cell.CELL_TYPE_NUMERIC && !"".equals(value.trim())) {
 			cell.setCellValue(Double.parseDouble(value));
@@ -222,106 +244,112 @@ public class CrashExcelServiceImpl implements CrashExcelService {
 			cell.setCellValue(value);
 		}
 		if (cellStyle == null) {
-			cellStyle = workbook.createCellStyle();
+			cellStyle = (XSSFCellStyle) workbook.createCellStyle();
 		}
 		cellStyle.setBorderTop(CellStyle.BORDER_THIN);
 		cellStyle.setBorderLeft(CellStyle.BORDER_THIN);
 		cellStyle.setBorderRight(CellStyle.BORDER_THIN);
 		cellStyle.setBorderBottom(CellStyle.BORDER_THIN);
+		cellStyle.setFillForegroundColor(new XSSFColor(Color.BLACK));
+		cellStyle.setFillBackgroundColor(color);
 		cell.setCellStyle(cellStyle);
 	}
 
 	private void addCrashVehicle(Sheet vehicleSheet, Sheet casualtySheet,
-			Vehicle vehicle, Crash crash, Integer injuredDriverCount) {
+			Vehicle vehicle, Crash crash, Integer injuredDriverCount,
+			XSSFColor color) {
 		Integer index = vehicleSheet.getPhysicalNumberOfRows();
 		Row row = vehicleSheet.createRow(index);
 		int cellIndex = 0;
 		addRowCell(row, cellIndex++, index.toString(), Cell.CELL_TYPE_NUMERIC,
-				getRightAlignStyle());
+				getRightAlignStyle(), color);
 		addRowCell(row, cellIndex++, crash.getTarNo(), Cell.CELL_TYPE_STRING,
-				null);
+				null, color);
 		addRowCell(row, cellIndex++, vehicle.getNumber() != null ? vehicle
 				.getNumber().toString() : "", Cell.CELL_TYPE_NUMERIC,
-				getRightAlignStyle());
+				getRightAlignStyle(), color);
 		addRowCell(row, cellIndex++, vehicle.getVehicleType() != null ? vehicle
-				.getVehicleType().getName() : "", Cell.CELL_TYPE_STRING, null);
+				.getVehicleType().getName() : "", Cell.CELL_TYPE_STRING, null,
+				color);
 		if (vehicle.getDriver() != null) {
 			addRowCell(row, cellIndex++,
 					vehicle.getDriver().getLicenseValid() != null ? vehicle
 							.getDriver().getLicenseValid() ? "Yes" : "No"
-							: "Uknown", Cell.CELL_TYPE_STRING, null);
+							: "Uknown", Cell.CELL_TYPE_STRING, null, color);
 			addRowCell(row, cellIndex++,
 					vehicle.getDriver().getLicenseNumber(),
-					Cell.CELL_TYPE_STRING, null);
+					Cell.CELL_TYPE_STRING, null, color);
 			addRowCell(row, cellIndex++, vehicle.getDriver().getGender(),
-					Cell.CELL_TYPE_STRING, getCenterAlignStyle());
+					Cell.CELL_TYPE_STRING, getCenterAlignStyle(), color);
 			addRowCell(row, cellIndex++,
 					vehicle.getDriver().getAge() != null ? vehicle.getDriver()
 							.getAge().toString() : "", Cell.CELL_TYPE_NUMERIC,
-					getRightAlignStyle());
+					getRightAlignStyle(), color);
 			addRowCell(row, cellIndex++,
 					vehicle.getDriver().getBeltUsed() != null ? vehicle
 							.getDriver().getBeltUsed() ? "Yes" : "No"
-							: "Uknown", Cell.CELL_TYPE_STRING, null);
+							: "Uknown", Cell.CELL_TYPE_STRING, null, color);
 			addRowCell(row, cellIndex++,
 					vehicle.getDriver().getCasualtyType() != null ? vehicle
 							.getDriver().getCasualtyType().getName() : "",
-					Cell.CELL_TYPE_STRING, null);
+					Cell.CELL_TYPE_STRING, null, color);
 			addCasualtyVehicleDriver(casualtySheet, vehicle, crash,
-					injuredDriverCount);
+					injuredDriverCount, color);
 		} else {
 			int i = 0;
 			while (i < 6) {
-				addRowCell(row, cellIndex++, "", Cell.CELL_TYPE_STRING, null);
+				addRowCell(row, cellIndex++, "", Cell.CELL_TYPE_STRING, null,
+						color);
 				i++;
 			}
 		}
 		addRowCell(row, cellIndex++, vehicle.getCompanyName(),
-				Cell.CELL_TYPE_STRING, null);
+				Cell.CELL_TYPE_STRING, null, color);
 	}
 
 	private void addCrashCasualty(Sheet casualtySheet, Casualty casualty,
-			Crash crash, Integer casualtyNum) {
+			Crash crash, Integer casualtyNum, XSSFColor color) {
 		Integer index = casualtySheet.getPhysicalNumberOfRows();
 		Row row = casualtySheet.createRow(index);
 		int cellIndex = 0;
 		addRowCell(row, cellIndex++, index.toString(), Cell.CELL_TYPE_NUMERIC,
-				getRightAlignStyle());
+				getRightAlignStyle(), color);
 		addRowCell(row, cellIndex++, crash.getTarNo(), Cell.CELL_TYPE_STRING,
-				null);
+				null, color);
 		addRowCell(row, cellIndex++,
 				casualty.getCasualtyType() != null ? casualty.getCasualtyType()
-						.getName() : "", Cell.CELL_TYPE_STRING, null);
+						.getName() : "", Cell.CELL_TYPE_STRING, null, color);
 		addRowCell(row, cellIndex++, casualty.getGender(),
-				Cell.CELL_TYPE_STRING, getCenterAlignStyle());
+				Cell.CELL_TYPE_STRING, getCenterAlignStyle(), color);
 		addRowCell(row, cellIndex++, casualty.getAge() != null ? casualty
 				.getAge().toString() : "", Cell.CELL_TYPE_NUMERIC,
-				getRightAlignStyle());
+				getRightAlignStyle(), color);
 		addRowCell(row, cellIndex++,
 				casualty.getCasualtyClass() != null ? casualty
 						.getCasualtyClass().getName() : "",
-				Cell.CELL_TYPE_STRING, null);
+				Cell.CELL_TYPE_STRING, null, color);
 		addRowCell(row, cellIndex++, casualty.getVehicle() != null ? "Vehile "
 				+ casualty.getVehicle().getNumber() : "",
-				Cell.CELL_TYPE_STRING, null);
+				Cell.CELL_TYPE_STRING, null, color);
 		addRowCell(row, cellIndex++, casualty.getVehicle() != null
 				&& casualty.getVehicle().getVehicleType() != null ? casualty
 				.getVehicle().getVehicleType().getName() : "",
-				Cell.CELL_TYPE_STRING, null);
+				Cell.CELL_TYPE_STRING, null, color);
 		addRowCell(
 				row,
 				cellIndex++,
 				casualty.getBeltOrHelmetUsed() != null ? casualty
 						.getBeltOrHelmetUsed() ? "Yes" : "No" : "Uknown",
-				Cell.CELL_TYPE_STRING, null);
+				Cell.CELL_TYPE_STRING, null, color);
 	}
 
 	private void addCasualtyVehicleDriver(Sheet casualtySheet, Vehicle vehicle,
-			Crash crash, Integer injuredDriverCount) {
+			Crash crash, Integer injuredDriverCount, XSSFColor color) {
 		Casualty casualty = vehicle.getDriver().toCasualty(vehicle);
 		if (casualty != null) {
 			injuredDriverCount++;
-			addCrashCasualty(casualtySheet, casualty, crash, injuredDriverCount);
+			addCrashCasualty(casualtySheet, casualty, crash,
+					injuredDriverCount, color);
 		}
 	}
 
@@ -332,14 +360,18 @@ public class CrashExcelServiceImpl implements CrashExcelService {
 		out.close();
 	}
 
-	private CellStyle getRightAlignStyle() {
-		CellStyle styleRightAlign = workbook.createCellStyle();
+	private XSSFCellStyle getRightAlignStyle() {
+		XSSFCellStyle styleRightAlign = (XSSFCellStyle) workbook
+				.createCellStyle();
 		styleRightAlign.setAlignment(CellStyle.ALIGN_RIGHT);
+		styleRightAlign.setFillForegroundColor(new XSSFColor(Color.BLACK));
+		styleRightAlign.setFillForegroundColor(new XSSFColor(Color.YELLOW));
 		return styleRightAlign;
 	}
 
-	private CellStyle getCenterAlignStyle() {
-		CellStyle styleRightAlign = workbook.createCellStyle();
+	private XSSFCellStyle getCenterAlignStyle() {
+		XSSFCellStyle styleRightAlign = (XSSFCellStyle) workbook
+				.createCellStyle();
 		styleRightAlign.setAlignment(CellStyle.ALIGN_CENTER);
 		return styleRightAlign;
 	}

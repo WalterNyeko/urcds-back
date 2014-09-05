@@ -79,7 +79,7 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
 	private GenericManager<Casualty, Long> casualtyManager;
 	@Autowired
 	private CrashExcelService crashExcelService;
-	
+
 	@Autowired
 	public CrashManagerImpl(CrashDao crashDao) {
 		super(crashDao);
@@ -94,9 +94,9 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
 		}
 		return crash;
 	}
-	
+
 	@Override
-	public List<Crash> getAll(){
+	public List<Crash> getAll() {
 		List<Crash> crashes = super.getAll();
 		Collections.sort(crashes);
 		return crashes;
@@ -134,16 +134,21 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
 				} else {
 					vehicle.setDateUpdated(new Date());
 				}
-				setVehicleParams(vehicle);				
-				vehicle = vehicleManager.save(vehicle);
-				updateReferencedCasualty(crash, vehicleId, vehicle);
+				setVehicleParams(vehicle);
+				Vehicle savedVehicle = vehicleManager.save(vehicle);
+				if (vehicle.getId() == null) {
+					vehicle.setId(vehicleId);
+				}
+				updateReferencedCasualty(crash, vehicleId, savedVehicle);
 			}
 		}
 	}
 
-	private void updateReferencedCasualty(Crash crash, long vehicleId, Vehicle vehicle) {
-		for(Casualty casualty : crash.getCasualties()) {
-			if (casualty.getVehicle()!=null && casualty.getVehicle().getId().equals(vehicleId)){
+	private void updateReferencedCasualty(Crash crash, long vehicleId,
+			Vehicle vehicle) {
+		for (Casualty casualty : crash.getCasualties()) {
+			if (casualty.getVehicle() != null
+					&& casualty.getVehicle().getId().equals(vehicleId)) {
 				casualty.setVehicle(vehicle);
 			}
 		}
@@ -330,7 +335,7 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
 	}
 
 	private void deleteRemovedVehicles(Crash dbCrash, Crash crash) {
-		
+
 		List<Vehicle> deletedVehicleIds = getVehiclesForDeletion(dbCrash, crash);
 		for (Vehicle vehicle : deletedVehicleIds) {
 			vehicleManager.remove(vehicle);
@@ -338,8 +343,9 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
 		}
 	}
 
-	private List<Vehicle> getVehiclesForDeletion(Crash dbCrash, Crash crashInEdit) {
-		
+	private List<Vehicle> getVehiclesForDeletion(Crash dbCrash,
+			Crash crashInEdit) {
+
 		List<Vehicle> vehiclesToDelete = new ArrayList<Vehicle>();
 		RcdsUtil<Vehicle> vehicleUtil = new RcdsUtil<Vehicle>();
 		for (Vehicle vehicle : dbCrash.getVehicles()) {
@@ -350,17 +356,19 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
 		}
 		return vehiclesToDelete;
 	}
-	
-private void deleteRemovedCasualties(Crash dbCrash, Crash crash) {
-		
-		List<Casualty> deletedVehicleIds = getCasualtiesForDeletion(dbCrash, crash);
+
+	private void deleteRemovedCasualties(Crash dbCrash, Crash crash) {
+
+		List<Casualty> deletedVehicleIds = getCasualtiesForDeletion(dbCrash,
+				crash);
 		for (Casualty casualty : deletedVehicleIds) {
 			casualtyManager.remove(casualty);
 		}
 	}
 
-	private List<Casualty> getCasualtiesForDeletion(Crash dbCrash, Crash crashInEdit) {
-		
+	private List<Casualty> getCasualtiesForDeletion(Crash dbCrash,
+			Crash crashInEdit) {
+
 		List<Casualty> casualtiesToDelete = new ArrayList<Casualty>();
 		RcdsUtil<Casualty> casualtyUtil = new RcdsUtil<Casualty>();
 		for (Casualty casualty : dbCrash.getCasualties()) {
@@ -374,7 +382,8 @@ private void deleteRemovedCasualties(Crash dbCrash, Crash crash) {
 
 	@Override
 	public void generateCrashDataExcel(String filename) throws IOException {
-		List<Crash> crashes = crashDao.findByNamedQuery(Crash.FIND_CRASHES_ORDER_BY_DATE, null);
+		List<Crash> crashes = crashDao.findByNamedQuery(
+				Crash.FIND_CRASHES_ORDER_BY_DATE, null);
 		crashExcelService.generateAndWriteCrashExcelToFile(crashes, filename);
 	}
 }
