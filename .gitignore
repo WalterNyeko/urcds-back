@@ -1,6 +1,7 @@
 # Distribution / packaging
 classes/
-target/
+web/target/
+core/target/
 \*.class
 core/com.sweroad.model.User/
 web/src/main/webapp/genexcel/
