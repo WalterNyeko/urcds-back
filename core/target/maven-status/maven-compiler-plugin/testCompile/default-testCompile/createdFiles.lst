@@ -2,6 +2,7 @@ com/sweroad/service/impl/LookupManagerImplTest.class
 com/sweroad/service/CrashManagerTest.class
 com/sweroad/service/impl/PasswordTokenManagerTest.class
 com/sweroad/service/MailEngineTest.class
+com/sweroad/util/ListUtilTest.class
 com/sweroad/dao/CrashDaoTest.class
 com/sweroad/service/impl/PersistentPasswordTokenManagerTest.class
 com/sweroad/dao/hibernate/HibernateConfigurationTest.class

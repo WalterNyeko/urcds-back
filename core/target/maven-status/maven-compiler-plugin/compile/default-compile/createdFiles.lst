@@ -30,7 +30,6 @@ com/sweroad/service/LookupManager.class
 com/sweroad/dao/LookupDao.class
 com/sweroad/dao/hibernate/UserDaoHibernate.class
 com/sweroad/model/RoadwayCharacter.class
-com/sweroad/util/RcdsUtil.class
 com/sweroad/service/impl/RoleManagerImpl.class
 com/sweroad/service/MailEngine.class
 com/sweroad/util/ConvertUtil.class
@@ -42,6 +41,7 @@ com/sweroad/dao/UserDao.class
 com/sweroad/service/CrashManager.class
 com/sweroad/model/VehicleType.class
 com/sweroad/dao/hibernate/CrashDaoHibernate.class
+com/sweroad/util/ListUtil.class
 com/sweroad/service/UserExistsException.class
 com/sweroad/model/CrashSeverity.class
 com/sweroad/dao/CrashDao.class

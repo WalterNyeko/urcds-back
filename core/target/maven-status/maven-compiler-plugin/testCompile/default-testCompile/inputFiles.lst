@@ -12,6 +12,7 @@
 /Users/Frank/Projects/sweroad/rcds/core/src/test/java/com/sweroad/dao/GenericDaoTest.java
 /Users/Frank/Projects/sweroad/rcds/core/src/test/java/com/sweroad/dao/UserDaoTest.java
 /Users/Frank/Projects/sweroad/rcds/core/src/test/java/com/sweroad/util/DateUtilTest.java
+/Users/Frank/Projects/sweroad/rcds/core/src/test/java/com/sweroad/util/ListUtilTest.java
 /Users/Frank/Projects/sweroad/rcds/core/src/test/java/com/sweroad/service/impl/CrashManagerImplTest.java
 /Users/Frank/Projects/sweroad/rcds/core/src/test/java/com/sweroad/dao/LookupDaoTest.java
 /Users/Frank/Projects/sweroad/rcds/core/src/test/java/com/sweroad/service/MockUserDetailsService.java

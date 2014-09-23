@@ -4,7 +4,9 @@ com/sweroad/webapp/filter/MockFilterChain.class
 com/sweroad/webapp/controller/CrashFormControllerTest.class
 com/sweroad/webapp/listener/StartupListenerTest.class
 com/sweroad/webapp/controller/UserControllerTest.class
+com/sweroad/webapp/util/HtmlHelperTest.class
 com/sweroad/webapp/controller/PasswordHintControllerTest.class
+com/sweroad/webapp/decorator/CrashDecoratorTest.class
 com/sweroad/webapp/controller/BaseControllerTestCase.class
 com/sweroad/webapp/controller/UpdatePasswordControllerTest.class
 com/sweroad/webapp/filter/LocaleFilterTest.class

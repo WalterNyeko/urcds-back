@@ -3,7 +3,7 @@
 <title><fmt:message key="crashList.title" /></title>
 <meta name="menu" content="CrashMenu" />
 </head>
-<div class="col-sm-10">
+<div class="col-sm-15">
 	<h2>
 		<fmt:message key="crashList.heading" />
 	</h2>
@@ -17,9 +17,9 @@
 	</div>
 	<display:table name="crashList"
 		class="table table-condensed table-striped table-hover" requestURI=""
-		id="crashList" export="true" pagesize="25">
-		<display:column property="id" sortable="true" href="crashform"
-			media="html" paramId="id" paramProperty="id" titleKey="crash.id" />
+		id="crashList" export="true" pagesize="25" decorator="com.sweroad.webapp.decorator.CrashDecorator">
+		<%-- <display:column property="id" sortable="true" href="crashform"
+			media="html" paramId="id" paramProperty="id" titleKey="crash.id" /> --%>
 		<display:column property="tarNo" sortable="true"
 			titleKey="crash.tarNo" />
 		<display:column property="townOrVillage" sortable="true"
@@ -35,6 +35,7 @@
 			titleKey="crash.policeStation" />
 		<display:column property="policeStation.district.name" sortable="true"
 			titleKey="crash.district" />
+		<display:column property="actions" sortable="true" titleKey="rcds.actions" />
 		<display:setProperty name="paging.banner.item_name">
 			<fmt:message key="crashList.crash" />
 		</display:setProperty>

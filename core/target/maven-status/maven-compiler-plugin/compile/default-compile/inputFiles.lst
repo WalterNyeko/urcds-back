@@ -56,6 +56,7 @@
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/model/CasualtyClass.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/util/Constants.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/dao/hibernate/HibernateSearchTools.java
+/Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/util/ListUtil.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/service/LookupManager.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/dao/LookupDao.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/service/CrashExcelService.java
@@ -63,5 +64,4 @@
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/service/impl/LookupManagerImpl.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/service/impl/PasswordTokenManagerImpl.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/model/Role.java
-/Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/util/RcdsUtil.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/dao/hibernate/CrashDaoHibernate.java

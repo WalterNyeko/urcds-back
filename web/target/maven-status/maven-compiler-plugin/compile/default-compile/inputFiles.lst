@@ -4,6 +4,7 @@
 /Users/Frank/Projects/sweroad/rcds/web/src/main/java/com/sweroad/webapp/taglib/CountryTag.java
 /Users/Frank/Projects/sweroad/rcds/web/src/main/java/com/sweroad/webapp/controller/UserFormController.java
 /Users/Frank/Projects/sweroad/rcds/web/src/main/java/com/sweroad/webapp/taglib/OutTag.java
+/Users/Frank/Projects/sweroad/rcds/web/src/main/java/com/sweroad/webapp/decorator/CrashDecorator.java
 /Users/Frank/Projects/sweroad/rcds/web/src/main/java/com/sweroad/webapp/util/ValidationUtil.java
 /Users/Frank/Projects/sweroad/rcds/web/src/main/java/com/sweroad/webapp/filter/LocaleFilter.java
 /Users/Frank/Projects/sweroad/rcds/web/src/main/java/com/sweroad/webapp/controller/UserController.java
@@ -17,6 +18,7 @@
 /Users/Frank/Projects/sweroad/rcds/web/src/main/java/com/sweroad/webapp/taglib/ConstantsTei.java
 /Users/Frank/Projects/sweroad/rcds/web/src/main/java/com/sweroad/webapp/spring/ValidatorExtensionPostProcessor.java
 /Users/Frank/Projects/sweroad/rcds/web/src/main/java/com/sweroad/webapp/listener/StartupListener.java
+/Users/Frank/Projects/sweroad/rcds/web/src/main/java/com/sweroad/webapp/util/HtmlHelper.java
 /Users/Frank/Projects/sweroad/rcds/web/src/main/java/com/sweroad/webapp/controller/SignupController.java
 /Users/Frank/Projects/sweroad/rcds/web/src/main/java/com/sweroad/webapp/util/RequestUtil.java
 /Users/Frank/Projects/sweroad/rcds/web/src/main/java/com/sweroad/webapp/controller/UpdatePasswordController.java

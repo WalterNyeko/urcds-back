@@ -86,4 +86,19 @@ public final class Constants {
      * @deprecated No longer used to set themes.
      */
     public static final String CSS_THEME = "csstheme";
+    
+    /**
+     * The link used for viewing crash details
+     */
+    public static final String CRASH_VIEW_LINK = "/crashview?id=%s";
+    
+    /**
+     * The link used to go to crash edit page
+     */
+    public static final String CRASH_EDIT_LINK = "/crashform?id=%s";
+    
+    /**
+     * The link used to remove a crash
+     */
+    public static final String CRASH_REMOVE_LINK = "/crashremove?id=%s";
 }

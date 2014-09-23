@@ -34,7 +34,7 @@ import com.sweroad.model.Weather;
 import com.sweroad.service.CrashExcelService;
 import com.sweroad.service.CrashManager;
 import com.sweroad.service.GenericManager;
-import com.sweroad.util.RcdsUtil;
+import com.sweroad.util.ListUtil;
 
 @Service("crashManager")
 public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
@@ -347,7 +347,7 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
 			Crash crashInEdit) {
 
 		List<Vehicle> vehiclesToDelete = new ArrayList<Vehicle>();
-		RcdsUtil<Vehicle> vehicleUtil = new RcdsUtil<Vehicle>();
+		ListUtil<Vehicle> vehicleUtil = new ListUtil<Vehicle>();
 		for (Vehicle vehicle : dbCrash.getVehicles()) {
 			if (!vehicleUtil.itemExistsInList(vehicle,
 					crashInEdit.getVehicles())) {
@@ -370,7 +370,7 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
 			Crash crashInEdit) {
 
 		List<Casualty> casualtiesToDelete = new ArrayList<Casualty>();
-		RcdsUtil<Casualty> casualtyUtil = new RcdsUtil<Casualty>();
+		ListUtil<Casualty> casualtyUtil = new ListUtil<Casualty>();
 		for (Casualty casualty : dbCrash.getCasualties()) {
 			if (!casualtyUtil.itemExistsInList(casualty,
 					crashInEdit.getCasualties())) {
