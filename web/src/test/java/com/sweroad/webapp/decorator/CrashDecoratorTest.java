@@ -11,7 +11,7 @@ import com.sweroad.model.Crash;
 @RunWith(PowerMockRunner.class)
 public class CrashDecoratorTest {
 
-	private String crashActions;
+	//private String crashActions;
 	private Crash crash;
 	private CrashDecorator crashDecorator;
 
@@ -20,9 +20,9 @@ public class CrashDecoratorTest {
 		crashDecorator = PowerMockito.spy(new CrashDecorator());
 		crash = new Crash();
 		crash.setId(1L);
-		crashActions = "<a href=\"crashview?id=1\" alt=\"View crash\">View</a> | ";
-		crashActions += "<a href=\"crashform?id=1\" alt=\"Edit crash\">Edit</a> | ";
-		crashActions += "<a href=\"crashremove?id=1\" alt=\"Remove crash\" onclick=\"return confirm('Remove crash?');\">Remove</a>";
+//		crashActions = "<a href=\"crashview?id=1\"><img src=\"/images/bt_View.gif\" alt=\"View\" title=\"View\" hspace=\"4\" /></a> | ";
+//		crashActions += "<a href=\"crashform?id=1\"><img src=\"/images/bt_Edit.gif\" alt=\"Edit\" title=\"Edit\" hspace=\"4\" /></a> | ";
+//		crashActions += "<a href=\"crashremove?id=1\" onclick=\"return confirm('Remove crash?');\"><img src=\"/images/bt_Remove.gif\" alt=\"Remove\" title=\"Remove\" hspace=\"4\" /></a>";
 
 		PowerMockito.doCallRealMethod().when(crashDecorator).getActions();
 		//PowerMockito.doReturn(crashActions).when(crashDecorator).getCurrentRowObject();

@@ -330,3 +330,10 @@ form#crashform input[type="text"], select {
 .right-al {
 	text-align: right;
 }
+.boldText {
+	font-weight: bold;
+}
+td.underlined {
+	border-bottom: solid 1px black;
+	padding-left: 4px;
+}

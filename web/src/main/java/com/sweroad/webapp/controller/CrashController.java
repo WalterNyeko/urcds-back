@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.sweroad.model.Crash;
 import com.sweroad.service.CrashManager;
 
 @Controller
@@ -30,9 +31,24 @@ public class CrashController extends BaseFormController {
 		return new ModelAndView("crashes").addObject(crashManager.getAll());
 	}
 
+	@RequestMapping(value = "/crashview", method = RequestMethod.GET)
+	public ModelAndView viewCrash(HttpServletRequest request) throws Exception {
+		try {
+			ModelAndView mav = new ModelAndView("crashview");
+			Crash crash;
+			String id = request.getParameter("id");
+			crash = crashManager.get(new Long(id));
+			mav.addObject("crash", crash);
+			mav.addAllObjects(crashManager.getReferenceData());
+			return mav;
+		} catch (Exception e) {
+			log.error("View crash failed: " + e.getLocalizedMessage());
+			return handleRequest();
+		}
+	}
+
 	@RequestMapping(value = "/crashexcel", method = RequestMethod.GET)
-	public void generateExcel(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public void generateExcel(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		try {
 			String excelFile = getFilename(request);
 			crashManager.generateCrashDataExcel(excelFile);
@@ -43,37 +59,30 @@ public class CrashController extends BaseFormController {
 	}
 
 	private String getFilename(HttpServletRequest request) {
-		// the directory to upload to
 		String uploadDir = getServletContext().getRealPath("/genexcel");
-		// The following seems to happen when running jetty:run
 		if (uploadDir == null) {
 			uploadDir = new File("src/main/webapp/genexcel").getAbsolutePath();
 		}
 		uploadDir += "/" + request.getRemoteUser() + "/";
-		// Create the directory if it doesn't exist
 		File dirPath = new File(uploadDir);
 		if (!dirPath.exists()) {
 			dirPath.mkdirs();
 		}
-		return uploadDir + "rcds_crashes_genby_" + request.getRemoteUser()
-				+ ".xlsx";
+		return uploadDir + "rcds_crashes_genby_" + request.getRemoteUser() + ".xlsx";
 	}
 
-	private void downloadFile(HttpServletResponse response, String excelFile)
-			throws URISyntaxException, IOException, FileNotFoundException {
+	private void downloadFile(HttpServletResponse response, String excelFile) throws URISyntaxException, IOException,
+			FileNotFoundException {
 		File f = new File(excelFile);
 		String filename = excelFile.substring(excelFile.lastIndexOf('/') + 1);
 		log.debug("Loading file " + excelFile + "(" + f.getAbsolutePath() + ")");
 		if (f.exists()) {
 			response.setContentType("application/vnd.ms-excel");
 			response.setContentLength(new Long(f.length()).intValue());
-			response.setHeader("Content-Disposition", "attachment; filename=\""
-					+ filename + "\"");
-			FileCopyUtils.copy(new FileInputStream(f),
-					response.getOutputStream());
+			response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
+			FileCopyUtils.copy(new FileInputStream(f), response.getOutputStream());
 		} else {
-			log.error("File" + excelFile + "(" + f.getAbsolutePath()
-					+ ") does not exist");
+			log.error("File" + excelFile + "(" + f.getAbsolutePath() + ") does not exist");
 		}
 	}
 }

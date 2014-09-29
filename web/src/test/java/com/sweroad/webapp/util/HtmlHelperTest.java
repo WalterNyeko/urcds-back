@@ -13,4 +13,11 @@ public class HtmlHelperTest {
 				"http://www.sweroad.com", "Go to Sweroad.com",
 				"javascript:addToSweroadVisitors()"));
 	}
+
+	@Test
+	public void testThatHtmlImageWorks() {
+		String expected = "<img src=\"images/view.gif\" alt=\"View\" title=\"View\" hspace=\"4\" />";
+		assertEquals(expected,
+				HtmlHelper.createImage("images/view.gif", "View", "4"));
+	}
 }
