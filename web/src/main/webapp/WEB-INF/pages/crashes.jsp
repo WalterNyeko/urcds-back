@@ -8,9 +8,11 @@
 		<fmt:message key="crashList.heading" />
 	</h2>
 	<div id="actions" class="btn=group">
-		<a href="<c:url value='/crashform'/>"> <fmt:message
+		<security:authorize url="/app/crashform*">
+		  <a href="/crashform"> <fmt:message
 				key="button.addCrash" />
 		</a> | 
+		</security:authorize>
 		<a href="<c:url value='/crashexcel'/>"> <fmt:message
 				key="button.exportToExcel" />
 		</a>

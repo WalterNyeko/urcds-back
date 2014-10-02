@@ -128,6 +128,8 @@ public class Crash extends BaseModel implements Comparable<Crash> {
 	@ManyToOne
 	@JoinColumn(name = "updated_by")
 	private User updatedBy;
+	private boolean editable;
+	private boolean removable;
 
 	/**
 	 * @return the casualties
@@ -681,6 +683,34 @@ public class Crash extends BaseModel implements Comparable<Crash> {
 			return String.format("%s:%s", hours, minutes);
 		}
 		return null;
+	}
+
+	/**
+	 * @return the editable
+	 */
+	public boolean isEditable() {
+		return editable;
+	}
+
+	/**
+	 * @param editable the editable to set
+	 */
+	public void setEditable(boolean editable) {
+		this.editable = editable;
+	}
+
+	/**
+	 * @return the removable
+	 */
+	public boolean isRemovable() {
+		return removable;
+	}
+
+	/**
+	 * @param removable the removable to set
+	 */
+	public void setRemovable(boolean removable) {
+		this.removable = removable;
 	}
 
 	@Override

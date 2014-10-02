@@ -14,6 +14,7 @@ com/sweroad/webapp/jsp/EscapeXmlELResolver.class
 com/sweroad/webapp/jsp/EscapeXmlELResolver$1.class
 com/sweroad/webapp/util/HtmlHelper.class
 com/sweroad/webapp/controller/FileUploadController.class
+com/sweroad/webapp/util/CrashHtmlHelper.class
 com/sweroad/webapp/controller/UpdatePasswordController.class
 com/sweroad/webapp/controller/UserFormController.class
 com/sweroad/webapp/spring/ValidatorExtensionPostProcessor.class

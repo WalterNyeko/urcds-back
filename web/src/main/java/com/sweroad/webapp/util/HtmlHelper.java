@@ -17,8 +17,20 @@ public class HtmlHelper {
 	 */
 	public static final String HTML_ANCHOR_TAG_CLOSE = "</a>";
 
-	public static String createAnchor(String innerText, String href,
-			String alt, String onclick) {
+	/**
+	 * Creates html anchor tag based on the passed attributes.
+	 * 
+	 * @param innerText
+	 *            Inner text of 'a' tag
+	 * @param href
+	 *            link to be loaded on click
+	 * @param alt
+	 *            Tool tip text
+	 * @param onclick
+	 *            javascript to execute on click
+	 * @return html 'a' tag
+	 */
+	public static String createAnchor(String innerText, String href, String alt, String onclick) {
 		if (alt != null && !alt.equals("")) {
 			alt = " alt=\"" + alt + "\"";
 		} else {
@@ -34,6 +46,17 @@ public class HtmlHelper {
 		return htmlAnchor;
 	}
 
+	/**
+	 * Creates html image tag.
+	 * 
+	 * @param imagePath
+	 *            Path of image
+	 * @param alt
+	 *            Tool tip
+	 * @param hspace
+	 *            Image hspace attribute
+	 * @return html image tag
+	 */
 	public static String createImage(String imagePath, String alt, String hspace) {
 		if (alt != null && !alt.equals("")) {
 			alt = " alt=\"" + alt + "\" title=\"" + alt + "\"";
@@ -45,6 +68,6 @@ public class HtmlHelper {
 		} else {
 			hspace = "";
 		}
-		return String.format(HTML_IMAGE_TAG, imagePath, alt, hspace);		
+		return String.format(HTML_IMAGE_TAG, imagePath, alt, hspace);
 	}
 }

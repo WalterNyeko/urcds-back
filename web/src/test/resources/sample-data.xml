@@ -98,13 +98,23 @@
 			<value description="name">ROLE_USER</value>
 			<value description="description"><![CDATA[Default role for all Users]]></value>
 		</row>
+		<row>
+			<value description="id">3</value>
+			<value description="name">ROLE_READONLY</value>
+			<value description="description"><![CDATA[Able to view all crash data but not make changes]]></value>
+		</row>
+		<row>
+			<value description="id">4</value>
+			<value description="name">ROLE_SUPER_USER</value>
+			<value description="description"><![CDATA[Able to change any crash data including removal]]></value>
+		</row>
 	</table>
 	<table name="user_role">
 		<column>user_id</column>
 		<column>role_id</column>
 		<row>
 			<value description="user_id">-1</value>
-			<value description="role_id">-2</value>
+			<value description="role_id">3</value>
 		</row>
 		<row>
 			<value description="user_id">-2</value>

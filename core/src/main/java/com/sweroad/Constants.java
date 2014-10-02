@@ -68,6 +68,16 @@ public final class Constants {
      * The name of the User role, as specified in web.xml
      */
     public static final String USER_ROLE = "ROLE_USER";
+    
+    /**
+     * The name of the Super User role, as specified in web.xml
+     */
+    public static final String SUPER_USER_ROLE = "ROLE_SUPER_USER";
+    
+    /**
+     * The name of the Readonly role, as specifeid in the web.xml
+     */
+    public static final String READONLY_ROLE = "ROLE_READONLY";
 
     /**
      * The name of the user's role list, a request-scoped attribute

@@ -131,7 +131,7 @@
 															</c:otherwise>
 														</c:choose></td>
 													<td rowspan="4"><c:if
-															test="${vehicle.driver ne null and vehicle.driver.casualtyType ne night }">
+															test="${vehicle.driver ne null and vehicle.driver.casualtyType ne null }">
 															${vehicle.driver.casualtyType.name}
 														</c:if></td>
 												</tr>
@@ -153,8 +153,7 @@
 								key="button.addVehicle" />
 					</a></td>
 				</tr>
-				<c:if
-					test="${crash.casualties ne null and not empty crash.casualties}">
+				<c:if test="${crash.casualties ne null and not empty crash.casualties}">
 					<tr>
 						<td colspan="2">
 							<table width="100%" class="crashform-gray">
@@ -192,31 +191,27 @@
 													<td align="center">${casualty.gender}</td>
 													<td align="right">${casualty.age}</td>
 													<td>${casualty.casualtyClass.name}</td>
-													<td><c:if test="${casualty.vehicle ne null and casualty.vehicle.id ne null}">
+													<td><c:if
+															test="${casualty.vehicle ne null and casualty.vehicle.id ne null}">
 															<appfuse:label styleClass="form-label"
 																key="crash.vehicle" />&nbsp;${casualty.vehicle.number}
 														</c:if></td>
-													<td>	
-														<c:choose>
+													<td><c:choose>
 															<c:when test="${casualty.beltOrHelmetUsed ne null}">
 																${casualty.beltOrHelmetUsed eq true ? "Yes" : "No"}
 															</c:when>
 															<c:otherwise>
 																Unknown
 															</c:otherwise>
-														</c:choose>
-													</td>
-													<td align="center">
-														<a href="/crashformcasualty?id=${casualty.id}">
-															<i class="icon-edit"></i>
-															<fmt:message key="button.edit" />
-														</a>
-														|
-														<a href="/crashformcasualtydelete?id=${casualty.id}" onclick="return confirmMessage('<fmt:message key="rcds.confirmDelete" />');">
-															<i class="icon-delete"></i>
-															<fmt:message key="button.delete" />
-														</a>
-													</td>
+														</c:choose></td>
+													<td align="center"><a
+														href="/crashformcasualty?id=${casualty.id}"> <i
+															class="icon-edit"></i> <fmt:message key="button.edit" />
+													</a> | <a href="/crashformcasualtydelete?id=${casualty.id}"
+														onclick="return confirmMessage('<fmt:message key="rcds.confirmDelete" />');">
+															<i class="icon-delete"></i> <fmt:message
+																key="button.delete" />
+													</a></td>
 												</tr>
 											</c:forEach>
 										</table>
