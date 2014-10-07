@@ -27,7 +27,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
-import com.sweroad.util.Constants;
+import com.sweroad.Constants;
 
 /**
  * @author Frank
@@ -46,6 +46,8 @@ public class Crash extends BaseModel implements Comparable<Crash> {
 	private static final long serialVersionUID = 2144213374837809344L;
 	public static final String FIND_CRASHES_ORDER_BY_DATE = "findCrashesOrderByDate";
 	public static final String FIND_CRASHES_ORDER_BY_DATE_DESC = "findCrashesOrderByDateDesc";
+	public static final String IS_EDITABLE_METHOD_NAME = "isEditable";
+	public static final String IS_REMOVABLE_MEHTOD_NAME = "isRemovable";
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;

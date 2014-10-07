@@ -49,6 +49,7 @@ com/sweroad/model/PoliceStation.class
 com/sweroad/service/UserService.class
 com/sweroad/model/BaseModel.class
 com/sweroad/service/GenericManager.class
+com/sweroad/service/CrashSecurityAdvice.class
 com/sweroad/model/GpsCoordinate.class
 com/sweroad/Constants.class
 com/sweroad/model/LabelValue.class
@@ -62,7 +63,6 @@ com/sweroad/dao/spring/HibernateExtensionPostProcessor.class
 com/sweroad/model/VehicleFailureType.class
 com/sweroad/service/impl/LookupManagerImpl.class
 com/sweroad/model/JunctionType.class
-com/sweroad/util/Constants.class
 com/sweroad/service/UserManager.class
 com/sweroad/model/SurfaceType.class
 com/sweroad/service/RoleManager.class

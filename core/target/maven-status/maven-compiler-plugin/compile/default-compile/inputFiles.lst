@@ -23,6 +23,7 @@
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/dao/SearchException.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/service/impl/GenericManagerImpl.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/service/CrashManager.java
+/Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/service/CrashSecurityAdvice.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/model/CrashSeverity.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/dao/GenericDao.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/model/Driver.java
@@ -54,7 +55,6 @@
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/service/GenericManager.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/dao/spring/HibernateExtensionPostProcessor.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/model/CasualtyClass.java
-/Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/util/Constants.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/dao/hibernate/HibernateSearchTools.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/util/ListUtil.java
 /Users/Frank/Projects/sweroad/rcds/core/src/main/java/com/sweroad/service/LookupManager.java

@@ -10,6 +10,13 @@ import com.sweroad.model.Crash;
 
 public interface CrashManager extends GenericManager<Crash, Long> {
 
+	/**
+	 * This method is monitored by CrashSecurityAdvice and should only be called when getting
+	 * crashes for display. Use getAll() otherwise.
+	 * @return
+	 */
+	List<Crash> getCrashes();
+	
 	Crash findByTarNo(String tarNo);
 	
 	@Transactional

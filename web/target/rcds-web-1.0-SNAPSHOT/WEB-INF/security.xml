@@ -46,9 +46,5 @@
 			access="ROLE_ADMIN" />
 		<protect-pointcut expression="execution(* *..service.UserManager.removeUser(..))"
 			access="ROLE_ADMIN" />
-		<protect-pointcut expression="execution(* *..webapp.util.CrashHtmlHelper.createEditLink(..))"
-			access="ROLE_ADMIN" />
-		<protect-pointcut expression="execution(* *..webapp.util.CrashHtmlHelper.createRemoveLink(..))"
-			access="ROLE_ADMIN" />
 	</global-method-security>
 </beans:beans>

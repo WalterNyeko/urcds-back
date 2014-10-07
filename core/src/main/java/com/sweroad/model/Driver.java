@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.sweroad.util.Constants;
+import com.sweroad.Constants;
 
 @Entity(name = "driver")
 public class Driver extends BaseModel {

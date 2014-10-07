@@ -53,7 +53,6 @@ public class UserSecurityAdvice implements MethodBeforeAdvice, AfterReturningAdv
 	 */
 	public void before(Method method, Object[] args, Object target) throws Throwable {
 		SecurityContext ctx = SecurityContextHolder.getContext();
-
 		if (ctx.getAuthentication() != null) {
 			Authentication auth = ctx.getAuthentication();
 			boolean administrator = false;

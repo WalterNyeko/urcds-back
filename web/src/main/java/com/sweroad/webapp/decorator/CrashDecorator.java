@@ -10,14 +10,14 @@ import com.sweroad.webapp.util.CrashHtmlHelper;
 public class CrashDecorator extends TableDecorator {
 
 	@Autowired
-	private CrashManager crashManager;	
-	
+	private CrashManager crashManager;
+
 	public String getActions() {
 		Crash crash = getCrash();
 		long id = crash.getId();
 		String viewLink = CrashHtmlHelper.createViewLink(id);
-		String editLink = CrashHtmlHelper.createEditLink(id);
-		String removeLink = CrashHtmlHelper.createRemoveLink(id);
+		String editLink = crash.isEditable() ? CrashHtmlHelper.createEditLink(id) : "";
+		String removeLink = crash.isRemovable() ? CrashHtmlHelper.createRemoveLink(id) : "";
 		String crashActions = String.format("%s%s%s", viewLink, editLink, removeLink);
 		return crashActions;
 	}

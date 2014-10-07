@@ -18,6 +18,8 @@
 			pointcut="execution(* *..service.UserManager.saveUser(..))" order="1" />
 		<aop:advisor id="managerTx" advice-ref="txAdvice"
 			pointcut="execution(* *..service.*Manager.*(..))" order="2" />
+		<aop:advisor id="crashSecurity" advice-ref="crashSecurityAdvice"
+			pointcut="execution(* *..service.CrashManager.getCrashes(..))" order="3" />
 	</aop:config>
 
 	<!-- Enable @Transactional support -->
@@ -48,6 +50,7 @@
 	</tx:advice>
 
 	<bean id="userSecurityAdvice" class="com.sweroad.service.UserSecurityAdvice" />
+	<bean id="crashSecurityAdvice" class="com.sweroad.service.CrashSecurityAdvice"/>
 
 	<!-- =================================================================== -->
 	<!-- Mail: Sender and Velocity configuration -->

@@ -101,6 +101,10 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
 		Collections.sort(crashes);
 		return crashes;
 	}
+	
+	public List<Crash> getCrashes() {
+		return getAll();
+	}
 
 	@Override
 	public Crash findByTarNo(String tarNo) {
