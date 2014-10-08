@@ -17,10 +17,10 @@ import com.sweroad.model.User;
 import com.sweroad.service.UserManager;
 
 @ContextConfiguration(locations = {
- "classpath:/applicationContext-resources.xml",
+ "classpath:/applicationContext-test-resources.xml",
         "classpath:/applicationContext-dao.xml", "classpath:/applicationContext-service.xml",
         "classpath*:/applicationContext.xml", // for modular archetypes
-        "/WEB-INF/applicationContext*.xml", "/WEB-INF/dispatcher-servlet.xml", "/WEB-INF/security.xml" })
+        "/WEB-INF/dispatcher-servlet.xml", "/WEB-INF/security.xml" })
 public class UpdatePasswordControllerTest extends BaseControllerTestCase {
     @Autowired
     private UpdatePasswordController controller;
