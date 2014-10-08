@@ -60,4 +60,26 @@ public class CrashManagerTest extends BaseManagerTestCase {
 		crashManager.removeVehicleFromCrash(crash, 2L);
 		assertEquals(1, crash.getCasualties().size());
 	}
+	
+	@Test
+	public void testThatRemoveCrashSetsCrashToRemoved() {
+		log.debug("testing that remove crash sets crash status to removed...");
+		Crash crash = crashManager.get(1L);
+		crash.setRemoved(false);
+		crashManager.save(crash);
+		crashManager.removeCrashById(1L);
+		crash  = crashManager.get(1L);
+		assertEquals(true, crash.isRemoved());
+	}
+	
+	@Test
+	public void testThatRestoreCrashSetsCrashIsRemovedToFalse() {
+		log.debug("testing that restore crash sets crash isRemoved to false...");
+		Crash crash = crashManager.get(1L);
+		crash.setRemoved(true);
+		crashManager.save(crash);
+		crashManager.restoreCrashById(1L);
+		crash  = crashManager.get(1L);
+		assertEquals(false, crash.isRemoved());
+	}
 }

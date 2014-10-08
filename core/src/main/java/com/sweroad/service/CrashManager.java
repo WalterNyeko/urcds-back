@@ -32,4 +32,8 @@ public interface CrashManager extends GenericManager<Crash, Long> {
 	void removeCasualtiesFromCrash(Crash crash, List<Long> casualtyIds);
 	
 	void generateCrashDataExcel(String filename) throws IOException;
+	
+	void removeCrashById(Long id);
+
+	void restoreCrashById(long id);
 }

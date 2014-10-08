@@ -117,6 +117,9 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
 		saveCrashCasualties(crash);
 		if (crash.getDateCreated() == null) {
 			crash.setDateCreated(new Date());
+			crash.setEditable(false);
+			crash.setRemovable(false);
+			crash.setRemoved(false);
 		} else {
 			crash.setDateUpdated(new Date());
 			Crash dbCrash = super.get(crash.getId());
@@ -389,5 +392,19 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
 		List<Crash> crashes = crashDao.findByNamedQuery(
 				Crash.FIND_CRASHES_ORDER_BY_DATE, null);
 		crashExcelService.generateAndWriteCrashExcelToFile(crashes, filename);
+	}
+
+	@Override
+	public void removeCrashById(Long id) {
+		Crash crash = this.get(id);
+		crash.setRemoved(true);
+		this.save(crash);
+	}
+
+	@Override
+	public void restoreCrashById(long id) {
+		Crash crash = this.get(id);
+		crash.setRemoved(false);
+		this.save(crash);
 	}
 }

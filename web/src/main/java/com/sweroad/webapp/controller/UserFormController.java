@@ -145,9 +145,8 @@ public class UserFormController extends BaseFormController {
 
                 // reset the version # to what was passed in
                 user.setVersion(originalVersion);
-
                 return "userform";
-            }
+            } 
 
             if (!StringUtils.equals(request.getParameter("from"), "list")) {
                 saveMessage(request, getText("user.saved", user.getFullName(), locale));

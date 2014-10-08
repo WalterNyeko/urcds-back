@@ -143,9 +143,9 @@ public class UserSecurityAdvice implements MethodBeforeAdvice, AfterReturningAdv
 		}
 	}
 
-	private User getCurrentUser(Authentication auth, UserManager userManager) {
+	public static User getCurrentUser(Authentication auth, UserManager userManager) {
 		User currentUser;
-		if (auth.getPrincipal() instanceof LdapUserDetails) {
+		if ((auth.getPrincipal() instanceof LdapUserDetails) && userManager != null) {
 			LdapUserDetails ldapDetails = (LdapUserDetails) auth.getPrincipal();
 			String username = ldapDetails.getUsername();
 			currentUser = userManager.getUserByUsername(username);

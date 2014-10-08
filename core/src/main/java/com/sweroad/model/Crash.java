@@ -130,8 +130,12 @@ public class Crash extends BaseModel implements Comparable<Crash> {
 	@ManyToOne
 	@JoinColumn(name = "updated_by")
 	private User updatedBy;
+	@Column(nullable = false)
 	private boolean editable;
+	@Column(nullable = false)
 	private boolean removable;
+	@Column(name = "is_removed", nullable = false)
+	private boolean isRemoved;
 
 	/**
 	 * @return the casualties
@@ -713,6 +717,20 @@ public class Crash extends BaseModel implements Comparable<Crash> {
 	 */
 	public void setRemovable(boolean removable) {
 		this.removable = removable;
+	}
+
+	/**
+	 * @return the isRemoved
+	 */
+	public boolean isRemoved() {
+		return isRemoved;
+	}
+
+	/**
+	 * @param isRemoved the isRemoved to set
+	 */
+	public void setRemoved(boolean isRemoved) {
+		this.isRemoved = isRemoved;
 	}
 
 	@Override

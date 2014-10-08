@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
+	<table name="district">
+		<column>name</column>
+		<row>
+			<value description="name">Lugazi</value>
+		</row>
+		<row>
+			<value description="name">Mpigi</value>
+		</row>
+		<row>
+			<value description="name">Kampala</value>
+		</row>
+		<row>
+			<value description="name">Wakiso</value>
+		</row>
+	</table>
 	<table name="app_user">
 		<column>id</column>
 		<column>username</column>
@@ -19,6 +34,7 @@
 		<column>account_enabled</column>
 		<column>account_expired</column>
 		<column>account_locked</column>
+		<column>district_id</column>
 		<column>credentials_expired</column>
 		<row>
 			<value description="id">1</value>
@@ -39,6 +55,7 @@
 			<value description="account_enabled">1</value>
 			<value description="account_expired">0</value>
 			<value description="account_locked">0</value>
+			<value description="district_id">2</value>
 			<value description="credentials_expired">0</value>
 		</row>
 		<row>
@@ -60,6 +77,7 @@
 			<value description="account_enabled">1</value>
 			<value description="account_expired">0</value>
 			<value description="account_locked">0</value>
+			<value description="district_id">2</value>
 			<value description="credentials_expired">0</value>
 		</row>
 	</table>

@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
+	<table name="district">
+		<column>id</column>
+		<column>name</column>
+		<row>
+			<value description="id">1</value>
+			<value description="name">Lugazi</value>
+		</row>
+		<row>
+			<value description="id">2</value>
+			<value description="name">Mpigi</value>
+		</row>
+		<row>
+			<value description="id">3</value>
+			<value description="name">Kampala</value>
+		</row>
+		<row>
+			<value description="id">4</value>
+			<value description="name">Wakiso</value>
+		</row>
+	</table>
 	<table name="app_user">
 		<column>id</column>
 		<column>username</column>
@@ -19,6 +39,7 @@
 		<column>account_enabled</column>
 		<column>account_expired</column>
 		<column>account_locked</column>
+		<column>district_id</column>
 		<column>credentials_expired</column>
 		<row>
 			<value description="id">-1</value>
@@ -39,6 +60,7 @@
 			<value description="account_enabled">1</value>
 			<value description="account_expired">0</value>
 			<value description="account_locked">0</value>
+			<value description="district_id">2</value>
 			<value description="credentials_expired">0</value>
 		</row>
 		<row>
@@ -60,6 +82,7 @@
 			<value description="account_enabled">1</value>
 			<value description="account_expired">0</value>
 			<value description="account_locked">0</value>
+			<value description="district_id">2</value>
 			<value description="credentials_expired">0</value>
 		</row>
 		<row>
@@ -81,6 +104,7 @@
 			<value description="account_enabled">1</value>
 			<value description="account_expired">0</value>
 			<value description="account_locked">0</value>
+			<value description="district_id">3</value>
 			<value description="credentials_expired">0</value>
 		</row>
 	</table>
@@ -131,339 +155,429 @@
 	</table>
 	<!-- Look up data -->
 	<table name="casualty_class">
+		<column>id</column>
 		<column>name</column>
 		<row>
+			<value description="id">1</value>
 			<value description="name">Pedestrian</value>
 		</row>
 		<row>
+			<value description="id">2</value>
 			<value description="name">Passenger on motorcycle</value>
 		</row>
 		<row>
+			<value description="id">3</value>
 			<value description="name">Bicycle passenger</value>
 		</row>
 		<row>
+			<value description="id">4</value>
 			<value description="name">Car passenger</value>
 		</row>
 		<row>
+			<value description="id">5</value>
 			<value description="name">Passenger Light omnibus</value>
 		</row>
 		<row>
+			<value description="id">6</value>
 			<value description="name">Passenger medium omnibus</value>
 		</row>
 		<row>
+			<value description="id">7</value>
 			<value description="name">Passenger heavy omnibus</value>
 		</row>
 		<row>
+			<value description="id">8</value>
 			<value description="name">Other passengers</value>
 		</row>
 		<row>
+			<value description="id">9</value>
 			<value description="name">Unknown</value>
 		</row>
 	</table>
 	<table name="casualty_type">
+		<column>id</column>
 		<column>name</column>
 		<row>
+			<value description="id">1</value>
 			<value description="name">Fatal</value>
 		</row>
 		<row>
+			<value description="id">2</value>
 			<value description="name">Serious</value>
 		</row>
 		<row>
+			<value description="id">3</value>
 			<value description="name">Slight</value>
 		</row>
 		<row>
+			<value description="id">4</value>
 			<value description="name">Not injured</value>
 		</row>
 	</table>
 	<table name="collision_type">
+		<column>id</column>
 		<column>name</column>
 		<row>
+			<value description="id">1</value>
 			<value description="name">Hit pedestrian</value>
 		</row>
 		<row>
+			<value description="id">2</value>
 			<value description="name">Rear end</value>
 		</row>
 		<row>
+			<value description="id">3</value>
 			<value description="name">Single vehicle, off road</value>
 		</row>
 		<row>
+			<value description="id">4</value>
 			<value description="name">Side swipe</value>
 		</row>
 		<row>
+			<value description="id">5</value>
 			<value description="name">Single vehicle, hit object</value>
 		</row>
 		<row>
+			<value description="id">6</value>
 			<value description="name">Angle</value>
 		</row>
 		<row>
+			<value description="id">7</value>
 			<value description="name">Head-on collision</value>
 		</row>
 		<row>
+			<value description="id">8</value>
 			<value description="name">Others</value>
 		</row>
 	</table>
 	<table name="crash_cause">
+		<column>id</column>
 		<column>name</column>
 		<row>
+			<value description="id">1</value>
 			<value description="name">Careless overtaking</value>
 		</row>
 		<row>
+			<value description="id">2</value>
 			<value description="name">Sudden entrance from a roadside</value>
 		</row>
 		<row>
+			<value description="id">3</value>
 			<value description="name">Careless pedestrian</value>
 		</row>
 		<row>
+			<value description="id">4</value>
 			<value description="name">Following too close (Tail-gating)</value>
 		</row>
 		<row>
+			<value description="id">5</value>
 			<value description="name">Over speeding</value>
 		</row>
 		<row>
+			<value description="id">6</value>
 			<value description="name">Passenger falls from vehicle</value>
 		</row>
 		<row>
+			<value description="id">7</value>
 			<value description="name">Passing too close</value>
 		</row>
 		<row>
+			<value description="id">8</value>
 			<value description="name">Dangerous loading</value>
 		</row>
 		<row>
+			<value description="id">9</value>
 			<value description="name">Vehicle mechanical defects</value>
 		</row>
 		<row>
+			<value description="id">10</value>
 			<value description="name">Violating traffic direction</value>
 		</row>
 		<row>
+			<value description="id">11</value>
 			<value description="name">Under influence of alcohol/drugs</value>
 		</row>
 		<row>
+			<value description="id">12</value>
 			<value description="name">Dazzled by lights of another vehicle</value>
 		</row>
 		<row>
+			<value description="id">13</value>
 			<value description="name">Neglecting right of way or stop sign</value>
 		</row>
 		<row>
+			<value description="id">14</value>
 			<value description="name">Fatigue, illness</value>
 		</row>
 		<row>
+			<value description="id">15</value>
 			<value description="name">Obstacle on carriage way</value>
 		</row>
 		<row>
+			<value description="id">16</value>
 			<value description="name">Sudden turning</value>
 		</row>
 		<row>
+			<value description="id">17</value>
 			<value description="name">Using mobile phone</value>
 		</row>
 		<row>
+			<value description="id">18</value>
 			<value description="name">Unknown cause (Hit &amp;&amp; Run)</value>
 		</row>
 	</table>
 	<table name="crash_severity">
+		<column>id</column>
 		<column>name</column>
 		<row>
+			<value description="id">1</value>
 			<value description="name">Fatal</value>
 		</row>
 		<row>
+			<value description="id">2</value>
 			<value description="name">Serious</value>
 		</row>
 		<row>
+			<value description="id">3</value>
 			<value description="name">Slight</value>
 		</row>
 		<row>
+			<value description="id">4</value>
 			<value description="name">Damage Only</value>
 		</row>
 	</table>
-	<table name="district">
-		<column>name</column>
-		<row>
-			<value description="name">Lugazi</value>
-		</row>
-		<row>
-			<value description="name">Mpigi</value>
-		</row>
-		<row>
-			<value description="name">Kampala</value>
-		</row>
-		<row>
-			<value description="name">Wakiso</value>
-		</row>
-	</table>
 	<table name="junction_type">
+		<column>id</column>
 		<column>name</column>
 		<row>
+			<value description="id">1</value>
 			<value description="name">Not in junction</value>
 		</row>
 		<row>
+			<value description="id">2</value>
 			<value description="name">Cross roads</value>
 		</row>
 		<row>
+			<value description="id">3</value>
 			<value description="name">Railway level crossing</value>
 		</row>
 		<row>
+			<value description="id">4</value>
 			<value description="name">Roundabout</value>
 		</row>
 		<row>
+			<value description="id">5</value>
 			<value description="name">Road junction (T/Y)</value>
 		</row>
 		<row>
+			<value description="id">6</value>
 			<value description="name">Other</value>
 		</row>
 	</table>
 	<table name="police_station">
+		<column>id</column>
 		<column>name</column>
 		<column>district_id</column>
 		<row>
+			<value description="id">1</value>
 			<value description="name">Lugazi Police Station</value>
 			<value description="district_id">1</value>
 		</row>
 		<row>
+			<value description="id">2</value>
 			<value description="name">Mpigi Police Station</value>
 			<value description="district_id">2</value>
 		</row>
 		<row>
+			<value description="id">3</value>
 			<value description="name">Kampala CPS</value>
 			<value description="district_id">3</value>
 		</row>
 		<row>
+			<value description="id">4</value>
 			<value description="name">Entebbe Police Station</value>
 			<value description="district_id">4</value>
 		</row>
 	</table>
 	<table name="road_surface">
+		<column>id</column>
 		<column>name</column>
 		<row>
+			<value description="id">1</value>
 			<value description="name">Wet</value>
 		</row>
 		<row>
+			<value description="id">2</value>
 			<value description="name">Dry</value>
 		</row>
 	</table>
 	<table name="roadway_character">
+		<column>id</column>
 		<column>name</column>
 		<row>
+			<value description="id">1</value>
 			<value description="name">Straight slight curve</value>
 		</row>
 		<row>
+			<value description="id">2</value>
 			<value description="name">Blind bend</value>
 		</row>
 		<row>
+			<value description="id">3</value>
 			<value description="name">Curve</value>
 		</row>
 		<row>
+			<value description="id">4</value>
 			<value description="name">Hillcrest</value>
 		</row>
 	</table>
 	<table name="surface_condition">
+		<column>id</column>
 		<column>name</column>
 		<row>
+			<value description="id">1</value>
 			<value description="name">Good</value>
 		</row>
 		<row>
+			<value description="id">2</value>
 			<value description="name">Defective, needs repair</value>
 		</row>
 		<row>
+			<value description="id">3</value>
 			<value description="name">Bad, urgent repair</value>
 		</row>
 	</table>
 	<table name="surface_type">
+		<column>id</column>
 		<column>name</column>
 		<row>
+			<value description="id">1</value>
 			<value description="name">Tar</value>
 		</row>
 		<row>
+			<value description="id">2</value>
 			<value description="name">Macadam</value>
 		</row>
 		<row>
+			<value description="id">3</value>
 			<value description="name">Murram</value>
 		</row>
 	</table>
 	<table name="vehicle_failure_type">
+		<column>id</column>
 		<column>name</column>
 		<row>
+			<value description="id">1</value>
 			<value description="name">No mechanical defects</value>
 		</row>
 		<row>
+			<value description="id">2</value>
 			<value description="name">Tyre blow out</value>
 		</row>
 		<row>
+			<value description="id">3</value>
 			<value description="name">Headlight failure</value>
 		</row>
 		<row>
+			<value description="id">4</value>
 			<value description="name">Brake failure</value>
 		</row>
 		<row>
+			<value description="id">5</value>
 			<value description="name">Steering wheel failure</value>
 		</row>
 		<row>
+			<value description="id">6</value>
 			<value description="name">Other failure</value>
 		</row>
 	</table>
 	<table name="vehicle_type">
+		<column>id</column>
 		<column>name</column>
 		<row>
+			<value description="id">1</value>
 			<value description="name">Motor car</value>
 		</row>
 		<row>
+			<value description="id">2</value>
 			<value description="name">Trailers &amp;&amp; Semi-Trailer</value>
 		</row>
 		<row>
+			<value description="id">3</value>
 			<value description="name">Dual-purpose vehicles</value>
 		</row>
 		<row>
+			<value description="id">4</value>
 			<value description="name">Fuel Truck</value>
 		</row>
 		<row>
+			<value description="id">5</value>
 			<value description="name">Light Omnibus</value>
 		</row>
 		<row>
+			<value description="id">6</value>
 			<value description="name">Engineering Plant</value>
 		</row>
 		<row>
+			<value description="id">7</value>
 			<value description="name">Medium Omnibus</value>
 		</row>
 		<row>
+			<value description="id">8</value>
 			<value description="name">Tractor</value>
 		</row>
 		<row>
+			<value description="id">9</value>
 			<value description="name">Heavy Omnibus</value>
 		</row>
 		<row>
+			<value description="id">10</value>
 			<value description="name">Motorcycle</value>
 		</row>
 		<row>
+			<value description="id">11</value>
 			<value description="name">Light Goods Vehicle</value>
 		</row>
 		<row>
+			<value description="id">12</value>
 			<value description="name">Pedal cycle</value>
 		</row>
 		<row>
+			<value description="id">13</value>
 			<value description="name">Medium Goods Vehicle</value>
 		</row>
 		<row>
+			<value description="id">14</value>
 			<value description="name">Pedestrian-controlled Vehicle</value>
 		</row>
 		<row>
+			<value description="id">15</value>
 			<value description="name">Heavy Goods Vehicle</value>
 		</row>
 		<row>
+			<value description="id">16</value>
 			<value description="name">Unknown</value>
 		</row>
 	</table>
 	<table name="weather">
+		<column>id</column>
 		<column>name</column>
 		<row>
+			<value description="id">1</value>
 			<value description="name">Clear</value>
 		</row>
 		<row>
+			<value description="id">2</value>
 			<value description="name">Rain</value>
 		</row>
 		<row>
+			<value description="id">3</value>
 			<value description="name">Mist</value>
 		</row>
 	</table>
 	<!-- End of lookup data -->
 	<table name="driver">
+		<column>id</column>
 		<column>age</column>
 		<column>gender</column>
 		<column>belt_used</column>
@@ -472,15 +586,17 @@
 		<column>casualty_type_id</column>
 		<column>date_created</column>
 		<row>
+			<value description="id">1</value>
 			<value description="age">27</value>
 			<value description="gender">M</value>
 			<value description="belt_used">0</value>
 			<value description="license_number">123456</value>
 			<value description="license_valid">1</value>
-			<value description="casualty_type_id">2</value>
+			<value description="casualty_type_id">4</value>
 			<value description="date_created">2014-06-03 18:15:00</value>
 		</row>
 		<row>
+			<value description="id">2</value>
 			<value description="age">53</value>
 			<value description="gender">M</value>
 			<value description="belt_used">1</value>
@@ -491,12 +607,14 @@
 		</row>
 	</table>
 	<table name="vehicle">
+		<column>id</column>
 		<column>number</column>
 		<column>driver_id</column>
 		<column>vehicle_type_id</column>
 		<column>company_name</column>
 		<column>date_created</column>
 		<row>
+			<value description="id">1</value>
 			<value description="number">1</value>
 			<value description="driver_id">1</value>
 			<value description="vehicle_type_id">1</value>
@@ -504,6 +622,7 @@
 			<value description="date_created">2014-06-03 18:15:00</value>
 		</row>
 		<row>
+			<value description="id">2</value>
 			<value description="number">2</value>
 			<value description="driver_id">2</value>
 			<value description="vehicle_type_id">7</value>
@@ -512,6 +631,7 @@
 		</row>
 	</table>
 	<table name="casualty">
+		<column>id</column>
 		<column>age</column>
 		<column>gender</column>
 		<column>belt_or_helmet_used</column>
@@ -520,6 +640,7 @@
 		<column>vehicle_id</column>
 		<column>date_created</column>
 		<row>
+			<value description="id">1</value>
 			<value description="age">25</value>
 			<value description="gender">F</value>
 			<value description="belt_or_helmet_used">1</value>
@@ -529,6 +650,7 @@
 			<value description="date_created">2014-06-05 18:15:00</value>
 		</row>
 		<row>
+			<value description="id">2</value>
 			<value description="age">30</value>
 			<value description="gender">M</value>
 			<value description="belt_or_helmet_used">0</value>
@@ -539,14 +661,17 @@
 		</row>
 	</table>
 	<table name="gps_coordinate">
+		<column>id</column>
 		<column>latitude</column>
 		<column>longitude</column>
 		<row>
-			<value description="latitude">N 0&#176;23&#8242;00&#8243;</value>
-			<value description="longitude">E 32&#176;55&#8242;27&#8243;</value>
+			<value description="id">1</value>
+			<value description="latitude">N 0 23 00</value>
+			<value description="longitude">E 32 55 27</value>
 		</row>
 	</table>
 	<table name="crash">
+		<column>id</column>
 		<column>crash_date_time</column>
 		<column>crash_place</column>
 		<column>date_created</column>
@@ -566,7 +691,11 @@
 		<column>surface_type_id</column>
 		<column>vehicle_failure_type_id</column>
 		<column>weather_id</column>
+		<column>editable</column>
+		<column>removable</column>
+		<column>is_removed</column>
 		<row>
+			<value description="id">1</value>
 			<value description="crash_date_time">2014-06-03 16:21:00</value>
 			<value description="crash_place">Kayanja</value>
 			<value description="date_created">2014-06-03 18:15:00</value>
@@ -586,6 +715,9 @@
 			<value description="surface_type_id">1</value>
 			<value description="vehicle_failure_type_id">1</value>
 			<value description="weather_id">1</value>
+			<value description="editable">0</value>
+			<value description="removable">0</value>
+			<value description="is_removed">0</value>
 		</row>
 	</table>
 	<table name="crash_casualty">

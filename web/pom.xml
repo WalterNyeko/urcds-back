@@ -26,7 +26,7 @@
 					<driver>${jdbc.driverClassName}</driver>
 					<username>${jdbc.username}</username>
 					<password>${jdbc.password}</password>
-					<url>${jdbc.url}</url>
+					<url>jdbc:mysql://localhost:3306/${db.name}-test?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;autoReconnect=true</url>
 					<src>src/test/resources/sample-data.xml</src>
 					<type>${dbunit.operation.type}</type>
 					<schema>${dbunit.schema}</schema>

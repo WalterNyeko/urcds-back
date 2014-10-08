@@ -27,7 +27,7 @@ public class CrashController extends BaseFormController {
 	private CrashManager crashManager;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView handleRequest() throws Exception {
+	public ModelAndView showCrashes() throws Exception {
 		return new ModelAndView("crashes").addObject(crashManager.getCrashes());
 	}
 
@@ -43,7 +43,19 @@ public class CrashController extends BaseFormController {
 			return mav;
 		} catch (Exception e) {
 			log.error("View crash failed: " + e.getLocalizedMessage());
-			return handleRequest();
+			return showCrashes();
+		}
+	}
+
+	@RequestMapping(value = "/crashremove", method = RequestMethod.GET)
+	public ModelAndView removeCrash(HttpServletRequest request) throws Exception {
+		try {			
+			String id = request.getParameter("id");
+			crashManager.removeCrashById(new Long(id));
+			return showCrashes();
+		} catch (Exception e) {
+			log.error("Remove crash failed: " + e.getLocalizedMessage());
+			return showCrashes();
 		}
 	}
 
