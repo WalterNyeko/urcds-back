@@ -55,11 +55,8 @@ public class UpdatePasswordControllerTest extends BaseControllerTestCase {
         String username = "admin";
         MockHttpServletRequest request = newGet("/updatePassword");
         request.addParameter("username", username);
-
         ModelAndView mav = controller.showForm(username, null, request);
-
         assertEquals("updatePasswordForm", mav.getViewName());
-
     }
 
     @SuppressWarnings("deprecation")
