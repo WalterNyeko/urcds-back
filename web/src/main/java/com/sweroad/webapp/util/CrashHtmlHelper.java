@@ -20,4 +20,11 @@ public class CrashHtmlHelper extends HtmlHelper {
 				"return confirm('Remove crash?');");
 		return removeLink;
 	}
+	
+	public static String createRestoreLink(long crashId) {
+		String removeIcon = HtmlHelper.createImage("/images/bt_Restore.gif", "Restore", "4");
+		String removeLink = HtmlHelper.createAnchor(removeIcon, "crashrestore?id=" + crashId, "Restore crash",
+				"return confirm('Restore removed crash?');");
+		return removeLink;
+	}
 }

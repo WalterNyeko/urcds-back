@@ -17,8 +17,15 @@ public class CrashDecorator extends TableDecorator {
 		long id = crash.getId();
 		String viewLink = CrashHtmlHelper.createViewLink(id);
 		String editLink = crash.isEditable() ? CrashHtmlHelper.createEditLink(id) : "";
-		String removeLink = crash.isRemovable() ? CrashHtmlHelper.createRemoveLink(id) : "";
-		String crashActions = String.format("%s%s%s", viewLink, editLink, removeLink);
+		String removeOrRestoreLink;
+		if (crash.isRemovable() && !crash.isRemoved()) {
+			removeOrRestoreLink = CrashHtmlHelper.createRemoveLink(id);
+		} else if (crash.isRemoved()) {
+			removeOrRestoreLink = CrashHtmlHelper.createRestoreLink(id);
+		} else {
+			removeOrRestoreLink = "";
+		}
+		String crashActions = String.format("%s%s%s", viewLink, editLink, removeOrRestoreLink);
 		return crashActions;
 	}
 

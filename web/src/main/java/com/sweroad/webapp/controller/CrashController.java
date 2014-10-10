@@ -58,6 +58,18 @@ public class CrashController extends BaseFormController {
 			return showCrashes();
 		}
 	}
+	
+	@RequestMapping(value = "/crashrestore", method = RequestMethod.GET)
+	public ModelAndView restoreCrash(HttpServletRequest request) throws Exception {
+		try {			
+			String id = request.getParameter("id");
+			crashManager.restoreCrashById(new Long(id));
+			return showCrashes();
+		} catch (Exception e) {
+			log.error("Restore crash failed: " + e.getLocalizedMessage());
+			return showCrashes();
+		}
+	}
 
 	@RequestMapping(value = "/crashexcel", method = RequestMethod.GET)
 	public void generateExcel(HttpServletRequest request, HttpServletResponse response) throws Exception {

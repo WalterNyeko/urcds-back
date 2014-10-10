@@ -402,7 +402,7 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
 	}
 
 	@Override
-	public void restoreCrashById(long id) {
+	public void restoreCrashById(Long id) {
 		Crash crash = this.get(id);
 		crash.setRemoved(false);
 		this.save(crash);

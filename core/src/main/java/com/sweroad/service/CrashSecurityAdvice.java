@@ -1,6 +1,7 @@
 package com.sweroad.service;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class CrashSecurityAdvice implements AfterReturningAdvice {
 		boolean editable = false;
 		boolean removable = false;
 		boolean editableOnlyForDistrict = false;
+		boolean isAdmin = false;
 		if (auth != null) {
 			User currentUser = UserSecurityAdvice.getCurrentUser(auth, null);
 			Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
@@ -33,12 +35,15 @@ public class CrashSecurityAdvice implements AfterReturningAdvice {
 				removable = false;
 			}
 			if (authsContainRole(Constants.SUPER_USER_ROLE, authorities)
-					|| authsContainRole(Constants.ADMIN_ROLE, authorities)) {
+					| (isAdmin = authsContainRole(Constants.ADMIN_ROLE, authorities))) {
 				editable = true;
 				removable = true;
 			}
 			setCrashModifiability(returnValue, editable, removable, editableOnlyForDistrict, currentUser.getDistrict());
-		}		
+			if (!isAdmin) {
+				removeInvisibleCrashes(returnValue);
+			}
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -60,6 +65,17 @@ public class CrashSecurityAdvice implements AfterReturningAdvice {
 				crash.setRemovable(removable);
 			}
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private void removeInvisibleCrashes(Object returnValue) {
+		List<Crash> crashes = new ArrayList<Crash>();
+		for (Crash crash : (List<Crash>) returnValue) {
+			if (crash.isRemoved()) {
+				crashes.add(crash);
+			}
+		}
+		((List<Crash>) returnValue).removeAll(crashes);
 	}
 
 	private boolean authsContainRole(String role, Collection<? extends GrantedAuthority> authorities) {

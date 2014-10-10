@@ -35,5 +35,5 @@ public interface CrashManager extends GenericManager<Crash, Long> {
 	
 	void removeCrashById(Long id);
 
-	void restoreCrashById(long id);
+	void restoreCrashById(Long id);
 }

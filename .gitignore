@@ -5,3 +5,6 @@ core/target/
 \*.class
 core/com.sweroad.model.User/
 web/src/main/webapp/genexcel/
+*.iml
+*.ipr
+*.iws
