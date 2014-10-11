@@ -18,72 +18,72 @@ import com.sweroad.model.User;
 
 public class CrashSecurityAdvice implements AfterReturningAdvice {
 
-	@Override
-	public void afterReturning(Object returnValue, Method method, Object[] args, Object target) throws Throwable {
-		SecurityContext sc = SecurityContextHolder.getContext();
-		Authentication auth = sc.getAuthentication();
-		boolean editable = false;
-		boolean removable = false;
-		boolean editableOnlyForDistrict = false;
-		boolean isAdmin = false;
-		if (auth != null) {
-			User currentUser = UserSecurityAdvice.getCurrentUser(auth, null);
-			Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
-			if (authsContainRole(Constants.USER_ROLE, authorities)) {
-				editableOnlyForDistrict = true;
-				editable = true;
-				removable = false;
-			}
-			if (authsContainRole(Constants.SUPER_USER_ROLE, authorities)
-					| (isAdmin = authsContainRole(Constants.ADMIN_ROLE, authorities))) {
-				editable = true;
-				removable = true;
-			}
-			setCrashModifiability(returnValue, editable, removable, editableOnlyForDistrict, currentUser.getDistrict());
-			if (!isAdmin) {
-				removeInvisibleCrashes(returnValue);
-			}
-		}
-	}
+    @Override
+    public void afterReturning(Object returnValue, Method method, Object[] args, Object target) throws Throwable {
+        SecurityContext sc = SecurityContextHolder.getContext();
+        Authentication auth = sc.getAuthentication();
+        boolean editable = false;
+        boolean removable = false;
+        boolean editableOnlyForDistrict = false;
+        boolean isAdmin = false;
+        if (auth != null) {
+            User currentUser = UserSecurityAdvice.getCurrentUser(auth, null);
+            Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+            if (authoritiesContainRole(Constants.USER_ROLE, authorities)) {
+                editableOnlyForDistrict = true;
+                editable = true;
+                removable = false;
+            }
+            if (authoritiesContainRole(Constants.SUPER_USER_ROLE, authorities)
+                    | (isAdmin = authoritiesContainRole(Constants.ADMIN_ROLE, authorities))) {
+                editable = true;
+                removable = true;
+            }
+            setCrashChangeAbility(returnValue, editable, removable, editableOnlyForDistrict, currentUser.getDistrict());
+            if (!isAdmin) {
+                removeInvisibleCrashes(returnValue);
+            }
+        }
+    }
 
-	@SuppressWarnings("unchecked")
-	private void setCrashModifiability(Object returnValue, boolean editable, boolean removable,
-			boolean editableOnlyForDistrict, District district) {
-		List<Crash> crashes = (List<Crash>) returnValue;
-		if (!editableOnlyForDistrict) {
-			for (Crash crash : crashes) {
-				crash.setEditable(editable);
-				crash.setRemovable(removable);
-			}
-		} else {
-			for (Crash crash : crashes) {
-				if (editable && (district != null && district.equals(crash.getPoliceStation().getDistrict()))) {
-					crash.setEditable(true);
-				} else {
-					crash.setEditable(false);
-				}
-				crash.setRemovable(removable);
-			}
-		}
-	}
+    @SuppressWarnings("unchecked")
+    private void setCrashChangeAbility(Object returnValue, boolean editable, boolean removable,
+                                       boolean editableOnlyForDistrict, District district) {
+        List<Crash> crashes = (List<Crash>) returnValue;
+        if (!editableOnlyForDistrict) {
+            for (Crash crash : crashes) {
+                crash.setEditable(editable);
+                crash.setRemovable(removable);
+            }
+        } else {
+            for (Crash crash : crashes) {
+                if (editable && (district != null && district.equals(crash.getPoliceStation().getDistrict()))) {
+                    crash.setEditable(true);
+                } else {
+                    crash.setEditable(false);
+                }
+                crash.setRemovable(removable);
+            }
+        }
+    }
 
-	@SuppressWarnings("unchecked")
-	private void removeInvisibleCrashes(Object returnValue) {
-		List<Crash> crashes = new ArrayList<Crash>();
-		for (Crash crash : (List<Crash>) returnValue) {
-			if (crash.isRemoved()) {
-				crashes.add(crash);
-			}
-		}
-		((List<Crash>) returnValue).removeAll(crashes);
-	}
+    @SuppressWarnings("unchecked")
+    private void removeInvisibleCrashes(Object returnValue) {
+        List<Crash> crashes = new ArrayList<Crash>();
+        for (Crash crash : (List<Crash>) returnValue) {
+            if (crash.isRemoved()) {
+                crashes.add(crash);
+            }
+        }
+        ((List<Crash>) returnValue).removeAll(crashes);
+    }
 
-	private boolean authsContainRole(String role, Collection<? extends GrantedAuthority> authorities) {
-		for (GrantedAuthority authority : authorities) {
-			if (authority.getAuthority().equals(role)) {
-				return true;
-			}
-		}
-		return false;
-	}
+    private boolean authoritiesContainRole(String role, Collection<? extends GrantedAuthority> authorities) {
+        for (GrantedAuthority authority : authorities) {
+            if (authority.getAuthority().equals(role)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

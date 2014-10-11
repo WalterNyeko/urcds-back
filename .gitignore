@@ -8,3 +8,4 @@ web/src/main/webapp/genexcel/
 *.iml
 *.ipr
 *.iws
+.idea/
