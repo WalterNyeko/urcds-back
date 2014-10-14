@@ -3,11 +3,9 @@
  */
 package com.sweroad.model;
 
+import java.beans.Transient;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -24,6 +22,9 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.sweroad.audit.IAuditable;
+import com.sweroad.audit.IEntity;
+import com.sweroad.audit.IXMLConvertible;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -38,7 +39,7 @@ import com.sweroad.Constants;
 @NamedQueries({
 		@NamedQuery(name = Crash.FIND_CRASHES_ORDER_BY_DATE, query = "from Crash c order by c.crashDateTime"),
 		@NamedQuery(name = Crash.FIND_CRASHES_ORDER_BY_DATE_DESC, query = "from Crash c order by c.crashDateTime desc") })
-public class Crash extends BaseModel implements Comparable<Crash> {
+public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertible, IEntity, IAuditable {
 
 	/**
 	 * 
@@ -47,7 +48,7 @@ public class Crash extends BaseModel implements Comparable<Crash> {
 	public static final String FIND_CRASHES_ORDER_BY_DATE = "findCrashesOrderByDate";
 	public static final String FIND_CRASHES_ORDER_BY_DATE_DESC = "findCrashesOrderByDateDesc";
 	public static final String IS_EDITABLE_METHOD_NAME = "isEditable";
-	public static final String IS_REMOVABLE_MEHTOD_NAME = "isRemovable";
+	public static final String IS_REMOVABLE_METHOD_NAME = "isRemovable";
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -771,4 +772,22 @@ public class Crash extends BaseModel implements Comparable<Crash> {
 		}
 		return AFTER;
 	}
+
+    @Override
+    @Transient
+    public String getClassAlias() {
+        return "Crash";
+    }
+
+    @Override
+    @Transient
+    public List<String> getFieldsToBeOmitted() {
+        return null;
+    }
+
+    @Override
+    @Transient
+    public Map<String, String> getFieldsAliases() {
+        return null;
+    }
 }

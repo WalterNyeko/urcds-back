@@ -7,21 +7,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.persistence.Version;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -45,6 +31,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  * @author <a href="mailto:matt@raibledesigns.com">Matt Raible</a> Updated by Dan Kibler (dan@getrolling.com) Extended
  *         to implement Acegi UserDetails interface by David Carter david@carter.net
  */
+@SuppressWarnings("JpaAttributeTypeInspection")
 @Entity
 @Table(name = "app_user")
 @Indexed
@@ -70,6 +57,7 @@ public class User extends BaseModel implements Serializable, UserDetails {
 	private boolean accountLocked;
 	private boolean credentialsExpired;
 	private District district;
+    private List<Audit> auditLogs;
 
 	/**
 	 * Default constructor - creates a new instance with no values set.
@@ -270,6 +258,11 @@ public class User extends BaseModel implements Serializable, UserDetails {
 		return !credentialsExpired;
 	}
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    public List<Audit> getAuditLogs() {
+        return auditLogs;
+    }
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -341,6 +334,10 @@ public class User extends BaseModel implements Serializable, UserDetails {
 	public void setCredentialsExpired(boolean credentialsExpired) {
 		this.credentialsExpired = credentialsExpired;
 	}
+
+    public void setAuditLogs(List<Audit> auditLogs) {
+        this.auditLogs = auditLogs;
+    }
 
 	/**
 	 * {@inheritDoc}
