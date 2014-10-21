@@ -14,13 +14,13 @@ public class Audit extends BaseModel implements IEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id = null;
+    private Long id;
     @Column(name = "pre_image")
-    private String preImage = null;
+    private String preImage;
     @Column(name = "post_image")
-    private String postImage = null;
+    private String postImage;
     @Column(nullable = false)
-    private String operation = null;
+    private String operation;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
