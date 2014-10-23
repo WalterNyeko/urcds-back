@@ -17,6 +17,13 @@ public interface IXMLConvertible extends Serializable {
     String getClassAlias();
 
     /**
+     * Gets id value of instance
+     *
+     * @return
+     */
+    Long getInstanceId();
+
+    /**
      * Gets the fields to be omitted.
      *
      * @return the fields to be omitted

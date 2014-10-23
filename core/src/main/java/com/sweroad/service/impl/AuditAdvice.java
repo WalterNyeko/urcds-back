@@ -46,42 +46,48 @@ public class AuditAdvice {
                 operation = determineOperation(object);
                 IXMLConvertible preImage = null;
                 IXMLConvertible postImage = null;
-                String preImageXML = null;
-                String postImageXML = null;
+                IAuditable memObject = null;
+                IAuditable dbObject = null;
                 if (!operation.equalsIgnoreCase(IAuditable.OPERATION_INSERT)
                         && object instanceof IAuditable
                         && object instanceof IXMLConvertible) {
-                    IAuditable auditable = (IAuditable) object;
+                    memObject = (IAuditable) object;
                     GenericManager gm = (GenericManager) pjp.getTarget();
-                    object = gm.get(auditable.getId());
+                    dbObject = (IAuditable) gm.get(memObject.getId());
+                    try {
+                        dbObject = dbObject.clone();
+                    } catch (CloneNotSupportedException e) {
+                        e.printStackTrace();
+                    }
                     preImage = (IXMLConvertible) object;
-                    preImageXML = XStreamUtils.getXMLFromObject(preImage, preImage.getClass().getName(),
-                            preImage.getFieldsAliases(), preImage.getFieldsToBeOmitted());
                 }
                 try {
                     returnValue = pjp.proceed();
                     if (returnValue instanceof IAuditable
                             && returnValue instanceof IXMLConvertible) {
                         postImage = (IXMLConvertible) returnValue;
-                        postImageXML = XStreamUtils.getXMLFromObject(postImage, postImage.getClass().getName(),
-                                postImage.getFieldsAliases(), postImage.getFieldsToBeOmitted());
                     }
                 } catch (Throwable e) {
                     e.printStackTrace();
                 }
-                if (shouldAudit(operation, preImageXML, postImageXML)) {
+                if (shouldAudit(operation, memObject, dbObject)) {
                     Audit auditLog = new Audit();
                     auditLog.setOperation(operation);
                     if (preImage != null) {
-                        auditLog.setPreImage(preImageXML);
+                        auditLog.setPreImage(XStreamUtils.getXMLFromObject(preImage, preImage.getClass().getName(),
+                                preImage.getFieldsAliases(), preImage.getFieldsToBeOmitted()));
                     }
                     if (postImage != null) {
-                        auditLog.setPostImage(postImageXML);
+                        auditLog.setPostImage(XStreamUtils.getXMLFromObject(postImage, postImage.getClass().getName(),
+                                postImage.getFieldsAliases(), postImage.getFieldsToBeOmitted()));
                     }
                     SecurityContext sc = SecurityContextHolder.getContext();
                     Authentication auth = sc.getAuthentication();
                     User currentUser = UserSecurityAdvice.getCurrentUser(auth, null);
                     auditLog.setId(0L);
+                    auditLog.setOperation(operation);
+                    auditLog.setEntityId(memObject.getId());
+                    auditLog.setEntityName(postImage.getClassAlias());
                     auditLog.setUser(currentUser);
                     auditLog.setAuditDate(new Date());
                     auditManager.save(auditLog);
@@ -107,16 +113,16 @@ public class AuditAdvice {
         }
     }
 
-    private boolean shouldAudit(String operation, String preImageXML, String postImageXML) {
-        if(postImageXML == null) {
+    private boolean shouldAudit(String operation, IAuditable dbObject, IAuditable memObject) {
+        if(memObject == null) {
             return false;
         }
-        if (preImageXML != null || postImageXML != null) {
+        if (dbObject != null || memObject != null) {
             if (operation.equals(IAuditable.OPERATION_UPDATE)) {
-                if (preImageXML == null || postImageXML == null) {
+                if (dbObject == null || memObject == null) {
                     return false;
                 }
-                if (preImageXML.equalsIgnoreCase(postImageXML)) {
+                if (!dbObject.isUpdated(memObject)) {
                     return false;
                 }
             }

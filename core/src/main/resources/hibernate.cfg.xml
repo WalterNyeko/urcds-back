@@ -17,7 +17,6 @@
 		<mapping class="com.sweroad.model.CrashSeverity" />
 		<mapping class="com.sweroad.model.District" />
 		<mapping class="com.sweroad.model.Driver" />
-		<mapping class="com.sweroad.model.GpsCoordinate" />
 		<mapping class="com.sweroad.model.JunctionType" />
 		<mapping class="com.sweroad.model.PoliceStation" />
 		<mapping class="com.sweroad.model.RoadSurface" />

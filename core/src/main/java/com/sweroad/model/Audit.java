@@ -1,8 +1,7 @@
 package com.sweroad.model;
 
-import com.sweroad.audit.IEntity;
-
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -10,11 +9,15 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "audit")
-public class Audit extends BaseModel implements IEntity {
+public class Audit extends BaseModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(name = "entity_name", nullable = false)
+    private String entityName;
+    @Column(name = "entity_id", nullable = false)
+    private Long entityId;
     @Column(name = "pre_image")
     private String preImage;
     @Column(name = "post_image")
@@ -33,6 +36,22 @@ public class Audit extends BaseModel implements IEntity {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getEntityName() {
+        return entityName;
+    }
+
+    public void setEntityName(String entityName) {
+        this.entityName = entityName;
+    }
+
+    public Long getEntityId() {
+        return entityId;
+    }
+
+    public void setEntityId(Long entityId) {
+        this.entityId = entityId;
     }
 
     public String getPreImage() {

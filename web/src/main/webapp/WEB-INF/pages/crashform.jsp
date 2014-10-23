@@ -171,13 +171,13 @@
 								<td>
 									<div class="col-sm-15 form-group">
 										<form:input cssClass="form-control"
-											path="gpsCoordinate.latitude" id="gpsCoordinate.latitude" />
+											path="latitude" id="latitude" />
 									</div>
 								</td>
 								<td>
 									<div class="col-sm-15 form-group">
 										<form:input cssClass="form-control"
-											path="gpsCoordinate.longitude" id="gpsCoordinate.longitude" />
+											path="longitude" id="longitude" />
 									</div>
 								</td>
 							</tr>

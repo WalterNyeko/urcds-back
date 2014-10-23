@@ -87,8 +87,8 @@
 									key="crashForm.gpsCoordinates.longitude" /></td>
 						</tr>
 						<tr>
-							<td>${crash.gpsCoordinate.latitude}</td>
-							<td>${crash.gpsCoordinate.longitude}</td>
+							<td>${crash.latitude}</td>
+							<td>${crash.longitude}</td>
 						</tr>
 					</table>
 				</td>

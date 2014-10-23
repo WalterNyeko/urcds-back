@@ -660,16 +660,6 @@
 			<value description="date_created">2014-06-05 18:15:00</value>
 		</row>
 	</table>
-	<table name="gps_coordinate">
-		<column>id</column>
-		<column>latitude</column>
-		<column>longitude</column>
-		<row>
-			<value description="id">1</value>
-			<value description="latitude">N 0 23 00</value>
-			<value description="longitude">E 32 55 27</value>
-		</row>
-	</table>
 	<table name="crash">
 		<column>id</column>
 		<column>crash_date_time</column>
@@ -681,7 +671,6 @@
 		<column>town_or_village</column>
 		<column>collision_type_id</column>
 		<column>crash_severity_id</column>
-		<column>gps_coordinate_id</column>
 		<column>junction_type_id</column>
 		<column>main_crash_cause_id</column>
 		<column>police_station_id</column>
@@ -694,6 +683,8 @@
 		<column>editable</column>
 		<column>removable</column>
 		<column>is_removed</column>
+        <column>latitude</column>
+        <column>longitude</column>
 		<row>
 			<value description="id">1</value>
 			<value description="crash_date_time">2014-06-03 16:21:00</value>
@@ -705,7 +696,6 @@
 			<value description="town_or_village">Kayanja</value>
 			<value description="collision_type_id">6</value>
 			<value description="crash_severity_id">2</value>
-			<value description="gps_coordinate_id">1</value>
 			<value description="junction_type_id">1</value>
 			<value description="main_crash_cause_id">1</value>
 			<value description="police_station_id">1</value>
@@ -718,6 +708,8 @@
 			<value description="editable">0</value>
 			<value description="removable">0</value>
 			<value description="is_removed">0</value>
+            <value description="latitude">N 0 23 00</value>
+            <value description="longitude">E 32 55 27</value>
 		</row>
 	</table>
 	<table name="crash_casualty">
