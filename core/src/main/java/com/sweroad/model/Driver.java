@@ -35,7 +35,7 @@ public class Driver extends BaseModel {
     @Column(name = "belt_used")
     private Boolean beltUsed;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "casualty_type_id", nullable = false)
+    @JoinColumn(name = "casualty_type_id")
     private CasualtyType casualtyType;
     @Column(name = "date_created", nullable = false)
     private Date dateCreated;

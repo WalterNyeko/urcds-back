@@ -2,20 +2,53 @@ package com.sweroad.service;
 
 import static org.junit.Assert.assertEquals;
 
+import com.sweroad.Constants;
+import com.sweroad.model.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.sweroad.model.Casualty;
-import com.sweroad.model.Crash;
-import com.sweroad.model.Vehicle;
+import org.springframework.context.ApplicationContext;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextImpl;
 
 public class CrashManagerTest extends BaseManagerTestCase {
 
 	private Log log = LogFactory.getLog(CrashManagerTest.class);
 	@Autowired
 	private CrashManager crashManager;
+
+    private ApplicationContext ctx = null;
+    private SecurityContext initialSecurityContext = null;
+
+    @Before
+    public void setUp() {
+        initialSecurityContext = SecurityContextHolder.getContext();
+
+        SecurityContext context = new SecurityContextImpl();
+        User user = new User("user");
+        user.setId(1L);
+        user.setPassword("password");
+        user.addRole(new Role(Constants.USER_ROLE));
+
+        UsernamePasswordAuthenticationToken token =
+                new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), user.getAuthorities());
+        token.setDetails(user);
+        context.setAuthentication(token);
+        SecurityContextHolder.setContext(context);
+    }
+
+    @After
+    public void tearDown() {
+        SecurityContextHolder.setContext(initialSecurityContext);
+    }
 
 	@Test
 	public void testRemoveCasualtyFromCrash() {

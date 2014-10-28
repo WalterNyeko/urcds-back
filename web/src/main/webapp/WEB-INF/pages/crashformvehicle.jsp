@@ -1,4 +1,4 @@
-<%@ include file="/common/taglibs.jsp"%>
+cc<%@ include file="/common/taglibs.jsp"%>
 <fmt:message key="crashForm.vehicleType" var="vehicleTypeLabel" />
 <fmt:message key="crashForm.driverCasualtyLabel" var="driverCasualtyTypeLabel" />
 <head>
@@ -7,7 +7,8 @@
 <script type="text/javascript">
 	$( document ).ready(function() {
 		$(".submit").click(function(){
-		    return validateFields();
+		    //return validateFields();
+            return true;
 		});	
 	});		
 </script>

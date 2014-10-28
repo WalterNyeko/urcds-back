@@ -166,4 +166,12 @@
             </bean>
         </constructor-arg>
     </bean>
+    <bean id="genericCrashManager" class="com.sweroad.service.impl.GenericManagerImpl">
+        <constructor-arg>
+            <bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
+                <constructor-arg value="com.sweroad.model.Crash" />
+                <property name="sessionFactory" ref="sessionFactory" />
+            </bean>
+        </constructor-arg>
+    </bean>
 </beans>

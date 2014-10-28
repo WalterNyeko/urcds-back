@@ -18,9 +18,9 @@ public class Audit extends BaseModel implements Serializable {
     private String entityName;
     @Column(name = "entity_id", nullable = false)
     private Long entityId;
-    @Column(name = "pre_image")
+    @Column(name = "pre_image", columnDefinition="text")
     private String preImage;
-    @Column(name = "post_image")
+    @Column(name = "post_image", columnDefinition="text")
     private String postImage;
     @Column(nullable = false)
     private String operation;

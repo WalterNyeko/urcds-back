@@ -79,6 +79,12 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
 	private GenericManager<Casualty, Long> casualtyManager;
 	@Autowired
 	private CrashExcelService crashExcelService;
+    /**
+     * Will be used instead of this so that we can intercept calls to save using
+     * audit trail aop classes
+     */
+    @Autowired
+    private GenericManager<Crash, Long> genericCrashManager;
 
 	@Autowired
 	public CrashManagerImpl(CrashDao crashDao) {
@@ -398,13 +404,13 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
 	public void removeCrashById(Long id) {
 		Crash crash = this.get(id);
 		crash.setRemoved(true);
-		this.save(crash);
+        genericCrashManager.save(crash);
 	}
 
 	@Override
 	public void restoreCrashById(Long id) {
 		Crash crash = this.get(id);
 		crash.setRemoved(false);
-		this.save(crash);
+        genericCrashManager.save(crash);
 	}
 }
