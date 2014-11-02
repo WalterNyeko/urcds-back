@@ -60,9 +60,13 @@
 				key="webapp.version" /> <c:if
 				test="${pageContext.request.remoteUser != null}">
             | <fmt:message key="user.status" /> ${pageContext.request.remoteUser}
-            </c:if> </span> <span class="col-sm-6 text-right"> &copy; <fmt:message
-				key="copyright.year" /> <a href="<fmt:message key="company.url"/>"><fmt:message
-					key="company.name" /></a>
+            </c:if> </span>
+        <span class="col-sm-6 text-right">
+            <%--&copy; <fmt:message--%>
+				<%--key="copyright.year" /> <a href="<fmt:message key="company.url"/>"><fmt:message--%>
+					<%--key="company.name" /></a>--%>
+            <img src="/images/ugandan.png" height="30" title="Proudly Ugandan" />
+            <img src="/images/proudly_ugandan.png" height="20" title="Proudly Ugandan" />
 		</span>
 	</div>
 	<%= (request.getAttribute("scripts") != null) ?  request.getAttribute("scripts") : "" %>
