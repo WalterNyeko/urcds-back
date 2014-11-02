@@ -136,3 +136,82 @@ function loadCrashCauseChart() {
 		}
 	});
 }
+
+function loadInGoogleMaps() {
+    loadDialog({message: "Loading map..."});
+    initializeMap();
+}
+
+function loadDialog(params) {
+    $("<div id='map-canvas' title='Google Map'>" +
+        "<div style='clear: both; margin-top: 2%; text-align: justify'>" +
+        params.message +
+        "</div></div>").appendTo("body");
+
+    $("#map-canvas").dialog({
+        autoOpen : true,
+        closeOnEscape: false,
+        modal : true,
+        height: 600,
+        width: 850,
+        buttons:{
+            'Close': function() {
+                $("#map-canvas").remove();
+            }
+        },
+
+        open: function(event, ui) {
+
+            openDialog({
+                dialogDiv: this,
+                cancelButtonValue: "Close",
+                okButtonValue: null
+            });
+        }
+    });
+    return false;
+}
+
+function openDialog(params) {
+    $(".ui-dialog-titlebar-close", $(params.dialogDiv).parent()).hide();
+    $('.ui-dialog-titlebar').css('border', '1px Solid #2C6CAF');
+    $('.ui-widget-content').css('border', '0');
+    $('.ui-dialog').zIndex(2000);
+    $('.ui-dialog .ui-dialog-titlebar').find('span').css('color', "#2C6CAF");
+}
+
+function setButtonAttributes(buttonValue){
+
+    $('.ui-dialog-buttonpane').find('button:contains("' + buttonValue + '")')
+        .removeAttr('class').addClass('button_medium').css('width', '120px').css('float', 'left').css('line-height', '0').css('padding','8px 0');
+    $('.ui-dialog-buttonpane').find('button:contains("' + buttonValue + '")')
+        .mouseover(function() {$(this).removeClass("ui-state-hover");})
+        .focus(function () {$(this).removeClass("ui-state-focus");});
+    $('.ui-dialog-buttonpane').find('button:contains("' + buttonValue + '")').blur();
+}
+
+function setDialogTheme(params) {
+    if (params.cancelButtonValue)
+        $('.ui-dialog-buttonpane').find('button:contains("' + params.cancelButtonValue + '")').css('background-image', 'url(images/button_medium_BG.gif)');
+    if (params.okButtonValue)
+        $('.ui-dialog-buttonpane').find('button:contains("' + params.okButtonValue + '")').css('background-image', 'url(images/button_medium_BG.gif)');
+
+    $('.ui-dialog .ui-dialog-titlebar').find('span').css('color', "#2C6CAF");
+}
+
+function initializeMap() {
+    var coordinates = new google.maps.LatLng(0.313667,32.588717);
+    var mapOptions = {
+        center: coordinates,
+        zoom: 18,
+        mapTypeId:google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map(document.getElementById('map-canvas'),
+        mapOptions);
+    var marker = new google.maps.Marker({
+        position: coordinates,
+        map: map,
+        animation: google.maps.Animation.DROP,
+        title: 'Crash Spot'
+    });
+}

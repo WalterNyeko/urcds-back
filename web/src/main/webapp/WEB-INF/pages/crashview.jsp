@@ -4,6 +4,9 @@
 <head>
 <title><fmt:message key="crashView.title" /></title>
 <meta name="menu" content="CrashMenu" />
+    <script type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdGBHIqR--XabhAy6UddDj4toKlEyJzAA">
+    </script>
 </head>
 
 <div class="col-sm-10">
@@ -84,11 +87,15 @@
 									key="crashForm.gpsCoordinates.latitude" /></td>
 							<td width="50%"><appfuse:label
 									styleClass="form-label boldText"
-									key="crashForm.gpsCoordinates.longitude" /></td>
+									key="crashForm.gpsCoordinates.longitude" />
+                                &nbsp;
+                                <img id="gMaps" src="/images/gglMap.png" alt="View in Google Maps" title="View in Google Maps" width="20"
+                                                                                     style="cursor: pointer;" onclick="javascript:loadInGoogleMaps();"/>
+                            </td>
 						</tr>
 						<tr>
-							<td>${crash.latitude}</td>
-							<td>${crash.longitude}</td>
+							<td id="tdLat">${crash.latitude}</td>
+							<td id="tdLon">${crash.longitude}</td>
 						</tr>
 					</table>
 				</td>

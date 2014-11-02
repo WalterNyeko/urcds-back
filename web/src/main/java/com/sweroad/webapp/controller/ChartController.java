@@ -48,6 +48,15 @@ public class ChartController extends BaseFormController {
 		return chart;
 	}
 
+    @RequestMapping(value = "/crashchartdistrctmonthly", method = RequestMethod.GET)
+    public @ResponseBody
+    String getCrashDistricMonthlyNumbers(HttpServletRequest request) throws Exception {
+        String chart = "[{\"type\":\"pie\",\"name\":\"Crash Cause Pie Chart\",";
+        chart += constructCrashCauseChartData();
+        chart += "}]";
+        return chart;
+    }
+
 	private String constructCrashChartData() {
 		String data = "\"data\":[";
 		Map<String, Integer> severityNumbers = getCrashSeverityNumbers();
