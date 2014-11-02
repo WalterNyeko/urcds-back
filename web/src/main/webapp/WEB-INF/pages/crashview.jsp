@@ -32,7 +32,7 @@
 				<td width="40%" valign="top">
 					<table width="100%">
 						<tr>
-							<td width="50%"><appfuse:label
+							<td width="50%" id="tdTarNo" data-crash-tarNo="${crash.tarNo}"><appfuse:label
 									styleClass="form-label boldText" key="crashForm.tarNo" /></td>
 							<td width="50%" class="underlined">${crash.tarNo}</td>
 						</tr>
@@ -89,13 +89,15 @@
 									styleClass="form-label boldText"
 									key="crashForm.gpsCoordinates.longitude" />
                                 &nbsp;
-                                <img id="gMaps" src="/images/gglMap.png" alt="View in Google Maps" title="View in Google Maps" width="20"
+                                <c:if test="${ crash.latitudeNumeric ne null and crash.longitudeNumeric ne null }">
+                                    <img id="gMaps" src="/images/gglMap.png" alt="View in Google Maps" title="View in Google Maps" width="20"
                                                                                      style="cursor: pointer;" onclick="javascript:loadInGoogleMaps();"/>
+                                </c:if>
                             </td>
 						</tr>
 						<tr>
-							<td id="tdLat">${crash.latitude}</td>
-							<td id="tdLon">${crash.longitude}</td>
+							<td id="tdLat" data-lat-val="${crash.latitudeNumeric}">${crash.latitude}&nbsp;</td>
+							<td id="tdLon" data-lon-val="${crash.longitudeNumeric}">${crash.longitude}&nbsp;</td>
 						</tr>
 					</table>
 				</td>

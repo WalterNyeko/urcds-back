@@ -5,10 +5,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sweroad.service.GenericManager;
+import com.sweroad.util.GisHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
@@ -25,6 +28,8 @@ public class CrashController extends BaseFormController {
 
 	@Autowired
 	private CrashManager crashManager;
+    @Autowired
+    private GenericManager<Crash, Long> genericCrashManager;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView showCrashes() throws Exception {
@@ -34,7 +39,7 @@ public class CrashController extends BaseFormController {
 	@RequestMapping(value = "/crashview", method = RequestMethod.GET)
 	public ModelAndView viewCrash(HttpServletRequest request) throws Exception {
 		try {
-			ModelAndView mav = new ModelAndView("crashview");
+            ModelAndView mav = new ModelAndView("crashview");
 			Crash crash;
 			String id = request.getParameter("id");
 			crash = crashManager.get(new Long(id));

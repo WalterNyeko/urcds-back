@@ -685,6 +685,8 @@
 		<column>is_removed</column>
         <column>latitude</column>
         <column>longitude</column>
+        <column>latitude_numeric</column>
+        <column>longitude_numeric</column>
 		<row>
 			<value description="id">1</value>
 			<value description="crash_date_time">2014-06-03 16:21:00</value>
@@ -708,8 +710,10 @@
 			<value description="editable">0</value>
 			<value description="removable">0</value>
 			<value description="is_removed">0</value>
-            <value description="latitude">N 0 23 00</value>
-            <value description="longitude">E 32 55 27</value>
+            <value description="latitude">N00 23 00</value>
+            <value description="longitude">E32 55 27</value>
+            <value description="latitude_numeric">0.383333</value>
+            <value description="longitude_numeric">32.921167</value>
 		</row>
 	</table>
 	<table name="crash_casualty">

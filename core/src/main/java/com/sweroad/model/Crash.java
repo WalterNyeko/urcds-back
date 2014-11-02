@@ -124,6 +124,10 @@ public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertib
     private String latitude;
     @Column
     private String longitude;
+    @Column(name = "latitude_numeric")
+    private Double latitudeNumeric;
+    @Column(name = "longitude_numeric")
+    private Double longitudeNumeric;
 
     /**
      * @return the casualties
@@ -682,6 +686,22 @@ public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertib
 
     public void setLatitude(String latitude) {
         this.latitude = latitude;
+    }
+
+    public Double getLatitudeNumeric() {
+        return latitudeNumeric;
+    }
+
+    public void setLatitudeNumeric(Double latitudeNumeric) {
+        this.latitudeNumeric = latitudeNumeric;
+    }
+
+    public Double getLongitudeNumeric() {
+        return longitudeNumeric;
+    }
+
+    public void setLongitudeNumeric(Double longitudeNumeric) {
+        this.longitudeNumeric = longitudeNumeric;
     }
 
     /**

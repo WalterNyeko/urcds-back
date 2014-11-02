@@ -200,18 +200,23 @@ function setDialogTheme(params) {
 }
 
 function initializeMap() {
-    var coordinates = new google.maps.LatLng(0.313667,32.588717);
-    var mapOptions = {
-        center: coordinates,
-        zoom: 18,
-        mapTypeId:google.maps.MapTypeId.ROADMAP
-    };
-    var map = new google.maps.Map(document.getElementById('map-canvas'),
-        mapOptions);
-    var marker = new google.maps.Marker({
-        position: coordinates,
-        map: map,
-        animation: google.maps.Animation.DROP,
-        title: 'Crash Spot'
-    });
+    if($("#gMaps")) {
+        var latitude = parseFloat($("#tdLat").attr('data-lat-val'));
+        var longitude = parseFloat($("#tdLon").attr('data-lon-val'));
+        var crashTitle = "Crash TAR No.: " + $("#tdTarNo").attr("data-crash-tarNo");
+        var coordinates = new google.maps.LatLng(latitude,longitude);
+        var mapOptions = {
+            center: coordinates,
+            zoom: 15,
+            mapTypeId:google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById('map-canvas'),
+            mapOptions);
+        var marker = new google.maps.Marker({
+            position: coordinates,
+            map: map,
+            animation: google.maps.Animation.DROP,
+            title: crashTitle
+        });
+    }
 }
