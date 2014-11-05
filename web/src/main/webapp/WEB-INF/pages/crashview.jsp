@@ -24,10 +24,8 @@
 			</td>
 		</tr>
 	</table>
-	
-	<div class="col-sm-15">
-		<table cellpadding="10" width="100%"
-			style="border-top: solid 1px gray; border-left: solid 1px gray;">
+    <div class="content-wrapper">
+		<table cellpadding="10" width="100%">
 			<tr>
 				<td width="40%" valign="top">
 					<table width="100%">
@@ -506,8 +504,14 @@
 				</c:if>
 			</c:if>
 		</table>
-	</div>
-	<a href="<c:url value='/crashes'/>" onclick="$('myDiv').printElement();"> <fmt:message
-			key="button.backToCrashes" />
-	</a>
+        <table width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+               <td width="100%" align="right">
+                    <a href="<c:url value='/crashes'/>"> <fmt:message
+                            key="button.backToCrashes" />
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>
