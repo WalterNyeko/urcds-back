@@ -220,3 +220,48 @@ function initializeMap() {
         });
     }
 }
+
+function defineLat() {
+    var latitude = $("#latLetter").val();
+    var latDeg = "" + $("#latDeg").val();
+    if(latDeg.length > 0) {
+        var degNum = parseInt(latDeg);
+        if (isNaN(degNum)) {
+            alert("Latitude degrees value must be numeric");
+            $("#latDeg").select();
+            return;
+        }
+        if (degNum > 90 || degNum < -90) {
+            alert("Latitude degrees value must be between -90 and 90");
+            $("#latDeg").select();
+            return;
+        }
+        if (degNum < 10 || degNum > -10) {
+            latitude += "0" + degNum;
+        } else {
+            latitude += "" + degNum;
+        }
+        var latMins = "" + $("#latMins").val();
+        if(latMins.length > 0) {
+            var minNum = parseFloat(latMins);
+            if(isNaN(minNum)) {
+                alert("Latitude minutes value must be numeric");
+                return;
+            }
+            if(minNum >= 60) {
+                alert("Latitude minutes value cannot be greater than 60.");
+                return;
+            }
+            if(minNum < 10) {
+                latitude += " 0" + minNum;
+            } else {
+                latitude += " " + minNum;
+            }
+        } else {
+            latitude += "00 00"
+        }
+    } else {
+        latitude = "";
+    }
+    document.getElementById("latitude").value = latitude;
+}

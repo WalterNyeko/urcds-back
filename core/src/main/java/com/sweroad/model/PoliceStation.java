@@ -3,26 +3,23 @@
  */
 package com.sweroad.model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 /**
  * @author Frank
  *
  */
-@Entity(name = "police_station")
+@Entity
+@Table(name = "police_station")
+@NamedQueries({
+        @NamedQuery(name = PoliceStation.FIND_POLICE_STATIONS_ORDER_BY_NAME, query = "from PoliceStation d order by d.name")})
 public class PoliceStation extends BaseModel {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -7204210378164794420L;
+    public static final String FIND_POLICE_STATIONS_ORDER_BY_NAME = "findPoliceStationsOrderByName";
 
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;

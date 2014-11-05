@@ -10,8 +10,11 @@
 			</c:if>
 			<menu:displayMenu name="Home" />
 			<menu:displayMenu name="CrashMenu" />
+            <menu:displayMenu name="AnalysisMenu" />
+            <menu:displayMenu name="MappingMenu" />
+            <menu:displayMenu name="ReportsMenu" />
+            <menu:displayMenu name="AdminMenu" />
 			<menu:displayMenu name="UserMenu" />
-			<menu:displayMenu name="AdminMenu" />
 			<menu:displayMenu name="Logout" />
 		</ul>
 	</div>

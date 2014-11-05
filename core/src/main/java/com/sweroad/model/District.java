@@ -1,19 +1,18 @@
 package com.sweroad.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-@Entity(name = "district")
+@Entity
+@Table(name = "district")
+@NamedQueries({
+        @NamedQuery(name = District.FIND_DISTRICTS_ORDER_BY_NAME, query = "from District d order by d.name")})
 public class District extends BaseModel {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -4268584529429360770L;
-
+    public static final String FIND_DISTRICTS_ORDER_BY_NAME = "findDistrictsOrderByName";
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@Column(nullable = false)

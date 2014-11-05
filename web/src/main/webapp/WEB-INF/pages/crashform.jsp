@@ -27,88 +27,68 @@
 					<td width="40%" valign="top">
 						<table width="100%" style="border-bottom: solid 1px black;">
 							<tr>
-								<td width="50%"><appfuse:label styleClass="form-label"
+								<td width="40%"><appfuse:label styleClass="form-label"
 										key="crashForm.tarNo" /></td>
-								<td width="50%"><spring:bind path="crash.tarNo">
-										<div class="col-sm-15 form-group${(not empty status.errorMessage) ? ' has-error' : ''}">
-									</spring:bind> 
+								<td width="60%">
 									<form:input cssClass="form-control req-val" path="tarNo" id="tarNo" data-labelName="${tarNoLabel}"
-										autofocus="true" /> <form:errors path="tarNo" cssClass="help-block" /> <form:hidden path="id" />
-									</div></td>
-							</tr>
-							<tr>
-								<td><appfuse:label styleClass="form-label"
-										key="crashForm.policeStation" /></td>
-								<td><spring:bind path="crash.policeStation">
-										<div
-											class="col-sm-15 form-group${(not empty status.errorMessage) ? ' has-error' : ''}">
-									</spring:bind> <form:select path="policeStation.id" cssClass="form-control req-val" data-labelName="${policeStationLabel}">
-										<form:option value="">
-											<fmt:message key="rcds.pleaseSelect" />
-										</form:option>
-										<form:options items="${policeStations}" itemValue="id"
-											itemLabel="name" />
-									</form:select> <form:errors path="policeStation" cssClass="help-block" />
-									</div></td>
+										autofocus="true" /><form:hidden path="id" />
+									</td>
 							</tr>
 							<tr>
 								<td><appfuse:label styleClass="form-label"
 										key="crashForm.district" /></td>
-								<td><spring:bind path="crash.policeStation.district">
-										<div
-											class="col-sm-15 form-group${(not empty status.errorMessage) ? ' has-error' : ''}">
-									</spring:bind> <form:select path="policeStation.district"
+								<td><form:select path="policeStation.district"
 										cssClass="form-control">
 										<form:option value="">
 											<fmt:message key="rcds.pleaseSelect" />
 										</form:option>
 										<form:options items="${districts}" itemValue="id"
 											itemLabel="name" />
-									</form:select> <form:errors path="policeStation.district"
-										cssClass="help-block" />
-									</div></td>
+									</form:select>
+								</td>
 							</tr>
+                            <tr>
+                                <td><appfuse:label styleClass="form-label"
+                                                   key="crashForm.policeStation" /></td>
+                                <td>
+                                    <form:select path="policeStation.id" cssClass="form-control req-val" data-labelName="${policeStationLabel}">
+                                        <form:option value="">
+                                            <fmt:message key="rcds.pleaseSelect" />
+                                        </form:option>
+                                        <form:options items="${policeStations}" itemValue="id"
+                                                      itemLabel="name" />
+                                    </form:select>
+                                </td>
+                            </tr>
 							<tr>
 								<td><appfuse:label styleClass="form-label"
 										key="crashForm.townOrVillage" /></td>
 								<td>
-									<div
-										class="col-sm-15 form-group${(not empty status.errorMessage) ? ' has-error' : ''}">
-										<form:input cssClass="form-control" path="townOrVillage"
+									<form:input cssClass="form-control" path="townOrVillage"
 											id="townOrVillage" />
-									</div>
 								</td>
 							</tr>
 							<tr>
 								<td><appfuse:label styleClass="form-label"
 										key="crashForm.road" /></td>
 								<td>
-									<div
-										class="col-sm-15 form-group${(not empty status.errorMessage) ? ' has-error' : ''}">
-										<form:input cssClass="form-control" path="road" id="road" />
-									</div>
+									<form:input cssClass="form-control" path="road" id="road" />
 								</td>
 							</tr>
 							<tr>
 								<td><appfuse:label styleClass="form-label"
 										key="crashForm.roadNumber" /></td>
 								<td>
-									<div
-										class="col-sm-15 form-group${(not empty status.errorMessage) ? ' has-error' : ''}">
-										<form:input cssClass="form-control" path="roadNumber"
+                                        <form:input cssClass="form-control" path="roadNumber"
 											id="roadNumber" />
-									</div>
 								</td>
 							</tr>
 							<tr>
 								<td><appfuse:label styleClass="form-label"
 										key="crashForm.crashPlace" /></td>
 								<td>
-									<div
-										class="col-sm-15 form-group${(not empty status.errorMessage) ? ' has-error' : ''}">
-										<form:input cssClass="form-control" path="crashPlace"
+									<form:input cssClass="form-control" path="crashPlace"
 											id="crashPlace" />
-									</div>
 								</td>
 							</tr>
 						</table>
@@ -153,7 +133,6 @@
 										  $('#crashDateTimeString').val(date);
 									  }
 									</script>
-									<br/>
 									<%@ include file="/common/timeselect.jsp"%>
 								</td>
 							</tr>
@@ -169,16 +148,54 @@
 							</tr>
 							<tr>
 								<td>
-									<div class="col-sm-15 form-group">
-										<form:input cssClass="form-control"
-											path="latitude" id="latitude" />
-									</div>
+                                    <%--<table cellpadding="0" cellspacing="0" class="innerTable" width="100%">--%>
+                                        <%--<tr>--%>
+                                            <%--<td style="min-width: 50px;">--%>
+                                                <%--<select id="latLetter" class="form-control" onchange="defineLat()">--%>
+                                                    <%--<option value="N">N</option>--%>
+                                                    <%--<option value="S">S</option>--%>
+                                                <%--</select>--%>
+                                            <%--</td>--%>
+                                            <%--<td>--%>
+                                                <%--<input id="latDegs" type="text" class="form-control" onblur="defineLat()" />--%>
+                                            <%--</td>--%>
+                                            <%--<td>--%>
+                                                <%--&deg;--%>
+                                            <%--</td>--%>
+                                            <%--<td>--%>
+                                                <%--<input id="latMins" type="text" class="form-control" onblur="defineLat()" />--%>
+                                            <%--</td>--%>
+                                            <%--<td>--%>
+                                                <%--'--%>
+                                            <%--</td>--%>
+                                        <%--</tr>--%>
+                                    <%--</table>--%>
+									<form:input cssClass="form-control" path="latitude" id="latitude" />
 								</td>
 								<td>
-									<div class="col-sm-15 form-group">
-										<form:input cssClass="form-control"
-											path="longitude" id="longitude" />
-									</div>
+                                    <%--<table cellpadding="0" cellspacing="0" class="innerTable" width="100%">--%>
+                                        <%--<tr>--%>
+                                            <%--<td style="min-width: 50px;">--%>
+                                                <%--<select id="lonLetter" class="form-control" disabled>--%>
+                                                    <%--<option value="E">E</option>--%>
+                                                    <%--<option value="W">W</option>--%>
+                                                <%--</select>--%>
+                                            <%--</td>--%>
+                                            <%--<td>--%>
+                                                <%--<input id="lonDegs" type="text" class="form-control" />--%>
+                                            <%--</td>--%>
+                                            <%--<td>--%>
+                                                <%--&deg;--%>
+                                            <%--</td>--%>
+                                            <%--<td>--%>
+                                                <%--<input id="lonMins" type="text" class="form-control" />--%>
+                                            <%--</td>--%>
+                                            <%--<td>--%>
+                                                <%--'--%>
+                                            <%--</td>--%>
+                                        <%--</tr>--%>
+                                    <%--</table>--%>
+                                    <form:input cssClass="form-control" path="longitude" id="longitude" />
 								</td>
 							</tr>
 						</table>

@@ -18,7 +18,7 @@
 		<decorator:getProperty property="meta.menu" />
 	</c:set>
 
-	<div class="navbar navbar-default navbar-fixed-top drop-shadow" role="navigation">
+	<div class="navbar navbar-inverse navbar-fixed-top drop-shadow" role="navigation">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse"
 				data-target="#navbar">

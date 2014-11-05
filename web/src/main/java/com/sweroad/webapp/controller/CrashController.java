@@ -28,8 +28,6 @@ public class CrashController extends BaseFormController {
 
 	@Autowired
 	private CrashManager crashManager;
-    @Autowired
-    private GenericManager<Crash, Long> genericCrashManager;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView showCrashes() throws Exception {

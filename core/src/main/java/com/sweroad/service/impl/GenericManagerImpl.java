@@ -2,6 +2,7 @@ package com.sweroad.service.impl;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -138,5 +139,10 @@ public class GenericManagerImpl<T, PK extends Serializable> implements GenericMa
      */
     public void reindexAll(boolean async) {
         dao.reindexAll(async);
+    }
+
+    @Override
+    public List<T> findByNamedQuery(String queryName, Map<String, Object> queryParams) {
+        return dao.findByNamedQuery(queryName, queryParams);
     }
 }
