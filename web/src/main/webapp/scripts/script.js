@@ -164,8 +164,45 @@ function loadDialog(params) {
 
             openDialog({
                 dialogDiv: this,
-                cancelButtonValue: "Close",
-                okButtonValue: null
+                cancelButtonValue: "Close"
+            });
+        }
+    });
+    return false;
+}
+
+
+function alertDialog(params){
+
+    $("<div id='alertDialog' title='Message Alert'>" +
+        "<div style='clear: both; margin-top: 2%; text-align: justify; font-size: 12;'>" +
+        params.message +
+        "</div></div>").appendTo("body");
+
+    var height = params.height ? params.height : 180;
+    var width = params.weight ? params.width : 400;
+
+    $("#alertDialog").dialog({
+        autoOpen : true,
+        closeOnEscape: false,
+        modal : true,
+        height: height,
+        width: width,
+        buttons:{
+            'OK': function() {
+                $("#alertDialog").remove();
+                if(params.focusTarget) {
+                    $(params.focusTarget).focus();
+                    $(params.focusTarget).select();
+                }
+            }
+        },
+
+        open: function(event, ui) {
+
+            openDialog({
+                dialogDiv: this,
+                okButtonValue: "OK"
             });
         }
     });
@@ -177,25 +214,6 @@ function openDialog(params) {
     $('.ui-dialog-titlebar').css('border', '1px Solid #2C6CAF');
     $('.ui-widget-content').css('border', '0');
     $('.ui-dialog').zIndex(2000);
-    $('.ui-dialog .ui-dialog-titlebar').find('span').css('color', "#2C6CAF");
-}
-
-function setButtonAttributes(buttonValue){
-
-    $('.ui-dialog-buttonpane').find('button:contains("' + buttonValue + '")')
-        .removeAttr('class').addClass('button_medium').css('width', '120px').css('float', 'left').css('line-height', '0').css('padding','8px 0');
-    $('.ui-dialog-buttonpane').find('button:contains("' + buttonValue + '")')
-        .mouseover(function() {$(this).removeClass("ui-state-hover");})
-        .focus(function () {$(this).removeClass("ui-state-focus");});
-    $('.ui-dialog-buttonpane').find('button:contains("' + buttonValue + '")').blur();
-}
-
-function setDialogTheme(params) {
-    if (params.cancelButtonValue)
-        $('.ui-dialog-buttonpane').find('button:contains("' + params.cancelButtonValue + '")').css('background-image', 'url(images/button_medium_BG.gif)');
-    if (params.okButtonValue)
-        $('.ui-dialog-buttonpane').find('button:contains("' + params.okButtonValue + '")').css('background-image', 'url(images/button_medium_BG.gif)');
-
     $('.ui-dialog .ui-dialog-titlebar').find('span').css('color', "#2C6CAF");
 }
 
@@ -221,47 +239,62 @@ function initializeMap() {
     }
 }
 
-function defineLat() {
-    var latitude = $("#latLetter").val();
-    var latDeg = "" + $("#latDeg").val();
-    if(latDeg.length > 0) {
-        var degNum = parseInt(latDeg);
-        if (isNaN(degNum)) {
-            alert("Latitude degrees value must be numeric");
-            $("#latDeg").select();
-            return;
+function defineGpsCoord(coord) {
+    var isLat = coord == "lat";
+    var coordinate = isLat ? $("#latLetter").val() : "E";
+    var degTb = isLat ?  $("#latDegs") : $("#lonDegs");
+    var minTb = isLat ?  $("#latMins") : $("#lonMins");
+    var maxDegs = isLat ? 90 : 180;
+    var coordText = isLat ? "Latitude" : "Longitude";
+    var coordDegs = $.trim($(degTb).val());
+
+    if(coordDegs.length > 0) {
+        if (!validateInteger(coordDegs)) {
+            alertDialog({ message: coordText + " degrees value must be numeric", focusTarget: $(degTb) });
+            return false;
         }
-        if (degNum > 90 || degNum < -90) {
-            alert("Latitude degrees value must be between -90 and 90");
-            $("#latDeg").select();
-            return;
+        if(coordDegs.indexOf("+") > -1) {
+            coordDegs = coordDegs.substr(1);
+            $(degTb).val(coordDegs);
         }
-        if (degNum < 10 || degNum > -10) {
-            latitude += "0" + degNum;
+        var degNum = parseInt(coordDegs, 10);
+        if (degNum > maxDegs || degNum < 0) {
+            alertDialog({ message: coordText + " degrees value must be between 0 and " + maxDegs, focusTarget: $(degTb) });
+            return false;
+        }
+        if (degNum < 10) {
+            coordinate += "0" + degNum;
         } else {
-            latitude += "" + degNum;
+            coordinate += "" + degNum;
         }
-        var latMins = "" + $("#latMins").val();
-        if(latMins.length > 0) {
-            var minNum = parseFloat(latMins);
+        var coordMins = "" + $(minTb).val();
+        if(coordMins.length > 0) {
+            var minNum = parseFloat(coordMins);
             if(isNaN(minNum)) {
-                alert("Latitude minutes value must be numeric");
-                return;
+                alertDialog({ message: coordText + " minutes value must be numeric", focusTarget: $(minTb) });
+                return false;
             }
             if(minNum >= 60) {
-                alert("Latitude minutes value cannot be greater than 60.");
-                return;
+                alertDialog({ message: coordText + " minutes value cannot be greater than 60.", focusTarget: $(minTb) });
+                return false;
             }
+            var minNumStr = "" + minNum.toFixed(3);
             if(minNum < 10) {
-                latitude += " 0" + minNum;
+                coordinate += " 0" + minNumStr;
             } else {
-                latitude += " " + minNum;
+                coordinate += " " + minNumStr;
             }
         } else {
-            latitude += "00 00"
+            coordinate += " 00.000"
         }
     } else {
-        latitude = "";
+        coordinate = "";
     }
-    document.getElementById("latitude").value = latitude;
+    document.getElementById(coordText.toLowerCase()).value = coordinate;
+    return true;
+}
+
+function validateInteger(num) {
+    var rx = RegExp('^([\-\+]?)[0-9]*$');
+    return rx.test(num);
 }

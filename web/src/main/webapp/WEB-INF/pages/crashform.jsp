@@ -148,54 +148,54 @@
 							</tr>
 							<tr>
 								<td>
-                                    <%--<table cellpadding="0" cellspacing="0" class="innerTable" width="100%">--%>
-                                        <%--<tr>--%>
-                                            <%--<td style="min-width: 50px;">--%>
-                                                <%--<select id="latLetter" class="form-control" onchange="defineLat()">--%>
-                                                    <%--<option value="N">N</option>--%>
-                                                    <%--<option value="S">S</option>--%>
-                                                <%--</select>--%>
-                                            <%--</td>--%>
-                                            <%--<td>--%>
-                                                <%--<input id="latDegs" type="text" class="form-control" onblur="defineLat()" />--%>
-                                            <%--</td>--%>
-                                            <%--<td>--%>
-                                                <%--&deg;--%>
-                                            <%--</td>--%>
-                                            <%--<td>--%>
-                                                <%--<input id="latMins" type="text" class="form-control" onblur="defineLat()" />--%>
-                                            <%--</td>--%>
-                                            <%--<td>--%>
-                                                <%--'--%>
-                                            <%--</td>--%>
-                                        <%--</tr>--%>
-                                    <%--</table>--%>
-									<form:input cssClass="form-control" path="latitude" id="latitude" />
+                                    <table cellpadding="0" cellspacing="0" class="innerTable" width="100%">
+                                        <tr>
+                                            <td style="min-width: 50px;">
+                                                <select id="latLetter" class="form-control" onchange="defineGpsCoord('lat')">
+                                                    <option value="N">N</option>
+                                                    <option value="S">S</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input id="latDegs" type="text" class="form-control" onblur="defineGpsCoord('lat')" />
+                                            </td>
+                                            <td>
+                                                &deg;
+                                            </td>
+                                            <td>
+                                                <input id="latMins" type="text" class="form-control" onblur="defineGpsCoord('lat')" />
+                                            </td>
+                                            <td>
+                                                '
+                                            </td>
+                                        </tr>
+                                    </table>
+									<form:hidden path="latitude" id="latitude" />
 								</td>
 								<td>
-                                    <%--<table cellpadding="0" cellspacing="0" class="innerTable" width="100%">--%>
-                                        <%--<tr>--%>
-                                            <%--<td style="min-width: 50px;">--%>
-                                                <%--<select id="lonLetter" class="form-control" disabled>--%>
-                                                    <%--<option value="E">E</option>--%>
-                                                    <%--<option value="W">W</option>--%>
-                                                <%--</select>--%>
-                                            <%--</td>--%>
-                                            <%--<td>--%>
-                                                <%--<input id="lonDegs" type="text" class="form-control" />--%>
-                                            <%--</td>--%>
-                                            <%--<td>--%>
-                                                <%--&deg;--%>
-                                            <%--</td>--%>
-                                            <%--<td>--%>
-                                                <%--<input id="lonMins" type="text" class="form-control" />--%>
-                                            <%--</td>--%>
-                                            <%--<td>--%>
-                                                <%--'--%>
-                                            <%--</td>--%>
-                                        <%--</tr>--%>
-                                    <%--</table>--%>
-                                    <form:input cssClass="form-control" path="longitude" id="longitude" />
+                                    <table cellpadding="0" cellspacing="0" class="innerTable" width="100%">
+                                        <tr>
+                                            <td style="min-width: 50px;">
+                                                <select id="lonLetter" class="form-control" disabled>
+                                                    <option value="E">E</option>
+                                                    <option value="W">W</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input id="lonDegs" type="text" class="form-control" onblur="defineGpsCoord('lon')" />
+                                            </td>
+                                            <td>
+                                                &deg;
+                                            </td>
+                                            <td>
+                                                <input id="lonMins" type="text" class="form-control" onblur="defineGpsCoord('lon')" />
+                                            </td>
+                                            <td>
+                                                '
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <form:hidden path="longitude" id="longitude" />
 								</td>
 							</tr>
 						</table>

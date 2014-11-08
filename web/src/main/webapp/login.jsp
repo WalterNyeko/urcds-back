@@ -10,10 +10,11 @@
 			<td width="20%" valign="top"><img src="/images/ug-coa.jpg" /><br />
 				- <fmt:message key="rcds.ministryOfWorks" /><br /> - <fmt:message
 					key="rcds.ministryOfHealth" /></td>
-			<td width="60%" style="padding-top: 70px;" align="center">
-				<h2 class="form-signin-heading" style="text-align: center;">
-					<fmt:message key="rcds.fullName" />
-				</h2>
+			<td width="60%" valign="top" align="center">
+				<%--<h2 class="form-signin-heading" style="text-align: center;">--%>
+					<%--<fmt:message key="rcds.fullName" />--%>
+				<%--</h2>--%>
+                <img src="/images/logo.jpg" width="480">
                 <br />
                 <form method="post" id="loginForm"
                     action="<c:url value='/j_security_check'/>"

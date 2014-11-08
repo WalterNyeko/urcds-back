@@ -39,7 +39,7 @@ public class CrashSecurityAdvice implements AfterReturningAdvice {
                 editable = true;
                 removable = true;
             }
-            setCrashChangeAbility(returnValue, editable, removable, editableOnlyForDistrict, currentUser.getDistrict());
+            setCrashChangeAbility((List<Crash>) returnValue, editable, removable, editableOnlyForDistrict, currentUser.getDistrict());
             if (!isAdmin) {
                 removeInvisibleCrashes(returnValue);
             }
@@ -47,9 +47,8 @@ public class CrashSecurityAdvice implements AfterReturningAdvice {
     }
 
     @SuppressWarnings("unchecked")
-    private void setCrashChangeAbility(Object returnValue, boolean editable, boolean removable,
+    private void setCrashChangeAbility(List<Crash> crashes, boolean editable, boolean removable,
                                        boolean editableOnlyForDistrict, District district) {
-        List<Crash> crashes = (List<Crash>) returnValue;
         if (!editableOnlyForDistrict) {
             for (Crash crash : crashes) {
                 crash.setEditable(editable);
