@@ -94,8 +94,20 @@
                             </td>
 						</tr>
 						<tr>
-							<td id="tdLat" data-lat-val="${crash.latitudeNumeric}">${crash.latitude}&nbsp;</td>
-							<td id="tdLon" data-lon-val="${crash.longitudeNumeric}">${crash.longitude}&nbsp;</td>
+							<td id="tdLat" data-lat-val="${crash.latitudeNumeric}">
+                                <c:if test="${crash.latitude ne null and crash.latitude ne ''}">
+                                    <c:set var="latParts" value="${crash.latitude.split(' ')}"/>
+                                    <i>${latParts[0]}&deg; ${latParts[1]}'</i>
+							    </c:if>
+                                &nbsp;
+                            </td>
+							<td id="tdLon" data-lon-val="${crash.longitudeNumeric}">
+                                <c:if test="${crash.longitude ne null and crash.longitude ne ''}">
+                                    <c:set var="lonParts" value="${crash.longitude.split(' ')}"/>
+                                    <i>${lonParts[0]}&deg; ${lonParts[1]}'</i>
+                                </c:if>
+                                &nbsp;
+                            </td>
 						</tr>
 					</table>
 				</td>

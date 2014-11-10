@@ -175,7 +175,7 @@ function loadDialog(params) {
 function alertDialog(params){
 
     $("<div id='alertDialog' title='Message Alert'>" +
-        "<div style='clear: both; margin-top: 2%; text-align: justify; font-size: 12;'>" +
+        "<div style='clear: both; margin-top: 2%; text-align: justify;'>" +
         params.message +
         "</div></div>").appendTo("body");
 
@@ -262,8 +262,12 @@ function defineGpsCoord(coord) {
             alertDialog({ message: coordText + " degrees value must be between 0 and " + maxDegs, focusTarget: $(degTb) });
             return false;
         }
-        if (degNum < 10) {
+        if (isLat && degNum < 10) {
             coordinate += "0" + degNum;
+        } else if (!isLat && degNum >= 10 && degNum < 100) {
+            coordinate += "0" + degNum;
+        } else if (degNum < 10) {
+            coordinate += "00" + degNum;
         } else {
             coordinate += "" + degNum;
         }
@@ -297,4 +301,24 @@ function defineGpsCoord(coord) {
 function validateInteger(num) {
     var rx = RegExp('^([\-\+]?)[0-9]*$');
     return rx.test(num);
+}
+
+function validateGpsCoordinates() {
+    return defineGpsCoord("lat") && defineGpsCoord("lon");
+}
+
+function loadGpsCoordinates() {
+    var latitude = $.trim($("#latitude").val());
+    var longitude = $.trim($("#longitude").val());
+    if(latitude.length > 0) {
+        var latparts = latitude.split(" ");
+        $("#latDegs").val(latparts[0].substr(1));
+        $("#latMins").val(latparts[1]);
+        $("#latLetter").val(latparts[0].substr(0,1));
+    }
+    if(longitude.length > 0) {
+        var lonparts = longitude.split(" ");
+        $("#lonDegs").val(lonparts[0].substr(1));
+        $("#lonMins").val(lonparts[1]);
+    }
 }

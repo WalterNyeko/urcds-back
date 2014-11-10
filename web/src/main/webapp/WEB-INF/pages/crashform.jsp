@@ -8,7 +8,8 @@
 	$( document ).ready(function() {
 		$(".submit").click(function(){
 		    return validateFields();
-		});	
+		});
+        loadGpsCoordinates();
 	});		
 </script>
 </head>
@@ -443,7 +444,7 @@
 						</a>
 					</td>
 					<td align="right"><input type="submit" class="btn btn-primary submit"
-						value="<fmt:message key='button.next'/>" onclick="bCancel=false;"></td>
+						value="<fmt:message key='button.next'/>" onclick="bCancel=false; return validateGpsCoordinates();"></td>
 				</tr>
 			</table>
 		</div>

@@ -49,7 +49,7 @@ public class AuditAdvice {
                 IAuditable dbObject = null;
                 memObject = (IAuditable) object;
                 GenericManager gm = (GenericManager) pjp.getTarget();
-                if(memObject.getId() != null && !memObject.getId().equals(0L)) {
+                if (memObject.getId() != null && !memObject.getId().equals(0L)) {
                     dbObject = (IAuditable) gm.get(memObject.getId());
                     try {
                         dbObject = dbObject.clone();
@@ -87,7 +87,7 @@ public class AuditAdvice {
                     User currentUser = UserSecurityAdvice.getCurrentUser(auth, null);
                     auditLog.setId(0L);
                     auditLog.setOperation(operation);
-                    auditLog.setEntityId(((IAuditable)returnValue).getId());
+                    auditLog.setEntityId(((IAuditable) returnValue).getId());
                     auditLog.setEntityName(postImage.getClassAlias());
                     auditLog.setUser(currentUser);
                     auditLog.setAuditDate(new Date());
@@ -116,10 +116,10 @@ public class AuditAdvice {
     }
 
     private boolean shouldAudit(String operation, IAuditable dbObject, IAuditable memObject) {
-        if(operation.equals(IAuditable.OPERATION_INSERT)) {
+        if (operation.equals(IAuditable.OPERATION_INSERT)) {
             return true;
         }
-        if(memObject == null) {
+        if (memObject == null) {
             return false;
         }
         if (dbObject != null || memObject != null) {
