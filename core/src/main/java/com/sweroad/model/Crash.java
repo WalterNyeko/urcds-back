@@ -581,6 +581,14 @@ public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertib
 
     public String getCrashDisplayDate() {
         if (crashDateTime != null) {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            return sdf.format(crashDateTime);
+        }
+        return "";
+    }
+
+    public String getCrashDisplayDateTime() {
+        if (crashDateTime != null) {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             return sdf.format(crashDateTime);
         }
@@ -723,6 +731,15 @@ public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertib
      */
     public void setRemoved(boolean isRemoved) {
         this.isRemoved = isRemoved;
+    }
+
+    /**
+     * Checks if this crash is editable for the current user's district
+     * @param districtId
+     * @return
+     */
+    public boolean isEditableForDistrict(Long districtId) {
+        return districtId.equals(policeStation.getDistrict().getId());
     }
 
     @Override

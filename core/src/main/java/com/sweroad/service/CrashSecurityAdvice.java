@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.Aspect;
 import org.springframework.aop.AfterReturningAdvice;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,19 +18,41 @@ import com.sweroad.Constants;
 import com.sweroad.model.Crash;
 import com.sweroad.model.District;
 import com.sweroad.model.User;
+import org.springframework.stereotype.Component;
 
-public class CrashSecurityAdvice implements AfterReturningAdvice {
+@Aspect
+@Component
+public class CrashSecurityAdvice {
 
-    @Override
-    public void afterReturning(Object returnValue, Method method, Object[] args, Object target) throws Throwable {
-        SecurityContext sc = SecurityContextHolder.getContext();
-        Authentication auth = sc.getAuthentication();
-        boolean editable = false;
-        boolean removable = false;
-        boolean editableOnlyForDistrict = false;
-        boolean isAdmin = false;
+    private boolean editable;
+    private boolean removable;
+    private boolean editableOnlyForDistrict;
+    private boolean isAdmin;
+    private User currentUser;
+
+    @AfterReturning(pointcut = "execution(* *..service.CrashManager.getCrashes(..))",
+            returning = "returnValue")
+    public void afterReturningCrashes(JoinPoint jp, Object returnValue) throws Throwable {
+        determineUserRoles();
+        setCrashChangeAbility((List<Crash>) returnValue);
+        if (!isAdmin) {
+            removeInvisibleCrashes(returnValue);
+        }
+
+    }
+
+    @AfterReturning(pointcut = "execution(* *..service.CrashManager.getCrashForView(..))",
+            returning = "returnValue")
+    public void afterReturningOneCrash(JoinPoint jp, Object returnValue) {
+        determineUserRoles();
+        setCrashEditability((Crash)returnValue);
+        ((Crash)returnValue).setRemovable(removable);
+    }
+
+    private void determineUserRoles() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null) {
-            User currentUser = UserSecurityAdvice.getCurrentUser(auth, null);
+            currentUser = UserSecurityAdvice.getCurrentUser(auth, null);
             Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
             if (authoritiesContainRole(Constants.USER_ROLE, authorities)) {
                 editableOnlyForDistrict = true;
@@ -39,30 +64,22 @@ public class CrashSecurityAdvice implements AfterReturningAdvice {
                 editable = true;
                 removable = true;
             }
-            setCrashChangeAbility((List<Crash>) returnValue, editable, removable, editableOnlyForDistrict, currentUser.getDistrict());
-            if (!isAdmin) {
-                removeInvisibleCrashes(returnValue);
-            }
         }
     }
 
     @SuppressWarnings("unchecked")
-    private void setCrashChangeAbility(List<Crash> crashes, boolean editable, boolean removable,
-                                       boolean editableOnlyForDistrict, District district) {
-        if (!editableOnlyForDistrict) {
-            for (Crash crash : crashes) {
-                crash.setEditable(editable);
-                crash.setRemovable(removable);
-            }
+    private void setCrashChangeAbility(List<Crash> crashes) {
+        for (Crash crash : crashes) {
+            setCrashEditability(crash);
+            crash.setRemovable(removable);
+        }
+    }
+
+    private void setCrashEditability(Crash crash) {
+        if (editable && editableOnlyForDistrict) {
+            crash.setEditable(crash.isEditableForDistrict(currentUser.getDistrict().getId()));
         } else {
-            for (Crash crash : crashes) {
-                if (editable && (district != null && district.equals(crash.getPoliceStation().getDistrict()))) {
-                    crash.setEditable(true);
-                } else {
-                    crash.setEditable(false);
-                }
-                crash.setRemovable(removable);
-            }
+            crash.setEditable(editable);
         }
     }
 

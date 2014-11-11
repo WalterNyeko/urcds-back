@@ -110,7 +110,12 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
     }
 
     public List<Crash> getCrashes() {
-        return getAll();
+        return super.findByNamedQuery(Crash.FIND_CRASHES_ORDER_BY_DATE_DESC, null);
+    }
+
+    @Override
+    public Crash getCrashForView(Long id) {
+        return this.get(id);
     }
 
     @Override

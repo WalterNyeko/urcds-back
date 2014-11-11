@@ -44,7 +44,7 @@ public class CrashController extends BaseFormController {
             ModelAndView mav = new ModelAndView("crashview");
             Crash crash;
             String id = request.getParameter("id");
-            crash = crashManager.get(new Long(id));
+            crash = crashManager.getCrashForView(new Long(id));
             mav.addObject("crash", crash);
             mav.addAllObjects(crashManager.getReferenceData());
             return mav;

@@ -28,12 +28,13 @@
             <display:column property="townOrVillage" sortable="true"
                 titleKey="crash.townOrVillage" />
             <display:column property="road" sortable="true" titleKey="crash.road" />
+            <display:column property="crashSeverity.name" sortable="true" titleKey="crash.severity" />
             <display:column property="vehicleCount" sortable="true"
-                style="text-align: right;" titleKey="crash.vehicles" />
+                style="text-align: center;" titleKey="crash.vehicles" />
             <display:column property="casualtyCount" sortable="true"
-                style="text-align: right;" titleKey="crash.casualties" />
+                style="text-align: center;" titleKey="crash.casualties" />
             <display:column property="crashDisplayDate" sortable="true"
-                style="text-align: center;" titleKey="crash.crashDateTime" />
+                style="text-align: center;" titleKey="crash.date" />
             <display:column property="policeStation.name" sortable="true"
                 titleKey="crash.policeStation" />
             <display:column property="policeStation.district.name" sortable="true"

@@ -16,6 +16,8 @@ public interface CrashManager extends GenericManager<Crash, Long> {
 	 * @return
 	 */
 	List<Crash> getCrashes();
+
+    Crash getCrashForView(Long id);
 	
 	Crash findByTarNo(String tarNo);
 	

@@ -9,3 +9,4 @@ web/src/main/webapp/genexcel/
 *.ipr
 *.iws
 .idea/
+*.patch
