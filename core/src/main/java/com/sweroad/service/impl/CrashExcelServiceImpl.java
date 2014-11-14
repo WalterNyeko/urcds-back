@@ -77,7 +77,7 @@ public class CrashExcelServiceImpl implements CrashExcelService {
         Row row = casualtySheet.createRow(0);
         int index = 0;
         addHeaderCell(row, index++, "No.");
-        addHeaderCell(row, index++, "Crash TAR No.");
+        addHeaderCell(row, index++, "Crash No.");
         addHeaderCell(row, index++, "Casualty Type");
         addHeaderCell(row, index++, "Casualty Sex");
         addHeaderCell(row, index++, "Casualty Age");
@@ -91,7 +91,7 @@ public class CrashExcelServiceImpl implements CrashExcelService {
         Row row = vehicleSheet.createRow(0);
         int index = 0;
         addHeaderCell(row, index++, "No.");
-        addHeaderCell(row, index++, "Crash TAR No.");
+        addHeaderCell(row, index++, "Crash No.");
         addHeaderCell(row, index++, "Vehicle No.");
         addHeaderCell(row, index++, "Vehicle Type");
         addHeaderCell(row, index++, "Driver License Valid");
@@ -107,6 +107,7 @@ public class CrashExcelServiceImpl implements CrashExcelService {
         Row row = crashSheet.createRow(0);
         int index = 0;
         addHeaderCell(row, index++, "No.");
+        addHeaderCell(row, index++, "Crash No.");
         addHeaderCell(row, index++, "TAR No.");
         addHeaderCell(row, index++, "Police Station");
         addHeaderCell(row, index++, "District");
@@ -120,6 +121,8 @@ public class CrashExcelServiceImpl implements CrashExcelService {
         addHeaderCell(row, index++, "Day");
         addHeaderCell(row, index++, "Time");
         addHeaderCell(row, index++, "Day of Week");
+        addHeaderCell(row, index++, "Northing");
+        addHeaderCell(row, index++, "Easting");
         addHeaderCell(row, index++, "Latitude");
         addHeaderCell(row, index++, "Longitude");
         addHeaderCell(row, index++, "Crash Severity");
@@ -163,6 +166,8 @@ public class CrashExcelServiceImpl implements CrashExcelService {
         int cellIndex = 0;
         addRowCell(row, cellIndex++, index.toString(), Cell.CELL_TYPE_NUMERIC,
                 getRightAlignStyle(), color);
+        addRowCell(row, cellIndex++, crash.getUniqueCode(), Cell.CELL_TYPE_STRING,
+                null, color);
         addRowCell(row, cellIndex++, crash.getTarNo(), Cell.CELL_TYPE_STRING,
                 null, color);
         addRowCell(row, cellIndex++, crash.getPoliceStation() != null ? crash
@@ -197,6 +202,12 @@ public class CrashExcelServiceImpl implements CrashExcelService {
         addRowCell(row, cellIndex++, crash.getLatitude(), Cell.CELL_TYPE_STRING,
                 null, color);
         addRowCell(row, cellIndex++, crash.getLongitude(), Cell.CELL_TYPE_STRING,
+                null, color);
+        addRowCell(row, cellIndex++, crash.getLatitudeNumeric() != null ?
+                        crash.getLatitudeNumeric().toString() : "", Cell.CELL_TYPE_NUMERIC,
+                null, color);
+        addRowCell(row, cellIndex++, crash.getLongitudeNumeric() != null ?
+                        crash.getLongitudeNumeric().toString() : "", Cell.CELL_TYPE_NUMERIC,
                 null, color);
         addRowCell(row, cellIndex++, crash.getCrashSeverity() != null ? crash
                         .getCrashSeverity().getName() : "", Cell.CELL_TYPE_STRING,
@@ -261,7 +272,7 @@ public class CrashExcelServiceImpl implements CrashExcelService {
         int cellIndex = 0;
         addRowCell(row, cellIndex++, index.toString(), Cell.CELL_TYPE_NUMERIC,
                 getRightAlignStyle(), color);
-        addRowCell(row, cellIndex++, crash.getTarNo(), Cell.CELL_TYPE_STRING,
+        addRowCell(row, cellIndex++, crash.getUniqueCode(), Cell.CELL_TYPE_STRING,
                 null, color);
         addRowCell(row, cellIndex++, vehicle.getNumber() != null ? vehicle
                         .getNumber().toString() : "", Cell.CELL_TYPE_NUMERIC,
@@ -312,7 +323,7 @@ public class CrashExcelServiceImpl implements CrashExcelService {
         int cellIndex = 0;
         addRowCell(row, cellIndex++, index.toString(), Cell.CELL_TYPE_NUMERIC,
                 getRightAlignStyle(), color);
-        addRowCell(row, cellIndex++, crash.getTarNo(), Cell.CELL_TYPE_STRING,
+        addRowCell(row, cellIndex++, crash.getUniqueCode(), Cell.CELL_TYPE_STRING,
                 null, color);
         addRowCell(row, cellIndex++,
                 casualty.getCasualtyType() != null ? casualty.getCasualtyType()

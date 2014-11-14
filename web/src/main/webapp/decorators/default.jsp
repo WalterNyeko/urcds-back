@@ -10,6 +10,18 @@
 <title><decorator:title /> | <fmt:message key="webapp.name" /></title>
 <t:assets />
 <decorator:head />
+    <script type="text/javascript">
+        $(function() {
+            $('.dtpicker').datepicker({
+                dateFormat: "dd/mm/yy",
+                autoSize: true,
+                inline: true,
+                showOtherMonths: true,
+                dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+                showAnim: "fold"
+            });
+        });
+    </script>
 </head>
 <body
 	<decorator:getProperty property="body.id" writeEntireProperty="true"/>

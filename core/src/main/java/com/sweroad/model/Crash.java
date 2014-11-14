@@ -645,6 +645,12 @@ public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertib
         return null;
     }
 
+    public String getUniqueCode() {
+        StringBuilder uniqueCode = new StringBuilder("Crash-");
+        uniqueCode.append(id).append(" [").append(tarNo).append("]");
+        return uniqueCode.toString();
+    }
+
     /**
      * @return the editable
      */
@@ -761,7 +767,7 @@ public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertib
 
     @Override
     public int hashCode() {
-        return 0;
+        return this.id.hashCode();
     }
 
     @Override

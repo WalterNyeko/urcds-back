@@ -109,32 +109,8 @@
 										id="crashDateTime" autofocus="true" /> <form:errors
 										path="crashDateTimeString" cssClass="help-block" />
 									</div> --%>									
-									<input type="text" id="crashDateTimeString" name="crashDateTimeString" class="form-control" value="${crash.crashDateTimeString}"/>									
-									<script type="text/javascript">
-									  $(function() {
-									    $('#crashDateTimeString').datepicker({
-									    	dateFormat: "dd/mm/yy",
-									    	autoSize: true,
-									    	inline: true,  
-								            showOtherMonths: true,  
-								            dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-								            showAnim: "fold"
-									    });
-									  });
-									  function appendTime(select) {
-										  var date = $('#crashDateTimeString').val();
-										  if (date.trim() == "") {
-											  return;
-										  }
-										  var dateParts = date.split(" ");
-										  if (dateParts.length > 1) {
-											  date = dateParts[0];
-										  }
-										  date = date + " " + $(select).val();
-										  $('#crashDateTimeString').val(date);
-									  }
-									</script>
-									<%@ include file="/common/timeselect.jsp"%>
+									<input type="text" id="crashDateTimeString" name="crashDateTimeString" class="form-control dtpicker" value="${crash.crashDateTimeString}"/>
+                                    <input type="text" id="crashTime" name="crashTime" class="form-control" placeholder="Enter time in 24hr" onblur="appendTime();"/>
 								</td>
 							</tr>
 							<tr>
