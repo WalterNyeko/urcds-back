@@ -97,7 +97,7 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
     public Crash get(Long id) {
         Crash crash = super.get(id);
         if (crash.getCrashDateTime() != null) {
-            crash.setCrashDateTimeString(crash.getCrashDisplayDate());
+            crash.setCrashDateTimeString(crash.getCrashDisplayDateTime());
         }
         return crash;
     }
@@ -321,6 +321,15 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
         referenceData.put("casualtyClasses", casualtyClasses);
 
         return referenceData;
+    }
+
+    @Override
+    public Map<String, List> getOrderedRefData() {
+        Map<String, List> refData = this.getReferenceData();
+        for(List l : refData.values()) {
+            Collections.sort(l);
+        }
+        return refData;
     }
 
     @Override

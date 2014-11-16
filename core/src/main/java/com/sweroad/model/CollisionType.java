@@ -7,7 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity(name="collision_type")
-public class CollisionType extends BaseModel {
+public class CollisionType extends BaseModel implements Comparable<CollisionType> {
 
 	/**
 	 * 
@@ -70,4 +70,12 @@ public class CollisionType extends BaseModel {
 	public int hashCode() {
 		return id.hashCode();
 	}
+
+    @Override
+    public int compareTo(CollisionType ct) {
+        if (ct == null || ct.getName() == null) {
+            return -1;
+        }
+        return this.name.compareTo(ct.getName());
+    }
 }

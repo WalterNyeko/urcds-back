@@ -14,7 +14,7 @@ import javax.persistence.Id;
  *
  */
 @Entity(name = "weather")
-public class Weather extends BaseModel {
+public class Weather extends BaseModel implements Comparable<Weather> {
 
 	/**
 	 * 
@@ -76,4 +76,12 @@ public class Weather extends BaseModel {
 	public int hashCode() {
 		return 0;
 	}
+
+    @Override
+    public int compareTo(Weather w) {
+        if (w == null || w.getName() == null) {
+            return -1;
+        }
+        return this.name.compareTo(w.getName());
+    }
 }

@@ -1,18 +1,25 @@
 <%@ include file="/common/taglibs.jsp"%>
 <head>
-<title><fmt:message key="crashList.title" /></title>
-<meta name="menu" content="CrashMenu" />
+<title><fmt:message key="crashAnalysis.heading" /></title>
+<meta name="menu" content="AnalysisMenu" />
 </head>
 <div class="col-sm-15">
 	<h2>
-		<fmt:message key="crashList.heading" />
+		<fmt:message key="crashAnalysis.heading" />
 	</h2>
 	<div id="actions" class="btn=group">
-		<security:authorize url="/app/crashform*">
-		  <a href="/crashform"> <fmt:message
-				key="button.addCrash" />
-		</a> | 
-		</security:authorize>
+        <a href="" onclick="return loadSelectCrash({url: '/analysiscrashselect'});">
+            <fmt:message key="crashAnalysis.Select" />
+		</a> |
+        <a href="" onclick="return false;">
+            <fmt:message key="crashAnalysis.AdvancedSelect" />
+        </a> |
+        <a href="" onclick="return false;">
+            <fmt:message key="crashAnalysis.PivotTables" />
+        </a> |
+        <a href="" onclick="return false;">
+            <fmt:message key="crashAnalysis.CrossTabulation" />
+        </a> |
 		<a href="<c:url value='/crashexcel'/>"> <fmt:message
 				key="button.exportToExcel" />
 		</a>
@@ -20,9 +27,7 @@
     <div class="content-wrapper">
         <display:table name="crashList"
             class="table table-condensed table-striped table-hover" requestURI=""
-            id="crashList" export="false" pagesize="50" decorator="com.sweroad.webapp.decorator.CrashDecorator">
-            <%-- <display:column property="id" sortable="true" href="crashform"
-                media="html" paramId="id" paramProperty="id" titleKey="crash.id" /> --%>
+            id="crashList" export="false" pagesize="50" decorator="com.sweroad.webapp.decorator.CrashAnalysisDecorator">
             <display:column property="tarNo" sortable="true"
                 titleKey="crash.tarNo" />
             <display:column property="townOrVillage" sortable="true"

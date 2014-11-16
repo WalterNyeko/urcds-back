@@ -1,4 +1,4 @@
-cc<%@ include file="/common/taglibs.jsp"%>
+<%@ include file="/common/taglibs.jsp"%>
 <fmt:message key="crashForm.vehicleType" var="vehicleTypeLabel" />
 <fmt:message key="crashForm.driverCasualtyLabel" var="driverCasualtyTypeLabel" />
 <head>

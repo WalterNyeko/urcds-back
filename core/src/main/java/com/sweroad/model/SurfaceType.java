@@ -14,7 +14,7 @@ import javax.persistence.Id;
  *
  */
 @Entity(name = "surface_type")
-public class SurfaceType {
+public class SurfaceType extends BaseModel implements Comparable<SurfaceType> {
 
 
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -73,4 +73,12 @@ public class SurfaceType {
 	public int hashCode() {
 		return 0;
 	}
+
+    @Override
+    public int compareTo(SurfaceType st) {
+        if (st == null || st.getName() == null) {
+            return -1;
+        }
+        return this.name.compareTo(st.getName());
+    }
 }

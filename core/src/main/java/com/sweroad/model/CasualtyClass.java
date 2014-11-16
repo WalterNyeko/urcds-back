@@ -7,54 +7,55 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity(name = "casualty_class")
-public class CasualtyClass extends BaseModel {
+public class CasualtyClass extends BaseModel implements Comparable<CasualtyClass> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2725420586814515518L;
-	
-	@Id @GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	@Column(nullable = false)
-	private String name;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 2725420586814515518L;
 
-	/**
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @Column(nullable = false)
+    private String name;
 
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
 
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
-	}
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	/**
-	 * @param name the name to set
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
 
-	@Override
-	public String toString() {
-		return String.format("CasualtyClass {%s}", name);
-	}
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
+    @Override
+    public String toString() {
+        return String.format("CasualtyClass {%s}", name);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
             return true;
         }
         if (!(o instanceof CasualtyClass)) {
@@ -64,10 +65,18 @@ public class CasualtyClass extends BaseModel {
         final CasualtyClass casualtyClass = (CasualtyClass) o;
 
         return casualtyClass != null ? id.equals(casualtyClass.getId()) : false;
-	}
+    }
 
-	@Override
-	public int hashCode() {
-		return id.hashCode();
-	}
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
+
+    @Override
+    public int compareTo(CasualtyClass cc) {
+        if (cc == null || cc.getName() == null) {
+            return -1;
+        }
+        return this.name.compareTo(cc.getName());
+    }
 }

@@ -2,16 +2,21 @@
 <fmt:message key="crashForm.tarNo" var="tarNoLabel" />
 <fmt:message key="crashForm.policeStation" var="policeStationLabel" />
 <head>
-<title><fmt:message key="crashForm.title" /></title>
-<meta name="menu" content="CrashMenu" />
-<script type="text/javascript">
-	$( document ).ready(function() {
-		$(".submit").click(function(){
-		    return validateFields();
-		});
-        loadGpsCoordinates();
-	});		
-</script>
+    <title><fmt:message key="crashForm.title" /></title>
+    <meta name="menu" content="CrashMenu" />
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdGBHIqR--XabhAy6UddDj4toKlEyJzAA">
+    </script>
+    <script type="text/javascript">
+        $( document ).ready(function() {
+            $(".submit").click(function(){
+                return validateFields();
+            });
+            loadGpsCoordinates();
+            loadCrashTime();
+            generateCoordDegrees();
+        });
+    </script>
 </head>
 <div class="col-sm-2">
 	<h2>
@@ -102,15 +107,9 @@
 							</tr>
 							<tr>
 								<td>
-									<%--<spring:bind path="crash.crashDateTimeString">
-										<div
-											class="form-group${(not empty status.errorMessage) ? ' has-error' : ''}">
-									</spring:bind> <form:input cssClass="form-control" path="crashDateTimeString"
-										id="crashDateTime" autofocus="true" /> <form:errors
-										path="crashDateTimeString" cssClass="help-block" />
-									</div> --%>									
-									<input type="text" id="crashDateTimeString" name="crashDateTimeString" class="form-control dtpicker" value="${crash.crashDateTimeString}"/>
-                                    <input type="text" id="crashTime" name="crashTime" class="form-control" placeholder="Enter time in 24hr" onblur="appendTime();"/>
+									<input type="text" id="crashDateTimeString" name="crashDateTimeString" class="form-control dtpicker right-al" value="${crash.crashDateTimeString}"
+                                           readonly="readonly" style="background-color: #FFFFFF; cursor: pointer;"/>
+                                    <input type="text" id="crashTime" name="crashTime" class="form-control right-al" placeholder="Enter time in 24hr" onblur="defineCrashTime();"/>
 								</td>
 							</tr>
 							<tr>
@@ -121,13 +120,17 @@
 								<td><appfuse:label styleClass="form-label"
 										key="crashForm.gpsCoordinates.latitude" /></td>
 								<td width="50%"><appfuse:label styleClass="form-label"
-										key="crashForm.gpsCoordinates.longitude" /></td>
+										key="crashForm.gpsCoordinates.longitude" />
+                                    &nbsp;
+                                    <img id="gMaps" src="/images/gglMap.png" alt="View in Google Maps" title="View in Google Maps" width="20"
+                                             style="cursor: pointer;" onclick="javascript:loadInGoogleMaps();"/>
+                                </td>
 							</tr>
 							<tr>
 								<td>
                                     <table cellpadding="0" cellspacing="0" class="innerTable" width="100%">
                                         <tr>
-                                            <td style="min-width: 50px;">
+                                            <td style="min-width: 50px;" id="tdLat" data-lat-val="">
                                                 <select id="latLetter" class="form-control" onchange="defineGpsCoord('lat')">
                                                     <option value="N">N</option>
                                                     <option value="S">S</option>
@@ -152,8 +155,8 @@
 								<td>
                                     <table cellpadding="0" cellspacing="0" class="innerTable" width="100%">
                                         <tr>
-                                            <td style="min-width: 50px;">
-                                                <select id="lonLetter" class="form-control" disabled>
+                                            <td style="min-width: 50px;" id="tdLon" data-lon-val="">
+                                                <select id="lonLetter" class="form-control" disabled style="background-color: #FFFFFF; cursor: default;" onchange="defineGpsCoord('lon')">
                                                     <option value="E">E</option>
                                                     <option value="W">W</option>
                                                 </select>

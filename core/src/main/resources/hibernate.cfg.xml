@@ -28,5 +28,6 @@
 		<mapping class="com.sweroad.model.VehicleType" />
 		<mapping class="com.sweroad.model.Weather" />
         <mapping class="com.sweroad.model.Audit" />
+        <mapping class="com.sweroad.model.SearchCriteria" />
 	</session-factory>
 </hibernate-configuration>

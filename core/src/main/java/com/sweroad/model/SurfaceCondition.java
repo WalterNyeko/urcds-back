@@ -14,7 +14,7 @@ import javax.persistence.Id;
  *
  */
 @Entity(name = "surface_condition")
-public class SurfaceCondition extends BaseModel {
+public class SurfaceCondition extends BaseModel implements Comparable<SurfaceCondition> {
 
 	/**
 	 * 
@@ -77,4 +77,12 @@ public class SurfaceCondition extends BaseModel {
 	public int hashCode() {
 		return 0;
 	}
+
+    @Override
+    public int compareTo(SurfaceCondition sc) {
+        if (sc == null || sc.getName() == null) {
+            return -1;
+        }
+        return this.name.compareTo(sc.getName());
+    }
 }

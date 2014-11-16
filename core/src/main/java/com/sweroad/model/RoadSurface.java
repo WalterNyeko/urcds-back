@@ -11,7 +11,7 @@ import javax.persistence.Id;
  *
  */
 @Entity(name = "road_surface")
-public class RoadSurface extends BaseModel {
+public class RoadSurface extends BaseModel implements Comparable<RoadSurface> {
 
 	/**
 	 * 
@@ -74,4 +74,12 @@ public class RoadSurface extends BaseModel {
 	public int hashCode() {
 		return 0;
 	}
+
+    @Override
+    public int compareTo(RoadSurface rs) {
+        if (rs == null || rs.getName() == null) {
+            return -1;
+        }
+        return this.name.compareTo(rs.getName());
+    }
 }

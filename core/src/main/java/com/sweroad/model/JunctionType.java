@@ -7,7 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity(name="junction_type")
-public class JunctionType extends BaseModel {
+public class JunctionType extends BaseModel implements Comparable<JunctionType> {
 
 	/**
 	 * 
@@ -70,4 +70,12 @@ public class JunctionType extends BaseModel {
 	public int hashCode() {
 		return 0;
 	}
+
+    @Override
+    public int compareTo(JunctionType j) {
+        if (j == null || j.getName() == null) {
+            return -1;
+        }
+        return this.name.compareTo(j.getName());
+    }
 }

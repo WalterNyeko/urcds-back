@@ -7,7 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity(name="vehicle_failure_type")
-public class VehicleFailureType extends BaseModel {
+public class VehicleFailureType extends BaseModel implements Comparable<VehicleFailureType> {
 
 	/**
 	 * 
@@ -70,4 +70,12 @@ public class VehicleFailureType extends BaseModel {
 	public int hashCode() {
 		return 0;
 	}
+
+    @Override
+    public int compareTo(VehicleFailureType vft) {
+        if (vft == null || vft.getName() == null) {
+            return -1;
+        }
+        return this.name.compareTo(vft.getName());
+    }
 }

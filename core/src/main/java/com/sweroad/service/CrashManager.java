@@ -26,6 +26,8 @@ public interface CrashManager extends GenericManager<Crash, Long> {
 	
 	@SuppressWarnings("rawtypes")
 	Map<String, List> getReferenceData();
+
+    Map<String, List> getOrderedRefData();
 	
 	void removeCasualtyFromCrash(Crash crash, Long casualtyId);
 

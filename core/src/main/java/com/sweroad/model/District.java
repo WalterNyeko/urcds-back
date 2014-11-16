@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Table(name = "district")
 @NamedQueries({
         @NamedQuery(name = District.FIND_DISTRICTS_ORDER_BY_NAME, query = "from District d order by d.name")})
-public class District extends BaseModel {
+public class District extends BaseModel implements Comparable<District> {
 
 	/**
 	 * 
@@ -69,4 +69,12 @@ public class District extends BaseModel {
 	public int hashCode() {
 		return id.hashCode();
 	}
+
+    @Override
+    public int compareTo(District d) {
+        if (d == null || d.getName() == null) {
+            return -1;
+        }
+        return this.name.compareTo(d.getName());
+    }
 }

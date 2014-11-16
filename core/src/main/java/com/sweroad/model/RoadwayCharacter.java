@@ -7,7 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity(name="roadway_character")
-public class RoadwayCharacter extends BaseModel {
+public class RoadwayCharacter extends BaseModel implements Comparable<RoadwayCharacter> {
 
 	/**
 	 * 
@@ -71,4 +71,11 @@ public class RoadwayCharacter extends BaseModel {
 		return 0;
 	}
 
+    @Override
+    public int compareTo(RoadwayCharacter rc) {
+        if (rc == null || rc.getName() == null) {
+            return -1;
+        }
+        return this.name.compareTo(rc.getName());
+    }
 }

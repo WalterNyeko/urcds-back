@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Table(name = "police_station")
 @NamedQueries({
         @NamedQuery(name = PoliceStation.FIND_POLICE_STATIONS_ORDER_BY_NAME, query = "from PoliceStation d order by d.name")})
-public class PoliceStation extends BaseModel {
+public class PoliceStation extends BaseModel implements Comparable<PoliceStation> {
 
 	/**
 	 * 
@@ -94,4 +94,12 @@ public class PoliceStation extends BaseModel {
 	public int hashCode() {
 		return 0;
 	}
+
+    @Override
+    public int compareTo(PoliceStation ps) {
+        if (ps == null || ps.getName() == null) {
+            return -1;
+        }
+        return this.name.compareTo(ps.getName());
+    }
 }

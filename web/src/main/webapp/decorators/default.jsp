@@ -18,7 +18,10 @@
                 inline: true,
                 showOtherMonths: true,
                 dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-                showAnim: "fold"
+                showAnim: "fold",
+                onSelect: function() {
+                    defineCrashTime();
+                }
             });
         });
     </script>
