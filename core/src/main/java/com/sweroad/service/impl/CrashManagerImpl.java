@@ -418,9 +418,7 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
     }
 
     @Override
-    public void generateCrashDataExcel(String filename) throws IOException {
-        List<Crash> crashes = crashDao.findByNamedQuery(
-                Crash.FIND_CRASHES_ORDER_BY_DATE, null);
+    public void generateCrashDataExcel(List<Crash> crashes, String filename) throws IOException {
         crashExcelService.generateAndWriteCrashExcelToFile(crashes, filename);
     }
 

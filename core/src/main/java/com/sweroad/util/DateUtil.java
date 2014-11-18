@@ -103,6 +103,21 @@ public final class DateUtil {
     }
 
     /**
+     * Parses date using given format.
+     * @param dateFormat String representation of date format
+     * @param date String representation of date
+     * @return parsed date if successful, null otherwise
+     */
+    public static Date parseDate(String dateFormat, String date) {
+        try {
+            return convertStringToDate(dateFormat, date);
+        } catch (ParseException e) {
+            log.error(e.getMessage());
+            return null;
+        }
+    }
+
+    /**
      * This method returns the current date time in the format:
      * MM/dd/yyyy HH:MM a
      *

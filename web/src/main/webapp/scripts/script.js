@@ -196,8 +196,7 @@ function alertDialog(params) {
         open: function (event, ui) {
 
             openDialog({
-                dialogDiv: this,
-                okButtonValue: "OK"
+                dialogDiv: this
             });
         }
     });
@@ -205,7 +204,9 @@ function alertDialog(params) {
 }
 
 function openDialog(params) {
-    $(".ui-dialog-titlebar-close", $(params.dialogDiv).parent()).hide();
+    if(!params.showClose) {
+        $(".ui-dialog-titlebar-close", $(params.dialogDiv).parent()).hide();
+    }
     $('.ui-dialog-titlebar').css('border', '1px Solid #2C6CAF');
     $('.ui-widget-content').css('border', '0');
     $('.ui-dialog').zIndex(2000);

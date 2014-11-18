@@ -11,11 +11,8 @@
 		<security:authorize url="/app/crashform*">
 		  <a href="/crashform"> <fmt:message
 				key="button.addCrash" />
-		</a> | 
-		</security:authorize>
-		<a href="<c:url value='/crashexcel'/>"> <fmt:message
-				key="button.exportToExcel" />
 		</a>
+		</security:authorize>
 	</div>
     <div class="content-wrapper">
         <display:table name="crashList"

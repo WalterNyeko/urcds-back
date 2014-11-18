@@ -1,12 +1,16 @@
 package com.sweroad.webapp.controller;
 
+import com.mysql.jdbc.StringUtils;
 import com.sweroad.model.Crash;
 import com.sweroad.model.SearchCriteria;
 import com.sweroad.service.CrashManager;
 import com.sweroad.service.GenericManager;
+import com.sweroad.service.SearchCriteriaManager;
+import com.sweroad.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,6 +22,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.List;
 
 @Controller
 @RequestMapping("/analysis*")
@@ -25,15 +30,24 @@ public class CrashAnalysisController extends BaseFormController {
 
     @Autowired
     private CrashManager crashManager;
-
     @Autowired
-    private GenericManager<Crash, Long> genericCrashManager;
+    private SearchCriteriaManager searchCriteriaManager;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView showCrashes() throws Exception {
+    public ModelAndView showCrashes(HttpServletRequest request) throws Exception {
         ModelAndView mav = new ModelAndView("analysis/crashanalysis");
-        mav.addObject(crashManager.getCrashes());
+        List<Crash> crashes = getCrashes(request);
+        mav.addObject(crashes);
         return mav;
+    }
+
+    private List<Crash> getCrashes(HttpServletRequest request) {
+        List<Crash> crashes = (List<Crash>)request.getSession().getAttribute("crashes");
+        if(crashes != null) {
+            return crashes;
+        } else {
+            return crashManager.getCrashes();
+        }
     }
 
     @RequestMapping(value = "/analysiscrashselect", method = RequestMethod.GET)
@@ -46,39 +60,42 @@ public class CrashAnalysisController extends BaseFormController {
             return mav;
         } catch (Exception e) {
             log.error("Select crash failed: " + e.getLocalizedMessage());
-            return showCrashes();
+            return showCrashes(request);
         }
     }
 
-    @RequestMapping(value = "/crashremove", method = RequestMethod.GET)
-    public ModelAndView removeCrash(HttpServletRequest request) throws Exception {
+    @RequestMapping(value = "/analysiscrashselect", method = RequestMethod.POST)
+    public ModelAndView selectCrash(SearchCriteria criteria, BindingResult errors,
+           HttpServletRequest request, HttpServletResponse response) throws Exception {
         try {
-            String id = request.getParameter("id");
-            crashManager.removeCrashById(new Long(id));
-            return showCrashes();
+            ModelAndView mav = new ModelAndView("analysis/crashanalysis");
+            processCriteria(criteria);
+            List<Crash> crashes = searchCriteriaManager.getCrashesByCriteria(criteria);
+            if(crashes.size()>0){
+                request.getSession().setAttribute("crashes", crashes);
+            }
+            mav.addObject(crashes);
+            return mav;
         } catch (Exception e) {
             log.error("Remove crash failed: " + e.getLocalizedMessage());
-            return showCrashes();
+            return showCrashes(request);
         }
     }
 
-    @RequestMapping(value = "/crashrestore", method = RequestMethod.GET)
-    public ModelAndView restoreCrash(HttpServletRequest request) throws Exception {
-        try {
-            String id = request.getParameter("id");
-            crashManager.restoreCrashById(new Long(id));
-            return showCrashes();
-        } catch (Exception e) {
-            log.error("Restore crash failed: " + e.getLocalizedMessage());
-            return showCrashes();
+    private void processCriteria(SearchCriteria criteria) {
+        if(!StringUtils.isNullOrEmpty(criteria.getStartDateString())){
+            criteria.setStartDate(DateUtil.parseDate("dd/MM/yyyy", criteria.getStartDateString()));
+        }
+        if(!StringUtils.isNullOrEmpty(criteria.getEndDateString())){
+            criteria.setEndDate(DateUtil.parseDate("dd/MM/yyyy", criteria.getEndDateString()));
         }
     }
 
-    @RequestMapping(value = "/crashexcel", method = RequestMethod.GET)
+    @RequestMapping(value = "/analysisdownloadexcel", method = RequestMethod.GET)
     public void generateExcel(HttpServletRequest request, HttpServletResponse response) throws Exception {
         try {
             String excelFile = getFilename(request);
-            crashManager.generateCrashDataExcel(excelFile);
+            crashManager.generateCrashDataExcel(getCrashes(request), excelFile);
             downloadFile(response, excelFile);
         } catch (Exception e) {
             log.error("Error on export to excel: " + e.getLocalizedMessage());

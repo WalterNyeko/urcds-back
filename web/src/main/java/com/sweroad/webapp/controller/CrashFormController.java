@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sweroad.util.DateUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -143,26 +144,12 @@ public class CrashFormController extends BaseFormController {
 		Crash crash = (Crash) request.getSession().getAttribute("crash");
 		if (crash.getCrashDateTimeString() != null
 				&& !"".equals(crash.getCrashDateTimeString())) {
-			crash.setCrashDateTime(parseDate(crash
-					.getCrashDateTimeString()));
+			crash.setCrashDateTime(DateUtil.parseDate("dd/MM/yyyy hh:mm", crash
+                    .getCrashDateTimeString()));
 		}
 		crashManager.saveCrash(crash);
 		request.getSession().removeAttribute("crash");
 		response.sendRedirect("/crashes");
-	}
-	
-	private Date parseDate(String crashDateString) {
-		SimpleDateFormat formatter = new SimpleDateFormat(
-				"dd/MM/yyyy hh:mm");
-		try{
-			return formatter.parse(crashDateString);
-		} catch (ParseException e) {
-			try{
-				return formatter.parse(crashDateString + " 12:00");
-			} catch (Exception ex){
-				return null;
-			}
-		} 		
 	}
 
 	@ModelAttribute

@@ -1,7 +1,9 @@
 package com.sweroad.model;
 
 import javax.persistence.*;
+import javax.persistence.Transient;
 
+import java.beans.*;
 import java.util.Date;
 
 /**
@@ -20,8 +22,12 @@ public class SearchCriteria extends BaseModel {
     private String description;
     @Column(name = "start_date")
     private Date startDate;
+    @Transient
+    private String startDateString;
     @Column(name = "end_date")
     private Date endDate;
+    @Transient
+    private String endDateString;
     @Column(name = "start_time")
     private String startTime;
     @Column(name = "end_time")
@@ -34,7 +40,8 @@ public class SearchCriteria extends BaseModel {
     @ManyToOne
     @JoinColumn
     private District district;
-    private transient Crash crash;
+    @Transient
+    private Crash crash;
 
     public Long getId() {
         return id;
@@ -74,6 +81,22 @@ public class SearchCriteria extends BaseModel {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public String getStartDateString() {
+        return startDateString;
+    }
+
+    public void setStartDateString(String startDateString) {
+        this.startDateString = startDateString;
+    }
+
+    public String getEndDateString() {
+        return endDateString;
+    }
+
+    public void setEndDateString(String endDateString) {
+        this.endDateString = endDateString;
     }
 
     public String getStartTime() {

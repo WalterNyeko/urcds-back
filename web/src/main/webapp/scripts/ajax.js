@@ -12,19 +12,11 @@ function loadSelectCrash(params) {
         autoOpen: true,
         closeOnEscape: false,
         modal: true,
-        height: 400,
         width: 850,
-        buttons: {
-            'Close': function () {
-                $("#select-crash").remove();
-            }
-        },
-
-        open: function (event, ui) {
-
+        open: function () {
             openDialog({
                 dialogDiv: this,
-                cancelButtonValue: "Close"
+                showClose: true
             });
         }
     });

@@ -7,21 +7,21 @@
 	<h2>
 		<fmt:message key="crashAnalysis.heading" />
 	</h2>
-	<div id="actions" class="btn=group">
+	<div id="actions" class="btn=group" style="padding-bottom: 2px;">
         <a href="" onclick="return loadSelectCrash({url: '/analysiscrashselect'});">
-            <fmt:message key="crashAnalysis.Select" />
-		</a> |
+            <img src="/images/simple-search.jpg" title="<fmt:message key="crashAnalysis.Select" />" height="20"/>
+		</a>|
         <a href="" onclick="return false;">
-            <fmt:message key="crashAnalysis.AdvancedSelect" />
-        </a> |
+            <img src="/images/query-icon.png" title="<fmt:message key="crashAnalysis.AdvancedSelect" />" height="20"/>
+        </a>|
+        <%--<a href="" onclick="return false;">--%>
+            <%--<img src="/images/pivot-table-icon.jpg" title="<fmt:message key="crashAnalysis.PivotTables" />" height="20"/>--%>
+        <%--</a>|--%>
         <a href="" onclick="return false;">
-            <fmt:message key="crashAnalysis.PivotTables" />
-        </a> |
-        <a href="" onclick="return false;">
-            <fmt:message key="crashAnalysis.CrossTabulation" />
-        </a> |
-		<a href="<c:url value='/crashexcel'/>"> <fmt:message
-				key="button.exportToExcel" />
+            <img src="/images/crosstab-icon.png" title="<fmt:message key="crashAnalysis.CrossTabulation" />" height="20"/>
+        </a>|
+		<a href="<c:url value='/analysisdownloadexcel'/>">
+            <img src="/images/excel-icon.png" title="<fmt:message key="button.exportToExcel" />" height="20"/>
 		</a>
 	</div>
     <div class="content-wrapper">

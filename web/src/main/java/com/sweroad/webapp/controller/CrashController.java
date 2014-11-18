@@ -77,43 +77,4 @@ public class CrashController extends BaseFormController {
             return showCrashes();
         }
     }
-
-    @RequestMapping(value = "/crashexcel", method = RequestMethod.GET)
-    public void generateExcel(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        try {
-            String excelFile = getFilename(request);
-            crashManager.generateCrashDataExcel(excelFile);
-            downloadFile(response, excelFile);
-        } catch (Exception e) {
-            log.error("Error on export to excel: " + e.getLocalizedMessage());
-        }
-    }
-
-    private String getFilename(HttpServletRequest request) {
-        String uploadDir = getServletContext().getRealPath("/genexcel");
-        if (uploadDir == null) {
-            uploadDir = new File("src/main/webapp/genexcel").getAbsolutePath();
-        }
-        uploadDir += "/" + request.getRemoteUser() + "/";
-        File dirPath = new File(uploadDir);
-        if (!dirPath.exists()) {
-            dirPath.mkdirs();
-        }
-        return uploadDir + "rcds_crashes_genby_" + request.getRemoteUser() + ".xlsx";
-    }
-
-    private void downloadFile(HttpServletResponse response, String excelFile) throws URISyntaxException, IOException,
-            FileNotFoundException {
-        File f = new File(excelFile);
-        String filename = excelFile.substring(excelFile.lastIndexOf('/') + 1);
-        log.debug("Loading file " + excelFile + "(" + f.getAbsolutePath() + ")");
-        if (f.exists()) {
-            response.setContentType("application/vnd.ms-excel");
-            response.setContentLength(new Long(f.length()).intValue());
-            response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
-            FileCopyUtils.copy(new FileInputStream(f), response.getOutputStream());
-        } else {
-            log.error("File" + excelFile + "(" + f.getAbsolutePath() + ") does not exist");
-        }
-    }
 }
