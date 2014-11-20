@@ -1,6 +1,6 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+This is the official repository for the Road Crash Data System being developed for GoU. The rest of this read me will be updated with time.
 
 ### What is this repository for? ###
 
