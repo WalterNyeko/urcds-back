@@ -122,7 +122,7 @@
 								<td width="50%"><appfuse:label styleClass="form-label"
 										key="crashForm.gpsCoordinates.longitude" />
                                     &nbsp;
-                                    <img id="gMaps" src="/images/gglMap.png" alt="View in Google Maps" title="View in Google Maps" width="20"
+                                    <img id="gMaps" src="/images/gglMap.png" alt="<fmt:message key='maps.viewInGoogleMaps'/>" title="<fmt:message key='maps.viewInGoogleMaps'/>" width="20"
                                              style="cursor: pointer;" onclick="javascript:loadInGoogleMaps();"/>
                                 </td>
 							</tr>

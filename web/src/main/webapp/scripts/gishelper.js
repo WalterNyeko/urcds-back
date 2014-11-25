@@ -3,8 +3,8 @@
  */
 /** Contains GIS specific functions ...*/
 function loadInGoogleMaps() {
-    loadDialog({message: "Loading map..."});
-    initializeMap();
+    loadDialog({message: "Loading map...", dialogTitle: "Crash Location - Google Maps" });
+    initializeSingleCrashMap();
 }
 
 function validateGpsCoordinates() {
@@ -27,19 +27,23 @@ function loadGpsCoordinates() {
     }
 }
 
-function initializeMap() {
+function initGoogleMap(coordinates, zoom) {
+    var mapOptions = {
+        center: coordinates,
+        zoom: zoom,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map(document.getElementById('map-canvas'),
+        mapOptions);
+    return map;
+}
+function initializeSingleCrashMap() {
     if ($("#gMaps")) {
         var latitude = parseFloat($("#tdLat").attr('data-lat-val'));
         var longitude = parseFloat($("#tdLon").attr('data-lon-val'));
         var crashTitle = "Crash TAR No.: " + $("#tdTarNo").attr("data-crash-tarNo");
         var coordinates = new google.maps.LatLng(latitude, longitude);
-        var mapOptions = {
-            center: coordinates,
-            zoom: 15,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        var map = new google.maps.Map(document.getElementById('map-canvas'),
-            mapOptions);
+        var map = initGoogleMap(coordinates, 15);
         var marker = new google.maps.Marker({
             position: coordinates,
             map: map,
@@ -114,7 +118,7 @@ function defineGpsCoord(coord) {
 }
 
 function mapButton(show) {
-    if(show) {
+    if (show) {
         $("#gMaps").show();
     } else {
         $("#gMaps").hide();
@@ -127,16 +131,16 @@ function generateCoordDegrees() {
     var lonDegs = $.trim($("#lonDegs").val());
     var lonMins = $.trim($("#lonMins").val());
 
-    if(latDegs.length == 0 || latMins.length == 0
+    if (latDegs.length == 0 || latMins.length == 0
         || lonDegs.length == 0 || lonMins.length == 0) {
         mapButton(false);
         return;
     }
     var latDecimals = ConvertDMSToDD({
-            degrees: parseInt(latDegs),
-            minutes: parseFloat(latMins),
-            direction: $("#latLetter").val()
-        });
+        degrees: parseInt(latDegs),
+        minutes: parseFloat(latMins),
+        direction: $("#latLetter").val()
+    });
     var lonDecimals = ConvertDMSToDD({
         degrees: parseInt(lonDegs),
         minutes: parseFloat(lonMins),
@@ -149,10 +153,10 @@ function generateCoordDegrees() {
 
 function ConvertDMSToDD(params) {
     var dd = params.degrees;
-    if(params.minutes) {
+    if (params.minutes) {
         dd += (params.minutes / 60);
     }
-    if(params.seconds) {
+    if (params.seconds) {
         dd += params.seconds / (60 * 60);
     }
     dd = parseFloat(dd);
@@ -160,5 +164,31 @@ function ConvertDMSToDD(params) {
         dd *= -1;
     }
     return dd;
+}
+
+function showCrashesInGoogleMaps() {
+    loadDialog({message: "Loading map...", dialogTitle: "Crash Locations - Google Maps" });
+    var crashesJSON = JSON.parse(localStorage.crashesJSON);
+    var markers = getCrashMarkers(crashesJSON.crashes);
+    var map = initGoogleMap(markers[0].getPosition(), 8);
+    $(markers).each(function(){
+        this.setMap(map);
+    });
+}
+
+function getCrashMarkers(crashes) {
+    var markers = [];
+    $(crashes).each(function(){
+       if(this.latitudeNumeric != null && this.longitudeNumeric != null) {
+           var coordinates = new google.maps.LatLng(parseFloat(this.latitudeNumeric), parseFloat(this.longitudeNumeric));
+           var marker = new google.maps.Marker({
+               position: coordinates,
+               animation: google.maps.Animation.DROP,
+               title: this.tarNo
+           });
+           markers.push(marker);
+       }
+    });
+    return markers;
 }
 

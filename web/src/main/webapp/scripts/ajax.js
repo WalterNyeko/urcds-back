@@ -20,15 +20,18 @@ function loadSelectCrash(params) {
             });
         }
     });
-    loadSelectCrashForm(params);
+    params.responseDiv = $("#select-crash");
+    sendRequest(params);
     return false;
 }
 
-function loadSelectCrashForm(params) {
+function sendRequest(params) {
     $.ajax({
-        url:params.url,
-        success:function(result){
-            $("#select-crash").html(result);
+        url: params.url,
+        success: function (result) {
+            if(params.responseDiv) {
+                $(params.responseDiv).html(result);
+            }
         }
     });
 }

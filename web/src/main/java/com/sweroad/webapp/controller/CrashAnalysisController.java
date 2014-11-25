@@ -1,5 +1,6 @@
 package com.sweroad.webapp.controller;
 
+import com.google.gson.Gson;
 import com.mysql.jdbc.StringUtils;
 import com.sweroad.model.Crash;
 import com.sweroad.model.SearchCriteria;
@@ -13,6 +14,7 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +24,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -42,8 +45,8 @@ public class CrashAnalysisController extends BaseFormController {
     }
 
     private List<Crash> getCrashes(HttpServletRequest request) {
-        List<Crash> crashes = (List<Crash>)request.getSession().getAttribute("crashes");
-        if(crashes != null) {
+        List<Crash> crashes = (List<Crash>) request.getSession().getAttribute("crashes");
+        if (crashes != null) {
             return crashes;
         } else {
             return crashManager.getCrashes();
@@ -66,27 +69,26 @@ public class CrashAnalysisController extends BaseFormController {
 
     @RequestMapping(value = "/analysiscrashselect", method = RequestMethod.POST)
     public ModelAndView selectCrash(SearchCriteria criteria, BindingResult errors,
-           HttpServletRequest request, HttpServletResponse response) throws Exception {
+                                    HttpServletRequest request, HttpServletResponse response) throws Exception {
         try {
-            ModelAndView mav = new ModelAndView("analysis/crashanalysis");
             processCriteria(criteria);
             List<Crash> crashes = searchCriteriaManager.getCrashesByCriteria(criteria);
-            if(crashes.size()>0){
+            String crashesJSON = new Gson().toJson(crashes);
+            if (crashes.size() > 0) {
                 request.getSession().setAttribute("crashes", crashes);
+                request.getSession().setAttribute("crashesJSON", crashesJSON);
             }
-            mav.addObject(crashes);
-            return mav;
         } catch (Exception e) {
             log.error("Remove crash failed: " + e.getLocalizedMessage());
-            return showCrashes(request);
         }
+        return showCrashes(request);
     }
 
     private void processCriteria(SearchCriteria criteria) {
-        if(!StringUtils.isNullOrEmpty(criteria.getStartDateString())){
+        if (!StringUtils.isNullOrEmpty(criteria.getStartDateString())) {
             criteria.setStartDate(DateUtil.parseDate("dd/MM/yyyy", criteria.getStartDateString()));
         }
-        if(!StringUtils.isNullOrEmpty(criteria.getEndDateString())){
+        if (!StringUtils.isNullOrEmpty(criteria.getEndDateString())) {
             criteria.setEndDate(DateUtil.parseDate("dd/MM/yyyy", criteria.getEndDateString()));
         }
     }

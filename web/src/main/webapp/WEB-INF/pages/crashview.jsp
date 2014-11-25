@@ -103,8 +103,8 @@
 									key="crashForm.gpsCoordinates.longitude" />
                                 &nbsp;
                                 <c:if test="${ crash.latitudeNumeric ne null and crash.longitudeNumeric ne null }">
-                                    <img id="gMaps" src="/images/gglMap.png" alt="View in Google Maps" title="View in Google Maps" width="20"
-                                                                                     style="cursor: pointer;" onclick="javascript:loadInGoogleMaps();"/>
+                                    <img id='gMaps' src='/images/gglMap.png' alt='<fmt:message key="maps.viewInGoogleMaps"/>' title='<fmt:message key="maps.viewInGoogleMaps"/>' width='20'
+                                                                                     style='cursor: pointer;' onclick='javascript:loadInGoogleMaps();'/>
                                 </c:if>
                             </td>
 						</tr>

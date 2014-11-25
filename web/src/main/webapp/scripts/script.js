@@ -138,7 +138,7 @@ function loadCrashCauseChart() {
 }
 
 function loadDialog(params) {
-    $("<div id='map-canvas' title='Google Map'>" +
+    $("<div id='map-canvas' title='" + params.dialogTitle +"'>" +
         "<div style='clear: both; margin-top: 2%; text-align: justify'>" +
         params.message +
         "</div></div>").appendTo("body");

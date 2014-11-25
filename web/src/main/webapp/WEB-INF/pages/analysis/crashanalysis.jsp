@@ -1,7 +1,10 @@
 <%@ include file="/common/taglibs.jsp"%>
 <head>
-<title><fmt:message key="crashAnalysis.heading" /></title>
-<meta name="menu" content="AnalysisMenu" />
+    <title><fmt:message key="crashAnalysis.heading" /></title>
+    <meta name="menu" content="AnalysisMenu" />
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdGBHIqR--XabhAy6UddDj4toKlEyJzAA">
+    </script>
 </head>
 <div class="col-sm-15">
 	<h2>
@@ -22,7 +25,9 @@
         </a>|
 		<a href="<c:url value='/analysisdownloadexcel'/>">
             <img src="/images/excel-icon.png" title="<fmt:message key="button.exportToExcel" />" height="20"/>
-		</a>
+		</a>|
+        <img id='gMaps' src='/images/gglMap.png' alt='<fmt:message key="maps.viewInGoogleMaps"/>' title='<fmt:message key="maps.viewInGoogleMaps"/>' height='20'
+                 style='cursor: pointer;' onclick='javascript:showCrashesInGoogleMaps();'/>
 	</div>
     <div class="content-wrapper">
         <display:table name="crashList"
@@ -61,3 +66,16 @@
     </div>
     <p>&nbsp;</p>
 </div>
+<input id='crashesJSON' type='hidden' value='${crashesJSON}' />
+<script type="text/javascript">
+    $(document).ready(function() {
+        localStorage.setItem("crashesJSON", null);
+        $("#gMaps").hide();
+        var jsonText = $.trim($("#crashesJSON").val());
+        if(jsonText.length > 0) {
+            var crashJson = '{"crashes" : ' + jsonText + '}';
+            localStorage.setItem("crashesJSON", crashJson);
+            $("#gMaps").show();
+        }
+    });
+</script>
