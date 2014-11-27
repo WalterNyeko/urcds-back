@@ -111,14 +111,14 @@
 						<tr>
 							<td id="tdLat" data-lat-val="${crash.latitudeNumeric}">
                                 <c:if test="${crash.latitude ne null and crash.latitude ne ''}">
-                                    <c:set var="latParts" value="${crash.latitude.split(' ')}"/>
+                                    <c:set var="latParts" value="${fn:split(crash.latitude, ' ')}"/>
                                     <i>${latParts[0]}&deg; ${latParts[1]}'</i>
 							    </c:if>
                                 &nbsp;
                             </td>
 							<td id="tdLon" data-lon-val="${crash.longitudeNumeric}">
                                 <c:if test="${crash.longitude ne null and crash.longitude ne ''}">
-                                    <c:set var="lonParts" value="${crash.longitude.split(' ')}"/>
+                                    <c:set var="lonParts" value="${fn:split(crash.longitude, ' ')}"/>
                                     <i>${lonParts[0]}&deg; ${lonParts[1]}'</i>
                                 </c:if>
                                 &nbsp;

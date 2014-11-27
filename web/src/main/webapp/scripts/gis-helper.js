@@ -37,19 +37,22 @@ function initGoogleMap(coordinates, zoom) {
         mapOptions);
     return map;
 }
+function initMap(coordinates, crashTitle) {
+    var map = initGoogleMap(coordinates, 10);
+    var marker = new google.maps.Marker({
+        position: coordinates,
+        map: map,
+        animation: google.maps.Animation.DROP,
+        title: crashTitle
+    });
+}
 function initializeSingleCrashMap() {
     if ($("#gMaps")) {
         var latitude = parseFloat($("#tdLat").attr('data-lat-val'));
         var longitude = parseFloat($("#tdLon").attr('data-lon-val'));
         var crashTitle = "Crash TAR No.: " + $("#tdTarNo").attr("data-crash-tarNo");
         var coordinates = new google.maps.LatLng(latitude, longitude);
-        var map = initGoogleMap(coordinates, 15);
-        var marker = new google.maps.Marker({
-            position: coordinates,
-            map: map,
-            animation: google.maps.Animation.DROP,
-            title: crashTitle
-        });
+        initMap(coordinates, crashTitle);
     }
 }
 
@@ -167,28 +170,58 @@ function ConvertDMSToDD(params) {
 }
 
 function showCrashesInGoogleMaps() {
-    loadDialog({message: "Loading map...", dialogTitle: "Crash Locations - Google Maps" });
     var crashesJSON = JSON.parse(localStorage.crashesJSON);
-    var markers = getCrashMarkers(crashesJSON.crashes);
-    var map = initGoogleMap(markers[0].getPosition(), 8);
+    var crashes = crashesJSON ? crashesJSON.crashes : undefined;
+    var markers = getCrashMarkers(crashes);
+    var center = markers.length > 0 ? markers[0].getPosition() : getDefaultPosition();
+    var map = initGoogleMap(center, 8);
     $(markers).each(function(){
         this.setMap(map);
     });
 }
 
+function getDefaultPosition() {
+    return new google.maps.LatLng(0.317416,32.5943618);
+}
+
 function getCrashMarkers(crashes) {
     var markers = [];
-    $(crashes).each(function(){
-       if(this.latitudeNumeric != null && this.longitudeNumeric != null) {
-           var coordinates = new google.maps.LatLng(parseFloat(this.latitudeNumeric), parseFloat(this.longitudeNumeric));
-           var marker = new google.maps.Marker({
-               position: coordinates,
-               animation: google.maps.Animation.DROP,
-               title: this.tarNo
-           });
-           markers.push(marker);
-       }
-    });
+    if(crashes) {
+        $(crashes).each(function(){
+            if(this.latitudeNumeric != null && this.longitudeNumeric != null) {
+                var coordinates = new google.maps.LatLng(parseFloat(this.latitudeNumeric), parseFloat(this.longitudeNumeric));
+                var marker = new google.maps.Marker({
+                    position: coordinates,
+                    animation: google.maps.Animation.DROP,
+                    title: this.tarNo
+                });
+                markers.push(marker);
+            }
+        });
+    }
     return markers;
 }
 
+function quickMapView(crashTitle, latitude, longitude) {
+    loadDialog({message: "Loading map...", dialogTitle: "Crash Location - Google Maps" });
+    var coordinates = new google.maps.LatLng(latitude, longitude);
+    initMap(coordinates, crashTitle);
+    return false;
+}
+
+function addPolygon(map) {
+    var busega=new google.maps.LatLng(0.3122877,32.5209336);
+    var mityana=new google.maps.LatLng(0.391336, 32.120147);
+    var buwama=new google.maps.LatLng(0.1194276,32.2561031);
+    var polygon = [busega, mityana, buwama];
+
+    var mpigiPolygon=new google.maps.Polygon({
+        path:polygon,
+        strokeColor:"#0000FF",
+        strokeOpacity:0.8,
+        strokeWeight:2,
+        fillColor:"#0000FF",
+        fillOpacity:0.2
+    });
+    mpigiPolygon.setMap(map);
+}

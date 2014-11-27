@@ -16,8 +16,8 @@ public class HtmlHelperTest {
 
 	@Test
 	public void testThatHtmlImageWorks() {
-		String expected = "<img src=\"images/view.gif\" alt=\"View\" title=\"View\" hspace=\"4\" />";
+		String expected = "<img src=\"images/view.gif\" alt=\"View\" title=\"View\" hspace=\"4\" height=\"15\" width=\"15\" />";
 		assertEquals(expected,
-				HtmlHelper.createImage("images/view.gif", "View", "4"));
+				HtmlHelper.createImage("images/view.gif", "View", "4", "15", "15"));
 	}
 }

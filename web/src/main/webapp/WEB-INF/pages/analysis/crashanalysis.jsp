@@ -26,8 +26,10 @@
 		<a href="<c:url value='/analysisdownloadexcel'/>">
             <img src="/images/excel-icon.png" title="<fmt:message key="button.exportToExcel" />" height="20"/>
 		</a>|
-        <img id='gMaps' src='/images/gglMap.png' alt='<fmt:message key="maps.viewInGoogleMaps"/>' title='<fmt:message key="maps.viewInGoogleMaps"/>' height='20'
-                 style='cursor: pointer;' onclick='javascript:showCrashesInGoogleMaps();'/>
+        <a id='gMaps' href="<c:url value='/mapping'/>">
+            <img src='/images/gglMap.png' alt='<fmt:message key="maps.viewInGoogleMaps"/>'
+                 title='<fmt:message key="maps.viewInGoogleMaps"/>' height='20'/>
+        </a>
 	</div>
     <div class="content-wrapper">
         <display:table name="crashList"

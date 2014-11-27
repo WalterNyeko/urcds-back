@@ -1,7 +1,10 @@
 <%@ include file="/common/taglibs.jsp"%>
 <head>
-<title><fmt:message key="crashList.title" /></title>
-<meta name="menu" content="CrashMenu" />
+    <title><fmt:message key="crashList.title" /></title>
+    <meta name="menu" content="CrashMenu" />
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdGBHIqR--XabhAy6UddDj4toKlEyJzAA">
+    </script>
 </head>
 <div class="col-sm-15">
 	<h2>
@@ -20,8 +23,8 @@
             id="crashList" export="false" pagesize="50" decorator="com.sweroad.webapp.decorator.CrashDecorator">
             <%-- <display:column property="id" sortable="true" href="crashform"
                 media="html" paramId="id" paramProperty="id" titleKey="crash.id" /> --%>
-            <display:column property="tarNo" sortable="true"
-                titleKey="crash.tarNo" />
+            <display:column property="uniqueCode" sortable="true"
+                titleKey="crash.crashNo" />
             <display:column property="townOrVillage" sortable="true"
                 titleKey="crash.townOrVillage" />
             <display:column property="road" sortable="true" titleKey="crash.road" />
@@ -30,8 +33,7 @@
                 style="text-align: center;" titleKey="crash.vehicles" />
             <display:column property="casualtyCount" sortable="true"
                 style="text-align: center;" titleKey="crash.casualties" />
-            <display:column property="crashDisplayDate" sortable="true"
-                style="text-align: center;" titleKey="crash.date" />
+            <display:column property="crashDisplayDate" sortable="true" titleKey="crash.date" />
             <display:column property="policeStation.name" sortable="true"
                 titleKey="crash.policeStation" />
             <display:column property="policeStation.district.name" sortable="true"

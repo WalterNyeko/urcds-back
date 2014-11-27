@@ -748,6 +748,14 @@ public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertib
         return districtId.equals(policeStation.getDistrict().getId());
     }
 
+    /**
+     * Checks if crash has valid gps coordinates
+     * @return
+     */
+    public boolean hasGpsCoordinates() {
+        return this.latitudeNumeric != null && this.longitudeNumeric != null;
+    }
+
     @Override
     public String toString() {
         return String.format("Crash {%s}", tarNo);

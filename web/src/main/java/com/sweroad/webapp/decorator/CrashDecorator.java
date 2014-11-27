@@ -25,7 +25,9 @@ public class CrashDecorator extends TableDecorator {
         } else {
             removeOrRestoreLink = "";
         }
-        String crashActions = String.format("%s%s%s", viewLink, editLink, removeOrRestoreLink);
+        String mapViewLink = !crash.isRemoved() && crash.hasGpsCoordinates() ? CrashHtmlHelper.createMapViewLink(crash.getUniqueCode(),
+                crash.getLatitudeNumeric(), crash.getLongitudeNumeric()) : "";
+        String crashActions = String.format("%s%s%s%s", viewLink, editLink, removeOrRestoreLink, mapViewLink);
         return crashActions;
     }
 

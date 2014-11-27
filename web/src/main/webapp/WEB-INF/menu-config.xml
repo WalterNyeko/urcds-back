@@ -11,7 +11,7 @@
         <Menu name="AnalysisMenu" title="menu.analysis" description="Crash Analysis"
               page="/analysis" roles="ROLE_ADMIN,ROLE_USER,ROLE_READONLY,ROLE_SUPER_USER" />
         <Menu name="MappingMenu" title="menu.mapping" description="Crash Mapping"
-              page="#" roles="ROLE_ADMIN,ROLE_USER,ROLE_READONLY,ROLE_SUPER_USER" />
+              page="/mapping" roles="ROLE_ADMIN,ROLE_USER,ROLE_READONLY,ROLE_SUPER_USER" />
         <Menu name="ReportsMenu" title="menu.reports" description="Crash Reports"
               page="#" roles="ROLE_ADMIN,ROLE_USER,ROLE_READONLY,ROLE_SUPER_USER" />
 		<Menu name="UserMenu" title="menu.user" description="User Menu"
