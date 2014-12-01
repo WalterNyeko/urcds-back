@@ -1,6 +1,6 @@
 <%@ include file="/common/taglibs.jsp"%>
 <head>
-    <title><fmt:message key="crashAnalysis.heading" /></title>
+    <title><fmt:message key="crashMapping.heading" /></title>
     <meta name="menu" content="MappingMenu" />
     <script type="text/javascript"
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdGBHIqR--XabhAy6UddDj4toKlEyJzAA">
