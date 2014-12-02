@@ -175,31 +175,67 @@ function showCrashesInGoogleMaps() {
     var markers = getCrashMarkers(crashes);
     var center = markers.length > 0 ? markers[0].getPosition() : getDefaultPosition();
     var map = initGoogleMap(center, 8);
-    $(markers).each(function(){
+    $(markers).each(function () {
         this.setMap(map);
+        google.maps.event.addListener(this, 'click', function () {
+            this.infoWindow.open(map, this);
+        });
     });
 }
 
 function getDefaultPosition() {
-    return new google.maps.LatLng(0.317416,32.5943618);
+    return new google.maps.LatLng(0.317416, 32.5943618);
 }
 
 function getCrashMarkers(crashes) {
     var markers = [];
-    if(crashes) {
-        $(crashes).each(function(){
-            if(this.latitudeNumeric != null && this.longitudeNumeric != null) {
+    if (crashes) {
+        $(crashes).each(function () {
+            if (this.latitudeNumeric != null && this.longitudeNumeric != null) {
                 var coordinates = new google.maps.LatLng(parseFloat(this.latitudeNumeric), parseFloat(this.longitudeNumeric));
-                var marker = new google.maps.Marker({
-                    position: coordinates,
-                    animation: google.maps.Animation.DROP,
-                    title: this.tarNo
+                var marker = getCrashStyledMarker(this, coordinates);
+                marker.infoWindow = new google.maps.InfoWindow({
+                    content: getCrashInfoContent(this)
                 });
                 markers.push(marker);
             }
         });
     }
     return markers;
+}
+
+function getCrashStyledMarker(crash, coordinates) {
+    return new StyledMarker({
+        styleIcon: getCrashStyledIcon(crash),
+        position: coordinates,
+        animation: google.maps.Animation.DROP,
+        title: crash.tarNo});
+}
+
+function getCrashStyledIcon(crash) {
+    var color = "00ff00";
+    var text = "";
+    if (crash.crashSeverity) {
+        switch (crash.crashSeverity.id) {
+            case 1:
+                color = "FF0000";
+                text = "F";
+                break;
+            case 2:
+                color = "FFA500";
+                text = "S";
+                break;
+            case 3:
+                color = "FFFF00";
+                text = "S";
+                break;
+            case 4:
+                color = "A52A2A";
+                text = "D";
+                break;
+        }
+    }
+    return new StyledIcon(StyledIconTypes.MARKER, {color: color, text: text});
 }
 
 function quickMapView(crashTitle, latitude, longitude) {
@@ -210,18 +246,18 @@ function quickMapView(crashTitle, latitude, longitude) {
 }
 
 function addPolygon(map) {
-    var busega=new google.maps.LatLng(0.3122877,32.5209336);
-    var mityana=new google.maps.LatLng(0.391336, 32.120147);
-    var buwama=new google.maps.LatLng(0.1194276,32.2561031);
+    var busega = new google.maps.LatLng(0.3122877, 32.5209336);
+    var mityana = new google.maps.LatLng(0.391336, 32.120147);
+    var buwama = new google.maps.LatLng(0.1194276, 32.2561031);
     var polygon = [busega, mityana, buwama];
 
-    var mpigiPolygon=new google.maps.Polygon({
-        path:polygon,
-        strokeColor:"#0000FF",
-        strokeOpacity:0.8,
-        strokeWeight:2,
-        fillColor:"#0000FF",
-        fillOpacity:0.2
+    var mpigiPolygon = new google.maps.Polygon({
+        path: polygon,
+        strokeColor: "#0000FF",
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: "#0000FF",
+        fillOpacity: 0.2
     });
     mpigiPolygon.setMap(map);
 }

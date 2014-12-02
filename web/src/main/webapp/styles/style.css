@@ -413,3 +413,14 @@ td.blue-header {
 .bot-pad-36 {
     padding-bottom: 36px !important;
 }
+
+table.infoWindow {
+    color: #000000;
+}
+table.infoWindow th {
+    text-align: center;
+    font-size: 14px;
+}
+table.infoWindow td {
+    padding: 2px 2px 2px 2px;
+}

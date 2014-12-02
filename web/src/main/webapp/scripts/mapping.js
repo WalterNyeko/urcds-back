@@ -8,5 +8,4 @@ var initMappingSurface = function() {
     $("#content").addClass("height-100");
     $("#content").addClass("bot-pad-36");
     $(".row").addClass("height-100");
-
 }

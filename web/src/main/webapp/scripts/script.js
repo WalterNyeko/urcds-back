@@ -264,3 +264,34 @@ function loadCrashTime() {
         $("#crashTime").val(time);
     }
 }
+
+function getCrashInfoContent(crash) {
+    var content = "<table class='infoWindow'><tr><th colspan='2'>";
+    content = content.concat(generateCrashCode(crash))
+        .concat("</th></tr><tr><td class='boldText'>Tar No.</td><td>").concat(crash.tarNo)
+        .concat("</td></tr><tr><td class='boldText'>Date & Time</td><td>").concat(crash.crashDateTimeString)
+        .concat("</td></tr><tr><td class='boldText'>Police Station</td><td>").concat(crash.policeStation.name)
+        .concat("</td></tr><tr><td class='boldText'>District</td><td>").concat(crash.policeStation.district.name)
+        .concat("</td></tr><tr><td class='boldText'>Crash Severity</td><td>").concat(crash.crashSeverity ? crash.crashSeverity.name : "")
+        .concat("</td></tr><tr><td class='boldText'>Collision Type</td><td>").concat(crash.collisionType ? crash.collisionType.name : "")
+        .concat("</td></tr><tr><td class='boldText'>Latitude</td><td>").concat(displayCoordinate(crash.latitude))
+        .concat("</td></tr><tr><td class='boldText'>Longitude</td><td>").concat(displayCoordinate(crash.longitude))
+        .concat("</td></tr><tr><td class='boldText'>Vehicles</td><td>").concat(crash.vehicles ? crash.vehicles.length : "")
+        .concat("</td></tr><tr><td class='boldText'>Casualties</td><td>").concat(crash.casualties ? crash.casualties.length : "")
+        .concat("</td></tr></table>");
+    return content;
+}
+
+function generateCrashCode(crash) {
+    var uniqueCode = "Crash-";
+    uniqueCode = uniqueCode.concat(crash.id).concat(" [").concat(crash.tarNo).concat("]");
+    return uniqueCode;
+}
+
+function displayCoordinate(coordinate) {
+    if($.trim(coordinate) == "") {
+        return "";
+    }
+    var coordParts = coordinate.split(" ");
+    return coordParts[0].concat("&deg ").concat(coordParts[1]).concat("\'");
+}
