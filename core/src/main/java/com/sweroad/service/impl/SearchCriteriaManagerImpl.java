@@ -24,7 +24,7 @@ public class SearchCriteriaManagerImpl implements SearchCriteriaManager {
         List<Crash> allCrashes = crashManager.getAllDistinct();
         List<Crash> filteredCrashes = new ArrayList<Crash>();
         for (Crash crash : allCrashes) {
-            if (meetsCriteria(crash)) {
+            if (!crash.isRemoved() && meetsCriteria(crash)) {
                 filteredCrashes.add(crash);
             }
         }

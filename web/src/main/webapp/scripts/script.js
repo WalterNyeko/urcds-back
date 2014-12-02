@@ -278,6 +278,7 @@ function getCrashInfoContent(crash) {
         .concat("</td></tr><tr><td class='boldText'>Longitude</td><td>").concat(displayCoordinate(crash.longitude))
         .concat("</td></tr><tr><td class='boldText'>Vehicles</td><td>").concat(crash.vehicles ? crash.vehicles.length : "")
         .concat("</td></tr><tr><td class='boldText'>Casualties</td><td>").concat(crash.casualties ? crash.casualties.length : "")
+        .concat("</td></tr><tr><td><a href='/crashview?id=").concat(crash.id).concat("'>View Crash</a>")
         .concat("</td></tr></table>");
     return content;
 }

@@ -49,7 +49,7 @@ public class CrashAnalysisController extends BaseFormController {
         if (crashes != null) {
             return crashes;
         } else {
-            return crashManager.getCrashes();
+            return crashManager.getAvailableCrashes();
         }
     }
 

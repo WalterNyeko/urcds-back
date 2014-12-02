@@ -113,6 +113,10 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
         return super.findByNamedQuery(Crash.FIND_CRASHES_ORDER_BY_DATE_DESC, null);
     }
 
+    public List<Crash> getAvailableCrashes() {
+        return super.findByNamedQuery(Crash.FIND_AVAILABLE_CRASHES_ORDER_BY_DATE_DESC, null);
+    }
+
     @Override
     public Crash getCrashForView(Long id) {
         return this.get(id);
@@ -250,7 +254,7 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
     }
 
     private void setGpsCoordinates(Crash crash) {
-        if(GisHelper.isValidLatitude(crash.getLatitude())
+        if (GisHelper.isValidLatitude(crash.getLatitude())
                 && GisHelper.isValidLongitude(crash.getLongitude())) {
             crash.setLatitudeNumeric(GisHelper.convertLatDegToDec(crash.getLatitude()));
             crash.setLongitudeNumeric(GisHelper.convertLongDegToDec(crash.getLongitude()));
@@ -326,7 +330,7 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
     @Override
     public Map<String, List> getOrderedRefData() {
         Map<String, List> refData = this.getReferenceData();
-        for(List l : refData.values()) {
+        for (List l : refData.values()) {
             Collections.sort(l);
         }
         return refData;

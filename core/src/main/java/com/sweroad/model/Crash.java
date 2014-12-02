@@ -24,7 +24,8 @@ import com.sweroad.Constants;
 @Table(name = "crash")
 @NamedQueries({
         @NamedQuery(name = Crash.FIND_CRASHES_ORDER_BY_DATE, query = "from Crash c order by c.crashDateTime"),
-        @NamedQuery(name = Crash.FIND_CRASHES_ORDER_BY_DATE_DESC, query = "from Crash c order by c.crashDateTime desc")})
+        @NamedQuery(name = Crash.FIND_CRASHES_ORDER_BY_DATE_DESC, query = "from Crash c order by c.crashDateTime desc"),
+        @NamedQuery(name = Crash.FIND_AVAILABLE_CRASHES_ORDER_BY_DATE_DESC, query = "from Crash c where c.isRemoved = false order by c.crashDateTime desc")})
 public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertible, IAuditable {
 
     /**
@@ -33,6 +34,7 @@ public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertib
     private static final long serialVersionUID = 2144213374837809344L;
     public static final String FIND_CRASHES_ORDER_BY_DATE = "findCrashesOrderByDate";
     public static final String FIND_CRASHES_ORDER_BY_DATE_DESC = "findCrashesOrderByDateDesc";
+    public static final String FIND_AVAILABLE_CRASHES_ORDER_BY_DATE_DESC = "findAvailableCrashesOrderByDateDesc";
     public static final String IS_EDITABLE_METHOD_NAME = "isEditable";
     public static final String IS_REMOVABLE_METHOD_NAME = "isRemovable";
     @Id
