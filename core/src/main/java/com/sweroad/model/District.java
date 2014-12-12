@@ -1,12 +1,14 @@
 package com.sweroad.model;
 
+import com.sweroad.query.Queryable;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "district")
 @NamedQueries({
         @NamedQuery(name = District.FIND_DISTRICTS_ORDER_BY_NAME, query = "from District d order by d.name")})
-public class District extends BaseModel implements Comparable<District> {
+public class District extends BaseModel implements Comparable<District>, Queryable {
 
 	/**
 	 * 
@@ -76,5 +78,10 @@ public class District extends BaseModel implements Comparable<District> {
             return -1;
         }
         return this.name.compareTo(d.getName());
+    }
+
+    @Override
+    public String getEntityName() {
+        return this.getClass().getSimpleName();
     }
 }

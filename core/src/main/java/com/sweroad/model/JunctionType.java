@@ -1,5 +1,7 @@
 package com.sweroad.model;
 
+import com.sweroad.query.Queryable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity(name="junction_type")
-public class JunctionType extends BaseModel implements Comparable<JunctionType> {
+public class JunctionType extends BaseModel implements Comparable<JunctionType>, Queryable {
 
 	/**
 	 * 
@@ -77,5 +79,10 @@ public class JunctionType extends BaseModel implements Comparable<JunctionType> 
             return -1;
         }
         return this.name.compareTo(j.getName());
+    }
+
+    @Override
+    public String getEntityName() {
+        return this.getClass().getSimpleName();
     }
 }

@@ -18,7 +18,7 @@ public class Functions {
                 color = "#FFFF00";
                 break;
             case 4:
-                color = "#A52A2A";
+                color = "#00FF00";
                 break;
         }
         return color;

@@ -32,7 +32,7 @@ public final class DateUtil {
     }
 
     /**
-     * Return default datePattern (MM/dd/yyyy)
+     * Return default datePattern (dd/MM/yyyy)
      *
      * @return a string representing the date pattern on the UI
      */
@@ -43,7 +43,7 @@ public final class DateUtil {
             defaultDatePattern = ResourceBundle.getBundle(Constants.BUNDLE_KEY, locale)
                     .getString("date.format");
         } catch (MissingResourceException mse) {
-            defaultDatePattern = "MM/dd/yyyy";
+            defaultDatePattern = "dd/MM/yyyy";
         }
 
         return defaultDatePattern;
@@ -76,7 +76,7 @@ public final class DateUtil {
      * This method generates a string representation of a date/time
      * in the format you specify on input
      *
-     * @param aMask the date pattern the string is in
+     * @param aMask   the date pattern the string is in
      * @param strDate a string representation of a date
      * @return a converted Date object
      * @throws ParseException when String doesn't match the expected format
@@ -104,8 +104,9 @@ public final class DateUtil {
 
     /**
      * Parses date using given format.
+     *
      * @param dateFormat String representation of date format
-     * @param date String representation of date
+     * @param date       String representation of date
      * @return parsed date if successful, null otherwise
      */
     public static Date parseDate(String dateFormat, String date) {
@@ -119,7 +120,7 @@ public final class DateUtil {
 
     /**
      * This method returns the current date time in the format:
-     * MM/dd/yyyy HH:MM a
+     * dd/MM/yyyy HH:MM a
      *
      * @param theTime the current time
      * @return the current date/time
@@ -129,7 +130,7 @@ public final class DateUtil {
     }
 
     /**
-     * This method returns the current date in the format: MM/dd/yyyy
+     * This method returns the current date in the format: dd/MM/yyyy
      *
      * @return the current date
      * @throws ParseException when String doesn't match the expected format
@@ -185,7 +186,7 @@ public final class DateUtil {
     /**
      * This method converts a String to a date using the datePattern
      *
-     * @param strDate the date to convert (in format MM/dd/yyyy)
+     * @param strDate the date to convert (in format dd/MM/yyyy)
      * @return a date object
      * @throws ParseException when String doesn't match the expected format
      */

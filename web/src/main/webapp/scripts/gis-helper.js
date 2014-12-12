@@ -213,7 +213,7 @@ function getCrashStyledMarker(crash, coordinates) {
 }
 
 function getCrashStyledIcon(crash) {
-    var color = "00ff00";
+    var color = "E0FFFF";
     var text = "";
     if (crash.crashSeverity) {
         switch (crash.crashSeverity.id) {
@@ -230,7 +230,7 @@ function getCrashStyledIcon(crash) {
                 text = "S";
                 break;
             case 4:
-                color = "A52A2A";
+                color = "00FF00";
                 text = "D";
                 break;
         }

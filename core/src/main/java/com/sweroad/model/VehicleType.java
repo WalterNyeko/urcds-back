@@ -1,5 +1,7 @@
 package com.sweroad.model;
 
+import com.sweroad.query.Queryable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity(name="vehicle_type")
-public class VehicleType extends BaseModel implements Comparable<VehicleType> {
+public class VehicleType extends BaseModel implements Comparable<VehicleType>, Queryable {
 
 	/**
 	 * 
@@ -77,5 +79,10 @@ public class VehicleType extends BaseModel implements Comparable<VehicleType> {
             return -1;
         }
         return this.name.compareTo(vt.getName());
+    }
+
+    @Override
+    public String getEntityName() {
+        return this.getClass().getSimpleName();
     }
 }

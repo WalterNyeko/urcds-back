@@ -25,7 +25,7 @@
                         </tr>
                     </c:forEach>
                     <tr>
-                        <td style="border: Solid #000 1px; color: #000;" bgcolor="#00FF00">&nbsp;</td>
+                        <td style="border: Solid #000 1px; color: #000;" bgcolor="#E0FFFF">&nbsp;</td>
                         <td>- <fmt:message key="rcds.notSpecified"/></td>
                     </tr>
                 </table>

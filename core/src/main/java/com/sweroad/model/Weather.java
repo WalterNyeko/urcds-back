@@ -3,6 +3,8 @@
  */
 package com.sweroad.model;
 
+import com.sweroad.query.Queryable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,7 +16,7 @@ import javax.persistence.Id;
  *
  */
 @Entity(name = "weather")
-public class Weather extends BaseModel implements Comparable<Weather> {
+public class Weather extends BaseModel implements Comparable<Weather>, Queryable {
 
 	/**
 	 * 
@@ -83,5 +85,10 @@ public class Weather extends BaseModel implements Comparable<Weather> {
             return -1;
         }
         return this.name.compareTo(w.getName());
+    }
+
+    @Override
+    public String getEntityName() {
+        return this.getClass().getSimpleName();
     }
 }

@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.sweroad.query.QueryCrash;
 import com.sweroad.util.GisHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -120,11 +121,6 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
     @Override
     public Crash getCrashForView(Long id) {
         return this.get(id);
-    }
-
-    @Override
-    public Crash findByTarNo(String tarNo) {
-        return crashDao.findByTarNo(tarNo);
     }
 
     @Override
@@ -347,13 +343,6 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
     }
 
     @Override
-    public void removeCasualtiesFromCrash(Crash crash, List<Long> casualtyIds) {
-        for (Long casualtyId : casualtyIds) {
-            removeCasualtyFromCrash(crash, casualtyId);
-        }
-    }
-
-    @Override
     public void removeVehicleFromCrash(Crash crash, Long vehicleId) {
         for (Vehicle vehicle : crash.getVehicles()) {
             if (vehicle.getId().equals(vehicleId)) {
@@ -373,6 +362,12 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
             }
         }
         removeCasualtiesFromCrash(crash, casualtyIds);
+    }
+
+    private void removeCasualtiesFromCrash(Crash crash, List<Long> casualtyIds) {
+        for (Long casualtyId : casualtyIds) {
+            removeCasualtyFromCrash(crash, casualtyId);
+        }
     }
 
     private void deleteRemovedVehicles(Crash dbCrash, Crash crash) {
@@ -438,5 +433,10 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
         Crash crash = this.get(id);
         crash.setRemoved(false);
         genericCrashManager.save(crash);
+    }
+
+    @Override
+    public List<Crash> getCrashesByQuery(QueryCrash queryCrash) {
+        return null;
     }
 }

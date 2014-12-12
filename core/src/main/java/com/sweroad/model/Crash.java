@@ -782,19 +782,10 @@ public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertib
 
     @Override
     public int compareTo(Crash crash) {
-        final int BEFORE = -1;
-        final int EQUAL = 0;
-        final int AFTER = 1;
         if (crash.getId() == null || id == null) {
-            return BEFORE;
+            return -1;
         }
-        if (id.longValue() == crash.getId().longValue()) {
-            return EQUAL;
-        }
-        if (id.longValue() < crash.getId().longValue()) {
-            return BEFORE;
-        }
-        return AFTER;
+        return id.compareTo(crash.getId());
     }
 
     @Override

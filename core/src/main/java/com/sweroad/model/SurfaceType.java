@@ -3,6 +3,8 @@
  */
 package com.sweroad.model;
 
+import com.sweroad.query.Queryable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,7 +16,7 @@ import javax.persistence.Id;
  *
  */
 @Entity(name = "surface_type")
-public class SurfaceType extends BaseModel implements Comparable<SurfaceType> {
+public class SurfaceType extends BaseModel implements Comparable<SurfaceType>, Queryable {
 
 
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -80,5 +82,10 @@ public class SurfaceType extends BaseModel implements Comparable<SurfaceType> {
             return -1;
         }
         return this.name.compareTo(st.getName());
+    }
+
+    @Override
+    public String getEntityName() {
+        return this.getClass().getSimpleName();
     }
 }

@@ -3,6 +3,8 @@
  */
 package com.sweroad.model;
 
+import com.sweroad.query.Queryable;
+
 import javax.persistence.*;
 
 /**
@@ -13,7 +15,7 @@ import javax.persistence.*;
 @Table(name = "police_station")
 @NamedQueries({
         @NamedQuery(name = PoliceStation.FIND_POLICE_STATIONS_ORDER_BY_NAME, query = "from PoliceStation d order by d.name")})
-public class PoliceStation extends BaseModel implements Comparable<PoliceStation> {
+public class PoliceStation extends BaseModel implements Comparable<PoliceStation>, Queryable {
 
 	/**
 	 * 
@@ -101,5 +103,10 @@ public class PoliceStation extends BaseModel implements Comparable<PoliceStation
             return -1;
         }
         return this.name.compareTo(ps.getName());
+    }
+
+    @Override
+    public String getEntityName() {
+        return this.getClass().getSimpleName();
     }
 }

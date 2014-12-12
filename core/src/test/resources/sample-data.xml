@@ -576,6 +576,7 @@
 		</row>
 	</table>
 	<!-- End of lookup data -->
+    <!-- Crash 1 Data -->
 	<table name="driver">
 		<column>id</column>
 		<column>age</column>
@@ -656,7 +657,7 @@
 			<value description="belt_or_helmet_used">0</value>
 			<value description="casualty_class_id">1</value>
 			<value description="casualty_type_id">2</value>
-			<value description="vehicle_id">1</value>
+			<null/>
 			<value description="date_created">2014-06-05 18:15:00</value>
 		</row>
 	</table>
@@ -710,8 +711,8 @@
 			<value description="editable">0</value>
 			<value description="removable">0</value>
 			<value description="is_removed">0</value>
-            <value description="latitude">N00 23 00</value>
-            <value description="longitude">E32 55 27</value>
+            <value description="latitude">N00 23.000</value>
+            <value description="longitude">E032 55.270</value>
             <value description="latitude_numeric">0.383333</value>
             <value description="longitude_numeric">32.921167</value>
 		</row>
@@ -740,4 +741,1441 @@
 			<value description="vehicle_id">2</value>
 		</row>
 	</table>
+    <!-- End of Crash 1 Data -->
+    <!-- Crash 2 Data -->
+    <table name="driver">
+        <column>id</column>
+        <column>age</column>
+        <column>gender</column>
+        <column>belt_used</column>
+        <column>license_number</column>
+        <column>license_valid</column>
+        <column>casualty_type_id</column>
+        <column>date_created</column>
+        <row>
+            <value description="id">3</value>
+            <value description="age">37</value>
+            <value description="gender">F</value>
+            <value description="belt_used">0</value>
+            <value description="license_number">12342356</value>
+            <value description="license_valid">1</value>
+            <value description="casualty_type_id">3</value>
+            <value description="date_created">2014-06-03 18:15:00</value>
+        </row>
+        <row>
+            <value description="id">4</value>
+            <value description="age">33</value>
+            <value description="gender">M</value>
+            <value description="belt_used">1</value>
+            <value description="license_number">12378459</value>
+            <value description="license_valid">1</value>
+            <value description="casualty_type_id">2</value>
+            <value description="date_created">2014-06-04 18:15:00</value>
+        </row>
+    </table>
+    <table name="vehicle">
+        <column>id</column>
+        <column>number</column>
+        <column>driver_id</column>
+        <column>vehicle_type_id</column>
+        <column>company_name</column>
+        <column>date_created</column>
+        <row>
+            <value description="id">3</value>
+            <value description="number">1</value>
+            <value description="driver_id">3</value>
+            <value description="vehicle_type_id">1</value>
+            <value description="company_name"></value>
+            <value description="date_created">2014-06-03 18:15:00</value>
+        </row>
+        <row>
+            <value description="id">4</value>
+            <value description="number">2</value>
+            <value description="driver_id">4</value>
+            <value description="vehicle_type_id">10</value>
+            <value description="company_name">DHL</value>
+            <value description="date_created">2014-06-05 18:15:00</value>
+        </row>
+    </table>
+    <table name="casualty">
+        <column>id</column>
+        <column>age</column>
+        <column>gender</column>
+        <column>belt_or_helmet_used</column>
+        <column>casualty_class_id</column>
+        <column>casualty_type_id</column>
+        <column>vehicle_id</column>
+        <column>date_created</column>
+        <row>
+            <value description="id">3</value>
+            <value description="age">15</value>
+            <value description="gender">F</value>
+            <value description="belt_or_helmet_used">1</value>
+            <value description="casualty_class_id">4</value>
+            <value description="casualty_type_id">3</value>
+            <value description="vehicle_id">3</value>
+            <value description="date_created">2014-06-05 18:15:00</value>
+        </row>
+        <row>
+            <value description="id">4</value>
+            <value description="age">11</value>
+            <value description="gender">M</value>
+            <value description="belt_or_helmet_used">0</value>
+            <value description="casualty_class_id">1</value>
+            <value description="casualty_type_id">2</value>
+            <null/>
+            <value description="date_created">2014-06-05 18:15:00</value>
+        </row>
+    </table>
+    <table name="crash">
+        <column>id</column>
+        <column>crash_date_time</column>
+        <column>crash_place</column>
+        <column>date_created</column>
+        <column>road</column>
+        <column>road_number</column>
+        <column>tar_no</column>
+        <column>town_or_village</column>
+        <column>collision_type_id</column>
+        <column>crash_severity_id</column>
+        <column>junction_type_id</column>
+        <column>main_crash_cause_id</column>
+        <column>police_station_id</column>
+        <column>road_surface_id</column>
+        <column>roadway_character_id</column>
+        <column>surface_condition_id</column>
+        <column>surface_type_id</column>
+        <column>vehicle_failure_type_id</column>
+        <column>weather_id</column>
+        <column>editable</column>
+        <column>removable</column>
+        <column>is_removed</column>
+        <column>latitude</column>
+        <column>longitude</column>
+        <column>latitude_numeric</column>
+        <column>longitude_numeric</column>
+        <row>
+            <value description="id">2</value>
+            <value description="crash_date_time">2014-06-18 08:21:00</value>
+            <value description="crash_place">Airtel Roundabout</value>
+            <value description="date_created">2014-06-03 18:15:00</value>
+            <value description="road">Wampewo Avenue</value>
+            <value description="road_number">12</value>
+            <value description="tar_no">A1510/LGZ</value>
+            <value description="town_or_village"></value>
+            <value description="collision_type_id">2</value>
+            <value description="crash_severity_id">2</value>
+            <value description="junction_type_id">4</value>
+            <value description="main_crash_cause_id">4</value>
+            <value description="police_station_id">3</value>
+            <value description="road_surface_id">2</value>
+            <value description="roadway_character_id">2</value>
+            <value description="surface_condition_id">1</value>
+            <value description="surface_type_id">1</value>
+            <value description="vehicle_failure_type_id">1</value>
+            <value description="weather_id">1</value>
+            <value description="editable">0</value>
+            <value description="removable">0</value>
+            <value description="is_removed">0</value>
+            <value description="latitude">N00 14.902</value>
+            <value description="longitude">E032 23.135</value>
+            <value description="latitude_numeric">0.248367</value>
+            <value description="longitude_numeric">32.385583</value>
+        </row>
+    </table>
+    <table name="crash_casualty">
+        <column>crash_id</column>
+        <column>casualty_id</column>
+        <row>
+            <value description="crash_id">2</value>
+            <value description="casualty_id">3</value>
+        </row>
+        <row>
+            <value description="crash_id">2</value>
+            <value description="casualty_id">4</value>
+        </row>
+    </table>
+    <table name="crash_vehicle">
+        <column>crash_id</column>
+        <column>vehicle_id</column>
+        <row>
+            <value description="crash_id">2</value>
+            <value description="vehicle_id">3</value>
+        </row>
+        <row>
+            <value description="crash_id">2</value>
+            <value description="vehicle_id">4</value>
+        </row>
+    </table>
+    <!-- End of Crash 2 Data -->
+    <!-- Crash 3 Data -->
+    <table name="driver">
+        <column>id</column>
+        <column>age</column>
+        <column>gender</column>
+        <column>belt_used</column>
+        <column>license_number</column>
+        <column>license_valid</column>
+        <column>casualty_type_id</column>
+        <column>date_created</column>
+        <row>
+            <value description="id">5</value>
+            <value description="age">20</value>
+            <value description="gender">M</value>
+            <value description="belt_used">0</value>
+            <value description="license_number">12342356</value>
+            <value description="license_valid">1</value>
+            <value description="casualty_type_id">4</value>
+            <value description="date_created">2014-06-03 18:15:00</value>
+        </row>
+        <row>
+            <value description="id">6</value>
+            <value description="age">19</value>
+            <value description="gender">M</value>
+            <value description="belt_used">1</value>
+            <value description="license_number">12378459</value>
+            <value description="license_valid">1</value>
+            <value description="casualty_type_id">4</value>
+            <value description="date_created">2014-06-04 18:15:00</value>
+        </row>
+        <row>
+            <value description="id">7</value>
+            <value description="age">25</value>
+            <value description="gender">F</value>
+            <value description="belt_used">0</value>
+            <value description="license_number">12342356</value>
+            <value description="license_valid">1</value>
+            <value description="casualty_type_id">4</value>
+            <value description="date_created">2014-06-03 18:15:00</value>
+        </row>
+        <row>
+            <value description="id">8</value>
+            <value description="age">42</value>
+            <value description="gender">M</value>
+            <value description="belt_used">1</value>
+            <value description="license_number">12378459</value>
+            <value description="license_valid">1</value>
+            <value description="casualty_type_id">4</value>
+            <value description="date_created">2014-06-04 18:15:00</value>
+        </row>
+    </table>
+    <table name="vehicle">
+        <column>id</column>
+        <column>number</column>
+        <column>driver_id</column>
+        <column>vehicle_type_id</column>
+        <column>company_name</column>
+        <column>date_created</column>
+        <row>
+            <value description="id">5</value>
+            <value description="number">1</value>
+            <value description="driver_id">5</value>
+            <value description="vehicle_type_id">1</value>
+            <value description="company_name"></value>
+            <value description="date_created">2014-06-03 18:15:00</value>
+        </row>
+        <row>
+            <value description="id">6</value>
+            <value description="number">2</value>
+            <value description="driver_id">6</value>
+            <value description="vehicle_type_id">1</value>
+            <value description="company_name"></value>
+            <value description="date_created">2014-06-05 18:15:00</value>
+        </row>
+        <row>
+            <value description="id">7</value>
+            <value description="number">1</value>
+            <value description="driver_id">7</value>
+            <value description="vehicle_type_id">1</value>
+            <value description="company_name"></value>
+            <value description="date_created">2014-06-03 18:15:00</value>
+        </row>
+        <row>
+            <value description="id">8</value>
+            <value description="number">2</value>
+            <value description="driver_id">8</value>
+            <value description="vehicle_type_id">1</value>
+            <value description="company_name"></value>
+            <value description="date_created">2014-06-05 18:15:00</value>
+        </row>
+    </table>
+    <table name="crash">
+        <column>id</column>
+        <column>crash_date_time</column>
+        <column>crash_place</column>
+        <column>date_created</column>
+        <column>road</column>
+        <column>road_number</column>
+        <column>tar_no</column>
+        <column>town_or_village</column>
+        <column>collision_type_id</column>
+        <column>crash_severity_id</column>
+        <column>junction_type_id</column>
+        <column>main_crash_cause_id</column>
+        <column>police_station_id</column>
+        <column>road_surface_id</column>
+        <column>roadway_character_id</column>
+        <column>surface_condition_id</column>
+        <column>surface_type_id</column>
+        <column>vehicle_failure_type_id</column>
+        <column>weather_id</column>
+        <column>editable</column>
+        <column>removable</column>
+        <column>is_removed</column>
+        <column>latitude</column>
+        <column>longitude</column>
+        <column>latitude_numeric</column>
+        <column>longitude_numeric</column>
+        <row>
+            <value description="id">3</value>
+            <value description="crash_date_time">2014-06-18 08:21:00</value>
+            <value description="crash_place">KIU Kansanga</value>
+            <value description="date_created">2014-06-03 18:15:00</value>
+            <value description="road">Gaba Road</value>
+            <value description="road_number">10</value>
+            <value description="tar_no">A1511/LGZ</value>
+            <value description="town_or_village">Kansanga</value>
+            <value description="collision_type_id">6</value>
+            <value description="crash_severity_id">4</value>
+            <value description="junction_type_id">1</value>
+            <value description="main_crash_cause_id">2</value>
+            <value description="police_station_id">3</value>
+            <value description="road_surface_id">2</value>
+            <value description="roadway_character_id">2</value>
+            <value description="surface_condition_id">1</value>
+            <value description="surface_type_id">1</value>
+            <value description="vehicle_failure_type_id">4</value>
+            <value description="weather_id">2</value>
+            <value description="editable">0</value>
+            <value description="removable">0</value>
+            <value description="is_removed">0</value>
+            <value description="latitude">N00 14.902</value>
+            <value description="longitude">E032 23.135</value>
+            <value description="latitude_numeric">0.248367</value>
+            <value description="longitude_numeric">32.385583</value>
+        </row>
+    </table>
+    <table name="crash_vehicle">
+        <column>crash_id</column>
+        <column>vehicle_id</column>
+        <row>
+            <value description="crash_id">3</value>
+            <value description="vehicle_id">5</value>
+        </row>
+        <row>
+            <value description="crash_id">3</value>
+            <value description="vehicle_id">6</value>
+        </row>
+        <row>
+            <value description="crash_id">3</value>
+            <value description="vehicle_id">7</value>
+        </row>
+        <row>
+            <value description="crash_id">3</value>
+            <value description="vehicle_id">8</value>
+        </row>
+    </table>
+    <!-- End of Crash 3 Data -->
+    <!-- Crash 4 Data -->
+    <table name="driver">
+        <column>id</column>
+        <column>age</column>
+        <column>gender</column>
+        <column>belt_used</column>
+        <column>license_number</column>
+        <column>license_valid</column>
+        <column>casualty_type_id</column>
+        <column>date_created</column>
+        <row>
+            <value description="id">9</value>
+            <value description="age">20</value>
+            <value description="gender">M</value>
+            <value description="belt_used">0</value>
+            <value description="license_number">12342356</value>
+            <value description="license_valid">1</value>
+            <value description="casualty_type_id">4</value>
+            <value description="date_created">2014-06-03 18:15:00</value>
+        </row>
+        <row>
+            <value description="id">10</value>
+            <value description="age">19</value>
+            <value description="gender">M</value>
+            <value description="belt_used">1</value>
+            <value description="license_number">12378459</value>
+            <value description="license_valid">1</value>
+            <value description="casualty_type_id">4</value>
+            <value description="date_created">2014-06-04 18:15:00</value>
+        </row>
+        <row>
+            <value description="id">11</value>
+            <value description="age">25</value>
+            <value description="gender">F</value>
+            <value description="belt_used">0</value>
+            <value description="license_number">12342356</value>
+            <value description="license_valid">1</value>
+            <value description="casualty_type_id">4</value>
+            <value description="date_created">2014-06-03 18:15:00</value>
+        </row>
+        <row>
+            <value description="id">12</value>
+            <value description="age">42</value>
+            <value description="gender">M</value>
+            <value description="belt_used">1</value>
+            <value description="license_number">12378459</value>
+            <value description="license_valid">1</value>
+            <value description="casualty_type_id">4</value>
+            <value description="date_created">2014-06-04 18:15:00</value>
+        </row>
+    </table>
+    <table name="vehicle">
+        <column>id</column>
+        <column>number</column>
+        <column>driver_id</column>
+        <column>vehicle_type_id</column>
+        <column>company_name</column>
+        <column>date_created</column>
+        <row>
+            <value description="id">9</value>
+            <value description="number">1</value>
+            <value description="driver_id">9</value>
+            <value description="vehicle_type_id">1</value>
+            <value description="company_name"></value>
+            <value description="date_created">2014-06-03 18:15:00</value>
+        </row>
+        <row>
+            <value description="id">10</value>
+            <value description="number">2</value>
+            <value description="driver_id">10</value>
+            <value description="vehicle_type_id">1</value>
+            <value description="company_name"></value>
+            <value description="date_created">2014-06-05 18:15:00</value>
+        </row>
+        <row>
+            <value description="id">11</value>
+            <value description="number">1</value>
+            <value description="driver_id">11</value>
+            <value description="vehicle_type_id">1</value>
+            <value description="company_name"></value>
+            <value description="date_created">2014-06-03 18:15:00</value>
+        </row>
+        <row>
+            <value description="id">12</value>
+            <value description="number">2</value>
+            <value description="driver_id">12</value>
+            <value description="vehicle_type_id">1</value>
+            <value description="company_name"></value>
+            <value description="date_created">2014-06-05 18:15:00</value>
+        </row>
+    </table>
+    <table name="crash">
+        <column>id</column>
+        <column>crash_date_time</column>
+        <column>crash_place</column>
+        <column>date_created</column>
+        <column>road</column>
+        <column>road_number</column>
+        <column>tar_no</column>
+        <column>town_or_village</column>
+        <column>collision_type_id</column>
+        <column>crash_severity_id</column>
+        <column>junction_type_id</column>
+        <column>main_crash_cause_id</column>
+        <column>police_station_id</column>
+        <column>road_surface_id</column>
+        <column>roadway_character_id</column>
+        <column>surface_condition_id</column>
+        <column>surface_type_id</column>
+        <column>vehicle_failure_type_id</column>
+        <column>weather_id</column>
+        <column>editable</column>
+        <column>removable</column>
+        <column>is_removed</column>
+        <column>latitude</column>
+        <column>longitude</column>
+        <column>latitude_numeric</column>
+        <column>longitude_numeric</column>
+        <row>
+            <value description="id">4</value>
+            <value description="crash_date_time">2014-06-18 08:21:00</value>
+            <value description="crash_place">Nsimbi Ziwome</value>
+            <value description="date_created">2014-06-03 18:15:00</value>
+            <value description="road">Bukoto-Ntinda</value>
+            <value description="road_number">1</value>
+            <value description="tar_no">A1512/LGZ</value>
+            <value description="town_or_village">Ntinda</value>
+            <value description="collision_type_id">6</value>
+            <value description="crash_severity_id">4</value>
+            <value description="junction_type_id">1</value>
+            <value description="main_crash_cause_id">2</value>
+            <value description="police_station_id">3</value>
+            <value description="road_surface_id">2</value>
+            <value description="roadway_character_id">2</value>
+            <value description="surface_condition_id">1</value>
+            <value description="surface_type_id">1</value>
+            <value description="vehicle_failure_type_id">4</value>
+            <value description="weather_id">2</value>
+            <value description="editable">0</value>
+            <value description="removable">0</value>
+            <value description="is_removed">0</value>
+            <value description="latitude">N00 14.902</value>
+            <value description="longitude">E032 23.135</value>
+            <value description="latitude_numeric">0.248367</value>
+            <value description="longitude_numeric">32.385583</value>
+        </row>
+    </table>
+    <table name="crash_vehicle">
+        <column>crash_id</column>
+        <column>vehicle_id</column>
+        <row>
+            <value description="crash_id">4</value>
+            <value description="vehicle_id">9</value>
+        </row>
+        <row>
+            <value description="crash_id">4</value>
+            <value description="vehicle_id">10</value>
+        </row>
+        <row>
+            <value description="crash_id">4</value>
+            <value description="vehicle_id">11</value>
+        </row>
+        <row>
+            <value description="crash_id">4</value>
+            <value description="vehicle_id">12</value>
+        </row>
+    </table>
+    <!-- End of Crash 4 Data -->
+    <!-- Crash 5 Data -->
+    <table name="driver">
+        <column>id</column>
+        <column>age</column>
+        <column>gender</column>
+        <column>belt_used</column>
+        <column>license_number</column>
+        <column>license_valid</column>
+        <column>casualty_type_id</column>
+        <column>date_created</column>
+        <row>
+            <value description="id">13</value>
+            <value description="age">18</value>
+            <value description="gender">M</value>
+            <value description="belt_used">0</value>
+            <value description="license_number">123456</value>
+            <value description="license_valid">1</value>
+            <value description="casualty_type_id">4</value>
+            <value description="date_created">2014-06-03 18:15:00</value>
+        </row>
+        <row>
+            <value description="id">14</value>
+            <value description="age">39</value>
+            <value description="gender">M</value>
+            <value description="belt_used">1</value>
+            <value description="license_number">123789</value>
+            <value description="license_valid">1</value>
+            <value description="casualty_type_id">3</value>
+            <value description="date_created">2014-06-04 18:15:00</value>
+        </row>
+    </table>
+    <table name="vehicle">
+        <column>id</column>
+        <column>number</column>
+        <column>driver_id</column>
+        <column>vehicle_type_id</column>
+        <column>company_name</column>
+        <column>date_created</column>
+        <row>
+            <value description="id">13</value>
+            <value description="number">1</value>
+            <value description="driver_id">13</value>
+            <value description="vehicle_type_id">1</value>
+            <value description="company_name"></value>
+            <value description="date_created">2014-06-03 18:15:00</value>
+        </row>
+        <row>
+            <value description="id">14</value>
+            <value description="number">2</value>
+            <value description="driver_id">14</value>
+            <value description="vehicle_type_id">7</value>
+            <value description="company_name">Total Uganda</value>
+            <value description="date_created">2014-06-05 18:15:00</value>
+        </row>
+    </table>
+    <table name="casualty">
+        <column>id</column>
+        <column>age</column>
+        <column>gender</column>
+        <column>belt_or_helmet_used</column>
+        <column>casualty_class_id</column>
+        <column>casualty_type_id</column>
+        <column>vehicle_id</column>
+        <column>date_created</column>
+        <row>
+            <value description="id">5</value>
+            <value description="age">25</value>
+            <value description="gender">F</value>
+            <value description="belt_or_helmet_used">1</value>
+            <value description="casualty_class_id">4</value>
+            <value description="casualty_type_id">3</value>
+            <value description="vehicle_id">1</value>
+            <value description="date_created">2014-06-05 18:15:00</value>
+        </row>
+        <row>
+            <value description="id">6</value>
+            <value description="age">30</value>
+            <value description="gender">M</value>
+            <value description="belt_or_helmet_used">0</value>
+            <value description="casualty_class_id">1</value>
+            <value description="casualty_type_id">1</value>
+            <null/>
+            <value description="date_created">2014-06-05 18:15:00</value>
+        </row>
+    </table>
+    <table name="crash">
+        <column>id</column>
+        <column>crash_date_time</column>
+        <column>crash_place</column>
+        <column>date_created</column>
+        <column>road</column>
+        <column>road_number</column>
+        <column>tar_no</column>
+        <column>town_or_village</column>
+        <column>collision_type_id</column>
+        <column>crash_severity_id</column>
+        <column>junction_type_id</column>
+        <column>main_crash_cause_id</column>
+        <column>police_station_id</column>
+        <column>road_surface_id</column>
+        <column>roadway_character_id</column>
+        <column>surface_condition_id</column>
+        <column>surface_type_id</column>
+        <column>vehicle_failure_type_id</column>
+        <column>weather_id</column>
+        <column>editable</column>
+        <column>removable</column>
+        <column>is_removed</column>
+        <column>latitude</column>
+        <column>longitude</column>
+        <column>latitude_numeric</column>
+        <column>longitude_numeric</column>
+        <row>
+            <value description="id">5</value>
+            <value description="crash_date_time">2014-06-03 16:21:00</value>
+            <value description="crash_place">Kayanja</value>
+            <value description="date_created">2014-06-03 18:15:00</value>
+            <value description="road">Kampala-Jinja</value>
+            <value description="road_number">15</value>
+            <value description="tar_no">A1513/LGZ</value>
+            <value description="town_or_village">Kayanja</value>
+            <value description="collision_type_id">1</value>
+            <value description="crash_severity_id">1</value>
+            <value description="junction_type_id">1</value>
+            <value description="main_crash_cause_id">1</value>
+            <value description="police_station_id">1</value>
+            <value description="road_surface_id">2</value>
+            <value description="roadway_character_id">2</value>
+            <value description="surface_condition_id">1</value>
+            <value description="surface_type_id">1</value>
+            <value description="vehicle_failure_type_id">1</value>
+            <value description="weather_id">1</value>
+            <value description="editable">0</value>
+            <value description="removable">0</value>
+            <value description="is_removed">0</value>
+            <value description="latitude">N00 23.000</value>
+            <value description="longitude">E032 55.270</value>
+            <value description="latitude_numeric">0.383333</value>
+            <value description="longitude_numeric">32.921167</value>
+        </row>
+    </table>
+    <table name="crash_casualty">
+        <column>crash_id</column>
+        <column>casualty_id</column>
+        <row>
+            <value description="crash_id">5</value>
+            <value description="casualty_id">5</value>
+        </row>
+        <row>
+            <value description="crash_id">5</value>
+            <value description="casualty_id">6</value>
+        </row>
+    </table>
+    <table name="crash_vehicle">
+        <column>crash_id</column>
+        <column>vehicle_id</column>
+        <row>
+            <value description="crash_id">5</value>
+            <value description="vehicle_id">13</value>
+        </row>
+        <row>
+            <value description="crash_id">5</value>
+            <value description="vehicle_id">14</value>
+        </row>
+    </table>
+    <!-- End of Crash 5 Data -->
+    <!-- Crash 6 Data -->
+    <table name="driver">
+        <column>id</column>
+        <column>age</column>
+        <column>gender</column>
+        <column>belt_used</column>
+        <column>license_number</column>
+        <column>license_valid</column>
+        <column>casualty_type_id</column>
+        <column>date_created</column>
+        <row>
+            <value description="id">15</value>
+            <value description="age">37</value>
+            <value description="gender">F</value>
+            <value description="belt_used">0</value>
+            <value description="license_number">12342356</value>
+            <value description="license_valid">1</value>
+            <value description="casualty_type_id">2</value>
+            <value description="date_created">2014-06-03 18:15:00</value>
+        </row>
+        <row>
+            <value description="id">16</value>
+            <value description="age">33</value>
+            <value description="gender">M</value>
+            <value description="belt_used">1</value>
+            <value description="license_number">12378459</value>
+            <value description="license_valid">1</value>
+            <value description="casualty_type_id">1</value>
+            <value description="date_created">2014-06-04 18:15:00</value>
+        </row>
+    </table>
+    <table name="vehicle">
+        <column>id</column>
+        <column>number</column>
+        <column>driver_id</column>
+        <column>vehicle_type_id</column>
+        <column>company_name</column>
+        <column>date_created</column>
+        <row>
+            <value description="id">15</value>
+            <value description="number">1</value>
+            <value description="driver_id">15</value>
+            <value description="vehicle_type_id">1</value>
+            <value description="company_name"></value>
+            <value description="date_created">2014-06-03 18:15:00</value>
+        </row>
+        <row>
+            <value description="id">16</value>
+            <value description="number">2</value>
+            <value description="driver_id">16</value>
+            <value description="vehicle_type_id">1</value>
+            <value description="company_name"></value>
+            <value description="date_created">2014-06-05 18:15:00</value>
+        </row>
+    </table>
+    <table name="casualty">
+        <column>id</column>
+        <column>age</column>
+        <column>gender</column>
+        <column>belt_or_helmet_used</column>
+        <column>casualty_class_id</column>
+        <column>casualty_type_id</column>
+        <column>vehicle_id</column>
+        <column>date_created</column>
+        <row>
+            <value description="id">7</value>
+            <value description="age">25</value>
+            <value description="gender">F</value>
+            <value description="belt_or_helmet_used">1</value>
+            <value description="casualty_class_id">4</value>
+            <value description="casualty_type_id">3</value>
+            <value description="vehicle_id">15</value>
+            <value description="date_created">2014-06-05 18:15:00</value>
+        </row>
+        <row>
+            <value description="id">8</value>
+            <value description="age">11</value>
+            <value description="gender">M</value>
+            <value description="belt_or_helmet_used">0</value>
+            <value description="casualty_class_id">1</value>
+            <value description="casualty_type_id">1</value>
+            <value description="vehicle_id">15</value>
+            <value description="date_created">2014-06-05 18:15:00</value>
+        </row>
+    </table>
+    <table name="crash">
+        <column>id</column>
+        <column>crash_date_time</column>
+        <column>crash_place</column>
+        <column>date_created</column>
+        <column>road</column>
+        <column>road_number</column>
+        <column>tar_no</column>
+        <column>town_or_village</column>
+        <column>collision_type_id</column>
+        <column>crash_severity_id</column>
+        <column>junction_type_id</column>
+        <column>main_crash_cause_id</column>
+        <column>police_station_id</column>
+        <column>road_surface_id</column>
+        <column>roadway_character_id</column>
+        <column>surface_condition_id</column>
+        <column>surface_type_id</column>
+        <column>vehicle_failure_type_id</column>
+        <column>weather_id</column>
+        <column>editable</column>
+        <column>removable</column>
+        <column>is_removed</column>
+        <column>latitude</column>
+        <column>longitude</column>
+        <column>latitude_numeric</column>
+        <column>longitude_numeric</column>
+        <row>
+            <value description="id">6</value>
+            <value description="crash_date_time">2014-06-18 08:21:00</value>
+            <value description="crash_place">Airtel Roundabout</value>
+            <value description="date_created">2014-06-03 18:15:00</value>
+            <value description="road">Wampewo Avenue</value>
+            <value description="road_number">12</value>
+            <value description="tar_no">A1514/LGZ</value>
+            <value description="town_or_village"></value>
+            <value description="collision_type_id">7</value>
+            <value description="crash_severity_id">2</value>
+            <value description="junction_type_id">4</value>
+            <value description="main_crash_cause_id">4</value>
+            <value description="police_station_id">3</value>
+            <value description="road_surface_id">2</value>
+            <value description="roadway_character_id">2</value>
+            <value description="surface_condition_id">1</value>
+            <value description="surface_type_id">1</value>
+            <value description="vehicle_failure_type_id">1</value>
+            <value description="weather_id">1</value>
+            <value description="editable">0</value>
+            <value description="removable">0</value>
+            <value description="is_removed">0</value>
+            <value description="latitude">N00 14.902</value>
+            <value description="longitude">E032 23.135</value>
+            <value description="latitude_numeric">0.248367</value>
+            <value description="longitude_numeric">32.385583</value>
+        </row>
+    </table>
+    <table name="crash_casualty">
+        <column>crash_id</column>
+        <column>casualty_id</column>
+        <row>
+            <value description="crash_id">6</value>
+            <value description="casualty_id">7</value>
+        </row>
+        <row>
+            <value description="crash_id">6</value>
+            <value description="casualty_id">8</value>
+        </row>
+    </table>
+    <table name="crash_vehicle">
+        <column>crash_id</column>
+        <column>vehicle_id</column>
+        <row>
+            <value description="crash_id">6</value>
+            <value description="vehicle_id">15</value>
+        </row>
+        <row>
+            <value description="crash_id">6</value>
+            <value description="vehicle_id">16</value>
+        </row>
+    </table>
+    <!-- End of Crash 6 Data -->
+    <!-- Crash 7 Data -->
+    <table name="driver">
+        <column>id</column>
+        <column>age</column>
+        <column>gender</column>
+        <column>belt_used</column>
+        <column>license_number</column>
+        <column>license_valid</column>
+        <column>casualty_type_id</column>
+        <column>date_created</column>
+        <row>
+            <value description="id">17</value>
+            <value description="age">21</value>
+            <value description="gender">M</value>
+            <value description="belt_used">0</value>
+            <value description="license_number">123456</value>
+            <value description="license_valid">1</value>
+            <value description="casualty_type_id">3</value>
+            <value description="date_created">2014-06-03 18:15:00</value>
+        </row>
+    </table>
+    <table name="vehicle">
+        <column>id</column>
+        <column>number</column>
+        <column>driver_id</column>
+        <column>vehicle_type_id</column>
+        <column>company_name</column>
+        <column>date_created</column>
+        <row>
+            <value description="id">17</value>
+            <value description="number">1</value>
+            <value description="driver_id">17</value>
+            <value description="vehicle_type_id">1</value>
+            <value description="company_name"></value>
+            <value description="date_created">2014-06-03 18:15:00</value>
+        </row>
+    </table>
+    <table name="crash">
+        <column>id</column>
+        <column>crash_date_time</column>
+        <column>crash_place</column>
+        <column>date_created</column>
+        <column>road</column>
+        <column>road_number</column>
+        <column>tar_no</column>
+        <column>town_or_village</column>
+        <column>collision_type_id</column>
+        <column>crash_severity_id</column>
+        <column>junction_type_id</column>
+        <column>main_crash_cause_id</column>
+        <column>police_station_id</column>
+        <column>road_surface_id</column>
+        <column>roadway_character_id</column>
+        <column>surface_condition_id</column>
+        <column>surface_type_id</column>
+        <column>vehicle_failure_type_id</column>
+        <column>weather_id</column>
+        <column>editable</column>
+        <column>removable</column>
+        <column>is_removed</column>
+        <column>latitude</column>
+        <column>longitude</column>
+        <column>latitude_numeric</column>
+        <column>longitude_numeric</column>
+        <row>
+            <value description="id">7</value>
+            <value description="crash_date_time">2014-02-03 16:21:00</value>
+            <value description="crash_place">Crested Towers</value>
+            <value description="date_created">2014-06-03 18:15:00</value>
+            <value description="road">Crested Towers</value>
+            <value description="road_number">16</value>
+            <value description="tar_no">A1515/KLA</value>
+            <value description="town_or_village">Kampala</value>
+            <value description="collision_type_id">5</value>
+            <value description="crash_severity_id">3</value>
+            <value description="junction_type_id">4</value>
+            <value description="main_crash_cause_id">1</value>
+            <value description="police_station_id">3</value>
+            <value description="road_surface_id">2</value>
+            <value description="roadway_character_id">2</value>
+            <value description="surface_condition_id">1</value>
+            <value description="surface_type_id">1</value>
+            <value description="vehicle_failure_type_id">1</value>
+            <value description="weather_id">1</value>
+            <value description="editable">0</value>
+            <value description="removable">0</value>
+            <value description="is_removed">0</value>
+            <value description="latitude">N00 23.000</value>
+            <value description="longitude">E032 55.270</value>
+            <value description="latitude_numeric">0.383333</value>
+            <value description="longitude_numeric">32.921167</value>
+        </row>
+    </table>
+    <table name="crash_vehicle">
+        <column>crash_id</column>
+        <column>vehicle_id</column>
+        <row>
+            <value description="crash_id">7</value>
+            <value description="vehicle_id">17</value>
+        </row>
+    </table>
+    <!-- End of Crash 7 Data -->
+    <!-- Crash 8 Data -->
+    <table name="driver">
+        <column>id</column>
+        <column>age</column>
+        <column>gender</column>
+        <column>belt_used</column>
+        <column>license_number</column>
+        <column>license_valid</column>
+        <column>casualty_type_id</column>
+        <column>date_created</column>
+        <row>
+            <value description="id">18</value>
+            <value description="age">37</value>
+            <value description="gender">F</value>
+            <value description="belt_used">0</value>
+            <value description="license_number">12342356</value>
+            <value description="license_valid">1</value>
+            <value description="casualty_type_id">2</value>
+            <value description="date_created">2014-06-03 18:15:00</value>
+        </row>
+        <row>
+            <value description="id">19</value>
+            <value description="age">33</value>
+            <value description="gender">M</value>
+            <value description="belt_used">1</value>
+            <value description="license_number">12378459</value>
+            <value description="license_valid">1</value>
+            <value description="casualty_type_id">1</value>
+            <value description="date_created">2014-06-04 18:15:00</value>
+        </row>
+    </table>
+    <table name="vehicle">
+        <column>id</column>
+        <column>number</column>
+        <column>driver_id</column>
+        <column>vehicle_type_id</column>
+        <column>company_name</column>
+        <column>date_created</column>
+        <row>
+            <value description="id">18</value>
+            <value description="number">1</value>
+            <value description="driver_id">18</value>
+            <value description="vehicle_type_id">1</value>
+            <value description="company_name"></value>
+            <value description="date_created">2014-06-03 18:15:00</value>
+        </row>
+        <row>
+            <value description="id">19</value>
+            <value description="number">2</value>
+            <value description="driver_id">19</value>
+            <value description="vehicle_type_id">1</value>
+            <value description="company_name"></value>
+            <value description="date_created">2014-06-05 18:15:00</value>
+        </row>
+    </table>
+    <table name="casualty">
+        <column>id</column>
+        <column>age</column>
+        <column>gender</column>
+        <column>belt_or_helmet_used</column>
+        <column>casualty_class_id</column>
+        <column>casualty_type_id</column>
+        <column>vehicle_id</column>
+        <column>date_created</column>
+        <row>
+            <value description="id">9</value>
+            <value description="age">25</value>
+            <value description="gender">F</value>
+            <value description="belt_or_helmet_used">1</value>
+            <value description="casualty_class_id">4</value>
+            <value description="casualty_type_id">3</value>
+            <value description="vehicle_id">19</value>
+            <value description="date_created">2014-06-05 18:15:00</value>
+        </row>
+        <row>
+            <value description="id">10</value>
+            <value description="age">11</value>
+            <value description="gender">M</value>
+            <value description="belt_or_helmet_used">0</value>
+            <value description="casualty_class_id">1</value>
+            <value description="casualty_type_id">1</value>
+            <value description="vehicle_id">19</value>
+            <value description="date_created">2014-06-05 18:15:00</value>
+        </row>
+    </table>
+    <table name="crash">
+        <column>id</column>
+        <column>crash_date_time</column>
+        <column>crash_place</column>
+        <column>date_created</column>
+        <column>road</column>
+        <column>road_number</column>
+        <column>tar_no</column>
+        <column>town_or_village</column>
+        <column>collision_type_id</column>
+        <column>crash_severity_id</column>
+        <column>junction_type_id</column>
+        <column>main_crash_cause_id</column>
+        <column>police_station_id</column>
+        <column>road_surface_id</column>
+        <column>roadway_character_id</column>
+        <column>surface_condition_id</column>
+        <column>surface_type_id</column>
+        <column>vehicle_failure_type_id</column>
+        <column>weather_id</column>
+        <column>editable</column>
+        <column>removable</column>
+        <column>is_removed</column>
+        <column>latitude</column>
+        <column>longitude</column>
+        <column>latitude_numeric</column>
+        <column>longitude_numeric</column>
+        <row>
+            <value description="id">8</value>
+            <value description="crash_date_time">2014-02-18 08:21:00</value>
+            <value description="crash_place">Airtel Roundabout</value>
+            <value description="date_created">2014-06-03 18:15:00</value>
+            <value description="road">Wampewo Avenue</value>
+            <value description="road_number">12</value>
+            <value description="tar_no">A1510/LGZ</value>
+            <value description="town_or_village"></value>
+            <value description="collision_type_id">7</value>
+            <value description="crash_severity_id">2</value>
+            <value description="junction_type_id">4</value>
+            <value description="main_crash_cause_id">4</value>
+            <value description="police_station_id">3</value>
+            <value description="road_surface_id">2</value>
+            <value description="roadway_character_id">2</value>
+            <value description="surface_condition_id">1</value>
+            <value description="surface_type_id">1</value>
+            <value description="vehicle_failure_type_id">1</value>
+            <value description="weather_id">1</value>
+            <value description="editable">0</value>
+            <value description="removable">0</value>
+            <value description="is_removed">0</value>
+            <value description="latitude">N00 14.902</value>
+            <value description="longitude">E032 23.135</value>
+            <value description="latitude_numeric">0.248367</value>
+            <value description="longitude_numeric">32.385583</value>
+        </row>
+    </table>
+    <table name="crash_casualty">
+        <column>crash_id</column>
+        <column>casualty_id</column>
+        <row>
+            <value description="crash_id">8</value>
+            <value description="casualty_id">9</value>
+        </row>
+        <row>
+            <value description="crash_id">8</value>
+            <value description="casualty_id">10</value>
+        </row>
+    </table>
+    <table name="crash_vehicle">
+        <column>crash_id</column>
+        <column>vehicle_id</column>
+        <row>
+            <value description="crash_id">8</value>
+            <value description="vehicle_id">18</value>
+        </row>
+        <row>
+            <value description="crash_id">8</value>
+            <value description="vehicle_id">19</value>
+        </row>
+    </table>
+    <!-- End of Crash 8 Data -->
+    <!-- Crash 9 Data -->
+    <table name="driver">
+        <column>id</column>
+        <column>age</column>
+        <column>gender</column>
+        <column>belt_used</column>
+        <column>license_number</column>
+        <column>license_valid</column>
+        <column>casualty_type_id</column>
+        <column>date_created</column>
+        <row>
+            <value description="id">20</value>
+            <value description="age">18</value>
+            <value description="gender">M</value>
+            <value description="belt_used">0</value>
+            <value description="license_number">123456</value>
+            <value description="license_valid">1</value>
+            <value description="casualty_type_id">4</value>
+            <value description="date_created">2014-06-03 18:15:00</value>
+        </row>
+        <row>
+            <value description="id">21</value>
+            <value description="age">39</value>
+            <value description="gender">M</value>
+            <value description="belt_used">1</value>
+            <value description="license_number">123789</value>
+            <value description="license_valid">1</value>
+            <value description="casualty_type_id">3</value>
+            <value description="date_created">2014-06-04 18:15:00</value>
+        </row>
+    </table>
+    <table name="vehicle">
+        <column>id</column>
+        <column>number</column>
+        <column>driver_id</column>
+        <column>vehicle_type_id</column>
+        <column>company_name</column>
+        <column>date_created</column>
+        <row>
+            <value description="id">20</value>
+            <value description="number">1</value>
+            <value description="driver_id">20</value>
+            <value description="vehicle_type_id">1</value>
+            <value description="company_name"></value>
+            <value description="date_created">2014-06-03 18:15:00</value>
+        </row>
+        <row>
+            <value description="id">21</value>
+            <value description="number">2</value>
+            <value description="driver_id">21</value>
+            <value description="vehicle_type_id">7</value>
+            <value description="company_name">Total Uganda</value>
+            <value description="date_created">2014-06-05 18:15:00</value>
+        </row>
+    </table>
+    <table name="casualty">
+        <column>id</column>
+        <column>age</column>
+        <column>gender</column>
+        <column>belt_or_helmet_used</column>
+        <column>casualty_class_id</column>
+        <column>casualty_type_id</column>
+        <column>vehicle_id</column>
+        <column>date_created</column>
+        <row>
+            <value description="id">11</value>
+            <value description="age">25</value>
+            <value description="gender">F</value>
+            <value description="belt_or_helmet_used">1</value>
+            <value description="casualty_class_id">4</value>
+            <value description="casualty_type_id">3</value>
+            <value description="vehicle_id">21</value>
+            <value description="date_created">2014-06-05 18:15:00</value>
+        </row>
+        <row>
+            <value description="id">12</value>
+            <value description="age">30</value>
+            <value description="gender">M</value>
+            <value description="belt_or_helmet_used">0</value>
+            <value description="casualty_class_id">1</value>
+            <value description="casualty_type_id">1</value>
+            <null/>
+            <value description="date_created">2014-06-05 18:15:00</value>
+        </row>
+    </table>
+    <table name="crash">
+        <column>id</column>
+        <column>crash_date_time</column>
+        <column>crash_place</column>
+        <column>date_created</column>
+        <column>road</column>
+        <column>road_number</column>
+        <column>tar_no</column>
+        <column>town_or_village</column>
+        <column>collision_type_id</column>
+        <column>crash_severity_id</column>
+        <column>junction_type_id</column>
+        <column>main_crash_cause_id</column>
+        <column>police_station_id</column>
+        <column>road_surface_id</column>
+        <column>roadway_character_id</column>
+        <column>surface_condition_id</column>
+        <column>surface_type_id</column>
+        <column>vehicle_failure_type_id</column>
+        <column>weather_id</column>
+        <column>editable</column>
+        <column>removable</column>
+        <column>is_removed</column>
+        <column>latitude</column>
+        <column>longitude</column>
+        <column>latitude_numeric</column>
+        <column>longitude_numeric</column>
+        <row>
+            <value description="id">9</value>
+            <value description="crash_date_time">2013-12-03 16:21:00</value>
+            <value description="crash_place">Kayanja</value>
+            <value description="date_created">2014-06-03 18:15:00</value>
+            <value description="road">Kampala-Jinja</value>
+            <value description="road_number">15</value>
+            <value description="tar_no">A1513/LGZ</value>
+            <value description="town_or_village">Kayanja</value>
+            <value description="collision_type_id">1</value>
+            <value description="crash_severity_id">1</value>
+            <value description="junction_type_id">1</value>
+            <value description="main_crash_cause_id">1</value>
+            <value description="police_station_id">1</value>
+            <value description="road_surface_id">2</value>
+            <value description="roadway_character_id">2</value>
+            <value description="surface_condition_id">1</value>
+            <value description="surface_type_id">1</value>
+            <value description="vehicle_failure_type_id">1</value>
+            <value description="weather_id">1</value>
+            <value description="editable">0</value>
+            <value description="removable">0</value>
+            <value description="is_removed">0</value>
+            <value description="latitude">N00 23.000</value>
+            <value description="longitude">E032 55.270</value>
+            <value description="latitude_numeric">0.383333</value>
+            <value description="longitude_numeric">32.921167</value>
+        </row>
+    </table>
+    <table name="crash_casualty">
+        <column>crash_id</column>
+        <column>casualty_id</column>
+        <row>
+            <value description="crash_id">9</value>
+            <value description="casualty_id">11</value>
+        </row>
+        <row>
+            <value description="crash_id">9</value>
+            <value description="casualty_id">12</value>
+        </row>
+    </table>
+    <table name="crash_vehicle">
+        <column>crash_id</column>
+        <column>vehicle_id</column>
+        <row>
+            <value description="crash_id">9</value>
+            <value description="vehicle_id">20</value>
+        </row>
+        <row>
+            <value description="crash_id">9</value>
+            <value description="vehicle_id">21</value>
+        </row>
+    </table>
+    <!-- End of Crash 9 Data -->
+    <!-- Crash 10 Data -->
+    <table name="driver">
+        <column>id</column>
+        <column>age</column>
+        <column>gender</column>
+        <column>belt_used</column>
+        <column>license_number</column>
+        <column>license_valid</column>
+        <column>casualty_type_id</column>
+        <column>date_created</column>
+        <row>
+            <value description="id">22</value>
+            <value description="age">20</value>
+            <value description="gender">M</value>
+            <value description="belt_used">0</value>
+            <value description="license_number">12342356</value>
+            <value description="license_valid">1</value>
+            <value description="casualty_type_id">4</value>
+            <value description="date_created">2014-06-03 18:15:00</value>
+        </row>
+        <row>
+            <value description="id">23</value>
+            <value description="age">19</value>
+            <value description="gender">M</value>
+            <value description="belt_used">1</value>
+            <value description="license_number">12378459</value>
+            <value description="license_valid">1</value>
+            <value description="casualty_type_id">4</value>
+            <value description="date_created">2014-06-04 18:15:00</value>
+        </row>
+        <row>
+            <value description="id">24</value>
+            <value description="age">25</value>
+            <value description="gender">F</value>
+            <value description="belt_used">0</value>
+            <value description="license_number">12342356</value>
+            <value description="license_valid">1</value>
+            <value description="casualty_type_id">4</value>
+            <value description="date_created">2014-06-03 18:15:00</value>
+        </row>
+        <row>
+            <value description="id">25</value>
+            <value description="age">42</value>
+            <value description="gender">M</value>
+            <value description="belt_used">1</value>
+            <value description="license_number">12378459</value>
+            <value description="license_valid">1</value>
+            <value description="casualty_type_id">4</value>
+            <value description="date_created">2014-06-04 18:15:00</value>
+        </row>
+    </table>
+    <table name="vehicle">
+        <column>id</column>
+        <column>number</column>
+        <column>driver_id</column>
+        <column>vehicle_type_id</column>
+        <column>company_name</column>
+        <column>date_created</column>
+        <row>
+            <value description="id">22</value>
+            <value description="number">1</value>
+            <value description="driver_id">22</value>
+            <value description="vehicle_type_id">1</value>
+            <value description="company_name"></value>
+            <value description="date_created">2014-06-03 18:15:00</value>
+        </row>
+        <row>
+            <value description="id">23</value>
+            <value description="number">2</value>
+            <value description="driver_id">23</value>
+            <value description="vehicle_type_id">1</value>
+            <value description="company_name"></value>
+            <value description="date_created">2014-06-05 18:15:00</value>
+        </row>
+        <row>
+            <value description="id">24</value>
+            <value description="number">1</value>
+            <value description="driver_id">24</value>
+            <value description="vehicle_type_id">1</value>
+            <value description="company_name"></value>
+            <value description="date_created">2014-06-03 18:15:00</value>
+        </row>
+        <row>
+            <value description="id">25</value>
+            <value description="number">2</value>
+            <value description="driver_id">25</value>
+            <value description="vehicle_type_id">1</value>
+            <value description="company_name"></value>
+            <value description="date_created">2014-06-05 18:15:00</value>
+        </row>
+    </table>
+    <table name="crash">
+        <column>id</column>
+        <column>crash_date_time</column>
+        <column>crash_place</column>
+        <column>date_created</column>
+        <column>road</column>
+        <column>road_number</column>
+        <column>tar_no</column>
+        <column>town_or_village</column>
+        <column>collision_type_id</column>
+        <column>crash_severity_id</column>
+        <column>junction_type_id</column>
+        <column>main_crash_cause_id</column>
+        <column>police_station_id</column>
+        <column>road_surface_id</column>
+        <column>roadway_character_id</column>
+        <column>surface_condition_id</column>
+        <column>surface_type_id</column>
+        <column>vehicle_failure_type_id</column>
+        <column>weather_id</column>
+        <column>editable</column>
+        <column>removable</column>
+        <column>is_removed</column>
+        <column>latitude</column>
+        <column>longitude</column>
+        <column>latitude_numeric</column>
+        <column>longitude_numeric</column>
+        <row>
+            <value description="id">10</value>
+            <value description="crash_date_time">2012-05-18 08:21:00</value>
+            <value description="crash_place">KIU Kansanga</value>
+            <value description="date_created">2014-06-03 18:15:00</value>
+            <value description="road">Gaba Road</value>
+            <value description="road_number">10</value>
+            <value description="tar_no">A1511/LGZ</value>
+            <value description="town_or_village">Kansanga</value>
+            <value description="collision_type_id">6</value>
+            <value description="crash_severity_id">4</value>
+            <value description="junction_type_id">1</value>
+            <value description="main_crash_cause_id">2</value>
+            <value description="police_station_id">3</value>
+            <value description="road_surface_id">2</value>
+            <value description="roadway_character_id">2</value>
+            <value description="surface_condition_id">1</value>
+            <value description="surface_type_id">1</value>
+            <value description="vehicle_failure_type_id">4</value>
+            <value description="weather_id">2</value>
+            <value description="editable">0</value>
+            <value description="removable">0</value>
+            <value description="is_removed">0</value>
+            <value description="latitude">N00 14.902</value>
+            <value description="longitude">E032 23.135</value>
+            <value description="latitude_numeric">0.248367</value>
+            <value description="longitude_numeric">32.385583</value>
+        </row>
+    </table>
+    <table name="crash_vehicle">
+        <column>crash_id</column>
+        <column>vehicle_id</column>
+        <row>
+            <value description="crash_id">10</value>
+            <value description="vehicle_id">22</value>
+        </row>
+        <row>
+            <value description="crash_id">10</value>
+            <value description="vehicle_id">23</value>
+        </row>
+        <row>
+            <value description="crash_id">10</value>
+            <value description="vehicle_id">24</value>
+        </row>
+        <row>
+            <value description="crash_id">10</value>
+            <value description="vehicle_id">25</value>
+        </row>
+    </table>
+    <!-- End of Crash 10 Data -->
 </dataset>

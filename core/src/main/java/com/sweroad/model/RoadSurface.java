@@ -1,5 +1,7 @@
 package com.sweroad.model;
 
+import com.sweroad.query.Queryable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +13,7 @@ import javax.persistence.Id;
  *
  */
 @Entity(name = "road_surface")
-public class RoadSurface extends BaseModel implements Comparable<RoadSurface> {
+public class RoadSurface extends BaseModel implements Comparable<RoadSurface>, Queryable {
 
 	/**
 	 * 
@@ -81,5 +83,10 @@ public class RoadSurface extends BaseModel implements Comparable<RoadSurface> {
             return -1;
         }
         return this.name.compareTo(rs.getName());
+    }
+
+    @Override
+    public String getEntityName() {
+        return this.getClass().getSimpleName();
     }
 }

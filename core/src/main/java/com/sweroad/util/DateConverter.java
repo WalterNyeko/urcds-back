@@ -11,7 +11,7 @@ import java.util.Date;
 
 /**
  * This class converts a java.util.Date to a String and a String to a java.util.Date.
- * 
+ *
  * @author <a href="mailto:matt@raibledesigns.com">Matt Raible</a>
  * @author <a href="mailto:tstrausz@tryllian.nl">Tibor Strausz</a>
  */
@@ -19,12 +19,13 @@ public class DateConverter implements Converter {
 
     /**
      * Convert a date to a String and a String to a Date
-     * @param type String, Date or Timestamp
+     *
+     * @param type  String, Date or Timestamp
      * @param value value to convert
      * @return Converted value for property population
      */
     @SuppressWarnings("rawtypes")
-	public Object convert(final Class type, final Object value) {
+    public Object convert(final Class type, final Object value) {
         if (value == null) {
             return null;
         } else if (type == Timestamp.class) {
@@ -40,8 +41,9 @@ public class DateConverter implements Converter {
 
     /**
      * Convert a String to a Date with the specified pattern.
-     * @param type String
-     * @param value value of String
+     *
+     * @param type    String
+     * @param value   value of String
      * @param pattern date pattern to parse with
      * @return Converted value for property population
      */
@@ -68,6 +70,7 @@ public class DateConverter implements Converter {
 
     /**
      * Convert a java.util.Date or a java.sql.Timestamp to a String. Or does a toString
+     *
      * @param value value to convert
      * @return Converted value for property population
      */

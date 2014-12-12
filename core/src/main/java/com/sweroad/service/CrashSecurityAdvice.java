@@ -61,6 +61,7 @@ public class CrashSecurityAdvice {
             }
             if (authoritiesContainRole(Constants.SUPER_USER_ROLE, authorities)
                     | (isAdmin = authoritiesContainRole(Constants.ADMIN_ROLE, authorities))) {
+                editableOnlyForDistrict = false;
                 editable = true;
                 removable = true;
             }

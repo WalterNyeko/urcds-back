@@ -203,6 +203,10 @@ public class GenericDaoHibernate<T, PK extends Serializable> implements GenericD
                 namedQuery.setParameter(s, queryParams.get(s));
             }
         }
+        return findByNamedQuery(namedQuery);
+    }
+
+    public List<T> findByNamedQuery(Query namedQuery) {
         return namedQuery.list();
     }
 
