@@ -52,7 +52,7 @@ public class QueryCrashTest extends BaseManagerTestCase {
         String expected = "from Crash c where c.crashSeverity in (:crashSeverityList)";
         List<CrashSeverity> severities = getCrashSeverities();
         queryCrash = new QueryCrash.QueryCrashBuilder().addQueryable(severities).build();
-        assertEquals(expected, queryCrash.generateHQL());
+        assertEquals(expected, queryCrash.toString());
     }
 
     @Test
@@ -65,7 +65,7 @@ public class QueryCrashTest extends BaseManagerTestCase {
                 .addQueryable(severities)
                 .addQueryable(collisionTypes)
                 .build();
-        assertEquals(expected, queryCrash.generateHQL());
+        assertEquals(expected, queryCrash.toString());
     }
 
     @Test
@@ -81,7 +81,19 @@ public class QueryCrashTest extends BaseManagerTestCase {
                 .addQueryable(collisionTypes)
                 .addQueryable(weatherList)
                 .build();
-        assertEquals(expected, queryCrash.generateHQL());
+        assertEquals(expected, queryCrash.toString());
+    }
+
+    @Test
+    public void testHqlQueryGeneratedForCrashSeveritiesAndStartDate() throws Exception {
+        String expected = "from Crash c where c.crashSeverity in (:crashSeverityList) and c.crashDateTime >= :startDate";
+        List<CrashSeverity> severities = getCrashSeverities();
+        Date startDate = DateUtil.convertStringToDate("01/06/2014");
+        queryCrash = new QueryCrash.QueryCrashBuilder()
+                .addQueryable(severities)
+                .addStartDate(startDate)
+                .build();
+        assertEquals(expected, queryCrash.toString());
     }
 
     @Test
@@ -91,70 +103,70 @@ public class QueryCrashTest extends BaseManagerTestCase {
         queryCrash = new QueryCrash.QueryCrashBuilder()
                 .addStartDate(startDate)
                 .build();
-        assertEquals(expected, queryCrash.generateHQL());
+        assertEquals(expected, queryCrash.toString());
     }
 
-//    @Test
-//    public void testHqlQueryGeneratedForEndDate() throws Exception {
-//        String expected = "from Crash c where c.crashDateTime <= :endDate";
-//        Date endDate = DateUtil.convertStringToDate("31/12/2014");
-//        queryCrash = new QueryCrash.QueryCrashBuilder()
-//                .addEndDate(endDate)
-//                .build();
-//        assertEquals(expected, queryCrash.generateHQL());
-//    }
+    @Test
+    public void testHqlQueryGeneratedForEndDate() throws Exception {
+        String expected = "from Crash c where c.crashDateTime <= :endDate";
+        Date endDate = DateUtil.convertStringToDate("31/12/2014");
+        queryCrash = new QueryCrash.QueryCrashBuilder()
+                .addEndDate(endDate)
+                .build();
+        assertEquals(expected, queryCrash.toString());
+    }
 
-//    @Test
-//    public void testHqlQueryGeneratedForDateRange() throws Exception {
-//        String expected = "from Crash c where c.crashDateTime between :startDate and :endDate";
-//        Date startDate = DateUtil.convertStringToDate("01/06/2014");
-//        Date endDate = DateUtil.convertStringToDate("31/12/2014");
-//        queryCrash = new QueryCrash.QueryCrashBuilder()
-//                .addStartDate(startDate)
-//                .addEndDate(endDate)
-//                .build();
-//        assertEquals(expected, queryCrash.generateHQL());
-//    }
+    @Test
+    public void testHqlQueryGeneratedForDateRange() throws Exception {
+        String expected = "from Crash c where c.crashDateTime between :startDate and :endDate";
+        Date startDate = DateUtil.convertStringToDate("01/06/2014");
+        Date endDate = DateUtil.convertStringToDate("31/12/2014");
+        queryCrash = new QueryCrash.QueryCrashBuilder()
+                .addStartDate(startDate)
+                .addEndDate(endDate)
+                .build();
+        assertEquals(expected, queryCrash.toString());
+    }
 
     @Test
     public void testHqlQueryGeneratedForStartMonth() throws Exception {
         String expected = "from Crash c where ((month(c.crashDateTime) >= month(:startDate) and " +
-                "year(c.crashDateTime) = year(:startDate)) or year(c.crashDateTime) > year(:startDate)";
+                "year(c.crashDateTime) = year(:startDate)) or year(c.crashDateTime) > year(:startDate))";
         Date startDate = DateUtil.convertStringToDate("01/06/2014");
         queryCrash = new QueryCrash.QueryCrashBuilder()
                 .addStartDate(startDate)
                 .setUseMonth(true)
                 .build();
-        assertEquals(expected, queryCrash.generateHQL());
+        assertEquals(expected, queryCrash.toString());
     }
 
     @Test
     public void testHqlQueryGeneratedForEndMonth() throws Exception {
         String expected = "from Crash c where ((month(c.crashDateTime) <= month(:endDate) and " +
-                "year(c.crashDateTime) = year(:endDate)) or year(c.crashDateTime) < year(:endDate)";
+                "year(c.crashDateTime) = year(:endDate)) or year(c.crashDateTime) < year(:endDate))";
         Date endDate = DateUtil.convertStringToDate("31/12/2014");
         queryCrash = new QueryCrash.QueryCrashBuilder()
                 .addEndDate(endDate)
                 .setUseMonth(true)
                 .build();
-        assertEquals(expected, queryCrash.generateHQL());
+        assertEquals(expected, queryCrash.toString());
     }
 
-//    @Test
-//    public void testHqlQueryGeneratedForMonthRange() throws Exception {
-//        String expected = "from Crash c where (((month(c.crashDateTime) >= month(:startDate) and " +
-//                "year(c.crashDateTime) = year(:startDate)) or year(c.crashDateTime) > year(:startDate)) " +
-//                "and (((month(c.crashDateTime) <= month(:endDate) and " +
-//                "year(c.crashDateTime) = year(:endDate)) or year(c.crashDateTime) < year(:endDate))";
-//        Date startDate = DateUtil.convertStringToDate("01/06/2014");
-//        Date endDate = DateUtil.convertStringToDate("31/12/2014");
-//        queryCrash = new QueryCrash.QueryCrashBuilder()
-//                .addStartDate(startDate)
-//                .addEndDate(endDate)
-//                .setUseMonth(true)
-//                .build();
-//        assertEquals(expected, queryCrash.generateHQL());
-//    }
+    @Test
+    public void testHqlQueryGeneratedForMonthRange() throws Exception {
+        String expected = "from Crash c where (((month(c.crashDateTime) >= month(:startDate) and " +
+                "year(c.crashDateTime) = year(:startDate)) or year(c.crashDateTime) > year(:startDate))) " +
+                "and (((month(c.crashDateTime) <= month(:endDate) and " +
+                "year(c.crashDateTime) = year(:endDate)) or year(c.crashDateTime) < year(:endDate)))";
+        Date startDate = DateUtil.convertStringToDate("01/06/2014");
+        Date endDate = DateUtil.convertStringToDate("31/12/2014");
+        queryCrash = new QueryCrash.QueryCrashBuilder()
+                .addStartDate(startDate)
+                .addEndDate(endDate)
+                .setUseMonth(true)
+                .build();
+        assertEquals(expected, queryCrash.toString());
+    }
 
     @Test
     public void testHqlQueryGeneratedForStartYear() throws Exception {
@@ -164,30 +176,71 @@ public class QueryCrashTest extends BaseManagerTestCase {
                 .addStartDate(startDate)
                 .setUseYear(true)
                 .build();
-        assertEquals(expected, queryCrash.generateHQL());
+        assertEquals(expected, queryCrash.toString());
     }
 
-//    @Test
-//    public void testHqlQueryGeneratedForEndYear() throws Exception {
-//        String expected = "from Crash c where year(c.crashDateTime) <= year(:endDate)";
-//        Date endDate = DateUtil.convertStringToDate("31/12/2014");
-//        queryCrash = new QueryCrash.QueryCrashBuilder()
-//                .addEndDate(endDate)
-//                .setUseYear(true)
-//                .build();
-//        assertEquals(expected, queryCrash.generateHQL());
-//    }
+    @Test
+    public void testHqlQueryGeneratedForEndYear() throws Exception {
+        String expected = "from Crash c where year(c.crashDateTime) <= year(:endDate)";
+        Date endDate = DateUtil.convertStringToDate("31/12/2014");
+        queryCrash = new QueryCrash.QueryCrashBuilder()
+                .addEndDate(endDate)
+                .setUseYear(true)
+                .build();
+        assertEquals(expected, queryCrash.toString());
+    }
 
-//    @Test
-//    public void testHqlQueryGeneratedForYearRange() throws Exception {
-//        String expected = "from Crash c where year(c.crashDateTime) between year(:startDate) and year(:endDate)";
-//        Date startDate = DateUtil.convertStringToDate("01/06/2014");
-//        Date endDate = DateUtil.convertStringToDate("31/12/2014");
-//        queryCrash = new QueryCrash.QueryCrashBuilder()
-//                .addStartDate(startDate)
-//                .addEndDate(endDate)
-//                .setUseYear(true)
-//                .build();
-//        assertEquals(expected, queryCrash.generateHQL());
-//    }
+    @Test
+    public void testHqlQueryGeneratedForYearRange() throws Exception {
+        String expected = "from Crash c where year(c.crashDateTime) between year(:startDate) and year(:endDate)";
+        Date startDate = DateUtil.convertStringToDate("01/06/2014");
+        Date endDate = DateUtil.convertStringToDate("31/12/2014");
+        queryCrash = new QueryCrash.QueryCrashBuilder()
+                .addStartDate(startDate)
+                .addEndDate(endDate)
+                .setUseYear(true)
+                .build();
+        assertEquals(expected, queryCrash.toString());
+    }
+
+    @Test
+    public void testHqlQueryGeneratedForStartHour() {
+        String expected = "from Crash c where hour(c.crashDateTime) >= :startHour";
+        queryCrash = new QueryCrash.QueryCrashBuilder()
+                .addStartHour(10)
+                .build();
+        assertEquals(expected, queryCrash.toString());
+    }
+
+    @Test
+    public void testHqlQueryGeneratedForEndHour() {
+        String expected = "from Crash c where hour(c.crashDateTime) <= :endHour";
+        queryCrash = new QueryCrash.QueryCrashBuilder()
+                .addEndHour(10)
+                .build();
+        assertEquals(expected, queryCrash.toString());
+    }
+
+    @Test
+    public void testHqlQueryGeneratedForHourRange() {
+        String expected = "from Crash c where hour(c.crashDateTime) between :startHour and :endHour";
+        queryCrash = new QueryCrash.QueryCrashBuilder()
+                .addStartHour(8)
+                .addEndHour(17)
+                .build();
+        assertEquals(expected, queryCrash.toString());
+    }
+
+    @Test
+    public void testHqlQueryGeneratedForCrashSeveritiesAndHourRange() {
+        String expected = "from Crash c where c.crashSeverity in (:crashSeverityList) and " +
+                "hour(c.crashDateTime) between :startHour and :endHour";
+        List<CrashSeverity> severities = getCrashSeverities();
+        queryCrash = new QueryCrash.QueryCrashBuilder()
+                .addQueryable(severities)
+                .addStartHour(8)
+                .addEndHour(17)
+                .build();
+        assertEquals(expected, queryCrash.toString());
+    }
 }

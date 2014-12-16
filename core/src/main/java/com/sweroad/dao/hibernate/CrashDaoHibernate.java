@@ -40,6 +40,11 @@ public class CrashDaoHibernate extends GenericDaoHibernate<Crash, Long> implemen
                 }
             }
         }
+        if(queryCrash.getParameters().size() > 0) {
+            for(String s : queryCrash.getParameters().keySet()){
+                namedQuery.setParameter(s, queryCrash.getParameters().get(s));
+            }
+        }
         return findByNamedQuery(namedQuery);
     }
 }

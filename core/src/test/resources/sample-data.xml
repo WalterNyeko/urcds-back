@@ -1797,7 +1797,7 @@
             <value description="date_created">2014-06-03 18:15:00</value>
             <value description="road">Wampewo Avenue</value>
             <value description="road_number">12</value>
-            <value description="tar_no">A1510/LGZ</value>
+            <value description="tar_no">A1516/LGZ</value>
             <value description="town_or_village"></value>
             <value description="collision_type_id">7</value>
             <value description="crash_severity_id">2</value>
@@ -1963,7 +1963,7 @@
             <value description="date_created">2014-06-03 18:15:00</value>
             <value description="road">Kampala-Jinja</value>
             <value description="road_number">15</value>
-            <value description="tar_no">A1513/LGZ</value>
+            <value description="tar_no">A1517/LGZ</value>
             <value description="town_or_village">Kayanja</value>
             <value description="collision_type_id">1</value>
             <value description="crash_severity_id">1</value>
@@ -2135,7 +2135,7 @@
             <value description="date_created">2014-06-03 18:15:00</value>
             <value description="road">Gaba Road</value>
             <value description="road_number">10</value>
-            <value description="tar_no">A1511/LGZ</value>
+            <value description="tar_no">A1518/LGZ</value>
             <value description="town_or_village">Kansanga</value>
             <value description="collision_type_id">6</value>
             <value description="crash_severity_id">4</value>

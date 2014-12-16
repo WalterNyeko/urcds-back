@@ -3,10 +3,7 @@ package com.sweroad.query;
 import com.sweroad.model.BaseModel;
 
 import javax.management.Query;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * Created by Frank on 12/9/14.
@@ -16,6 +13,7 @@ public class QueryCrash extends BaseModel {
     private QueryCrash(QueryCrashBuilder builder) {
         this.queryables = builder.queryables;
         this.parameters = builder.parameters;
+        this.useTime = builder.useTime;
         this.useMonth = builder.useMonth;
         this.useYear = builder.useYear;
     }
@@ -25,6 +23,8 @@ public class QueryCrash extends BaseModel {
     private Map<String, List<? extends Queryable>> queryables;
 
     private Map<String, Object> parameters;
+
+    private boolean useTime;
 
     private boolean useMonth;
 
@@ -42,8 +42,8 @@ public class QueryCrash extends BaseModel {
         return queryables;
     }
 
-    public String generateHQL() {
-        return new HQLBuilder().generateHQL();
+    public Map<String, Object> getParameters() {
+        return parameters;
     }
 
     private static String getParamName(String attribute) {
@@ -51,8 +51,8 @@ public class QueryCrash extends BaseModel {
         return firstChar.concat(attribute.substring(1)).concat("List");
     }
 
-    private static String getEntityNameFromParamName (String paramName) {
-        if(paramName.endsWith("List")) {
+    private static String getEntityNameFromParamName(String paramName) {
+        if (paramName.endsWith("List")) {
             paramName = paramName.replaceAll("List", "");
         }
         return paramName;
@@ -60,7 +60,7 @@ public class QueryCrash extends BaseModel {
 
     @Override
     public String toString() {
-        return generateHQL();
+        return new HQLBuilder().generateHQL();
     }
 
     @Override
@@ -82,6 +82,7 @@ public class QueryCrash extends BaseModel {
     public static class QueryCrashBuilder {
         private final Map<String, List<? extends Queryable>> queryables;
         private final Map<String, Object> parameters;
+        private boolean useTime;
         private boolean useMonth;
         private boolean useYear;
 
@@ -97,14 +98,36 @@ public class QueryCrash extends BaseModel {
             return this;
         }
 
+        public QueryCrashBuilder addStartHour(int startHour) {
+            parameters.put("startHour", startHour);
+            return this;
+        }
+
+        public QueryCrashBuilder addEndHour(int endHour) {
+            parameters.put("endHour", endHour);
+            return this;
+        }
+
         public QueryCrashBuilder addStartDate(Date startDate) {
             parameters.put("startDate", startDate);
             return this;
         }
 
         public QueryCrashBuilder addEndDate(Date endDate) {
+            if (!useTime) {
+                endDate = maximizeEndDate(endDate);
+            }
             parameters.put("endDate", endDate);
             return this;
+        }
+
+        private Date maximizeEndDate(Date endDate) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(endDate);
+            cal.add(Calendar.HOUR, 23);
+            cal.add(Calendar.MINUTE, 59);
+            cal.add(Calendar.SECOND, 59);
+            return cal.getTime();
         }
 
         public QueryCrashBuilder setUseMonth(boolean useMonth) {
@@ -124,6 +147,7 @@ public class QueryCrash extends BaseModel {
 
     private class HQLBuilder {
         private String hqlStart = "from Crash c";
+
         private String generateHQL() {
             StringBuilder query = new StringBuilder(hqlStart);
             appendQueryables(query);
@@ -147,52 +171,90 @@ public class QueryCrash extends BaseModel {
 
         private void appendParameters(StringBuilder query) {
             String hql = query.toString().trim();
-            if(parameters.size() > 0) {
-                if(hql.equals(hqlStart)) {
+            if (parameters.size() > 0) {
+                if (hql.equals(hqlStart)) {
                     query.append(" where ");
-                } else  {
+                } else {
                     query.append(" and ");
                 }
-                if(parameters.containsKey("startDate")) {
+                if (parameters.containsKey("startDate") && parameters.containsKey("endDate")) {
+                    appendDateRange(query);
+                } else if (parameters.containsKey("startDate")) {
                     appendStartDate(query);
-                }
-                if(parameters.containsKey("endDate")) {
+                } else if (parameters.containsKey("endDate")) {
                     appendEndDate(query);
+                }
+                if (parameters.containsKey("startHour") && parameters.containsKey("endHour")) {
+                    appendHourRange(query);
+                } else if (parameters.containsKey("startHour")) {
+                    appendStartHour(query);
+                } else if (parameters.containsKey("endHour")) {
+                    appendEndHour(query);
                 }
                 stripLastAnd(query);
             }
         }
 
+        private void appendDateRange(StringBuilder query) {
+            if (!useMonth && !useYear) {
+                query.append("c.crashDateTime between :startDate and :endDate and ");
+                return;
+            } else if (useYear) {
+                query.append("year(c.crashDateTime) between year(:startDate) and year(:endDate) and ");
+                return;
+            } else if (useMonth) {
+                query.append("(");
+                appendStartDate(query);
+                stripLastAnd(query);
+                query.append(") and (");
+                appendEndDate(query);
+                stripLastAnd(query);
+                query.append(") and ");
+            }
+        }
+
         private void appendStartDate(StringBuilder query) {
-            if(!useMonth && !useYear) {
+            if (!useMonth && !useYear) {
                 query.append("c.crashDateTime >= :startDate and ");
                 return;
             }
-            if(useMonth) {
+            if (useMonth) {
                 query.append("((month(c.crashDateTime) >= month(:startDate) and ")
                         .append("year(c.crashDateTime) = year(:startDate)) or ")
-                        .append("year(c.crashDateTime) > year(:startDate) and ");
+                        .append("year(c.crashDateTime) > year(:startDate)) and ");
                 return;
             }
-            if(useYear) {
+            if (useYear) {
                 query.append("year(c.crashDateTime) >= year(:startDate) and ");
             }
         }
 
         private void appendEndDate(StringBuilder query) {
-            if(!useMonth && !useYear) {
-                query.append("c.crashDateTime >= :endDate and ");
+            if (!useMonth && !useYear) {
+                query.append("c.crashDateTime <= :endDate and ");
                 return;
             }
-            if(useMonth) {
+            if (useMonth) {
                 query.append("((month(c.crashDateTime) <= month(:endDate) and ")
                         .append("year(c.crashDateTime) = year(:endDate)) or ")
-                        .append("year(c.crashDateTime) < year(:endDate) and ");
+                        .append("year(c.crashDateTime) < year(:endDate)) and ");
                 return;
             }
-            if(useYear) {
-                query.append("year(c.crashDateTime) <= year(:startDate) and ");
+            if (useYear) {
+                query.append("year(c.crashDateTime) <= year(:endDate) and ");
             }
+        }
+
+        private void appendHourRange(StringBuilder query) {
+            query.append("hour(c.crashDateTime) between :startHour and :endHour and ");
+        }
+
+        private void appendStartHour(StringBuilder query) {
+            query.append("hour(c.crashDateTime) >= :startHour and ");
+        }
+
+        private void appendEndHour(StringBuilder query) {
+            query.append("hour(c.crashDateTime) <= :endHour and ");
         }
 
         private void stripLastAnd(StringBuilder query) {
