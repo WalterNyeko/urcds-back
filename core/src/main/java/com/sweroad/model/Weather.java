@@ -3,6 +3,7 @@
  */
 package com.sweroad.model;
 
+import com.google.common.base.CaseFormat;
 import com.sweroad.query.Queryable;
 
 import javax.persistence.Column;
@@ -90,5 +91,15 @@ public class Weather extends BaseModel implements Comparable<Weather>, Queryable
     @Override
     public String getEntityName() {
         return this.getClass().getSimpleName();
+    }
+
+    /**
+     * Gets name to be used within query from Crash POV.
+     *
+     * @return name for query
+     */
+    @Override
+    public String getNameForQuery() {
+        return CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, getEntityName());
     }
 }

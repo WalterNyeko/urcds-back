@@ -35,8 +35,8 @@ public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertib
     public static final String FIND_CRASHES_ORDER_BY_DATE = "findCrashesOrderByDate";
     public static final String FIND_CRASHES_ORDER_BY_DATE_DESC = "findCrashesOrderByDateDesc";
     public static final String FIND_AVAILABLE_CRASHES_ORDER_BY_DATE_DESC = "findAvailableCrashesOrderByDateDesc";
-    public static final String IS_EDITABLE_METHOD_NAME = "isEditable";
-    public static final String IS_REMOVABLE_METHOD_NAME = "isRemovable";
+    public static final String CASUALTIES_LIST_NAME = "casualties";
+    public static final String VEHICLES_LIST_NAME = "vehicles";
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

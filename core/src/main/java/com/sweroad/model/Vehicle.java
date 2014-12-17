@@ -24,7 +24,7 @@ public class Vehicle extends BaseModel implements Comparable<Vehicle> {
 	private Long id;
 	@Column(nullable = false)
 	private Integer number;
-	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@ManyToOne(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "vehicle_type_id")
 	private VehicleType vehicleType;
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })

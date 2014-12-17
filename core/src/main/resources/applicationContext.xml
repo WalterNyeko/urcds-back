@@ -174,5 +174,4 @@
             </bean>
         </constructor-arg>
     </bean>
-    <bean id="searchCriteriaManager" class="com.sweroad.service.impl.SearchCriteriaManagerImpl" />
 </beans>

@@ -31,7 +31,7 @@ import org.hibernate.search.Search;
                 "classpath:**/applicationContext*.xml"})
 public abstract class BaseDaoTestCase extends AbstractTransactionalJUnit4SpringContextTests {
     @Autowired
-    private SessionFactory sessionFactory;
+    protected SessionFactory sessionFactory;
 
     /**
      * Log variable for all child classes. Uses LogFactory.getLog(getClass()) from Commons Logging

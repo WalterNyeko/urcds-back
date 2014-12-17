@@ -3,15 +3,13 @@ package com.sweroad.dao;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import com.sweroad.model.CollisionType;
-import com.sweroad.model.CrashSeverity;
-import com.sweroad.model.Weather;
+import com.sweroad.model.*;
 import com.sweroad.query.QueryCrash;
 import com.sweroad.util.DateUtil;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import com.sweroad.model.Crash;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,9 +19,13 @@ public class CrashDaoTest extends BaseDaoTestCase {
 
     @Autowired
     private CrashDao crashDao;
+    @Autowired
+    private GenericDao<VehicleType, Long> vehicleTypeDao;
+
     private List<CrashSeverity> severities;
     private List<CollisionType> collisionTypes;
     private List<Weather> weathers;
+    private List<VehicleType> vehicleTypes;
 
     @Test
     public void testThatFindCrashByTaNoWorks() {
@@ -199,5 +201,21 @@ public class CrashDaoTest extends BaseDaoTestCase {
                 .build();
         List<Crash> crashes = crashDao.findCrashesByQueryCrash(queryCrash);
         assertEquals(5, crashes.size());
+    }
+
+    @Test
+    public void testFindAllCrashesInvolvingMediumOmnibusesAndMotorcycles() {
+        String hql = "select c from Crash c join c.vehicles v where v.vehicleType in (:vehicleTypeList)";
+        Session session = sessionFactory.getCurrentSession();
+        Query namedQuery = session.createQuery(hql);
+        vehicleTypes = new ArrayList<VehicleType>();
+        vehicleTypes.add(vehicleTypeDao.get(7L));
+        vehicleTypes.add(vehicleTypeDao.get(10L));
+        QueryCrash queryCrash = new QueryCrash.QueryCrashBuilder()
+                .addQueryable(vehicleTypes)
+                .build();
+        namedQuery.setParameterList("vehicleTypeList", vehicleTypes);
+        List<Crash> crashes = crashDao.findByNamedQuery(namedQuery);
+        assertEquals(4, crashes.size());
     }
 }

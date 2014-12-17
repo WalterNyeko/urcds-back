@@ -7,7 +7,15 @@ package com.sweroad.query;
 public interface Queryable {
     /**
      * Gets name of entity
+     *
      * @return
      */
     String getEntityName();
+
+    /**
+     * Gets name to be used within query from Crash POV.
+     *
+     * @return name for query
+     */
+    String getNameForQuery();
 }

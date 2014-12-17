@@ -6,6 +6,7 @@ import com.sweroad.query.QueryCrash;
 import com.sweroad.service.CrashManager;
 import com.sweroad.service.SearchCriteriaManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 /**
  * Created by Frank on 11/17/14.
  */
+@Service("searchCriteriaManager")
 public class SearchCriteriaManagerImpl implements SearchCriteriaManager {
 
     @Autowired

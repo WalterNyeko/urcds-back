@@ -3,6 +3,7 @@
  */
 package com.sweroad.model;
 
+import com.google.common.base.CaseFormat;
 import com.sweroad.query.Queryable;
 
 import javax.persistence.Column;
@@ -91,5 +92,10 @@ public class SurfaceCondition extends BaseModel implements Comparable<SurfaceCon
     @Override
     public String getEntityName() {
         return this.getClass().getSimpleName();
+    }
+
+    @Override
+    public String getNameForQuery() {
+        return CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, getEntityName());
     }
 }

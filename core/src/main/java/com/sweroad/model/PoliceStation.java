@@ -3,6 +3,7 @@
  */
 package com.sweroad.model;
 
+import com.google.common.base.CaseFormat;
 import com.sweroad.query.Queryable;
 
 import javax.persistence.*;
@@ -108,5 +109,15 @@ public class PoliceStation extends BaseModel implements Comparable<PoliceStation
     @Override
     public String getEntityName() {
         return this.getClass().getSimpleName();
+    }
+
+    /**
+     * Gets name to be used within query from Crash POV.
+     *
+     * @return name for query
+     */
+    @Override
+    public String getNameForQuery() {
+        return CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, getEntityName());
     }
 }

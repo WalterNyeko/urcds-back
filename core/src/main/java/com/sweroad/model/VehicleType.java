@@ -1,5 +1,6 @@
 package com.sweroad.model;
 
+import com.google.common.base.CaseFormat;
 import com.sweroad.query.Queryable;
 
 import javax.persistence.Column;
@@ -84,5 +85,17 @@ public class VehicleType extends BaseModel implements Comparable<VehicleType>, Q
     @Override
     public String getEntityName() {
         return this.getClass().getSimpleName();
+    }
+
+    /**
+     * Gets name to be used within query from Crash POV.
+     *
+     * @return name for query
+     */
+    @Override
+    public String getNameForQuery() {
+        return Crash.VEHICLES_LIST_NAME
+                .concat(".")
+                .concat(CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, getEntityName()));
     }
 }

@@ -1,5 +1,6 @@
 package com.sweroad.query;
 
+import com.google.common.base.CaseFormat;
 import com.sweroad.model.BaseModel;
 
 import javax.management.Query;
@@ -13,7 +14,6 @@ public class QueryCrash extends BaseModel {
     private QueryCrash(QueryCrashBuilder builder) {
         this.queryables = builder.queryables;
         this.parameters = builder.parameters;
-        this.useTime = builder.useTime;
         this.useMonth = builder.useMonth;
         this.useYear = builder.useYear;
     }
@@ -47,15 +47,12 @@ public class QueryCrash extends BaseModel {
     }
 
     private static String getParamName(String attribute) {
-        String firstChar = attribute.substring(0, 1).toLowerCase();
-        return firstChar.concat(attribute.substring(1)).concat("List");
+        attribute = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, attribute);
+        return attribute.concat("List");
     }
 
-    private static String getEntityNameFromParamName(String paramName) {
-        if (paramName.endsWith("List")) {
-            paramName = paramName.replaceAll("List", "");
-        }
-        return paramName;
+    private static String getNameForQuery(List<? extends Queryable> list) {
+        return list.get(0).getNameForQuery();
     }
 
     @Override
@@ -82,7 +79,6 @@ public class QueryCrash extends BaseModel {
     public static class QueryCrashBuilder {
         private final Map<String, List<? extends Queryable>> queryables;
         private final Map<String, Object> parameters;
-        private boolean useTime;
         private boolean useMonth;
         private boolean useYear;
 
@@ -114,9 +110,7 @@ public class QueryCrash extends BaseModel {
         }
 
         public QueryCrashBuilder addEndDate(Date endDate) {
-            if (!useTime) {
-                endDate = maximizeEndDate(endDate);
-            }
+            endDate = maximizeEndDate(endDate);
             parameters.put("endDate", endDate);
             return this;
         }
@@ -146,7 +140,7 @@ public class QueryCrash extends BaseModel {
     }
 
     private class HQLBuilder {
-        private String hqlStart = "from Crash c";
+        private String hqlStart = "Select c from Crash c";
 
         private String generateHQL() {
             StringBuilder query = new StringBuilder(hqlStart);
@@ -160,7 +154,7 @@ public class QueryCrash extends BaseModel {
                 query.append(" where ");
                 for (String attribute : queryables.keySet()) {
                     query.append("c.")
-                            .append(getEntityNameFromParamName(attribute))
+                            .append(getNameForQuery(queryables.get(attribute)))
                             .append(" in (:")
                             .append(attribute)
                             .append(") and ");
