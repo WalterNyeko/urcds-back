@@ -1,9 +1,8 @@
 package com.sweroad.dao;
 
 import com.sweroad.model.Crash;
-import com.sweroad.query.QueryCrash;
+import com.sweroad.query.CrashQuery;
 
-import org.hibernate.Query;
 import java.util.List;
 
 public interface CrashDao extends GenericDao<Crash, Long> {
@@ -17,8 +16,8 @@ public interface CrashDao extends GenericDao<Crash, Long> {
 
     /**
      * Gets list of crashes that fit crash criteria
-     * @param queryCrash
+     * @param crashQuery
      * @return
      */
-    List<Crash> findCrashesByQueryCrash(QueryCrash queryCrash);
+    List<Crash> findCrashesByQueryCrash(CrashQuery crashQuery);
 }

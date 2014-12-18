@@ -1,8 +1,10 @@
 package com.sweroad.dao.hibernate;
 
 import java.util.List;
+import java.util.Map;
 
-import com.sweroad.query.QueryCrash;
+import com.sweroad.query.CrashQuery;
+import com.sweroad.query.Queryable;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
@@ -28,21 +30,33 @@ public class CrashDaoHibernate extends GenericDaoHibernate<Crash, Long> implemen
         return null;
     }
 
-    public List<Crash> findCrashesByQueryCrash(QueryCrash queryCrash) {
+    public List<Crash> findCrashesByQueryCrash(CrashQuery crashQuery) {
         Session session = getSession();
-        Query namedQuery = session.createQuery(queryCrash.toString());
-        if (queryCrash.getQueryables().size() > 0) {
-            for (String s : queryCrash.getQueryables().keySet()) {
+        Query namedQuery = session.createQuery(crashQuery.toString());
+        if (crashQuery.getQueryables().size() > 0) {
+            for (String s : crashQuery.getQueryables().keySet()) {
                 if (s.endsWith("List")) {
-                    namedQuery.setParameterList(s, queryCrash.getQueryables().get(s));
+                    namedQuery.setParameterList(s, crashQuery.getQueryables().get(s));
                 } else {
-                    namedQuery.setParameter(s, queryCrash.getQueryables().get(s));
+                    namedQuery.setParameter(s, crashQuery.getQueryables().get(s));
                 }
             }
         }
-        if(queryCrash.getParameters().size() > 0) {
-            for(String s : queryCrash.getParameters().keySet()){
-                namedQuery.setParameter(s, queryCrash.getParameters().get(s));
+        if (crashQuery.getParameters().size() > 0) {
+            for (String s : crashQuery.getParameters().keySet()) {
+                namedQuery.setParameter(s, crashQuery.getParameters().get(s));
+            }
+        }
+        if (crashQuery.getCustomQueryables().size() > 0) {
+            for (String queryable : crashQuery.getCustomQueryables().keySet()) {
+                Map<String, Object> paramMap = crashQuery.getCustomQueryables().get(queryable);
+                for (String s : paramMap.keySet()) {
+                    if (paramMap.get(s) instanceof List) {
+                        namedQuery.setParameterList(s.concat("List"), (List) paramMap.get(s));
+                    } else {
+                        namedQuery.setParameter(s, paramMap.get(s));
+                    }
+                }
             }
         }
         return findByNamedQuery(namedQuery);

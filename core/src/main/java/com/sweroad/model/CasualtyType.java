@@ -95,8 +95,7 @@ public class CasualtyType extends BaseModel implements Comparable<CasualtyType>,
      */
     @Override
     public String getNameForQuery() {
-        return Crash.CASUALTIES_LIST_NAME
-                .concat(".")
+        return Crash.CASUALTY_ALIAS_DOT
                 .concat(CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, getEntityName()));
     }
 }

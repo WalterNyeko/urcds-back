@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import com.sweroad.query.QueryCrash;
+import com.sweroad.query.CrashQuery;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sweroad.model.Crash;
@@ -87,9 +87,9 @@ public interface CrashManager extends GenericManager<Crash, Long> {
 	void restoreCrashById(Long id);
 
     /**
-     * Gets crashes that meet criteria defined in QueryCrash.
-     * @param queryCrash QueryCrash that defines criteria
+     * Gets crashes that meet criteria defined in CrashQuery.
+     * @param crashQuery CrashQuery that defines criteria
      * @return List of Crashes
      */
-    List<Crash> getCrashesByQuery(QueryCrash queryCrash);
+    List<Crash> getCrashesByQuery(CrashQuery crashQuery);
 }

@@ -100,6 +100,7 @@ public class Weather extends BaseModel implements Comparable<Weather>, Queryable
      */
     @Override
     public String getNameForQuery() {
-        return CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, getEntityName());
+        return Crash.CRASH_ALIAS_DOT
+                .concat(CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, getEntityName()));
     }
 }

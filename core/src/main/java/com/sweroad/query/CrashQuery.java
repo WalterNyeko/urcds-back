@@ -2,20 +2,23 @@ package com.sweroad.query;
 
 import com.google.common.base.CaseFormat;
 import com.sweroad.model.BaseModel;
+import com.sweroad.model.Crash;
 
-import javax.management.Query;
 import java.util.*;
 
 /**
  * Created by Frank on 12/9/14.
  */
-public class QueryCrash extends BaseModel {
+public class CrashQuery extends BaseModel {
 
-    private QueryCrash(QueryCrashBuilder builder) {
+    private CrashQuery(CrashQueryBuilder builder) {
         this.queryables = builder.queryables;
         this.parameters = builder.parameters;
+        this.customQueryables = builder.customQueryables;
         this.useMonth = builder.useMonth;
         this.useYear = builder.useYear;
+        this.joinCasualties = builder.joinCasualties;
+        this.joinVehicles = builder.joinVehicles;
     }
 
     private Long id;
@@ -24,11 +27,17 @@ public class QueryCrash extends BaseModel {
 
     private Map<String, Object> parameters;
 
+    private Map<String, Map<String, Object>> customQueryables;
+
     private boolean useTime;
 
     private boolean useMonth;
 
     private boolean useYear;
+
+    private boolean joinCasualties;
+
+    private boolean joinVehicles;
 
     public Long getId() {
         return this.id;
@@ -44,6 +53,10 @@ public class QueryCrash extends BaseModel {
 
     public Map<String, Object> getParameters() {
         return parameters;
+    }
+
+    public Map<String, Map<String, Object>> getCustomQueryables() {
+        return customQueryables;
     }
 
     private static String getParamName(String attribute) {
@@ -65,10 +78,10 @@ public class QueryCrash extends BaseModel {
         if (o == null) {
             return false;
         }
-        if (!(o instanceof QueryCrash)) {
+        if (!(o instanceof CrashQuery)) {
             return false;
         }
-        return ((QueryCrash) o).id.equals(this.id);
+        return ((CrashQuery) o).id.equals(this.id);
     }
 
     @Override
@@ -76,40 +89,46 @@ public class QueryCrash extends BaseModel {
         return 0;
     }
 
-    public static class QueryCrashBuilder {
+    public static class CrashQueryBuilder {
         private final Map<String, List<? extends Queryable>> queryables;
         private final Map<String, Object> parameters;
+        private Map<String, Map<String, Object>> customQueryables;
         private boolean useMonth;
         private boolean useYear;
+        private boolean joinCasualties;
+        private boolean joinVehicles;
 
-        public QueryCrashBuilder() {
+        public enum CrashJoinType {CASUALTY, VEHICLE}
+
+        public CrashQueryBuilder() {
             queryables = new TreeMap<String, List<? extends Queryable>>();
             parameters = new TreeMap<String, Object>();
+            customQueryables = new TreeMap<String, Map<String, Object>>();
         }
 
-        public QueryCrashBuilder addQueryable(List<? extends Queryable> queryableList) {
+        public CrashQueryBuilder addQueryable(List<? extends Queryable> queryableList) {
             if (queryableList.size() > 0) {
                 queryables.put(getParamName(queryableList.get(0).getEntityName()), queryableList);
             }
             return this;
         }
 
-        public QueryCrashBuilder addStartHour(int startHour) {
+        public CrashQueryBuilder addStartHour(int startHour) {
             parameters.put("startHour", startHour);
             return this;
         }
 
-        public QueryCrashBuilder addEndHour(int endHour) {
+        public CrashQueryBuilder addEndHour(int endHour) {
             parameters.put("endHour", endHour);
             return this;
         }
 
-        public QueryCrashBuilder addStartDate(Date startDate) {
+        public CrashQueryBuilder addStartDate(Date startDate) {
             parameters.put("startDate", startDate);
             return this;
         }
 
-        public QueryCrashBuilder addEndDate(Date endDate) {
+        public CrashQueryBuilder addEndDate(Date endDate) {
             endDate = maximizeEndDate(endDate);
             parameters.put("endDate", endDate);
             return this;
@@ -124,40 +143,102 @@ public class QueryCrash extends BaseModel {
             return cal.getTime();
         }
 
-        public QueryCrashBuilder setUseMonth(boolean useMonth) {
+        public CrashQueryBuilder addCustomQueryable(CrashJoinType joinType, String property, Comparison comparison,
+                                                    String paramName, Object paramValue, boolean encloseInParenthesis) {
+            StringBuilder comparisonClause = new StringBuilder("");
+            if (joinType == CrashJoinType.CASUALTY) {
+                this.joinCasualties(true);
+                property = Crash.CASUALTY_ALIAS_DOT.concat(property);
+            } else if (joinType == CrashJoinType.VEHICLE) {
+                this.joinVehicles(true);
+                property = Crash.VEHICLE_ALIAS_DOT.concat(property);
+            }
+
+            comparisonClause.append(property).append(comparison.getSymbol());
+            if (encloseInParenthesis) {
+                comparisonClause.append("(");
+            }
+            comparisonClause.append(":").append(paramName);
+            if (encloseInParenthesis) {
+                comparisonClause.append(")");
+            }
+            customQueryables.put(comparisonClause.toString(), new HashMap<String, Object>());
+            customQueryables.get(comparisonClause.toString()).put(paramName, paramValue);
+            return this;
+        }
+
+        public CrashQueryBuilder setUseMonth(boolean useMonth) {
             this.useMonth = useMonth;
             return this;
         }
 
-        public QueryCrashBuilder setUseYear(boolean useYear) {
+        public CrashQueryBuilder setUseYear(boolean useYear) {
             this.useYear = useYear;
             return this;
         }
 
-        public QueryCrash build() {
-            return new QueryCrash(this);
+        public CrashQueryBuilder joinCasualties(boolean joinCasualties) {
+            this.joinCasualties = joinCasualties;
+            return this;
+        }
+
+        public CrashQueryBuilder joinVehicles(boolean joinVehicles) {
+            this.joinVehicles = joinVehicles;
+            return this;
+        }
+
+        public CrashQuery build() {
+            return new CrashQuery(this);
         }
     }
 
     private class HQLBuilder {
-        private String hqlStart = "Select c from Crash c";
+        private final String hqlStart = "Select c from Crash c";
+        private final String casualtyJoin = " join c.casualties i";
+        private final String vehicleJoin = " join c.vehicles v";
 
         private String generateHQL() {
             StringBuilder query = new StringBuilder(hqlStart);
             appendQueryables(query);
             appendParameters(query);
+            addCustomQueryables(query);
             return query.toString().trim();
+        }
+
+        private void appendJoins(StringBuilder query) {
+            if (joinCasualties && !query.toString().contains(casualtyJoin)) {
+                query.append(casualtyJoin);
+            }
+            if (joinVehicles && !query.toString().contains(vehicleJoin)) {
+                query.append(vehicleJoin);
+            }
         }
 
         private void appendQueryables(StringBuilder query) {
             if (queryables.size() > 0) {
+                appendJoins(query);
                 query.append(" where ");
                 for (String attribute : queryables.keySet()) {
-                    query.append("c.")
-                            .append(getNameForQuery(queryables.get(attribute)))
+                    query.append(getNameForQuery(queryables.get(attribute)))
                             .append(" in (:")
                             .append(attribute)
                             .append(") and ");
+                }
+                stripLastAnd(query);
+            }
+        }
+
+        private void addCustomQueryables(StringBuilder query) {
+            String hql = query.toString().trim();
+            if (customQueryables.size() > 0) {
+                if (hql.equals(hqlStart)) {
+                    appendJoins(query);
+                    query.append(" where ");
+                } else {
+                    query.append(" and ");
+                }
+                for (String key : customQueryables.keySet()) {
+                    query.append(key).append(" and ");
                 }
                 stripLastAnd(query);
             }
@@ -167,6 +248,7 @@ public class QueryCrash extends BaseModel {
             String hql = query.toString().trim();
             if (parameters.size() > 0) {
                 if (hql.equals(hqlStart)) {
+                    appendJoins(query);
                     query.append(" where ");
                 } else {
                     query.append(" and ");

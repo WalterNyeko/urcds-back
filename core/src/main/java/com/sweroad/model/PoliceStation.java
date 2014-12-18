@@ -118,6 +118,7 @@ public class PoliceStation extends BaseModel implements Comparable<PoliceStation
      */
     @Override
     public String getNameForQuery() {
-        return CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, getEntityName());
+        return Crash.CRASH_ALIAS_DOT
+                .concat(CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, getEntityName()));
     }
 }

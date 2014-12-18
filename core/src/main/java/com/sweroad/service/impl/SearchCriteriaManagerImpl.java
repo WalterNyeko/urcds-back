@@ -1,8 +1,6 @@
 package com.sweroad.service.impl;
 
-import com.sweroad.dao.CrashDao;
 import com.sweroad.model.*;
-import com.sweroad.query.QueryCrash;
 import com.sweroad.service.CrashManager;
 import com.sweroad.service.SearchCriteriaManager;
 import org.springframework.beans.factory.annotation.Autowired;

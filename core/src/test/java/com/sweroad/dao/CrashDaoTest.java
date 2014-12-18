@@ -4,10 +4,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import com.sweroad.model.*;
-import com.sweroad.query.QueryCrash;
+import com.sweroad.query.Comparison;
+import com.sweroad.query.CrashQuery;
+import com.sweroad.service.GenericManager;
 import com.sweroad.util.DateUtil;
-import org.hibernate.Query;
-import org.hibernate.Session;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,7 +20,7 @@ public class CrashDaoTest extends BaseDaoTestCase {
     @Autowired
     private CrashDao crashDao;
     @Autowired
-    private GenericDao<VehicleType, Long> vehicleTypeDao;
+    private GenericManager<VehicleType, Long> vehicleTypeManager;
 
     private List<CrashSeverity> severities;
     private List<CollisionType> collisionTypes;
@@ -38,7 +38,7 @@ public class CrashDaoTest extends BaseDaoTestCase {
         severities = new ArrayList<CrashSeverity>();
         severities.add(new CrashSeverity());
         severities.get(0).setId(1L);
-        QueryCrash query = new QueryCrash.QueryCrashBuilder()
+        CrashQuery query = new CrashQuery.CrashQueryBuilder()
                 .addQueryable(severities).build();
         List<Crash> crashes = crashDao.findCrashesByQueryCrash(query);
         assertEquals(2, crashes.size());
@@ -51,7 +51,7 @@ public class CrashDaoTest extends BaseDaoTestCase {
         severities.add(new CrashSeverity());
         severities.get(0).setId(1L);
         severities.get(1).setId(2L);
-        QueryCrash query = new QueryCrash.QueryCrashBuilder()
+        CrashQuery query = new CrashQuery.CrashQueryBuilder()
                 .addQueryable(severities).build();
         List<Crash> crashes = crashDao.findCrashesByQueryCrash(query);
         assertEquals(6, crashes.size());
@@ -65,11 +65,11 @@ public class CrashDaoTest extends BaseDaoTestCase {
         weathers.add(new Weather());
         collisionTypes.get(0).setId(6L);
         weathers.get(0).setId(2L);
-        QueryCrash queryCrash = new QueryCrash.QueryCrashBuilder()
+        CrashQuery crashQuery = new CrashQuery.CrashQueryBuilder()
                 .addQueryable(collisionTypes)
                 .addQueryable(weathers)
                 .build();
-        List<Crash> crashes = crashDao.findCrashesByQueryCrash(queryCrash);
+        List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashQuery);
         assertEquals(3, crashes.size());
     }
 
@@ -77,21 +77,21 @@ public class CrashDaoTest extends BaseDaoTestCase {
     public void testFindCrashesBetweenDates() throws Exception {
         Date startDate = DateUtil.convertStringToDate("18/02/2014");
         Date endDate = DateUtil.convertStringToDate("18/06/2014");
-        QueryCrash queryCrash = new QueryCrash.QueryCrashBuilder()
+        CrashQuery crashQuery = new CrashQuery.CrashQueryBuilder()
                 .addStartDate(startDate)
                 .addEndDate(endDate)
                 .build();
-        List<Crash> crashes = crashDao.findCrashesByQueryCrash(queryCrash);
+        List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashQuery);
         assertEquals(7, crashes.size());
     }
 
     @Test
     public void testFindCrashesFromDate() throws Exception {
         Date startDate = DateUtil.convertStringToDate("02/06/2014");
-        QueryCrash queryCrash = new QueryCrash.QueryCrashBuilder()
+        CrashQuery crashQuery = new CrashQuery.CrashQueryBuilder()
                 .addStartDate(startDate)
                 .build();
-        List<Crash> crashes = crashDao.findCrashesByQueryCrash(queryCrash);
+        List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashQuery);
         assertEquals(6, crashes.size());
     }
 
@@ -99,23 +99,23 @@ public class CrashDaoTest extends BaseDaoTestCase {
     public void testFindCrashesBetweenMonths() throws Exception {
         Date startDate = DateUtil.convertStringToDate("01/12/2013");
         Date endDate = DateUtil.convertStringToDate("01/05/2014");
-        QueryCrash queryCrash = new QueryCrash.QueryCrashBuilder()
+        CrashQuery crashQuery = new CrashQuery.CrashQueryBuilder()
                 .addStartDate(startDate)
                 .addEndDate(endDate)
                 .setUseMonth(true)
                 .build();
-        List<Crash> crashes = crashDao.findCrashesByQueryCrash(queryCrash);
+        List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashQuery);
         assertEquals(3, crashes.size());
     }
 
     @Test
     public void testFindCrashesUpToMonth() throws Exception {
         Date endDate = DateUtil.convertStringToDate("01/05/2014");
-        QueryCrash queryCrash = new QueryCrash.QueryCrashBuilder()
+        CrashQuery crashQuery = new CrashQuery.CrashQueryBuilder()
                 .addEndDate(endDate)
                 .setUseMonth(true)
                 .build();
-        List<Crash> crashes = crashDao.findCrashesByQueryCrash(queryCrash);
+        List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashQuery);
         assertEquals(4, crashes.size());
     }
 
@@ -123,55 +123,55 @@ public class CrashDaoTest extends BaseDaoTestCase {
     public void testFindCrashesBetweenYears() throws Exception {
         Date startDate = DateUtil.convertStringToDate("01/12/2012");
         Date endDate = DateUtil.convertStringToDate("01/12/2013");
-        QueryCrash queryCrash = new QueryCrash.QueryCrashBuilder()
+        CrashQuery crashQuery = new CrashQuery.CrashQueryBuilder()
                 .addStartDate(startDate)
                 .addEndDate(endDate)
                 .setUseYear(true)
                 .build();
-        List<Crash> crashes = crashDao.findCrashesByQueryCrash(queryCrash);
+        List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashQuery);
         assertEquals(2, crashes.size());
     }
 
     @Test
     public void testFindCrashesUpToYear() throws Exception {
         Date endDate = DateUtil.convertStringToDate("01/12/2013");
-        QueryCrash queryCrash = new QueryCrash.QueryCrashBuilder()
+        CrashQuery crashQuery = new CrashQuery.CrashQueryBuilder()
                 .addEndDate(endDate)
                 .setUseYear(true)
                 .build();
-        List<Crash> crashes = crashDao.findCrashesByQueryCrash(queryCrash);
+        List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashQuery);
         assertEquals(2, crashes.size());
     }
 
     @Test
     public void testFindCrashesThatOccurredBetween16And20Hours() {
-        QueryCrash queryCrash = new QueryCrash.QueryCrashBuilder()
+        CrashQuery crashQuery = new CrashQuery.CrashQueryBuilder()
                 .addStartHour(16)
                 .addEndHour(20)
                 .build();
-        List<Crash> crashes = crashDao.findCrashesByQueryCrash(queryCrash);
+        List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashQuery);
         assertEquals(4, crashes.size());
     }
 
     @Test
     public void testFindCrashesThatOccurredBetween08And10HoursBeforeJune2014() throws Exception {
         Date endDate = DateUtil.convertStringToDate("01/05/2014");
-        QueryCrash queryCrash = new QueryCrash.QueryCrashBuilder()
+        CrashQuery crashQuery = new CrashQuery.CrashQueryBuilder()
                 .addEndDate(endDate)
                 .setUseMonth(true)
                 .addStartHour(8)
                 .addEndHour(10)
                 .build();
-        List<Crash> crashes = crashDao.findCrashesByQueryCrash(queryCrash);
+        List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashQuery);
         assertEquals(2, crashes.size());
     }
 
     @Test
     public void testFindAllCrashesThatOccurredFromMidday() {
-        QueryCrash queryCrash = new QueryCrash.QueryCrashBuilder()
+        CrashQuery crashQuery = new CrashQuery.CrashQueryBuilder()
                 .addStartHour(12)
                 .build();
-        List<Crash> crashes = crashDao.findCrashesByQueryCrash(queryCrash);
+        List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashQuery);
         assertEquals(4, crashes.size());
     }
 
@@ -179,13 +179,13 @@ public class CrashDaoTest extends BaseDaoTestCase {
     public void testFindAllCrashesThatOccurredFromMiddayIn2014() throws Exception {
         Date startDate = DateUtil.convertStringToDate("01/01/2014");
         Date endDate = DateUtil.convertStringToDate("01/12/2014");
-        QueryCrash queryCrash = new QueryCrash.QueryCrashBuilder()
+        CrashQuery crashQuery = new CrashQuery.CrashQueryBuilder()
                 .addStartDate(startDate)
                 .addEndDate(endDate)
                 .setUseYear(true)
                 .addStartHour(12)
                 .build();
-        List<Crash> crashes = crashDao.findCrashesByQueryCrash(queryCrash);
+        List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashQuery);
         assertEquals(3, crashes.size());
     }
 
@@ -193,29 +193,39 @@ public class CrashDaoTest extends BaseDaoTestCase {
     public void testFindAllCrashesThatOccurredUpToMiddayIn2014() throws Exception {
         Date startDate = DateUtil.convertStringToDate("01/01/2014");
         Date endDate = DateUtil.convertStringToDate("01/12/2014");
-        QueryCrash queryCrash = new QueryCrash.QueryCrashBuilder()
+        CrashQuery crashQuery = new CrashQuery.CrashQueryBuilder()
                 .addStartDate(startDate)
                 .addEndDate(endDate)
                 .setUseYear(true)
                 .addEndHour(12)
                 .build();
-        List<Crash> crashes = crashDao.findCrashesByQueryCrash(queryCrash);
+        List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashQuery);
         assertEquals(5, crashes.size());
     }
 
     @Test
     public void testFindAllCrashesInvolvingMediumOmnibusesAndMotorcycles() {
-        String hql = "select c from Crash c join c.vehicles v where v.vehicleType in (:vehicleTypeList)";
-        Session session = sessionFactory.getCurrentSession();
-        Query namedQuery = session.createQuery(hql);
         vehicleTypes = new ArrayList<VehicleType>();
-        vehicleTypes.add(vehicleTypeDao.get(7L));
-        vehicleTypes.add(vehicleTypeDao.get(10L));
-        QueryCrash queryCrash = new QueryCrash.QueryCrashBuilder()
+        vehicleTypes.add(vehicleTypeManager.get(7L));
+        vehicleTypes.add(vehicleTypeManager.get(10L));
+        CrashQuery crashQuery = new CrashQuery.CrashQueryBuilder()
                 .addQueryable(vehicleTypes)
+                .joinVehicles(true)
                 .build();
-        namedQuery.setParameterList("vehicleTypeList", vehicleTypes);
-        List<Crash> crashes = crashDao.findByNamedQuery(namedQuery);
+        List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashQuery);
         assertEquals(4, crashes.size());
+    }
+
+    @Test
+    public void testFindAllCrashesInvolvingFemaleDriversAbove30Yrs() {
+        CrashQuery crashQuery = new CrashQuery.CrashQueryBuilder()
+                .joinVehicles(true)
+                .addCustomQueryable(CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE,
+                        "driver.age", Comparison.GT, "age", 30, false)
+                .addCustomQueryable(CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE,
+                        "driver.gender", Comparison.EQ, "gender", "F", false)
+                .build();
+        List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashQuery);
+        assertEquals(3, crashes.size());
     }
 }

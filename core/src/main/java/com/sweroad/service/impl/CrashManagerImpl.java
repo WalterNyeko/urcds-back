@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.sweroad.query.QueryCrash;
+import com.sweroad.query.CrashQuery;
 import com.sweroad.util.GisHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -436,7 +436,7 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
     }
 
     @Override
-    public List<Crash> getCrashesByQuery(QueryCrash queryCrash) {
+    public List<Crash> getCrashesByQuery(CrashQuery crashQuery) {
         return null;
     }
 }

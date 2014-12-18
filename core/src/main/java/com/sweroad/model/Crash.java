@@ -35,8 +35,9 @@ public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertib
     public static final String FIND_CRASHES_ORDER_BY_DATE = "findCrashesOrderByDate";
     public static final String FIND_CRASHES_ORDER_BY_DATE_DESC = "findCrashesOrderByDateDesc";
     public static final String FIND_AVAILABLE_CRASHES_ORDER_BY_DATE_DESC = "findAvailableCrashesOrderByDateDesc";
-    public static final String CASUALTIES_LIST_NAME = "casualties";
-    public static final String VEHICLES_LIST_NAME = "vehicles";
+    public static final String CRASH_ALIAS_DOT = "c.";
+    public static final String CASUALTY_ALIAS_DOT  = "i.";
+    public static final String VEHICLE_ALIAS_DOT = "v.";
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -743,6 +744,7 @@ public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertib
 
     /**
      * Checks if this crash is editable for the current user's district
+     *
      * @param districtId
      * @return
      */
@@ -752,6 +754,7 @@ public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertib
 
     /**
      * Checks if crash has valid gps coordinates
+     *
      * @return
      */
     public boolean hasGpsCoordinates() {

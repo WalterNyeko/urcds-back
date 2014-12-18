@@ -97,6 +97,7 @@ public class SurfaceType extends BaseModel implements Comparable<SurfaceType>, Q
      */
     @Override
     public String getNameForQuery() {
-        return CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, getEntityName());
+        return Crash.CRASH_ALIAS_DOT
+                .concat(CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, getEntityName()));
     }
 }

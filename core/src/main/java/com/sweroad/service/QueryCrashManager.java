@@ -1,7 +1,7 @@
 package com.sweroad.service;
 
 import com.sweroad.model.Crash;
-import com.sweroad.query.QueryCrash;
+import com.sweroad.query.CrashQuery;
 
 import java.util.List;
 
@@ -11,10 +11,10 @@ import java.util.List;
 public interface QueryCrashManager {
 
     /**
-     * Gets crashes that meet queryCrash criteria.
+     * Gets crashes that meet crashQuery criteria.
      *
-     * @param queryCrash QueryCrash
+     * @param crashQuery CrashQuery
      * @return List of Crashes
      */
-    List<Crash> getCrashesByQuery(QueryCrash queryCrash);
+    List<Crash> getCrashesByQuery(CrashQuery crashQuery);
 }

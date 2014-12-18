@@ -94,8 +94,7 @@ public class VehicleType extends BaseModel implements Comparable<VehicleType>, Q
      */
     @Override
     public String getNameForQuery() {
-        return Crash.VEHICLES_LIST_NAME
-                .concat(".")
+        return Crash.VEHICLE_ALIAS_DOT
                 .concat(CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, getEntityName()));
     }
 }
