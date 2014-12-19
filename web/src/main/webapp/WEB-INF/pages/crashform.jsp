@@ -234,7 +234,7 @@
 							<tr>
 								</c:if>
 								<td width="33.3%"><form:radiobutton
-										path="mainCrashCause.id" value="${crashCause.id}" />&nbsp;&nbsp;${crashCause.name}
+										path="crashCause.id" value="${crashCause.id}" />&nbsp;&nbsp;${crashCause.name}
 								</td>
 								</c:forEach>
 							</tr>

@@ -40,7 +40,7 @@ public class StartupListenerTest extends TestCase {
     protected void tearDown() throws Exception {
         super.tearDown();
         // cleanup: close sessionFactory and related resources (search index locks)
-        springListener.closeWebApplicationContext(sc);
+        springListener.contextDestroyed(new ServletContextEvent(sc));
         springListener = null;
         listener = null;
         sc = null;

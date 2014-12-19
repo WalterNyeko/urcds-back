@@ -109,9 +109,9 @@ public class SearchCriteriaManagerImpl implements SearchCriteriaManager {
     }
 
     private boolean meetsCrashCauseCriteria(Crash crash) {
-        if (searchCriteria.getCrash().getMainCrashCause().getId() != null) {
-            if (crash.getMainCrashCause() != null && crash.getMainCrashCause()
-                    .equals(searchCriteria.getCrash().getMainCrashCause())) {
+        if (searchCriteria.getCrash().getCrashCause().getId() != null) {
+            if (crash.getCrashCause() != null && crash.getCrashCause()
+                    .equals(searchCriteria.getCrash().getCrashCause())) {
                 return true;
             }
         } else {

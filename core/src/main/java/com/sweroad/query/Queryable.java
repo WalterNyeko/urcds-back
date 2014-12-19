@@ -5,6 +5,14 @@ package com.sweroad.query;
  * Created by Frank on 12/9/14.
  */
 public interface Queryable {
+
+    /**
+     * Get id of Queryable
+     *
+     * @return
+     */
+    Long getId();
+
     /**
      * Gets name of entity
      *

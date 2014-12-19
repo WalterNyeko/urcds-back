@@ -1,20 +1,18 @@
 package com.sweroad.webapp.controller;
 
-import com.google.gson.Gson;
 import com.mysql.jdbc.StringUtils;
 import com.sweroad.model.Crash;
 import com.sweroad.model.SearchCriteria;
 import com.sweroad.service.CrashManager;
-import com.sweroad.service.GenericManager;
 import com.sweroad.service.SearchCriteriaManager;
 import com.sweroad.util.DateUtil;
+import com.sweroad.webapp.util.JsonHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +22,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -73,11 +70,7 @@ public class CrashAnalysisController extends BaseFormController {
         try {
             processCriteria(criteria);
             List<Crash> crashes = searchCriteriaManager.getCrashesByCriteria(criteria);
-            String crashesJSON = new Gson().toJson(crashes);
-            if (crashes.size() > 0) {
-                request.getSession().setAttribute("crashes", crashes);
-                request.getSession().setAttribute("crashesJSON", crashesJSON);
-            }
+            JsonHelper.crashesToJsonAndSetInSession(request, crashes);
         } catch (Exception e) {
             log.error("Remove crash failed: " + e.getLocalizedMessage());
         }

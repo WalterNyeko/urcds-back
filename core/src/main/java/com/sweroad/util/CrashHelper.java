@@ -66,10 +66,10 @@ public class CrashHelper {
         if (crash1.getJunctionType() != null && !crash1.getJunctionType().equals(crash2.getJunctionType())) {
             return true;
         }
-        if(crash1.getMainCrashCause() == null && crash2.getMainCrashCause() != null) {
+        if(crash1.getCrashCause() == null && crash2.getCrashCause() != null) {
             return true;
         }
-        if (crash1.getMainCrashCause() != null && !crash1.getMainCrashCause().equals(crash2.getMainCrashCause())) {
+        if (crash1.getCrashCause() != null && !crash1.getCrashCause().equals(crash2.getCrashCause())) {
             return true;
         }
         if(crash1.getPoliceStation() == null && crash2.getPoliceStation() != null) {

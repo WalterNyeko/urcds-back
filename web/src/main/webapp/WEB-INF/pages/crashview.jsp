@@ -183,8 +183,8 @@
 						<tr>
 							</c:if>
 							<td width="33.3%"><input type="radio"
-								disabled ${crash.mainCrashCause ne null and
-								crash.mainCrashCause.id eq
+								disabled ${crash.crashCause ne null and
+								crash.crashCause.id eq
 								crashCause.id ? "checked" : ""} value="${crashCause.id}" />
 								&nbsp;&nbsp;${crashCause.name}</td>
 							</c:forEach>

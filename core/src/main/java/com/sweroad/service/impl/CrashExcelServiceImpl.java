@@ -215,8 +215,8 @@ public class CrashExcelServiceImpl implements CrashExcelService {
         addRowCell(row, cellIndex++, crash.getCollisionType() != null ? crash
                         .getCollisionType().getName() : "", Cell.CELL_TYPE_STRING,
                 null, color);
-        addRowCell(row, cellIndex++, crash.getMainCrashCause() != null ? crash
-                        .getMainCrashCause().getName() : "", Cell.CELL_TYPE_STRING,
+        addRowCell(row, cellIndex++, crash.getCrashCause() != null ? crash
+                        .getCrashCause().getName() : "", Cell.CELL_TYPE_STRING,
                 null, color);
         addRowCell(row, cellIndex++,
                 crash.getVehicleFailureType() != null ? crash

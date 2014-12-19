@@ -107,7 +107,7 @@ public class CrashQuery extends BaseModel {
         }
 
         public CrashQueryBuilder addQueryable(List<? extends Queryable> queryableList) {
-            if (queryableList.size() > 0) {
+            if (queryableList != null && queryableList.size() > 0) {
                 queryables.put(getParamName(queryableList.get(0).getEntityName()), queryableList);
             }
             return this;
@@ -162,7 +162,7 @@ public class CrashQuery extends BaseModel {
             if (encloseInParenthesis) {
                 comparisonClause.append(")");
             }
-            customQueryables.put(comparisonClause.toString(), new HashMap<String, Object>());
+            customQueryables.put(comparisonClause.toString(), new TreeMap<String, Object>());
             customQueryables.get(comparisonClause.toString()).put(paramName, paramValue);
             return this;
         }

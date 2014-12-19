@@ -65,7 +65,7 @@ public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertib
     private CollisionType collisionType;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "main_crash_cause_id")
-    private CrashCause mainCrashCause;
+    private CrashCause crashCause;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "vehicle_failure_type_id")
     private VehicleFailureType vehicleFailureType;
@@ -303,15 +303,15 @@ public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertib
     /**
      * @return the mainCrashCause
      */
-    public CrashCause getMainCrashCause() {
-        return mainCrashCause;
+    public CrashCause getCrashCause() {
+        return crashCause;
     }
 
     /**
      * @param mainCrashCause the mainCrashCause to set
      */
-    public void setMainCrashCause(CrashCause mainCrashCause) {
-        this.mainCrashCause = mainCrashCause;
+    public void setCrashCause(CrashCause mainCrashCause) {
+        this.crashCause = mainCrashCause;
     }
 
     /**

@@ -21,6 +21,8 @@ public class CrashDaoTest extends BaseDaoTestCase {
     private CrashDao crashDao;
     @Autowired
     private GenericManager<VehicleType, Long> vehicleTypeManager;
+    @Autowired
+    private GenericManager<CasualtyClass, Long> casualtyClassManager;
 
     private List<CrashSeverity> severities;
     private List<CollisionType> collisionTypes;
@@ -217,7 +219,19 @@ public class CrashDaoTest extends BaseDaoTestCase {
     }
 
     @Test
-    public void testFindAllCrashesInvolvingFemaleDriversAbove30Yrs() {
+    public void testFindAllCrashesInvolvingPedestrians() {
+        List<CasualtyClass> casualtyClasses = new ArrayList<CasualtyClass>();
+        casualtyClasses.add(casualtyClassManager.get(1L));
+        CrashQuery crashQuery = new CrashQuery.CrashQueryBuilder()
+                .addQueryable(casualtyClasses)
+                .joinCasualties(true)
+                .build();
+        List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashQuery);
+        assertEquals(6, crashes.size());
+    }
+
+    @Test
+    public void testFindAllCrashesInvolvingFemaleDriversAbove30Years() {
         CrashQuery crashQuery = new CrashQuery.CrashQueryBuilder()
                 .joinVehicles(true)
                 .addCustomQueryable(CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE,

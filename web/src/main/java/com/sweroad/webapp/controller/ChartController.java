@@ -133,8 +133,8 @@ public class ChartController extends BaseFormController {
     private Integer getNumberOfCrashesByCauseId(List<Crash> crashes, Long id) {
         int count = 0;
         for (Crash crash : crashes) {
-            if (crash.getMainCrashCause() != null
-                    && crash.getMainCrashCause().getId().equals(id)) {
+            if (crash.getCrashCause() != null
+                    && crash.getCrashCause().getId().equals(id)) {
                 count++;
             }
         }

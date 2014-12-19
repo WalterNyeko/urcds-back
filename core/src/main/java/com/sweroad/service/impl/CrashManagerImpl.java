@@ -215,9 +215,9 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
             crash.setJunctionType(junctionTypeManager.get(crash
                     .getJunctionType().getId()));
         }
-        if (crash.getMainCrashCause() != null) {
-            crash.setMainCrashCause(crashCauseManager.get(crash
-                    .getMainCrashCause().getId()));
+        if (crash.getCrashCause() != null) {
+            crash.setCrashCause(crashCauseManager.get(crash
+                    .getCrashCause().getId()));
         }
         if (crash.getPoliceStation() != null) {
             crash.setPoliceStation(policeStationManager.get(crash

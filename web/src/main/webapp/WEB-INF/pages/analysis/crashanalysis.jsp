@@ -14,7 +14,7 @@
         <a href="" onclick="return loadSelectCrash({url: '/analysiscrashselect'});">
             <img src="/images/simple-search.jpg" title="<fmt:message key="crashAnalysis.Select" />" height="20"/>
 		</a>|
-        <a href="" onclick="return false;">
+        <a href="/crashquery">
             <img src="/images/query-icon.png" title="<fmt:message key="crashAnalysis.AdvancedSelect" />" height="20"/>
         </a>|
         <%--<a href="" onclick="return false;">--%>
