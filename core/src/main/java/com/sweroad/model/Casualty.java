@@ -25,9 +25,9 @@ public class Casualty extends BaseModel {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@Column(name = "gender")
-	private String Gender;
+	private String gender;
 	@Column(name = "age")
-	private Integer Age;
+	private Integer age;
 	@Column(name = "belt_or_helmet_used")
 	private Boolean beltOrHelmetUsed;
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
@@ -69,7 +69,7 @@ public class Casualty extends BaseModel {
 	 * @return the gender
 	 */
 	public String getGender() {
-		return Gender;
+		return gender;
 	}
 
 	/**
@@ -77,14 +77,14 @@ public class Casualty extends BaseModel {
 	 *            the gender to set
 	 */
 	public void setGender(String gender) {
-		Gender = gender;
+		this.gender = gender;
 	}
 
 	/**
 	 * @return the age
 	 */
 	public Integer getAge() {
-		return Age;
+		return age;
 	}
 
 	/**
@@ -92,7 +92,7 @@ public class Casualty extends BaseModel {
 	 *            the age to set
 	 */
 	public void setAge(Integer age) {
-		Age = age;
+		this.age = age;
 	}
 
 	/**

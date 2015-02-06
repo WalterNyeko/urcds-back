@@ -74,7 +74,7 @@
                         <td><appfuse:label styleClass="form-label"
                                            key="crashForm.mainCauseOfCrash" /></td>
                         <td>
-                            <form:select path="crash.mainCrashCause.id" cssClass="form-control">
+                            <form:select path="crash.crashCause.id" cssClass="form-control">
                                 <form:option value="">
                                     <fmt:message key="crashAnalysis.any" />
                                 </form:option>

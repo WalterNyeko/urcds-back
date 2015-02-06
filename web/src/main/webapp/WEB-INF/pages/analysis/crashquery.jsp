@@ -257,6 +257,103 @@
 						</table>
 					</td>
 				</tr>
+                <tr>
+                    <td colspan="9">
+                        <table width="100%" class="crashform-gray">
+                            <tr>
+                                <th width="40%"><appfuse:label styleClass="control-label"
+                                                               key="crash.vehicle" /></th>
+                                <th width="60%"><appfuse:label styleClass="control-label"
+                                                               key="crash.driver" /></th>
+                            </tr>
+                            <tr>
+                                <td width="40%" class="blue-header">
+                                    <table width="100%" class="crashform-blue"
+                                           style="border-top: none; border-left: none; border-bottom: none;">
+                                        <tr>
+                                            <th colspan="2" style="border-top: none; border-left: none;">
+                                                <appfuse:label
+                                                        styleClass="control-label" key="crashForm.vehicleType" />
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <c:forEach var="vehicleType"
+                                                       items="${vehicleTypes}" varStatus="status">
+                                            <c:if test="${ status.index % 2 == 0 and status.index > 0}">
+                                        </tr>
+                                        <tr>
+                                            </c:if>
+                                            <td width="50%"
+                                                style="border-left: none; border-bottom: none; text-align: left;"><form:checkbox
+                                                    path="vehicleTypes[${status.index}].id" value="${vehicleType.id}" />&nbsp;&nbsp;${vehicleType.name}
+                                            </td>
+                                            </c:forEach>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td>
+                                    <table width="100%" class="crashform-blue"
+                                           style="border-top: none; border-left: none; border-bottom: none;">
+                                        <tr>
+                                            <th style="border-top: none; border-left: none;">
+                                                <appfuse:label
+                                                        styleClass="control-label" key="crashForm.licenseType" />
+                                            </th>
+                                            <th style="border-top: none; border-left: none;">
+                                                <appfuse:label
+                                                        styleClass="control-label" key="crashForm.driverSex" />
+                                            </th>
+                                            <th style="border-top: none; border-left: none;">
+                                                <appfuse:label
+                                                        styleClass="control-label" key="crashForm.driverAge" />
+                                            </th>
+                                            <th style="border-top: none; border-left: none;">
+                                                <appfuse:label
+                                                        styleClass="control-label" key="crashForm.driverBeltUsed" />
+                                            </th>
+                                            <th style="border-top: none; border-left: none;">
+                                                <appfuse:label
+                                                        styleClass="control-label" key="crashForm.driverCasualty" />
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <c:forEach var="licenseType" items="${licenseTypes}" varStatus="status">
+                                                    <form:checkbox
+                                                            path="licenseTypes[${status.index}].label" value="${licenseType.id}" />&nbsp;&nbsp;${licenseType.value} <br/>
+                                                </c:forEach>
+                                            </td>
+                                            <td>
+                                                <c:forEach var="driverGender" items="${driverGenders}" varStatus="status">
+                                                    <form:checkbox
+                                                            path="driverGenders[${status.index}].label" value="${driverGender.id}" />&nbsp;&nbsp;${driverGender.value} <br/>
+                                                </c:forEach>
+                                            </td>
+                                            <td>
+                                                <c:forEach var="driverBeltUsed" items="${driverBeltUseds}" varStatus="status">
+                                                    <form:checkbox
+                                                            path="driverBeltUseds[${status.index}].label" value="${driverBeltUsed.id}" />&nbsp;&nbsp;${driverBeltUsed.value} <br/>
+                                                </c:forEach>
+                                            </td>
+                                            <td>
+                                                <c:forEach var="driverAgeRange" items="${driverAgeRanges}" varStatus="status">
+                                                    <form:checkbox
+                                                            path="driverAgeRanges[${status.index}].label" value="${driverAgeRange.id}" />&nbsp;&nbsp;${driverAgeRange.value} <br/>
+                                                </c:forEach>
+                                            </td>
+                                            <td>
+                                                <c:forEach var="driverCasualtyType" items="${driverCasualtyTypes}" varStatus="status">
+                                                    <form:checkbox
+                                                            path="driverCasualtyTypes[${status.index}].id" value="${driverCasualtyType.id}" />&nbsp;&nbsp;${driverCasualtyType.name} <br/>
+                                                </c:forEach>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
 				<tr>
 					<td>
 						<a class="btn btn-default" href="<c:url value='/analysis'/>" onclick="bCancel=true;">

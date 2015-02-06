@@ -5,6 +5,7 @@ import com.sweroad.query.CrashQuery;
 import com.sweroad.query.CrashSearch;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Frank on 12/16/14.
@@ -25,4 +26,6 @@ public interface CrashQueryManager {
      * @param crashSearch
      */
     void processCrashSearch(CrashSearch crashSearch);
+
+    Map<String, List> getCrashQueryReferenceData();
 }

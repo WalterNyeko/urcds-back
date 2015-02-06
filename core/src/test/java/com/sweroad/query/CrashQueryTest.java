@@ -272,9 +272,8 @@ public class CrashQueryTest extends BaseManagerTestCase {
     @Test
     public void testHqlQueryGeneratedForCrashesInvolvingPedestrians() {
         String expected = "Select c from Crash c join c.casualties i where i.casualtyClass in (:casualtyClassList)";
-        List<CasualtyClass> casualtyClasses = getCasualtyClasses();
         crashQuery = new CrashQuery.CrashQueryBuilder()
-                .addQueryable(casualtyClasses)
+                .addQueryable(getCasualtyClasses())
                 .joinCasualties(true)
                 .build();
         assertEquals(expected, crashQuery.toString());
@@ -293,16 +292,32 @@ public class CrashQueryTest extends BaseManagerTestCase {
         assertEquals(expected, crashQuery.toString());
     }
 
-//    @Test
-//    public void testHqlQueryGeneratedForCrashesInvolvingCasualtiesBetween10And20Years() {
-//        String expected = "Select c from Crash c join c.casualties i where i.age >= :age1 and i.age <= :age2";
-//        crashQuery = new CrashQuery.CrashQueryBuilder()
-//                .joinCasualties(true)
-//                .addCustomQueryable(CrashQuery.CrashQueryBuilder.CrashJoinType.CASUALTY,
-//                        "age", Comparison.GTE, "age1", 10, false)
-//                .addCustomQueryable(CrashQuery.CrashQueryBuilder.CrashJoinType.CASUALTY,
-//                        "age", Comparison.LTE, "age2", 20, false)
-//                .build();
-//        assertEquals(expected, crashQuery.toString());
-//    }
+    @Test
+    public void testHqlQueryGeneratedForCrashesInvolvingCasualtiesBetween10And20Years() {
+        String expected = "Select c from Crash c join c.casualties i where i.age <= :age2 and i.age >= :age1";
+        crashQuery = new CrashQuery.CrashQueryBuilder()
+                .joinCasualties(true)
+                .addCustomQueryable(CrashQuery.CrashQueryBuilder.CrashJoinType.CASUALTY,
+                        "age", Comparison.GTE, "age1", 10, false)
+                .addCustomQueryable(CrashQuery.CrashQueryBuilder.CrashJoinType.CASUALTY,
+                        "age", Comparison.LTE, "age2", 20, false)
+                .build();
+        assertEquals(expected, crashQuery.toString());
+    }
+
+    @Test
+    public void testHqlQueryGeneratedForCrashesInvolvingFemaleDriversAbove30YearsAndPedestrians() {
+        String expected = "Select c from Crash c join c.casualties i join c.vehicles v " +
+                "where i.casualtyClass in (:casualtyClassList) and v.driver.age > :age and v.driver.gender = :gender";
+        crashQuery = new CrashQuery.CrashQueryBuilder()
+                .joinVehicles(true)
+                .addCustomQueryable(CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE,
+                        "driver.age", Comparison.GT, "age", 30, false)
+                .addCustomQueryable(CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE,
+                        "driver.gender", Comparison.EQ, "gender", "F", false)
+                .addQueryable(getCasualtyClasses())
+                .joinCasualties(true)
+                .build();
+        assertEquals(expected, crashQuery.toString());
+    }
 }

@@ -25,8 +25,6 @@ import java.util.List;
 public class CrashQueryController extends  BaseFormController {
 
     @Autowired
-    private CrashManager crashManager;
-    @Autowired
     private CrashQueryManager crashQueryManager;
 
     @RequestMapping(method = RequestMethod.GET)
@@ -36,7 +34,7 @@ public class CrashQueryController extends  BaseFormController {
         crashSearch.getCrashSeverities().add(new CrashSeverity());
         crashSearch.getCrashSeverities().get(0).setId(2L);
         mav.addObject(crashSearch);
-        mav.addAllObjects(crashManager.getReferenceData());
+        mav.addAllObjects(crashQueryManager.getCrashQueryReferenceData());
         return mav;
     }
 
