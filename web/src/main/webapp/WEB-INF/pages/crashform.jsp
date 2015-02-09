@@ -18,12 +18,12 @@
         });
     </script>
 </head>
-<div class="col-sm-2">
-	<h2>
+<div class="col-sm-3">
+	<h3>
 		<fmt:message key="crashForm.heading" />
-	</h2>
+	</h3>
 </div>
-<div class="col-sm-10">
+<div class="col-sm-15">
 	<form:errors path="*" cssClass="alert alert-danger alert-dismissable" element="div"/>
 	<form:form commandName="crash" method="post" action="/crashform2"
 		id="crashForm" autocomplete="off" cssClass="well">

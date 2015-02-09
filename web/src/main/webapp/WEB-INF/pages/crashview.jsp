@@ -9,13 +9,13 @@
     </script>
 </head>
 
-<div class="col-sm-10">
+<div class="col-sm-15">
 	<table width="100%" cellpadding="0" cellspacing="0">
 		<tr>
 			<td width="60%">
-				<h2>
+				<h3>
 					<fmt:message key="crashView.title" />
-				</h2>
+				</h3>
 			</td>
 			<td width="40%" align="right">
                 <c:if test="${crash.editable and !crash.removed}">

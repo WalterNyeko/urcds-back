@@ -3,16 +3,16 @@
 <title><fmt:message key="crashForm.title" /></title>
 <meta name="menue" content="CrashMenu" />
 </head>
-<div class="col-sm-2">
-	<h2>
+<div class="col-sm-3">
+	<h3>
 		<fmt:message key="crashForm.heading" />
-	</h2>
+	</h3>
 	<p>
 		<appfuse:label styleClass="control-label" key="crashForm.tarNo" />
 		: ${crash.tarNo}
 	</p>
 </div>
-<div class="col-sm-10">
+<div class="col-sm-15">
 	<form:form commandName="crash" method="post" action="/crashformsubmit"
 		id="crashform" autocomplete="off" cssClass="well"
 		onsubmit="return validateCrash(this)">

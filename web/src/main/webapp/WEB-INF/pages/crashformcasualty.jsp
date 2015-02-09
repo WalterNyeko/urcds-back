@@ -12,12 +12,12 @@
 	});		
 </script>
 </head>
-<div class="col-sm-2">
-	<h2>
+<div class="col-sm-3">
+	<h3>
 		<fmt:message key="casulatyForm.heading" />
-	</h2>
+	</h3>
 </div>
-<div class="col-sm-10">
+<div class="col-sm-15">
 	<form:form commandName="casualty" method="post"
 		action="/crashformcasualty" id="casualtyform" autocomplete="off"
 		cssClass="well" onsubmit="return validateCasualty(this)">

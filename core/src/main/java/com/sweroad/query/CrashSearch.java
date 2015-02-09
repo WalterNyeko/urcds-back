@@ -13,19 +13,27 @@ public class CrashSearch {
 
     private Date startDate;
     private Date endDate;
-    private List<CrashSeverity> crashSeverities =  new ArrayList<CrashSeverity>();
-    private List<CollisionType> collisionTypes =  new ArrayList<CollisionType>();
-    private List<CrashCause> crashCauses =  new ArrayList<CrashCause>();
-    private List<VehicleFailureType> vehicleFailureTypes =  new ArrayList<VehicleFailureType>();
-    private List<Weather> weathers =  new ArrayList<Weather>();
-    private List<SurfaceCondition> surfaceConditions =  new ArrayList<SurfaceCondition>();
-    private List<RoadSurface> roadSurfaces =  new ArrayList<RoadSurface>();
-    private List<SurfaceType> surfaceTypes =  new ArrayList<SurfaceType>();
-    private List<RoadwayCharacter> roadwayCharacters =  new ArrayList<RoadwayCharacter>();
-    private List<JunctionType> junctionTypes =  new ArrayList<JunctionType>();
-    private List<VehicleType> vehicleTypes =  new ArrayList<VehicleType>();
-    private List<CasualtyType> casualtyTypes =  new ArrayList<CasualtyType>();
-    private List<CasualtyClass> casualtyClasses =  new ArrayList<CasualtyClass>();
+    private List<CrashSeverity> crashSeverities = new ArrayList<CrashSeverity>();
+    private List<CollisionType> collisionTypes = new ArrayList<CollisionType>();
+    private List<CrashCause> crashCauses = new ArrayList<CrashCause>();
+    private List<VehicleFailureType> vehicleFailureTypes = new ArrayList<VehicleFailureType>();
+    private List<Weather> weathers = new ArrayList<Weather>();
+    private List<SurfaceCondition> surfaceConditions = new ArrayList<SurfaceCondition>();
+    private List<RoadSurface> roadSurfaces = new ArrayList<RoadSurface>();
+    private List<SurfaceType> surfaceTypes = new ArrayList<SurfaceType>();
+    private List<RoadwayCharacter> roadwayCharacters = new ArrayList<RoadwayCharacter>();
+    private List<JunctionType> junctionTypes = new ArrayList<JunctionType>();
+    private List<VehicleType> vehicleTypes = new ArrayList<VehicleType>();
+    private List<LabelValue> licenseTypes = new ArrayList<LabelValue>();
+    private List<LabelValue> driverGenders = new ArrayList<LabelValue>();
+    private List<LabelValue> driverBeltUseds = new ArrayList<LabelValue>();
+    private List<LabelValue> driverAgeRanges = new ArrayList<LabelValue>();
+    private List<CasualtyType> driverCasualtyTypes = new ArrayList<CasualtyType>();
+    private List<CasualtyType> casualtyTypes = new ArrayList<CasualtyType>();
+    private List<CasualtyClass> casualtyClasses = new ArrayList<CasualtyClass>();
+    private List<LabelValue> casualtyGenders = new ArrayList<LabelValue>();
+    private List<LabelValue> casualtyAgeRanges = new ArrayList<LabelValue>();
+    private List<LabelValue> casualtyBeltUseds = new ArrayList<LabelValue>();
 
     public Date getStartDate() {
         return this.startDate;
@@ -145,6 +153,70 @@ public class CrashSearch {
 
     public void setCasualtyClasses(List<CasualtyClass> casualtyClasses) {
         this.casualtyClasses = casualtyClasses;
+    }
+
+    public List<LabelValue> getLicenseTypes() {
+        return licenseTypes;
+    }
+
+    public void setLicenseTypes(List<LabelValue> licenseTypes) {
+        this.licenseTypes = licenseTypes;
+    }
+
+    public List<LabelValue> getDriverGenders() {
+        return driverGenders;
+    }
+
+    public void setDriverGenders(List<LabelValue> driverGenders) {
+        this.driverGenders = driverGenders;
+    }
+
+    public List<LabelValue> getDriverBeltUseds() {
+        return driverBeltUseds;
+    }
+
+    public void setDriverBeltUseds(List<LabelValue> driverBeltUseds) {
+        this.driverBeltUseds = driverBeltUseds;
+    }
+
+    public List<LabelValue> getDriverAgeRanges() {
+        return driverAgeRanges;
+    }
+
+    public void setDriverAgeRanges(List<LabelValue> driverAgeRanges) {
+        this.driverAgeRanges = driverAgeRanges;
+    }
+
+    public List<CasualtyType> getDriverCasualtyTypes() {
+        return driverCasualtyTypes;
+    }
+
+    public void setDriverCasualtyTypes(List<CasualtyType> driverCasualtyTypes) {
+        this.driverCasualtyTypes = driverCasualtyTypes;
+    }
+
+    public List<LabelValue> getCasualtyGenders() {
+        return casualtyGenders;
+    }
+
+    public void setCasualtyGenders(List<LabelValue> casualtyGenders) {
+        this.casualtyGenders = casualtyGenders;
+    }
+
+    public List<LabelValue> getCasualtyAgeRanges() {
+        return casualtyAgeRanges;
+    }
+
+    public void setCasualtyAgeRanges(List<LabelValue> casualtyAgeRanges) {
+        this.casualtyAgeRanges = casualtyAgeRanges;
+    }
+
+    public List<LabelValue> getCasualtyBeltUseds() {
+        return casualtyBeltUseds;
+    }
+
+    public void setCasualtyBeltUseds(List<LabelValue> casualtyBeltUseds) {
+        this.casualtyBeltUseds = casualtyBeltUseds;
     }
 
     public CrashQuery toQuery() {

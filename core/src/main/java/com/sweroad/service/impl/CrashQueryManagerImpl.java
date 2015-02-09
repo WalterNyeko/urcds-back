@@ -151,13 +151,13 @@ public class CrashQueryManagerImpl implements CrashQueryManager {
         addLabelValueToList("Male", "M", driverGenders);
         addLabelValueToList("Female", "F", driverGenders);
         addLabelValueToList("Unknown", "-1", driverGenders);
-        queryCrashReferenceData.put("driverGenders", driverGenders);
+        queryCrashReferenceData.put("genders", driverGenders);
 
         List<LabelValue> driverBeltUseds = new ArrayList<LabelValue>();
         addLabelValueToList("Yes", "1", driverBeltUseds);
         addLabelValueToList("No", "0", driverBeltUseds);
         addLabelValueToList("Unknown", "-1", driverBeltUseds);
-        queryCrashReferenceData.put("driverBeltUseds", driverBeltUseds);
+        queryCrashReferenceData.put("beltUseds", driverBeltUseds);
 
         List<LabelValue> driverAgeRanges = new ArrayList<LabelValue>();
         addLabelValueToList("Below 10", "1", driverAgeRanges);
@@ -168,9 +168,7 @@ public class CrashQueryManagerImpl implements CrashQueryManager {
         addLabelValueToList("50-59", "6", driverAgeRanges);
         addLabelValueToList("60-69", "7", driverAgeRanges);
         addLabelValueToList("70 and above", "8", driverAgeRanges);
-        queryCrashReferenceData.put("driverAgeRanges", driverAgeRanges);
-
-        queryCrashReferenceData.put("driverCasualtyTypes", casualtyTypeManager.getAllDistinct());
+        queryCrashReferenceData.put("ageRanges", driverAgeRanges);
 
         return queryCrashReferenceData;
     }
