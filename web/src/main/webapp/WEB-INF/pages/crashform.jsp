@@ -15,6 +15,7 @@
             loadGpsCoordinates();
             loadCrashTime();
             generateCoordDegrees();
+            initDistrictSelectChange();
         });
     </script>
 </head>
@@ -44,7 +45,7 @@
 								<td><appfuse:label styleClass="form-label"
 										key="crashForm.district" /></td>
 								<td><form:select path="policeStation.district"
-										cssClass="form-control">
+										cssClass="form-control district-select">
 										<form:option value="">
 											<fmt:message key="rcds.pleaseSelect" />
 										</form:option>
@@ -57,7 +58,7 @@
                                 <td><appfuse:label styleClass="form-label"
                                                    key="crashForm.policeStation" /></td>
                                 <td>
-                                    <form:select path="policeStation.id" cssClass="form-control req-val" data-labelName="${policeStationLabel}">
+                                    <form:select path="policeStation.id" cssClass="form-control req-val police-station-select" data-labelName="${policeStationLabel}">
                                         <form:option value="">
                                             <fmt:message key="rcds.pleaseSelect" />
                                         </form:option>
@@ -429,3 +430,4 @@
 		</div>
 	</form:form>
 </div>
+<input id="policeStationJson" value="${police_stations_json}" type="hidden"/>

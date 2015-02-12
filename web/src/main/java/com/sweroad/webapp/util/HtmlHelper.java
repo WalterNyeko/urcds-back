@@ -7,7 +7,7 @@ public class HtmlHelper {
     /**
      * Html anchor with placeholders for href, alt and onclick
      */
-    public static final String HTML_ANCHOR_TAG = "<a href=\"%s\"%s%s>";
+    public static final String HTML_ANCHOR_TAG = "<a href=\"%s\"%s%s%s>";
 
     /**
      * Html image tag with placeholders for src, alt, title and hspace
@@ -28,7 +28,7 @@ public class HtmlHelper {
      * @param onclick   javascript to execute on click
      * @return html 'a' tag
      */
-    public static String createAnchor(String innerText, String href, String alt, String onclick) {
+    public static String createAnchor(String innerText, String href, String alt, String onclick, String... dataAttributes) {
         if (alt != null && !alt.equals("")) {
             alt = " alt=\"" + alt + "\"";
         } else {
@@ -39,9 +39,17 @@ public class HtmlHelper {
         } else {
             onclick = "";
         }
-        String htmlAnchor = String.format(HTML_ANCHOR_TAG, href, alt, onclick);
+        String htmlAnchor = String.format(HTML_ANCHOR_TAG, href, alt, onclick, buildDataAttributes(dataAttributes));
         htmlAnchor += innerText + HTML_ANCHOR_TAG_CLOSE;
         return htmlAnchor;
+    }
+
+    private static String buildDataAttributes(String... dataAttributes) {
+        String dataAttribute = "";
+        for(String data : dataAttributes) {
+            dataAttribute += data.concat(" ");
+        }
+        return dataAttribute;
     }
 
     /**

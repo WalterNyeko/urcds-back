@@ -14,7 +14,7 @@ public class CrashAnalysisDecorator extends TableDecorator {
     public String getActions() {
         Crash crash = getCrash();
         long id = crash.getId();
-        return CrashHtmlHelper.createViewLink(id);
+        return CrashHtmlHelper.createViewLink(id, "data-crashanalysis-id");
     }
 
     private Crash getCrash() {

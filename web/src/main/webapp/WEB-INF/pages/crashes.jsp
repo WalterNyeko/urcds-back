@@ -55,3 +55,9 @@
     </div>
     <p>&nbsp;</p>
 </div>
+<script type="text/javascript">
+    jQuery(window).load(function(){
+        highlightLastAccessedObject();
+    });
+</script>
+<input id="accessAttributeName" type="hidden" value="data-crashes-id">

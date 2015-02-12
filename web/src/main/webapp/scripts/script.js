@@ -296,3 +296,195 @@ function displayCoordinate(coordinate) {
     var coordParts = coordinate.split(" ");
     return coordParts[0].concat("&deg ").concat(coordParts[1]).concat("\'");
 }
+
+function initPopupFormLinks() {
+    $(document).ready(function() {
+        $("a.popup-form").each(function() {
+           $(this).click(function() {
+               var url = $(this).attr("href");
+               var $modal = $('#ajax-modal');
+               $modal.zIndex(2000);
+               $('body').modalmanager('loading');
+               $modal.load(url, '', function(){
+                   $modal.modal();
+               });
+               return false;
+           });
+        });
+    });
+}
+
+/***
+ Last accessed highlight functions
+ ***/
+function setAccessedObject(element) {
+
+    if(isBrowserIE7OrLower()) {
+        return;
+    }
+
+    var attrName = $("#accessAttributeName").val();
+    var tr = getElementRow(element);
+    var dataElement = $(tr).find("a["+attrName+"]");
+    var idValue = $(dataElement).attr(attrName);
+    var newHtml = "";
+    setIdByAttributeName(attrName, idValue);
+    clearHighlight();
+    $(tr).find('td').each(function(){
+        if($(this).is(":visible")) {
+            $(this).addClass("borderHighlight");
+        }
+    });
+
+    //Remove inherited border highlight from cell contents
+    if(browserIsIE()){
+        removeInheritedHighlightForIE(tr[0]);
+    } else {
+        removeInheritedHighlight(tr);
+    }
+}
+
+function getElementRow(element) {
+    var tr = $(element).closest("tr");
+    while ($(tr).hasClass("innerTable")) {
+        var table = $(tr).closest("table");
+        tr = $(table).closest("tr");
+    }
+    return tr;
+}
+
+function removeInheritedHighlight(tr) {
+
+    $(tr).find('td').each(function() {
+        removeHighlightFromCellDescendants(this);
+    });
+}
+
+function removeInheritedHighlightForIE(row){
+
+    for (var i = 0; i < row.cells.length; i++) {
+        removeHighlightFromCellDescendants(row.cells[i]);
+    }
+}
+
+function clearHighlight(withRowSpan) {
+
+    $("td.borderHighlight").each(function(){
+        $(this).removeClass("borderHighlight");
+    });
+    if(withRowSpan) {
+        $("td.borderHighlightTop").each(function(){
+            $(this).removeClass("borderHighlightTop");
+        });
+        $("td.borderHighlightBottom").each(function(){
+            $(this).removeClass("borderHighlightBottom");
+        });
+    }
+}
+
+function highlightLastAccessedObject(rowHighlightType) {
+
+    var attrName = $("#accessAttributeName").val();
+    if(attrName){
+
+        var dataElement = $("a[" + attrName + "='" + getIdByAttributeName(attrName) + "']");
+        if(dataElement && $(dataElement).is("a")) {
+            setAccessedObject(dataElement);
+        }
+    }
+}
+
+function getLastAccessedId(){
+
+    var attrName = $("#accessAttributeName").val();
+    return getIdByAttributeName(attrName);
+}
+
+function setLastAccessedId(id){
+
+    var attrName = $("#accessAttributeName").val();
+    setIdByAttributeName(attrName, id);
+}
+
+function getIdByAttributeName(attrName) {
+    if(!isBrowserIE7OrLower()){
+        return localStorage[attrName];
+    }
+}
+
+function setIdByAttributeName(attrName, idValue) {
+    if(!isBrowserIE7OrLower()){
+        localStorage[attrName] = idValue;
+    }
+}
+
+function clearLastAccessedObjects(){
+    localStorage.removeItem("data-crashes-id");
+    localStorage.removeItem("data-crashanalysis-id");
+}
+
+function removeHighlightFromCellDescendants(td){
+
+    $(td).find(".borderHighlight").each(function(){
+        $(this).removeClass("borderHighlight");
+    });
+}
+
+function isBrowserIE7OrLower(){
+    if(browserIsIE()  && browserIsIE() < 8) {
+        return true;
+    }
+    return false;
+}
+
+/***
+ End of Last accessed highlight functions
+ ***/
+
+/**
+ * detect IE
+ * returns version of IE or false, if browser is not Internet Explorer
+ */
+function browserIsIE() {
+    var ua = window.navigator.userAgent;
+
+    var msie = ua.indexOf('MSIE ');
+    if (msie > 0) {
+        // IE 10 or older => return version number
+        return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
+    }
+
+    var trident = ua.indexOf('Trident/');
+    if (trident > 0) {
+        // IE 11 => return version number
+        var rv = ua.indexOf('rv:');
+        return parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10);
+    }
+
+    var edge = ua.indexOf('Edge/');
+    if (edge > 0) {
+        // IE 12 => return version number
+        return parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10);
+    }
+
+    // other browser
+    return false;
+}
+
+function initDistrictSelectChange() {
+    var policeStationJson ='{"policeStations" : ' + $("#policeStationJson").val() + '}';
+    var policeStations = $(JSON.parse(policeStationJson).policeStations);
+    var selectedPoliceStation = $(".police-station-select").val();
+    $(".district-select").change(function() {
+        var selectedDistrict = $(this).val();
+        var policeStationSelect = $(".police-station-select");
+        policeStationSelect.find("option:not(:first)").remove();
+        policeStations.each(function() {
+            if(this.district.id == selectedDistrict) {
+                policeStationSelect.append("<option value=\"" + this.id + "\">" + this.name + "</option>");
+            }
+        });
+    });
+    $(".district-select").trigger("change");
+    $(".police-station-select").val(selectedPoliceStation);
+}

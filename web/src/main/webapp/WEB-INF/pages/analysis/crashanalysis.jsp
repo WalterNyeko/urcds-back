@@ -69,6 +69,7 @@
     <p>&nbsp;</p>
 </div>
 <input id='crashesJSON' type='hidden' value='${crashesJSON}' />
+<input id="accessAttributeName" type="hidden" value="data-crashanalysis-id">
 <script type="text/javascript">
     $(document).ready(function() {
         localStorage.setItem("crashesJSON", null);
@@ -79,5 +80,8 @@
             localStorage.setItem("crashesJSON", crashJson);
             $("#gMaps").show();
         }
+    });
+    jQuery(window).load(function(){
+        highlightLastAccessedObject();
     });
 </script>

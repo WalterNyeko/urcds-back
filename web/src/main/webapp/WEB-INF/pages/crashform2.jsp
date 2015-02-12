@@ -1,7 +1,10 @@
 <%@ include file="/common/taglibs.jsp"%>
 <head>
-<title><fmt:message key="crashForm.title" /></title>
-<meta name="menue" content="CrashMenu" />
+    <title><fmt:message key="crashForm.title" /></title>
+    <meta name="menue" content="CrashMenu" />
+    <script type="text/javascript">
+        initPopupFormLinks();
+    </script>
 </head>
 <div class="col-sm-3">
 	<h3>
@@ -47,7 +50,7 @@
 										</td>
 									</tr>
 								</table>
-								<a href="/crashformvehicle?id=${vehicle.id}">
+								<a href="/crashformvehicle?id=${vehicle.id}" class="popup-form">
 									<i class="icon-edit"></i>
 									<fmt:message key="button.edit" />
 								</a>
@@ -149,7 +152,7 @@
 					</c:forEach>
 				</c:if>
 				<tr>
-					<td><a href="/crashformvehicle"> <i class="icon-ok"></i> <fmt:message
+					<td><a href="/crashformvehicle" class="popup-form"> <i class="icon-ok"></i> <fmt:message
 								key="button.addVehicle" />
 					</a></td>
 				</tr>
@@ -204,8 +207,8 @@
 																Unknown
 															</c:otherwise>
 														</c:choose></td>
-													<td align="center"><a
-														href="/crashformcasualty?id=${casualty.id}"> <i
+													<td align="center">
+                                                        <a href="/crashformcasualty?id=${casualty.id}" class="popup-form"> <i
 															class="icon-edit"></i> <fmt:message key="button.edit" />
 													</a> | <a href="/crashformcasualtydelete?id=${casualty.id}"
 														onclick="return confirmMessage('<fmt:message key="rcds.confirmDelete" />');">
@@ -222,7 +225,7 @@
 					</tr>
 				</c:if>
 				<tr>
-					<td><a href="/crashformcasualty"> <i class="icon-ok"></i>
+					<td><a href="/crashformcasualty" class="popup-form"> <i class="icon-ok"></i>
 							<fmt:message key="button.addCasualty" />
 					</a></td>
 					<td></td>
@@ -252,3 +255,4 @@
 		</div>
 	</form:form>
 </div>
+<div id="ajax-modal" class="modal container fade" tabindex="-1" style="display: none; margin-top: 40px;" aria-hidden="true"></div>

@@ -424,3 +424,8 @@ table.infoWindow th {
 table.infoWindow td {
     padding: 2px 2px 2px 2px;
 }
+
+td.borderHighlight{
+    border-top: 2px solid orange !important;
+    border-bottom: 2px solid orange !important;
+}
