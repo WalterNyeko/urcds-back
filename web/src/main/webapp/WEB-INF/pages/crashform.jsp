@@ -16,6 +16,7 @@
             loadCrashTime();
             generateCoordDegrees();
             initDistrictSelectChange();
+            initCrashValidation();
         });
     </script>
 </head>
@@ -431,3 +432,19 @@
 	</form:form>
 </div>
 <input id="policeStationJson" value="${police_stations_json}" type="hidden"/>
+<div id="warning-modal" class="modal fade" tabindex="-1" style="display: none; margin-top: 40px; color: #000;" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+        <h4 class="modal-title" style="color: #800000; font-weight: bold;">Warning</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div id="warning-content" class="col-md-15">
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-default">Back</button>
+        <button type="button" class="btn btn-primary" onclick="document.getElementById('crashForm').submit();">Proceed Anyway</button>
+    </div>
+</div>

@@ -18,5 +18,6 @@
         <js>/scripts/gis-helper.js</js>
         <js>/scripts/mapping.js</js>
         <js>/scripts/ajax.js</js>
+        <js>/scripts/crash-validator.js</js>
 	</group>
 </groups>

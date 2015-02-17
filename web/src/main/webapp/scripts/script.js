@@ -73,7 +73,7 @@ function validateFields() {
         alertDialog({message: valMessages});
         return false;
     }
-    return true;
+    return validateCrashData();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        validationWarningMessagevalidationWarningMessagevalidationWarningMessagevalidationWarningMessage;
 }
 
 function createOptions(divId, chartTitle) {
