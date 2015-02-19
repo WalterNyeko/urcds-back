@@ -1,10 +1,14 @@
 package com.sweroad.webapp.controller;
 
 import com.mysql.jdbc.StringUtils;
+import com.sweroad.model.Casualty;
 import com.sweroad.model.Crash;
 import com.sweroad.model.SearchCriteria;
+import com.sweroad.model.Vehicle;
+import com.sweroad.service.CasualtyManager;
 import com.sweroad.service.CrashManager;
 import com.sweroad.service.SearchCriteriaManager;
+import com.sweroad.service.VehicleManager;
 import com.sweroad.util.DateUtil;
 import com.sweroad.webapp.util.JsonHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +33,13 @@ import java.util.List;
 public class CrashAnalysisController extends BaseFormController {
 
     @Autowired
+    private CasualtyManager casualtyManager;
+    @Autowired
     private CrashManager crashManager;
     @Autowired
     private SearchCriteriaManager searchCriteriaManager;
+    @Autowired
+    private VehicleManager vehicleManager;
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView showCrashes(HttpServletRequest request) throws Exception {
@@ -41,13 +49,39 @@ public class CrashAnalysisController extends BaseFormController {
         return mav;
     }
 
+    @RequestMapping(value = "/analysisvehicles", method = RequestMethod.GET)
+    public ModelAndView showVehicles(HttpServletRequest request) throws Exception {
+        ModelAndView mav = new ModelAndView("analysis/vehicleanalysis");
+        mav.addObject(getVehicles(request));
+        return mav;
+    }
+
+    @RequestMapping(value = "/analysiscasualties", method = RequestMethod.GET)
+    public ModelAndView showCasualties(HttpServletRequest request) throws Exception {
+        ModelAndView mav = new ModelAndView("analysis/casualtyanalysis");
+        mav.addObject(getCasualties(request));
+        return mav;
+    }
+
     private List<Crash> getCrashes(HttpServletRequest request) {
         List<Crash> crashes = (List<Crash>) request.getSession().getAttribute("crashes");
         if (crashes != null) {
             return crashes;
         } else {
-            return crashManager.getAvailableCrashes();
+            crashes = crashManager.getAvailableCrashes();
+            JsonHelper.crashesToJsonAndSetInSession(request, crashes);
+            return crashes;
         }
+    }
+
+    private List<Vehicle> getVehicles(HttpServletRequest request) {
+        List<Crash> crashes = getCrashes(request);
+        return vehicleManager.extractVehiclesFromCrashList(crashes);
+    }
+
+    private List<Casualty> getCasualties(HttpServletRequest request) {
+        List<Crash> crashes = getCrashes(request);
+        return casualtyManager.extractCasualtiesFromCrashList(crashes);
     }
 
     @RequestMapping(value = "/analysiscrashselect", method = RequestMethod.GET)

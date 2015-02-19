@@ -34,4 +34,9 @@ public class CrashHtmlHelper extends HtmlHelper {
         String mapLink = HtmlHelper.createAnchor(mapIcon, "", "Show on Map", onClick);
         return mapLink;
     }
+
+    public static String createCrashCodeLink(long crashId, String crashCode, String dataAttributeName, long dataAttributeValue) {
+        String viewLink = createAnchor(crashCode, "crashview?id=" + crashId, "View crash", "setAccessedObject(this)", dataAttributeName.concat("=") + dataAttributeValue);
+        return viewLink;
+    }
 }

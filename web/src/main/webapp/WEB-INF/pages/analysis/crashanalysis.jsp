@@ -10,27 +10,20 @@
 	<h2>
 		<fmt:message key="crashAnalysis.heading" />
 	</h2>
-	<div id="actions" class="btn=group" style="padding-bottom: 2px;">
-        <a href="" onclick="return loadSelectCrash({url: '/analysiscrashselect'});">
-            <img src="/images/simple-search.jpg" title="<fmt:message key="crashAnalysis.Select" />" height="20"/>
-		</a>|
-        <a href="/crashquery">
-            <img src="/images/query-icon.png" title="<fmt:message key="crashAnalysis.AdvancedSelect" />" height="20"/>
-        </a>|
-        <%--<a href="" onclick="return false;">--%>
-            <%--<img src="/images/pivot-table-icon.jpg" title="<fmt:message key="crashAnalysis.PivotTables" />" height="20"/>--%>
-        <%--</a>|--%>
-        <a href="" onclick="return false;">
-            <img src="/images/crosstab-icon.png" title="<fmt:message key="crashAnalysis.CrossTabulation" />" height="20"/>
-        </a>|
-		<a href="<c:url value='/analysisdownloadexcel'/>">
-            <img src="/images/excel-icon.png" title="<fmt:message key="button.exportToExcel" />" height="20"/>
-		</a>|
-        <a id='gMaps' href="<c:url value='/mapping'/>">
-            <img src='/images/gglMap.png' alt='<fmt:message key="maps.viewInGoogleMaps"/>'
-                 title='<fmt:message key="maps.viewInGoogleMaps"/>' height='20'/>
-        </a>
-	</div>
+    <table width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+            <td width="60%">
+                <c:import url="analysismenu.jsp" />
+            </td>
+            <td width="40%">
+                <ul class="nav nav-tabs" style="float: right;">
+                    <li class="active"><a href=""  class="non-click"><fmt:message key="crashList.crashes" /></a></li>
+                    <li><a href="/analysisvehicles"><fmt:message key="crashAnalysis.vehicles" /></a></li>
+                    <li><a href="/analysiscasualties"><fmt:message key="crashAnalysis.casualties"/></a></li>
+                </ul>
+            </td>
+        </tr>
+    </table>
     <div class="content-wrapper">
         <display:table name="crashList"
             class="table table-condensed table-striped table-hover" requestURI=""

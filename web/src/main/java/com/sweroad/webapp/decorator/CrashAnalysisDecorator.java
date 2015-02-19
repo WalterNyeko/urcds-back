@@ -8,9 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class CrashAnalysisDecorator extends TableDecorator {
 
-    @Autowired
-    private CrashManager crashManager;
-
     public String getActions() {
         Crash crash = getCrash();
         long id = crash.getId();

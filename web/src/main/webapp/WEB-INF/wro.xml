@@ -15,6 +15,7 @@
         <js>/resources/bootstrap-modal/js/bootstrap-modal.js</js>
         <js>/resources/bootstrap-modal/js/bootstrap-modalmanager.js</js>
         <js>/scripts/script.js</js>
+        <js>/scripts/rcds-init.js</js>
         <js>/scripts/gis-helper.js</js>
         <js>/scripts/mapping.js</js>
         <js>/scripts/ajax.js</js>

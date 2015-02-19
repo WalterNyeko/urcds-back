@@ -11,6 +11,7 @@
 <t:assets />
 <decorator:head />
     <script type="text/javascript">
+        systemWideInit();
         $(function() {
             $('.dtpicker').datepicker({
                 dateFormat: "dd/mm/yy",

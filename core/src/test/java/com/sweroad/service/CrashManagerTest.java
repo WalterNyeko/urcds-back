@@ -24,8 +24,6 @@ public class CrashManagerTest extends BaseManagerTestCase {
 	private Log log = LogFactory.getLog(CrashManagerTest.class);
 	@Autowired
 	private CrashManager crashManager;
-
-    private ApplicationContext ctx = null;
     private SecurityContext initialSecurityContext = null;
 
     @Before
