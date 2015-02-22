@@ -35,8 +35,8 @@ public class CrashHtmlHelper extends HtmlHelper {
         return mapLink;
     }
 
-    public static String createCrashCodeLink(long crashId, String crashCode, String dataAttributeName, long dataAttributeValue) {
-        String viewLink = createAnchor(crashCode, "crashview?id=" + crashId, "View crash", "setAccessedObject(this)", dataAttributeName.concat("=") + dataAttributeValue);
+    public static String createCrashCodeLink(long crashId, String crashCode) {
+        String viewLink = createAnchor(crashCode, "crashview?id=" + crashId, "View crash", "", "");
         return viewLink;
     }
 }

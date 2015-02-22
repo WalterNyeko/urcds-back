@@ -1,9 +1,11 @@
 package com.sweroad.service.impl;
 
+import com.sweroad.dao.GenericDao;
 import com.sweroad.model.Casualty;
 import com.sweroad.model.Crash;
 import com.sweroad.model.Vehicle;
 import com.sweroad.service.CasualtyManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,6 +16,11 @@ import java.util.List;
  */
 @Service("casualtyManager")
 public class CasualtyManagerImpl extends GenericManagerImpl<Casualty, Long> implements CasualtyManager {
+
+    @Autowired
+    public CasualtyManagerImpl(GenericDao<Casualty, Long> casualtyDao) {
+        super(casualtyDao);
+    }
 
     @Override
     public List<Casualty> extractCasualtiesFromCrashList(List<Crash> crashes) {

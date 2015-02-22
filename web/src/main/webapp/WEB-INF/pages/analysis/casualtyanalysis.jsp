@@ -24,17 +24,18 @@
     <div class="content-wrapper">
         <display:table name="casualtyList"
                        class="table table-condensed table-striped table-hover" requestURI=""
-                       id="casualtyList" export="false" pagesize="50" decorator="com.sweroad.webapp.decorator.CrashAnalysisDecorator">
-            <display:column property="crash.uniqueCode" sortable="true"
+                       id="casualtyList" export="false" pagesize="50" decorator="com.sweroad.webapp.decorator.CasualtyAnalysisDecorator">
+            <display:column property="crashCode" sortable="true"
                             titleKey="crash.crashNo" />
             <display:column property="casualtyClass.name" sortable="true"
                             titleKey="crashAnalysis.casualtyClass" />
             <display:column property="casualtyType.name" sortable="true" titleKey="crashAnalysis.casualtyType" />
-            <display:column property="gender" sortable="true" titleKey="crashAnalysis.casualtySex" />
+            <display:column property="gender" sortable="true"
+                            style="text-align: center;" titleKey="crashAnalysis.casualtySex" />
             <display:column property="age" sortable="true"
                             style="text-align: center;" titleKey="crashAnalysis.casualtyAge" />
-            <display:column property="vehicle.number" sortable="true" titleKey="crashAnalysis.fromVehicle" />
-            <display:column property="beltOrHelmetUsed" sortable="true" titleKey="crashForm.driverBeltUsed" />
+            <display:column property="casualtyVehicle" sortable="true" titleKey="crashAnalysis.fromVehicle" />
+            <display:column property="casualtyBeltUsed" sortable="true" titleKey="crashForm.driverBeltUsed" />
             <display:setProperty name="paging.banner.item_name">
                 <fmt:message key="crash.casualty" />
             </display:setProperty>

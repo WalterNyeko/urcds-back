@@ -113,4 +113,50 @@ public class CrashManagerTest extends BaseManagerTestCase {
 		crash  = crashManager.get(1L);
 		assertEquals(false, crash.isRemoved());
 	}
+
+    @Test
+    public void testSaveCrash() {
+        log.debug("testing save crash...");
+        Crash crash = buildCrashObject();
+        crash = crashManager.saveCrash(crash);
+        assertEquals(11L, crash.getId().longValue());
+    }
+
+    private Crash buildCrashObject() {
+        Crash crash = new Crash();
+        crash.setId(0L);
+        crash.setTarNo("A001/Test1");
+        crash.setPoliceStation(new PoliceStation());
+        crash.setLatitude("Latitude");
+        crash.setLongitude("Longitude");
+        crash.getPoliceStation().setId(1L);
+        for (int i = 1; i <= 10; i++) {
+            Vehicle vehicle = buildVehicleObject(i, i);
+            crash.addVehicle(vehicle);
+            crash.addCasualty(buildCasualtyObject(vehicle));
+        }
+        return crash;
+    }
+
+    private Vehicle buildVehicleObject(long vehicleAndDriverId, int vehicleNumber) {
+        Vehicle vehicle = new Vehicle();
+        vehicle.setId(vehicleAndDriverId);
+        vehicle.setVehicleType(new VehicleType());
+        vehicle.getVehicleType().setId(1L);
+        vehicle.setNumber(vehicleNumber);
+        vehicle.setDriver(new Driver());
+        vehicle.getDriver().setId(vehicleAndDriverId);
+        return vehicle;
+    }
+
+    private Casualty buildCasualtyObject(Vehicle vehicle) {
+        Casualty casualty = new Casualty();
+        casualty.setId(vehicle.getId());
+        casualty.setVehicle(vehicle);
+        casualty.setCasualtyType(new CasualtyType());
+        casualty.getCasualtyType().setId(3L);
+        casualty.setCasualtyClass(new CasualtyClass());
+        casualty.getCasualtyClass().setId(4L);
+        return casualty;
+    }
 }

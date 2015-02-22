@@ -28,10 +28,11 @@
             <display:column property="crashCode" sortable="true"
                             titleKey="crash.crashNo" />
             <display:column property="number" sortable="true"
-                            titleKey="crashAnalysis.vehicleNo" />
+                            style="text-align: center;"  titleKey="crashAnalysis.vehicleNo" />
             <display:column property="vehicleType.name" sortable="true" titleKey="crashForm.vehicleType" />
             <display:column property="driverLicense" sortable="true" titleKey="crashAnalysis.driverLicense" />
-            <display:column property="driver.gender" sortable="true" titleKey="crashAnalysis.driverSex" />
+            <display:column property="driver.gender" sortable="true"
+                            style="text-align: center;" titleKey="crashAnalysis.driverSex" />
             <display:column property="driver.age" sortable="true"
                             style="text-align: center;" titleKey="crashAnalysis.driverAge" />
             <display:column property="driverBeltUsed" sortable="true" titleKey="crashAnalysis.beltHelmetUsed" />

@@ -1,8 +1,10 @@
 package com.sweroad.service.impl;
 
+import com.sweroad.dao.GenericDao;
 import com.sweroad.model.Crash;
 import com.sweroad.model.Vehicle;
 import com.sweroad.service.VehicleManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,6 +15,11 @@ import java.util.List;
  */
 @Service("vehicleManager")
 public class VehicleManagerImpl extends GenericManagerImpl<Vehicle, Long> implements VehicleManager {
+
+    @Autowired
+    public VehicleManagerImpl(GenericDao<Vehicle, Long> vehicleDao) {
+        super(vehicleDao);
+    }
 
     @Override
     public List<Vehicle> extractVehiclesFromCrashList(List<Crash> crashes) {

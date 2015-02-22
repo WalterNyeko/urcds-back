@@ -211,6 +211,7 @@ public class Driver extends BaseModel {
         }
         CasualtyClass cc = new CasualtyClass();
         cc.setName("Driver");
+        cc.setId(0L);
         Casualty casualty = new Casualty();
         casualty.setAge(age);
         casualty.setBeltOrHelmetUsed(beltUsed);
@@ -218,6 +219,7 @@ public class Driver extends BaseModel {
         casualty.setCasualtyType(casualtyType);
         casualty.setGender(gender);
         casualty.setVehicle(vehicle);
+        casualty.setId(0L);
         return casualty;
     }
 

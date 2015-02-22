@@ -1,7 +1,6 @@
 package com.sweroad.service;
 
-import com.sweroad.model.Casualty;
-import com.sweroad.model.Crash;
+import com.sweroad.model.*;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -30,8 +29,8 @@ public class CasualtyManagerTest extends BaseManagerTestCase {
         List<Crash> crashes = crashManager.getAllDistinct();
         List<Casualty> casualties = casualtyManager.extractCasualtiesFromCrashList(crashes);
         boolean nullCrashExists = false;
-        for(Casualty casualty : casualties) {
-            if(casualty.getCrash() == null) {
+        for (Casualty casualty : casualties) {
+            if (casualty.getCrash() == null) {
                 nullCrashExists = true;
                 break;
             }

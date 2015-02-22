@@ -12,7 +12,7 @@ public class VehicleAnalysisDecorator extends TableDecorator {
     public String getCrashCode() {
         Vehicle vehicle = getVehicle();
         long crashId = vehicle.getCrash().getId();
-        return CrashHtmlHelper.createCrashCodeLink(crashId, vehicle.getCrash().getUniqueCode(), "data-crashanalysis-id", vehicle.getId());
+        return CrashHtmlHelper.createCrashCodeLink(crashId, vehicle.getCrash().getUniqueCode());
     }
 
     public String getDriverLicense() {
