@@ -156,19 +156,8 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
                 setVehicleParams(vehicle);
                 Vehicle savedVehicle = vehicleManager.save(vehicle);
                 if (vehicle.getId() == null) {
-                    vehicle.setId(vehicleId);
+                    vehicle.setId(savedVehicle.getId());
                 }
-                updateReferencedCasualty(crash, vehicleId, savedVehicle);
-            }
-        }
-    }
-
-    private void updateReferencedCasualty(Crash crash, long vehicleId,
-                                          Vehicle vehicle) {
-        for (Casualty casualty : crash.getCasualties()) {
-            if (casualty.getVehicle() != null
-                    && casualty.getVehicle().getId().equals(vehicleId)) {
-                casualty.setVehicle(vehicle);
             }
         }
     }
