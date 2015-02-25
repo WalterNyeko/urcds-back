@@ -10,8 +10,14 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.ldap.userdetails.LdapUserDetails;
 import org.springframework.stereotype.Service;
 
 import com.sweroad.dao.UserDao;
@@ -268,5 +274,24 @@ public class UserManagerImpl extends GenericManagerImpl<User, Long> implements U
         }
         // or throw exception
         return null;
+    }
+
+    @Override
+    public User getCurrentUser() {
+        SecurityContext sc = SecurityContextHolder.getContext();
+        Authentication auth = sc.getAuthentication();
+        User currentUser = null;
+        if ((auth.getPrincipal() instanceof LdapUserDetails)) {
+            LdapUserDetails ldapDetails = (LdapUserDetails) auth.getPrincipal();
+            String username = ldapDetails.getUsername();
+            currentUser = this.getUserByUsername(username);
+        } else if (auth.getPrincipal() instanceof UserDetails) {
+            currentUser = (User) auth.getPrincipal();
+        } else if (auth.getDetails() instanceof UserDetails) {
+            currentUser = (User) auth.getDetails();
+        } else {
+            throw new AccessDeniedException("User not properly authenticated.");
+        }
+        return currentUser;
     }
 }

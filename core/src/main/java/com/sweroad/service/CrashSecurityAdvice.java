@@ -9,6 +9,7 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.aop.AfterReturningAdvice;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
@@ -24,6 +25,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class CrashSecurityAdvice {
 
+    @Autowired
+    private UserManager userManager;
     private boolean editable;
     private boolean removable;
     private boolean editableOnlyForDistrict;
@@ -52,7 +55,7 @@ public class CrashSecurityAdvice {
     private void determineUserRoles() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null) {
-            currentUser = UserSecurityAdvice.getCurrentUser(auth, null);
+            currentUser = userManager.getCurrentUser();
             Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
             if (authoritiesContainRole(Constants.USER_ROLE, authorities)) {
                 editableOnlyForDistrict = true;

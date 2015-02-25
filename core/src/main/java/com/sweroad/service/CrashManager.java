@@ -85,11 +85,4 @@ public interface CrashManager extends GenericManager<Crash, Long> {
      * @param id
      */
 	void restoreCrashById(Long id);
-
-    /**
-     * Gets crashes that meet criteria defined in CrashQuery.
-     * @param crashQuery CrashQuery that defines criteria
-     * @return List of Crashes
-     */
-    List<Crash> getCrashesByQuery(CrashQuery crashQuery);
 }

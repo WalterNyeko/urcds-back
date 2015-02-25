@@ -175,7 +175,7 @@
                                                        key="crashForm.passengerVehicleNo" /></td>
                                     <td class="blue-header"><appfuse:label styleClass="control-label"
                                                        key="crashForm.passengerBeltUsed" /></td>
-                                    <td class="blue-header"><appfuse:label styleClass="control-label"
+                                    <td width="10%" class="blue-header"><appfuse:label styleClass="control-label"
                                                        key="rcds.actions" /></td>
 							    </tr>
                                     <c:forEach var="casualty" items="${crash.casualties}"

@@ -8,31 +8,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.sweroad.model.*;
 import com.sweroad.query.CrashQuery;
+import com.sweroad.service.UserManager;
 import com.sweroad.util.GisHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sweroad.dao.CrashDao;
-import com.sweroad.model.Casualty;
-import com.sweroad.model.CasualtyClass;
-import com.sweroad.model.CasualtyType;
-import com.sweroad.model.CollisionType;
-import com.sweroad.model.Crash;
-import com.sweroad.model.CrashCause;
-import com.sweroad.model.CrashSeverity;
-import com.sweroad.model.District;
-import com.sweroad.model.Driver;
-import com.sweroad.model.JunctionType;
-import com.sweroad.model.PoliceStation;
-import com.sweroad.model.RoadSurface;
-import com.sweroad.model.RoadwayCharacter;
-import com.sweroad.model.SurfaceCondition;
-import com.sweroad.model.SurfaceType;
-import com.sweroad.model.Vehicle;
-import com.sweroad.model.VehicleFailureType;
-import com.sweroad.model.VehicleType;
-import com.sweroad.model.Weather;
 import com.sweroad.service.CrashExcelService;
 import com.sweroad.service.CrashManager;
 import com.sweroad.service.GenericManager;
@@ -43,6 +26,8 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
         CrashManager {
 
     private CrashDao crashDao;
+    @Autowired
+    private UserManager userManager;
     @Autowired
     private GenericManager<CrashSeverity, Long> crashSeverityManager;
     @Autowired
@@ -125,15 +110,18 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
 
     @Override
     public Crash saveCrash(Crash crash) {
-        saveCrashVehicles(crash);
-        saveCrashCasualties(crash);
+        User user = userManager.getCurrentUser();
+        saveCrashVehicles(crash, user);
+        saveCrashCasualties(crash, user);
         if (crash.getDateCreated() == null) {
             crash.setDateCreated(new Date());
+            crash.setCreatedBy(user);
             crash.setEditable(false);
             crash.setRemovable(false);
             crash.setRemoved(false);
         } else {
             crash.setDateUpdated(new Date());
+            crash.setUpdatedBy(user);
             Crash dbCrash = super.get(crash.getId());
             deleteRemovedVehicles(dbCrash, crash);
             deleteRemovedCasualties(dbCrash, crash);
@@ -142,16 +130,18 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
         return super.save(crash);
     }
 
-    private void saveCrashVehicles(Crash crash) {
+    private void saveCrashVehicles(Crash crash, User user) {
         if (crash.getVehicles() != null) {
             for (Vehicle vehicle : crash.getVehicles()) {
-                saveVehicleDriver(vehicle);
+                saveVehicleDriver(vehicle, user);
                 long vehicleId = vehicle.getId();
                 if (vehicle.getDateCreated() == null) {
                     vehicle.setDateCreated(new Date());
+                    vehicle.setCreatedBy(user);
                     vehicle.setId(null);
                 } else {
                     vehicle.setDateUpdated(new Date());
+                    vehicle.setUpdatedBy(user);
                 }
                 setVehicleParams(vehicle);
                 Vehicle savedVehicle = vehicleManager.save(vehicle);
@@ -162,28 +152,32 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
         }
     }
 
-    private void saveVehicleDriver(Vehicle vehicle) {
+    private void saveVehicleDriver(Vehicle vehicle, User user) {
         if (vehicle.getDriver() != null) {
             Driver driver = vehicle.getDriver();
             if (driver.getDateCreated() == null) {
                 driver.setDateCreated(new Date());
+                driver.setCreatedBy(user);
                 driver.setId(null);
             } else {
                 driver.setDateUpdated(new Date());
+                driver.setUpdatedBy(user);
             }
             driver = driverManager.save(driver);
             vehicle.setDriver(driver);
         }
     }
 
-    private void saveCrashCasualties(Crash crash) {
+    private void saveCrashCasualties(Crash crash, User user) {
         if (crash.getCasualties() != null) {
             for (Casualty casualty : crash.getCasualties()) {
                 if (casualty.getDateCreated() == null) {
                     casualty.setDateCreated(new Date());
+                    casualty.setCreatedBy(user);
                     casualty.setId(null);
                 } else {
                     casualty.setDateUpdated(new Date());
+                    casualty.setUpdatedBy(user);
                 }
                 setCasualtyParams(casualty);
                 casualty = casualtyManager.save(casualty);
@@ -422,10 +416,5 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
         Crash crash = this.get(id);
         crash.setRemoved(false);
         genericCrashManager.save(crash);
-    }
-
-    @Override
-    public List<Crash> getCrashesByQuery(CrashQuery crashQuery) {
-        return null;
     }
 }

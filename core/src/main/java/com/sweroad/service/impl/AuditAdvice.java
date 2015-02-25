@@ -6,6 +6,7 @@ import com.sweroad.model.Audit;
 import com.sweroad.model.User;
 import com.sweroad.model.VehicleType;
 import com.sweroad.service.GenericManager;
+import com.sweroad.service.UserManager;
 import com.sweroad.service.UserSecurityAdvice;
 import com.sweroad.util.XStreamUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -27,6 +28,8 @@ import java.util.Date;
 public class AuditAdvice {
     @Autowired
     private GenericManager<Audit, Long> auditManager;
+    @Autowired
+    private UserManager userManager;
 
     @Around("execution(* com.sweroad.service.GenericManager.save(..))")
     public Object auditSave(ProceedingJoinPoint pjp) {
@@ -84,7 +87,7 @@ public class AuditAdvice {
                     }
                     SecurityContext sc = SecurityContextHolder.getContext();
                     Authentication auth = sc.getAuthentication();
-                    User currentUser = UserSecurityAdvice.getCurrentUser(auth, null);
+                    User currentUser = userManager.getCurrentUser();
                     auditLog.setId(0L);
                     auditLog.setOperation(operation);
                     auditLog.setEntityId(((IAuditable) returnValue).getId());
