@@ -10,6 +10,7 @@ import com.sweroad.service.CrashManager;
 import com.sweroad.service.SearchCriteriaManager;
 import com.sweroad.service.VehicleManager;
 import com.sweroad.util.DateUtil;
+import com.sweroad.webapp.util.CrashAnalysisHelper;
 import com.sweroad.webapp.util.JsonHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -91,6 +92,8 @@ public class CrashAnalysisController extends BaseFormController {
             SearchCriteria criteria = new SearchCriteria();
             mav.addObject("criteria", criteria);
             mav.addAllObjects(crashManager.getOrderedRefData());
+            mav.addObject("years", CrashAnalysisHelper.getYearsForSearch());
+            mav.addObject("months", CrashAnalysisHelper.getMonthsForSearch(request));
             return mav;
         } catch (Exception e) {
             log.error("Select crash failed: " + e.getLocalizedMessage());
@@ -99,8 +102,7 @@ public class CrashAnalysisController extends BaseFormController {
     }
 
     @RequestMapping(value = "/analysiscrashselect", method = RequestMethod.POST)
-    public ModelAndView selectCrash(SearchCriteria criteria, BindingResult errors,
-                                    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ModelAndView selectCrash(SearchCriteria criteria, HttpServletRequest request) throws Exception {
         try {
             processCriteria(criteria);
             List<Crash> crashes = searchCriteriaManager.getCrashesByCriteria(criteria);
@@ -144,8 +146,7 @@ public class CrashAnalysisController extends BaseFormController {
         return uploadDir + "rcds_crashes_genby_" + request.getRemoteUser() + ".xlsx";
     }
 
-    private void downloadFile(HttpServletResponse response, String excelFile) throws URISyntaxException, IOException,
-            FileNotFoundException {
+    private void downloadFile(HttpServletResponse response, String excelFile) throws URISyntaxException, IOException {
         File f = new File(excelFile);
         String filename = excelFile.substring(excelFile.lastIndexOf('/') + 1);
         log.debug("Loading file " + excelFile + "(" + f.getAbsolutePath() + ")");

@@ -3,25 +3,14 @@
 <fmt:message key="crashForm.driverCasualtyLabel" var="driverCasualtyTypeLabel" />
 <fmt:message key="crashForm.enterLicenseNumber" var="enterLicenseNumber" />
 <fmt:message key="crashForm.enterDriverAge" var="enterDriverAge" />
-<script type="text/javascript">
-	$( document ).ready(function() {
-		$(".submit").click(function(){
-		    //return validateFields();
-            return true;
-		});	
-	});		
-</script>
-
 <div class="modal-body">
-    <div class="col-sm-3">
-        <h3>
-            <fmt:message key="vehicleForm.heading" />
-        </h3>
-    </div>
     <div class="col-sm-15">
         <form:form commandName="vehicle" method="post"
             action="/crashformvehicle" id="vehicleform" autocomplete="off"
             cssClass="well" onsubmit="return validateVehicle(this)">
+            <h3>
+                <fmt:message key="vehicleForm.heading" />
+            </h3>
             <form:hidden path="id" />
             <form:hidden path="dateCreated"/>
             <form:hidden path="number" />
@@ -142,13 +131,15 @@
                         <td colspan="2">
                             <table width="100%">
                                 <tr>
-                                    <td width="50%"><a class="btn btn-default"
-                                                       href="/crashform2"> <i class="icon-ok"></i> <fmt:message
-                                            key="button.cancel" />
-                                    </a></td>
-                                    <td width="50%" align="right"><input type="submit"
-                                                                         class="btn btn-primary submit"
-                                                                         value="<fmt:message key='button.save'/>"></td>
+                                    <td width="50%">
+                                        <a class="btn btn-default" data-dismiss="modal" href="/crashform2">
+                                            <i class="icon-ok"></i>
+                                            <fmt:message key="button.cancel" />
+                                        </a>
+                                    </td>
+                                    <td width="50%" align="right">
+                                        <input type="submit" class="btn btn-primary submit" value="<fmt:message key='button.save'/>">
+                                    </td>
                                 </tr>
                             </table>
                         </td>

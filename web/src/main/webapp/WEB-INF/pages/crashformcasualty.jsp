@@ -9,15 +9,13 @@
 	});		
 </script>
 <div class="modal-body">
-    <div class="col-sm-3">
-        <h3>
-            <fmt:message key="casulatyForm.heading" />
-        </h3>
-    </div>
     <div class="col-sm-15">
         <form:form commandName="casualty" method="post"
             action="/crashformcasualty" id="casualtyform" autocomplete="off"
             cssClass="well" onsubmit="return validateCasualty(this)">
+            <h3>
+                <fmt:message key="casulatyForm.heading" />
+            </h3>
             <div class="col-sm-15">
                 <table cellpadding="4" width="100%">
                     <tr>

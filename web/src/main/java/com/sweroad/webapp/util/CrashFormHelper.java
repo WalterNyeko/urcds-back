@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.sweroad.model.Casualty;
 import com.sweroad.model.Crash;
+import com.sweroad.model.LabelValue;
 import com.sweroad.model.Vehicle;
 
 public class CrashFormHelper {

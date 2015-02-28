@@ -57,7 +57,6 @@ public class User extends BaseModel implements Serializable, UserDetails {
 	private boolean accountLocked;
 	private boolean credentialsExpired;
 	private District district;
-    private List<Audit> auditLogs;
 
 	/**
 	 * Default constructor - creates a new instance with no values set.
@@ -258,11 +257,6 @@ public class User extends BaseModel implements Serializable, UserDetails {
 		return !credentialsExpired;
 	}
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    public List<Audit> getAuditLogs() {
-        return auditLogs;
-    }
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -334,10 +328,6 @@ public class User extends BaseModel implements Serializable, UserDetails {
 	public void setCredentialsExpired(boolean credentialsExpired) {
 		this.credentialsExpired = credentialsExpired;
 	}
-
-    public void setAuditLogs(List<Audit> auditLogs) {
-        this.auditLogs = auditLogs;
-    }
 
 	/**
 	 * {@inheritDoc}

@@ -465,9 +465,11 @@
 											${vehicle.driver.casualtyType.name}
 										</c:if> </td>
 								</tr>
-                                <tr>
-                                    <td colspan="6">&nbsp;</td>
-                                </tr>
+                                <c:if test="${!status.last}">
+                                    <tr>
+                                        <td colspan="6">&nbsp;</td>
+                                    </tr>
+                                </c:if>
 							</c:forEach>
 						</table>
 					</td>
@@ -504,7 +506,7 @@
 								</tr>
 								<c:forEach var="casualty" items="${crash.casualties}"
 									varStatus="status">
-									<tr>
+									<tr class="standout">
 										<td class="padd2"><appfuse:label styleClass="form-label"
 												key="crash.person" />&nbsp;${status.index + 1}</td>
 										<td class="padd2">${casualty.casualtyType.name}</td>
@@ -536,51 +538,59 @@
                 <td width="50%" style="padding-left: 8px;">
                     <table cellpadding="2" style="border: 1px solid #000;">
                         <tr>
-                            <td>
+                            <td align="right">
                                 <appfuse:label
                                         styleClass="control-label" key="crashForm.CreatedBy" />:
                             </td>
                             <td>
-                                <c:if test="${crash.createdBy ne null}">
-                                    ${crash.createdBy.fullName}
-                                </c:if>
+                                <i>
+                                    <c:if test="${crash.createdBy ne null}">
+                                        ${crash.createdBy.fullName}
+                                    </c:if>
+                                </i>
                             </td>
                             <td>
-                                &nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;
                             </td>
                             <td>
                                 <appfuse:label
                                         styleClass="control-label" key="crashForm.on" />:
                             </td>
                             <td>
-                                <c:if test="${crash.dateCreated ne null}">
-                                    <fmt:formatDate type="both"
-                                                    value="${crash.dateCreated}" />
-                                </c:if>
+                                <i>
+                                    <c:if test="${crash.dateCreated ne null}">
+                                        <fmt:formatDate type="both"
+                                                        value="${crash.dateCreated}" />
+                                    </c:if>
+                                </i>
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td align="right">
                                 <appfuse:label
                                         styleClass="control-label" key="crashForm.LastUpdatedBy" />:
                             </td>
                             <td>
-                                <c:if test="${crash.updatedBy ne null}">
-                                    ${crash.updatedBy.fullName}
-                                </c:if>
+                                <i>
+                                    <c:if test="${crash.updatedBy ne null}">
+                                        ${crash.updatedBy.fullName}
+                                    </c:if>
+                                </i>
                             </td>
                             <td>
-                                &nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;
                             </td>
                             <td>
                                 <appfuse:label
                                         styleClass="control-label" key="crashForm.on" />:
                             </td>
                             <td>
-                                <c:if test="${crash.dateUpdated ne null}">
-                                    <fmt:formatDate type="both"
-                                                    value="${crash.dateUpdated}" />
-                                </c:if>
+                                <i>
+                                    <c:if test="${crash.dateUpdated ne null}">
+                                        <fmt:formatDate type="both"
+                                                        value="${crash.dateUpdated}" />
+                                    </c:if>
+                                </i>
                             </td>
                         </tr>
                     </table>

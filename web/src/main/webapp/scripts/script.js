@@ -306,6 +306,13 @@ function initPopupFormLinks() {
                $modal.zIndex(2000);
                $('body').modalmanager('loading');
                $modal.load(url, '', function(){
+                   var modalBody = $modal.find('.modal-body');
+                   var modalFooter = $modal.find('.modal-footer');
+                   $modal.html('');
+                   $modal.append(modalBody);
+                   if(modalFooter) {
+                       $modal.append(modalFooter);
+                   }
                    $modal.modal();
                });
                return false;

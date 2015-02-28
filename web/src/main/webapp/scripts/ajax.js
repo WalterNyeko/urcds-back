@@ -13,6 +13,11 @@ function loadSelectCrash(params) {
         closeOnEscape: false,
         modal: true,
         width: 850,
+        buttons: {
+            'Search': function () {
+                $("#selectCrashForm").submit();
+            }
+        },
         open: function () {
             openDialog({
                 dialogDiv: this,
@@ -21,6 +26,7 @@ function loadSelectCrash(params) {
         }
     });
     params.responseDiv = $("#select-crash");
+    params.rootElementId = "selectCrashForm";
     sendRequest(params);
     return false;
 }
@@ -31,6 +37,11 @@ function sendRequest(params) {
         success: function (result) {
             if(params.responseDiv) {
                 $(params.responseDiv).html(result);
+                if(params.rootElementId) {
+                    var rootElement = $(params.responseDiv).find("#"+params.rootElementId);
+                    $(params.responseDiv).html("");
+                    $(params.responseDiv).append(rootElement);
+                }
             }
         }
     });

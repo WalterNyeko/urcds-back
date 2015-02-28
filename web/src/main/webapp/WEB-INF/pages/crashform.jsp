@@ -20,15 +20,13 @@
         });
     </script>
 </head>
-<div class="col-sm-3">
-	<h3>
-		<fmt:message key="crashForm.heading" />
-	</h3>
-</div>
 <div class="col-sm-15">
 	<form:errors path="*" cssClass="alert alert-danger alert-dismissable" element="div"/>
 	<form:form commandName="crash" method="post" action="/crashform2"
 		id="crashForm" autocomplete="off" cssClass="well">
+        <h3>
+            <fmt:message key="crashForm.heading" />
+        </h3>
 		<div class="col-sm-15">
 			<table cellpadding="4" width="100%">
 				<tr>

@@ -8,6 +8,8 @@
 		<Menu name="Home" title="home.title" page="/home" roles="ROLE_ADMIN,ROLE_USER,ROLE_READONLY,ROLE_SUPER_USER" />
 		<Menu name="CrashMenu" title="menu.crashes" description="List of Crashes"
 			page="/crashes" roles="ROLE_ADMIN,ROLE_USER,ROLE_READONLY,ROLE_SUPER_USER" />
+        <Menu name="InjuryMenu" title="menu.injuries" description="List of Injuries"
+              page="#" roles="ROLE_ADMIN,ROLE_USER,ROLE_READONLY,ROLE_SUPER_USER" />
         <Menu name="AnalysisMenu" title="menu.analysis" description="Crash Analysis"
               page="/analysis" roles="ROLE_ADMIN,ROLE_USER,ROLE_READONLY,ROLE_SUPER_USER" />
         <Menu name="MappingMenu" title="menu.mapping" description="Crash Mapping"

@@ -38,6 +38,8 @@ public class CrashFormController extends BaseFormController {
     private GenericManager<CasualtyClass, Long> casualtyClassManager;
     @Autowired
     private GenericManager<CasualtyType, Long> casualtyTypeManager;
+    @Autowired
+    private GenericManager<PoliceStation, Long> policeStationManager;
     private final static Long DEFAULT_ID = 0L;
 
     public CrashFormController() {
@@ -81,6 +83,7 @@ public class CrashFormController extends BaseFormController {
                     "crash");
             if (sessionCrash != null && sessionCrash.getId().equals(crashId)) {
                 crash = sessionCrash;
+                crash.setPoliceStation(policeStationManager.get(crash.getPoliceStation().getId()));
             } else {
                 crash = crashManager.get(crashId);
             }

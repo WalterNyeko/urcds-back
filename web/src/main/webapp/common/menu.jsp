@@ -10,6 +10,7 @@
 			</c:if>
 			<menu:displayMenu name="Home" />
 			<menu:displayMenu name="CrashMenu" />
+            <menu:displayMenu name="InjuryMenu" />
             <menu:displayMenu name="AnalysisMenu" />
             <menu:displayMenu name="MappingMenu" />
             <menu:displayMenu name="ReportsMenu" />

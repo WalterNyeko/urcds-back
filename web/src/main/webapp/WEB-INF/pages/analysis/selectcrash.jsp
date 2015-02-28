@@ -9,6 +9,38 @@
                     <tr>
                         <td width="40%">
                             <appfuse:label styleClass="form-label"
+                                           key="rcds.from" />
+                        </td>
+                        <td width="60%">
+                            <table width="100%">
+                                <tr>
+                                    <td width="50%">
+                                        <form:select path="startYear"
+                                                     cssClass="form-control">
+                                            <form:option value="" selected="selected">
+                                                <fmt:message key="rcds.year" />
+                                            </form:option>
+                                            <form:options items="${years}" itemValue="value"
+                                                          itemLabel="label" />
+                                        </form:select>
+                                    </td>
+                                    <td width="50%">
+                                        <form:select path="startMonth"
+                                                     cssClass="form-control">
+                                            <form:option value="" selected="selected">
+                                                <fmt:message key="rcds.month" />
+                                            </form:option>
+                                            <form:options items="${months}" itemValue="value"
+                                                          itemLabel="label" />
+                                        </form:select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="40%">
+                            <appfuse:label styleClass="form-label"
                                 key="crashAnalysis.startDate" />
                         </td>
                         <td width="60%">
@@ -49,6 +81,38 @@
                     <tr>
                         <td width="40%">
                             <appfuse:label styleClass="form-label"
+                                           key="rcds.to" />
+                        </td>
+                        <td width="60%">
+                            <table width="100%">
+                                <tr>
+                                    <td width="50%">
+                                        <form:select path="endYear"
+                                                     cssClass="form-control">
+                                            <form:option value="" selected="selected">
+                                                <fmt:message key="rcds.year" />
+                                            </form:option>
+                                            <form:options items="${years}" itemValue="value"
+                                                          itemLabel="label" />
+                                        </form:select>
+                                    </td>
+                                    <td width="50%">
+                                        <form:select path="endMonth"
+                                                     cssClass="form-control">
+                                            <form:option value="" selected="selected">
+                                                <fmt:message key="rcds.month" />
+                                            </form:option>
+                                            <form:options items="${months}" itemValue="value"
+                                                          itemLabel="label" />
+                                        </form:select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="40%">
+                            <appfuse:label styleClass="form-label"
                                            key="crashAnalysis.endDate" />
                         </td>
                         <td width="60%">
@@ -84,12 +148,6 @@
                         </td>
                     </tr>
                 </table>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <input type="submit" class="btn btn-primary submit"
-                       value="<fmt:message key='button.search'/>">
             </td>
         </tr>
     </table>

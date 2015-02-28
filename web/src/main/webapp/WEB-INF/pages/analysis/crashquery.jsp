@@ -11,16 +11,14 @@
         });
     </script>
 </head>
-<div class="col-sm-3">
-	<h3>
-		<fmt:message key="crashQuery.heading" />
-	</h3>
-    <fmt:message key="crashQuery.subHeading" />
-</div>
 <div class="col-sm-15">
 	<form:errors path="*" cssClass="alert alert-danger alert-dismissable" element="div"/>
 	<form:form commandName="crashSearch" method="post" action="/crashqueryrun"
 		id="crashForm" autocomplete="off" cssClass="well">
+        <h3>
+            <fmt:message key="crashQuery.heading" />
+        </h3>
+        <fmt:message key="crashQuery.subHeading" />
 		<div class="col-sm-15">
 			<table cellpadding="4" width="100%">
 				<tr>

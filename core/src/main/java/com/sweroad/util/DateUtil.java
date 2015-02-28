@@ -193,4 +193,28 @@ public final class DateUtil {
     public static Date convertStringToDate(final String strDate) throws ParseException {
         return convertStringToDate(getDatePattern(), strDate);
     }
+
+    public static int getDateMonthOrYear(Date date, int monthOrYear) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.get(monthOrYear);
+    }
+
+    public static Date createDateFromYearMonthDay(int year, int month, int day) {
+        Calendar calender = Calendar.getInstance();
+        calender.set(year, month - 1, day);
+        return calender.getTime();
+    }
+
+    public static int getMaximumDateInYearMonth(int year, int month) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month - 1, 1);
+        return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+    }
+
+    public static int getOneBasedMonthFromDate(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.get(Calendar.MONTH) + 1;
+    }
 }

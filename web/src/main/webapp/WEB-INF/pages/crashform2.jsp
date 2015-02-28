@@ -6,19 +6,14 @@
         initPopupFormLinks();
     </script>
 </head>
-<div class="col-sm-3">
-	<h3>
-		<fmt:message key="crashForm.heading" />
-	</h3>
-	<p>
-		<appfuse:label styleClass="control-label" key="crashForm.tarNo" />
-		: ${crash.tarNo}
-	</p>
-</div>
 <div class="col-sm-15">
 	<form:form commandName="crash" method="post" action="/crashformsubmit"
 		id="crashform" autocomplete="off" cssClass="well"
 		onsubmit="return validateCrash(this)">
+        <h3>
+            <fmt:message key="crashForm.heading" />
+        </h3>
+        <appfuse:label styleClass="control-label" key="crashForm.tarNo" />: ${crash.tarNo}
 		<div class="col-sm-15">
 			<table cellpadding="4" width="100%">
 				<c:if test="${crash.vehicles ne null }">
