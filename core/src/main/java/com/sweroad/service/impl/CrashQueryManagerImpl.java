@@ -8,6 +8,8 @@ import com.sweroad.query.Queryable;
 import com.sweroad.service.CrashManager;
 import com.sweroad.service.CrashQueryManager;
 import com.sweroad.service.GenericManager;
+import com.sweroad.service.LookupManager;
+import com.sweroad.util.GenericManagerHelper;
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,6 +53,8 @@ public class CrashQueryManagerImpl implements CrashQueryManager {
     private GenericManager<CasualtyClass, Long> casualtyClassManager;
     @Autowired
     private GenericManager<CasualtyType, Long> casualtyTypeManager;
+    @Autowired
+    private LookupManager lookupManager;
 
     @Override
     public List<Crash> getCrashesByQuery(CrashQuery crashQuery) {
@@ -59,149 +63,29 @@ public class CrashQueryManagerImpl implements CrashQueryManager {
 
     @Override
     public void processCrashSearch(CrashSearch crashSearch) {
-        List<CrashSeverity> crashSeverities = stripNulls(crashSearch.getCrashSeverities());
-        crashSearch.setCrashSeverities(
-                crashSeverities.size() > 0 ? getFilteredList(crashSeverities, crashSeverityManager)
-                        : crashSeverities
-        );
-
-        List<CollisionType> collisionTypes = stripNulls(crashSearch.getCollisionTypes());
-        crashSearch.setCollisionTypes(
-                collisionTypes.size() > 0 ? getFilteredList(collisionTypes, collisionTypeManager) :
-                        collisionTypes
-        );
-
-        List<CrashCause> crashCauses = stripNulls(crashSearch.getCrashCauses());
-        crashSearch.setCrashCauses(
-                crashCauses.size() > 0 ? getFilteredList(crashCauses, crashCauseManager)
-                        : crashCauses
-        );
-
-        List<VehicleFailureType> vehicleFailureTypes = stripNulls(crashSearch.getVehicleFailureTypes());
-        crashSearch.setVehicleFailureTypes(
-                vehicleFailureTypes.size() > 0 ? getFilteredList(vehicleFailureTypes, vehicleFailureTypeManager)
-                        : vehicleFailureTypes
-        );
-
-        List<Weather> weathers = stripNulls(crashSearch.getWeathers());
-        crashSearch.setWeathers(
-                weathers.size() > 0 ? getFilteredList(weathers, weatherManager)
-                        : weathers
-        );
-
-        List<SurfaceCondition> surfaceConditions = stripNulls(crashSearch.getSurfaceConditions());
-        crashSearch.setSurfaceConditions(
-                surfaceConditions.size() > 0 ? getFilteredList(surfaceConditions, surfaceConditionManager)
-                        : surfaceConditions
-        );
-
-        List<RoadSurface> roadSurfaces = stripNulls(crashSearch.getRoadSurfaces());
-        crashSearch.setRoadSurfaces(
-                roadSurfaces.size() > 0 ? getFilteredList(roadSurfaces, roadSurfaceManager)
-                        : roadSurfaces
-        );
-
-        List<SurfaceType> surfaceTypes = stripNulls(crashSearch.getSurfaceTypes());
-        crashSearch.setSurfaceTypes(
-                surfaceTypes.size() > 0 ? getFilteredList(surfaceTypes, surfaceTypeManager)
-                        : surfaceTypes
-        );
-
-        List<RoadwayCharacter> roadwayCharacters = stripNulls(crashSearch.getRoadwayCharacters());
-        crashSearch.setRoadwayCharacters(
-                roadwayCharacters.size() > 0 ? getFilteredList(roadwayCharacters, roadwayCharacterManager)
-                        : roadwayCharacters
-        );
-
-        List<JunctionType> junctionTypes = stripNulls(crashSearch.getJunctionTypes());
-        crashSearch.setJunctionTypes(
-                junctionTypes.size() > 0 ? getFilteredList(junctionTypes, junctionTypeManager)
-                        : junctionTypes
-        );
-
-        List<VehicleType> vehicleTypes = stripNulls(crashSearch.getVehicleTypes());
-        crashSearch.setVehicleTypes(
-                vehicleTypes.size() > 0 ? getFilteredList(vehicleTypes, vehicleTypeManager)
-                        : vehicleTypes
-        );
-
-        List<CasualtyClass> casualtyClasses = stripNulls(crashSearch.getCasualtyClasses());
-        crashSearch.setCasualtyClasses(
-                casualtyClasses.size() > 0 ? getFilteredList(casualtyClasses, casualtyTypeManager)
-                        : casualtyClasses
-        );
-
-        List<CasualtyType> casualtyTypes = stripNulls(crashSearch.getCasualtyTypes());
-        crashSearch.setCasualtyTypes(
-                casualtyTypes.size() > 0 ? getFilteredList(casualtyTypes, casualtyTypeManager)
-                        : casualtyTypes
-        );
+        crashSearch.setCrashSeverities(GenericManagerHelper.filterForCrashSearch(crashSearch.getCrashSeverities(), crashSeverityManager));
+        crashSearch.setCollisionTypes(GenericManagerHelper.filterForCrashSearch(crashSearch.getCollisionTypes(), collisionTypeManager));
+        crashSearch.setCrashCauses(GenericManagerHelper.filterForCrashSearch(crashSearch.getCrashCauses(), crashCauseManager));
+        crashSearch.setVehicleFailureTypes(GenericManagerHelper.filterForCrashSearch(crashSearch.getVehicleFailureTypes(), vehicleFailureTypeManager));
+        crashSearch.setWeathers(GenericManagerHelper.filterForCrashSearch(crashSearch.getWeathers(), weatherManager));
+        crashSearch.setSurfaceConditions(GenericManagerHelper.filterForCrashSearch(crashSearch.getSurfaceConditions(), surfaceConditionManager));
+        crashSearch.setRoadSurfaces(GenericManagerHelper.filterForCrashSearch(crashSearch.getRoadSurfaces(), roadSurfaceManager));
+        crashSearch.setSurfaceTypes(GenericManagerHelper.filterForCrashSearch(crashSearch.getSurfaceTypes(), surfaceTypeManager));
+        crashSearch.setRoadwayCharacters(GenericManagerHelper.filterForCrashSearch(crashSearch.getRoadwayCharacters(), roadwayCharacterManager));
+        crashSearch.setJunctionTypes(GenericManagerHelper.filterForCrashSearch(crashSearch.getJunctionTypes(), junctionTypeManager));
+        crashSearch.setVehicleTypes(GenericManagerHelper.filterForCrashSearch(crashSearch.getVehicleTypes(), vehicleTypeManager));
+        crashSearch.setCasualtyClasses(GenericManagerHelper.filterForCrashSearch(crashSearch.getCasualtyClasses(), casualtyClassManager));
+        crashSearch.setCasualtyTypes(GenericManagerHelper.filterForCrashSearch(crashSearch.getCasualtyTypes(), casualtyTypeManager));
     }
 
     @Override
     public Map<String, List> getCrashQueryReferenceData() {
         Map<String, List> queryCrashReferenceData = crashManager.getReferenceData();
-        List<LabelValue> licenseTypes = new ArrayList<LabelValue>();
-        addLabelValueToList("Valid License", "1", licenseTypes);
-        addLabelValueToList("No Valid License", "0", licenseTypes);
-        addLabelValueToList("Unknown", "-1", licenseTypes);
-        queryCrashReferenceData.put("licenseTypes", licenseTypes);
-
-        List<LabelValue> driverGenders = new ArrayList<LabelValue>();
-        addLabelValueToList("Male", "M", driverGenders);
-        addLabelValueToList("Female", "F", driverGenders);
-        addLabelValueToList("Unknown", "-1", driverGenders);
-        queryCrashReferenceData.put("genders", driverGenders);
-
-        List<LabelValue> driverBeltUseds = new ArrayList<LabelValue>();
-        addLabelValueToList("Yes", "1", driverBeltUseds);
-        addLabelValueToList("No", "0", driverBeltUseds);
-        addLabelValueToList("Unknown", "-1", driverBeltUseds);
-        queryCrashReferenceData.put("beltUseds", driverBeltUseds);
-
-        List<LabelValue> driverAgeRanges = new ArrayList<LabelValue>();
-        addLabelValueToList("Below 10", "1", driverAgeRanges);
-        addLabelValueToList("10-19", "2", driverAgeRanges);
-        addLabelValueToList("20-29", "3", driverAgeRanges);
-        addLabelValueToList("30-39", "4", driverAgeRanges);
-        addLabelValueToList("40-49", "5", driverAgeRanges);
-        addLabelValueToList("50-59", "6", driverAgeRanges);
-        addLabelValueToList("60-69", "7", driverAgeRanges);
-        addLabelValueToList("70 and above", "8", driverAgeRanges);
-        queryCrashReferenceData.put("ageRanges", driverAgeRanges);
+        queryCrashReferenceData.put("licenseTypes", lookupManager.getAllLicenseTypes());
+        queryCrashReferenceData.put("genders", lookupManager.getAllGenders());
+        queryCrashReferenceData.put("beltUseds", lookupManager.getAllBeltUsedOptions());
+        queryCrashReferenceData.put("ageRanges", lookupManager.getAllAgeRanges());
 
         return queryCrashReferenceData;
-    }
-
-    private void addLabelValueToList(String label, String value, List<LabelValue> labelValues) {
-        LabelValue licenseType = new LabelValue();
-        licenseType.setLabel(label);
-        licenseType.setValue(value);
-        labelValues.add(licenseType);
-    }
-
-    private <T extends Queryable> List<T> getFilteredList(List<T> list, GenericManager listManager) {
-        List<T> dbList = listManager.getAll();
-        List<T> filteredList = new ArrayList<T>();
-        for (T t : dbList) {
-            for (T y : list) {
-                if (t.getId().equals(y.getId())) {
-                    filteredList.add(t);
-                }
-            }
-        }
-        return filteredList;
-    }
-
-    private <T extends Queryable> List<T> stripNulls(List<T> list) {
-        List<T> strippedList = new ArrayList<T>();
-        if (list != null) {
-            for (T t : list) {
-                if (t.getId() != null) {
-                    strippedList.add(t);
-                }
-            }
-        }
-        return strippedList;
     }
 }

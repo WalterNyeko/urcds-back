@@ -1,5 +1,7 @@
 package com.sweroad.model;
 
+import com.sweroad.query.Queryable;
+
 import java.io.Serializable;
 import java.util.Comparator;
 
@@ -13,7 +15,18 @@ import java.util.Comparator;
  *
  * @see org.apache.struts.util.LabelValueBean
  */
-public class LabelValue implements Comparable<Object>, Serializable {
+public class LabelValue implements Comparable<Object>, Serializable, Queryable {
+
+    /**
+     * The property which supplies the option label visible to the end user.
+     */
+    private String label;
+    /**
+     * The property which supplies the value returned to the server.
+     */
+    private String value;
+    private String entityName;
+    private String nameForQuery;
 
     private static final long serialVersionUID = 3689355407466181430L;
 
@@ -52,12 +65,6 @@ public class LabelValue implements Comparable<Object>, Serializable {
 
     // ------------------------------------------------------------- Properties
 
-
-    /**
-     * The property which supplies the option label visible to the end user.
-     */
-    private String label;
-
     public String getLabel() {
         return this.label;
     }
@@ -67,10 +74,6 @@ public class LabelValue implements Comparable<Object>, Serializable {
     }
 
 
-    /**
-     * The property which supplies the value returned to the server.
-     */
-    private String value;
 
     public String getValue() {
         return this.value;
@@ -80,6 +83,32 @@ public class LabelValue implements Comparable<Object>, Serializable {
         this.value = value;
     }
 
+    @Override
+    public Long getId() {
+        try {
+            return Long.parseLong(this.value);
+        } catch(NumberFormatException nfe) {
+            return null;
+        }
+    }
+
+    @Override
+    public String getEntityName() {
+        return this.entityName;
+    }
+
+    public void setEntityName(String entityName) {
+        this.entityName = entityName;
+    }
+
+    @Override
+    public String getNameForQuery() {
+        return this.nameForQuery;
+    }
+
+    public void setNameForQuery(String nameForQuery) {
+        this.nameForQuery = nameForQuery;
+    }
 
     // --------------------------------------------------------- Public Methods
 

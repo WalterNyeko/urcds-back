@@ -1,5 +1,7 @@
 package com.sweroad.service;
 
+import com.sweroad.query.CrashSearch;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;

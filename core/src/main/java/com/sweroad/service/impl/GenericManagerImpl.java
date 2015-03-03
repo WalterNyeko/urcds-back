@@ -1,9 +1,14 @@
 package com.sweroad.service.impl;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.sweroad.model.CrashSeverity;
+import com.sweroad.query.CrashSearch;
+import com.sweroad.query.Queryable;
+import com.sweroad.util.GenericManagerHelper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -43,7 +48,7 @@ import com.sweroad.service.GenericManager;
  * @param <T>  a type variable
  * @param <PK> the primary key for that type
  * @author <a href="mailto:matt@raibledesigns.com">Matt Raible</a>
- *  Updated by jgarcia: added full text search + reindexing
+ *         Updated by jgarcia: added full text search + reindexing
  */
 public class GenericManagerImpl<T, PK extends Serializable> implements GenericManager<T, PK> {
     /**
@@ -70,13 +75,14 @@ public class GenericManagerImpl<T, PK extends Serializable> implements GenericMa
     public List<T> getAll() {
         return dao.getAll();
     }
-    
+
     /**
      * {@inheritDoc}
+     *
      * @return
      */
     public List<T> getAllDistinct() {
-    	return dao.getAllDistinct();
+        return dao.getAllDistinct();
     }
 
     /**
