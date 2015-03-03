@@ -108,7 +108,7 @@ public class CrashAnalysisController extends BaseFormController {
             List<Crash> crashes = searchCriteriaManager.getCrashesByCriteria(criteria);
             JsonHelper.crashesToJsonAndSetInSession(request, crashes);
         } catch (Exception e) {
-            log.error("Remove crash failed: " + e.getLocalizedMessage());
+            log.error("Select crashes failed: " + e.getLocalizedMessage());
         }
         return showCrashes(request);
     }

@@ -15,7 +15,9 @@ function loadSelectCrash(params) {
         width: 850,
         buttons: {
             'Search': function () {
-                $("#selectCrashForm").submit();
+                if(validateCrashSearch()) {
+                    $("#selectCrashForm").submit();
+                }
             }
         },
         open: function () {
@@ -27,6 +29,7 @@ function loadSelectCrash(params) {
     });
     params.responseDiv = $("#select-crash");
     params.rootElementId = "selectCrashForm";
+    params.dialogDiv = $("#select-crash");
     sendRequest(params);
     return false;
 }
@@ -42,6 +45,11 @@ function sendRequest(params) {
                     $(params.responseDiv).html("");
                     $(params.responseDiv).append(rootElement);
                 }
+            }
+        },
+        complete: function() {
+            if(params.dialogDiv) {
+                params.dialogDiv.dialog("option", "position", { my: "center", at: "center", of: window });
             }
         }
     });

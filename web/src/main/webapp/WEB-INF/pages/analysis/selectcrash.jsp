@@ -4,7 +4,7 @@
     id="selectCrashForm" autocomplete="off">
     <table cellpadding="4" width="100%">
         <tr>
-            <td width="50%" valign="top">
+            <td width="50%" valign="top" style="padding-right: 8px;">
                 <table width="100%">
                     <tr>
                         <td width="40%">
@@ -16,7 +16,7 @@
                                 <tr>
                                     <td width="50%">
                                         <form:select path="startYear"
-                                                     cssClass="form-control">
+                                                     cssClass="form-control year-month-range" id="startYear">
                                             <form:option value="" selected="selected">
                                                 <fmt:message key="rcds.year" />
                                             </form:option>
@@ -26,7 +26,7 @@
                                     </td>
                                     <td width="50%">
                                         <form:select path="startMonth"
-                                                     cssClass="form-control">
+                                                     cssClass="form-control year-month-range" id="startMonth">
                                             <form:option value="" selected="selected">
                                                 <fmt:message key="rcds.month" />
                                             </form:option>
@@ -76,7 +76,7 @@
                     </tr>
                 </table>
             </td>
-            <td width="50%" valign="top">
+            <td width="50%" valign="top"  style="padding-left: 8px;">
                 <table width="100%">
                     <tr>
                         <td width="40%">
@@ -88,7 +88,7 @@
                                 <tr>
                                     <td width="50%">
                                         <form:select path="endYear"
-                                                     cssClass="form-control">
+                                                     cssClass="form-control year-month-range" id="endYear">
                                             <form:option value="" selected="selected">
                                                 <fmt:message key="rcds.year" />
                                             </form:option>
@@ -98,7 +98,7 @@
                                     </td>
                                     <td width="50%">
                                         <form:select path="endMonth"
-                                                     cssClass="form-control">
+                                                     cssClass="form-control year-month-range" id="endMonth">
                                             <form:option value="" selected="selected">
                                                 <fmt:message key="rcds.month" />
                                             </form:option>
@@ -108,6 +108,11 @@
                                     </td>
                                 </tr>
                             </table>
+                        </td>
+                    </tr>
+                    <tr id="year-month-range-error" style="display: none; color: red; font-style: italic;">
+                        <td colspan="2">
+
                         </td>
                     </tr>
                     <tr>
@@ -152,3 +157,11 @@
         </tr>
     </table>
 </form:form>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+       $('.year-month-range').change(function() {
+           validateYearMonthRange(displayYearMonthRangeError);
+       });
+    });
+</script>

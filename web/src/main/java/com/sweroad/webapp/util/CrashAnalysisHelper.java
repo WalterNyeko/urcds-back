@@ -21,7 +21,7 @@ public class CrashAnalysisHelper {
         final int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         List<LabelValue> years = new ArrayList<LabelValue>();
         LabelValue year;
-        for(Integer i = currentYear; i >= minYear; i--) {
+        for (Integer i = currentYear; i >= minYear; i--) {
             year = new LabelValue();
             year.setLabel(i.toString());
             year.setValue(i.toString());
@@ -34,9 +34,9 @@ public class CrashAnalysisHelper {
         List<LabelValue> months = new ArrayList<LabelValue>();
         LabelValue month;
         MessageSource messageSource = getMessageSource(request);
-        for(Integer i = 0; i < 12; i++) {
+        for (Integer i = 1; i <= 12; i++) {
             month = new LabelValue();
-            month.setLabel(messageSource.getMessage(Constants.MONTHS_OF_YEAR_KEYS[i], null, request.getLocale()));
+            month.setLabel(messageSource.getMessage(Constants.MONTHS_OF_YEAR_KEYS[i - 1], null, request.getLocale()));
             month.setValue(i.toString());
             months.add(month);
         }

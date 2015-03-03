@@ -89,3 +89,41 @@ var checkRoadwayCharacter = function() {
         validationWarningMessage.push("You specified Character of Roadway as <i>Straight slight curve</i> and Junction Type as <i>Roundabout</i>");
     }
 }
+
+var validateYearMonthRange = function(displayError) {
+    var startYear = $('#startYear').val().length ? parseInt($('#startYear').val()) : 0;
+    var startMonth = $('#startMonth').val().length ? parseInt($('#startMonth').val()) : 0;
+    var endYear = $('#endYear').val().length ? parseInt($('#endYear').val()) : 0;
+    var endMonth = $('#endMonth').val().length ? parseInt($('#endMonth').val()) : 0;
+    if(startYear > endYear && endYear != 0) {
+        displayError('Start Year cannot be greater than End Year');
+        return false;
+    }
+    if(startYear == endYear && startMonth > endMonth && endMonth != 0) {
+        displayError('Start Month cannot be greater than End Month');
+        return false;
+    }
+    if(startYear > 0 && startMonth > 0 && endMonth > 0 && endYear == 0) {
+        displayError('Please select End Year');
+        return false;
+    }
+    if(startYear == 0 && startMonth > 0 && endMonth > 0 && endYear > 0) {
+        displayError('Please select Start Year');
+        return false;
+    }
+    return true;
+}
+
+var displayYearMonthRangeError = function(message) {
+    $("#year-month-range-error").children('td').html(message);
+    $("#year-month-range-error").show();
+    setTimeout(function() {
+        $("#year-month-range-error").fadeOut(6000);
+    }, 1000);
+}
+var validateCrashSearch = function() {
+    if(!validateYearMonthRange(displayYearMonthRangeError)) {
+        return false;
+    }
+    return true;
+}

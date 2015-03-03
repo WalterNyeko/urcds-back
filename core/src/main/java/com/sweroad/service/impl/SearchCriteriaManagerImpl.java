@@ -54,7 +54,7 @@ public class SearchCriteriaManagerImpl implements SearchCriteriaManager {
 
     private boolean meetsDateCriteria(SearchCriteria searchCriteria, Crash crash) {
         boolean meets;
-        if(atLeastOneYearMonthProvided(searchCriteria)) {
+        if (atLeastOneYearMonthProvided(searchCriteria)) {
             meets = meetsMonthOnlyCriteria(searchCriteria, crash);
             if (!meets) {
                 return false;
@@ -100,6 +100,14 @@ public class SearchCriteriaManagerImpl implements SearchCriteriaManager {
             setStartAndEndDatesForStartYearMonthAndEndYear(searchCriteria);
         } else if (endYearAndMonthButOnlyStartYearProvided(searchCriteria)) {
             setStartAndEndDatesForStartYearAndEndYearMonth(searchCriteria);
+        } else if (onlyStartYearProvided(searchCriteria)) {
+            setStartDateForStartYear(searchCriteria);
+        } else if (onlyStartYearAndMonthProvided(searchCriteria)) {
+            setStartDateForStartYearAndMonth(searchCriteria);
+        } else if (onlyEndYearProvided(searchCriteria)) {
+            setEndDateForEndYear(searchCriteria);
+        } else if (onlyEndYearAndMonthProvided(searchCriteria)) {
+            setEndDateForEndYearAndMonth(searchCriteria);
         }
     }
 
@@ -120,7 +128,7 @@ public class SearchCriteriaManagerImpl implements SearchCriteriaManager {
 
     private void setStartAndEndDatesForStartYearMonthAndEndYear(SearchCriteria searchCriteria) {
         Date startDate = DateUtil.createDateFromYearMonthDay(searchCriteria.getStartYear(), searchCriteria.getStartMonth(), 1);
-        Date endDate = DateUtil.createDateFromYearMonthDay(searchCriteria.getEndYear(), searchCriteria.getEndMonth(), 1);
+        Date endDate = DateUtil.createDateFromYearMonthDay(searchCriteria.getEndYear(), 12, 31);
         searchCriteria.setStartDate(startDate);
         searchCriteria.setEndDate(endDate);
     }
@@ -130,6 +138,27 @@ public class SearchCriteriaManagerImpl implements SearchCriteriaManager {
         Date endDate = DateUtil.createDateFromYearMonthDay(searchCriteria.getEndYear(), searchCriteria.getEndMonth(),
                 DateUtil.getMaximumDateInYearMonth(searchCriteria.getEndYear(), searchCriteria.getEndMonth()));
         searchCriteria.setStartDate(startDate);
+        searchCriteria.setEndDate(endDate);
+    }
+
+    private void setStartDateForStartYear(SearchCriteria searchCriteria) {
+        Date startDate = DateUtil.createDateFromYearMonthDay(searchCriteria.getStartYear(), 1, 1);
+        searchCriteria.setStartDate(startDate);
+    }
+
+    private void setStartDateForStartYearAndMonth(SearchCriteria searchCriteria) {
+        Date startDate = DateUtil.createDateFromYearMonthDay(searchCriteria.getStartYear(), searchCriteria.getStartMonth(), 1);
+        searchCriteria.setStartDate(startDate);
+    }
+
+    private void setEndDateForEndYear(SearchCriteria searchCriteria) {
+        Date endDate = DateUtil.createDateFromYearMonthDay(searchCriteria.getEndYear(), 12, 31);
+        searchCriteria.setEndDate(endDate);
+    }
+
+    private void setEndDateForEndYearAndMonth(SearchCriteria searchCriteria) {
+        Date endDate = DateUtil.createDateFromYearMonthDay(searchCriteria.getEndYear(), searchCriteria.getEndMonth(),
+                DateUtil.getMaximumDateInYearMonth(searchCriteria.getEndYear(), searchCriteria.getEndMonth()));
         searchCriteria.setEndDate(endDate);
     }
 
@@ -150,12 +179,32 @@ public class SearchCriteriaManagerImpl implements SearchCriteriaManager {
 
     private boolean startYearAndMonthButOnlyEndYearProvided(SearchCriteria searchCriteria) {
         return (searchCriteria.getStartYear() != null && searchCriteria.getStartMonth() != null
-                && searchCriteria.getEndMonth() == null && searchCriteria.getEndMonth() != null);
+                && searchCriteria.getEndYear() != null && searchCriteria.getEndMonth() == null);
     }
 
     private boolean endYearAndMonthButOnlyStartYearProvided(SearchCriteria searchCriteria) {
         return (searchCriteria.getStartYear() != null && searchCriteria.getStartMonth() == null
-                && searchCriteria.getEndMonth() != null && searchCriteria.getEndMonth() != null);
+                && searchCriteria.getEndYear() != null && searchCriteria.getEndMonth() != null);
+    }
+
+    private boolean onlyStartYearProvided(SearchCriteria searchCriteria) {
+        return (searchCriteria.getStartYear() != null && searchCriteria.getStartMonth() == null
+                && searchCriteria.getEndYear() == null && searchCriteria.getEndMonth() == null);
+    }
+
+    private boolean onlyStartYearAndMonthProvided(SearchCriteria searchCriteria) {
+        return (searchCriteria.getStartYear() != null && searchCriteria.getStartMonth() != null
+                && searchCriteria.getEndYear() == null && searchCriteria.getEndMonth() == null);
+    }
+
+    private boolean onlyEndYearProvided(SearchCriteria searchCriteria) {
+        return (searchCriteria.getStartYear() == null && searchCriteria.getStartMonth() == null
+                && searchCriteria.getEndYear() != null && searchCriteria.getEndMonth() == null);
+    }
+
+    private boolean onlyEndYearAndMonthProvided(SearchCriteria searchCriteria) {
+        return (searchCriteria.getStartYear() == null && searchCriteria.getStartMonth() == null
+                && searchCriteria.getEndYear() != null && searchCriteria.getEndMonth() != null);
     }
 
     private boolean atLeastOneYearMonthProvided(SearchCriteria searchCriteria) {
