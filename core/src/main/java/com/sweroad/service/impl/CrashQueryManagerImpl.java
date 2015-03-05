@@ -4,17 +4,14 @@ import com.sweroad.dao.CrashDao;
 import com.sweroad.model.*;
 import com.sweroad.query.CrashQuery;
 import com.sweroad.query.CrashSearch;
-import com.sweroad.query.Queryable;
 import com.sweroad.service.CrashManager;
 import com.sweroad.service.CrashQueryManager;
 import com.sweroad.service.GenericManager;
 import com.sweroad.service.LookupManager;
 import com.sweroad.util.GenericManagerHelper;
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -74,8 +71,16 @@ public class CrashQueryManagerImpl implements CrashQueryManager {
         crashSearch.setRoadwayCharacters(GenericManagerHelper.filterForCrashSearch(crashSearch.getRoadwayCharacters(), roadwayCharacterManager));
         crashSearch.setJunctionTypes(GenericManagerHelper.filterForCrashSearch(crashSearch.getJunctionTypes(), junctionTypeManager));
         crashSearch.setVehicleTypes(GenericManagerHelper.filterForCrashSearch(crashSearch.getVehicleTypes(), vehicleTypeManager));
+        crashSearch.setDriverLicenseTypes(lookupManager.getFilteredLicenseTypes(crashSearch.getDriverLicenseTypes()));
+        crashSearch.setDriverGenders(lookupManager.getFilteredGenders(crashSearch.getDriverGenders()));
+        crashSearch.setDriverAgeRanges(lookupManager.getFilteredAgeRanges(crashSearch.getDriverAgeRanges()));
+        crashSearch.setDriverBeltUsedOptions(lookupManager.getFilteredBeltUsedOptions(crashSearch.getDriverBeltUsedOptions()));
+        crashSearch.setDriverCasualtyTypes(GenericManagerHelper.filterForCrashSearch(crashSearch.getDriverCasualtyTypes(), casualtyTypeManager));
         crashSearch.setCasualtyClasses(GenericManagerHelper.filterForCrashSearch(crashSearch.getCasualtyClasses(), casualtyClassManager));
         crashSearch.setCasualtyTypes(GenericManagerHelper.filterForCrashSearch(crashSearch.getCasualtyTypes(), casualtyTypeManager));
+        crashSearch.setCasualtyGenders(lookupManager.getFilteredGenders(crashSearch.getCasualtyGenders()));
+        crashSearch.setCasualtyAgeRanges(lookupManager.getFilteredAgeRanges(crashSearch.getCasualtyAgeRanges()));
+        crashSearch.setCasualtyBeltUsedOptions(lookupManager.getFilteredBeltUsedOptions(crashSearch.getCasualtyBeltUsedOptions()));
     }
 
     @Override
@@ -85,7 +90,6 @@ public class CrashQueryManagerImpl implements CrashQueryManager {
         queryCrashReferenceData.put("genders", lookupManager.getAllGenders());
         queryCrashReferenceData.put("beltUseds", lookupManager.getAllBeltUsedOptions());
         queryCrashReferenceData.put("ageRanges", lookupManager.getAllAgeRanges());
-
         return queryCrashReferenceData;
     }
 }

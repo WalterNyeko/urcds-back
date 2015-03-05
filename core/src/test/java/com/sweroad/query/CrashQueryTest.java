@@ -282,12 +282,26 @@ public class CrashQueryTest extends BaseManagerTestCase {
     @Test
     public void testHqlQueryGeneratedForCrashesInvolvingFemaleDriversAbove30Years() {
         String expected = "Select c from Crash c join c.vehicles v where v.driver.age > :age and v.driver.gender = :gender";
+        CustomQueryable customQueryableGreaterThan30 = new CustomQueryable.CustomQueryableBuilder()
+                .addCrashJoinType(CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE)
+                .addProperty("driver.age")
+                .addComparison(Comparison.GT)
+                .addParameterName("age")
+                .addParameterValue(30)
+                .shouldEncloseInParenthesis(false)
+                .build();
+        CustomQueryable customQueryableFemaleDriver = new CustomQueryable.CustomQueryableBuilder()
+                .addCrashJoinType(CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE)
+                .addProperty("driver.gender")
+                .addComparison(Comparison.EQ)
+                .addParameterName("gender")
+                .addParameterValue("F")
+                .shouldEncloseInParenthesis(false)
+                .build();
         crashQuery = new CrashQuery.CrashQueryBuilder()
                 .joinVehicles(true)
-                .addCustomQueryable(CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE,
-                        "driver.age", Comparison.GT, "age", 30, false)
-                .addCustomQueryable(CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE,
-                        "driver.gender", Comparison.EQ, "gender", "F", false)
+                .addCustomQueryable(customQueryableGreaterThan30)
+                .addCustomQueryable(customQueryableFemaleDriver)
                 .build();
         assertEquals(expected, crashQuery.toString());
     }
@@ -295,12 +309,26 @@ public class CrashQueryTest extends BaseManagerTestCase {
     @Test
     public void testHqlQueryGeneratedForCrashesInvolvingCasualtiesBetween10And20Years() {
         String expected = "Select c from Crash c join c.casualties i where i.age <= :age2 and i.age >= :age1";
+        CustomQueryable customQueryableGreaterThanEqualTo10 = new CustomQueryable.CustomQueryableBuilder()
+                .addCrashJoinType(CrashQuery.CrashQueryBuilder.CrashJoinType.CASUALTY)
+                .addProperty("age")
+                .addComparison(Comparison.GTE)
+                .addParameterName("age1")
+                .addParameterValue(10)
+                .shouldEncloseInParenthesis(false)
+                .build();
+        CustomQueryable customQueryableLessThanEqualTo20 = new CustomQueryable.CustomQueryableBuilder()
+                .addCrashJoinType(CrashQuery.CrashQueryBuilder.CrashJoinType.CASUALTY)
+                .addProperty("age")
+                .addComparison(Comparison.LTE)
+                .addParameterName("age2")
+                .addParameterValue(20)
+                .shouldEncloseInParenthesis(false)
+                .build();
         crashQuery = new CrashQuery.CrashQueryBuilder()
                 .joinCasualties(true)
-                .addCustomQueryable(CrashQuery.CrashQueryBuilder.CrashJoinType.CASUALTY,
-                        "age", Comparison.GTE, "age1", 10, false)
-                .addCustomQueryable(CrashQuery.CrashQueryBuilder.CrashJoinType.CASUALTY,
-                        "age", Comparison.LTE, "age2", 20, false)
+                .addCustomQueryable(customQueryableGreaterThanEqualTo10)
+                .addCustomQueryable(customQueryableLessThanEqualTo20)
                 .build();
         assertEquals(expected, crashQuery.toString());
     }
@@ -309,12 +337,26 @@ public class CrashQueryTest extends BaseManagerTestCase {
     public void testHqlQueryGeneratedForCrashesInvolvingFemaleDriversAbove30YearsAndPedestrians() {
         String expected = "Select c from Crash c join c.casualties i join c.vehicles v " +
                 "where i.casualtyClass in (:casualtyClassList) and v.driver.age > :age and v.driver.gender = :gender";
+        CustomQueryable customQueryableGreaterThan30 = new CustomQueryable.CustomQueryableBuilder()
+                .addCrashJoinType(CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE)
+                .addProperty("driver.age")
+                .addComparison(Comparison.GT)
+                .addParameterName("age")
+                .addParameterValue(30)
+                .shouldEncloseInParenthesis(false)
+                .build();
+        CustomQueryable customQueryableFemaleDriver = new CustomQueryable.CustomQueryableBuilder()
+                .addCrashJoinType(CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE)
+                .addProperty("driver.gender")
+                .addComparison(Comparison.EQ)
+                .addParameterName("gender")
+                .addParameterValue("F")
+                .shouldEncloseInParenthesis(false)
+                .build();
         crashQuery = new CrashQuery.CrashQueryBuilder()
                 .joinVehicles(true)
-                .addCustomQueryable(CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE,
-                        "driver.age", Comparison.GT, "age", 30, false)
-                .addCustomQueryable(CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE,
-                        "driver.gender", Comparison.EQ, "gender", "F", false)
+                .addCustomQueryable(customQueryableGreaterThan30)
+                .addCustomQueryable(customQueryableFemaleDriver)
                 .addQueryable(getCasualtyClasses())
                 .joinCasualties(true)
                 .build();

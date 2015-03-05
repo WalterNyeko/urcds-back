@@ -324,7 +324,7 @@
                                             <td style="border-top: none; border-left: none;">
                                                 <c:forEach var="licenseType" items="${licenseTypes}" varStatus="status">
                                                     <form:checkbox
-                                                            path="licenseTypes[${status.index}].value" value="${licenseType.value}" />&nbsp;&nbsp;${licenseType.label} <br/>
+                                                            path="driverLicenseTypes[${status.index}].value" value="${licenseType.value}" />&nbsp;&nbsp;${licenseType.label} <br/>
                                                 </c:forEach>
                                             </td>
                                             <td style="border-top: none; border-left: none;">
@@ -342,7 +342,7 @@
                                             <td style="border-top: none; border-left: none;">
                                                 <c:forEach var="driverBeltUsed" items="${beltUseds}" varStatus="status">
                                                     <form:checkbox
-                                                            path="driverBeltUseds[${status.index}].value" value="${driverBeltUsed.value}" />&nbsp;&nbsp;${driverBeltUsed.label} <br/>
+                                                            path="driverBeltUsedOptions[${status.index}].value" value="${driverBeltUsed.value}" />&nbsp;&nbsp;${driverBeltUsed.label} <br/>
                                                 </c:forEach>
                                             </td>
                                             <td style="border-top: none; border-left: none; border-right: none;">
@@ -410,7 +410,7 @@
                                 <td class="padd2" style="border-top: none; border-left: none;">
                                     <c:forEach var="casualtyBeltUsed" items="${beltUseds}" varStatus="status">
                                         <form:checkbox
-                                                path="casualtyBeltUseds[${status.index}].value" value="${casualtyBeltUsed.value}" />&nbsp;&nbsp;${casualtyBeltUsed.label} <br/>
+                                                path="casualtyBeltUsedOptions[${status.index}].value" value="${casualtyBeltUsed.value}" />&nbsp;&nbsp;${casualtyBeltUsed.label} <br/>
                                     </c:forEach>
                                 </td>
                             </tr>

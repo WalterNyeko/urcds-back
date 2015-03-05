@@ -5,6 +5,7 @@ import com.sweroad.model.CrashSeverity;
 import com.sweroad.query.CrashSearch;
 import com.sweroad.service.CrashManager;
 import com.sweroad.service.CrashQueryManager;
+import com.sweroad.service.LookupManager;
 import com.sweroad.webapp.util.JsonHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,11 +27,13 @@ public class CrashQueryController extends  BaseFormController {
 
     @Autowired
     private CrashQueryManager crashQueryManager;
+    @Autowired
+    private LookupManager lookupManager;
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView showForm() {
         ModelAndView mav = new ModelAndView("analysis/crashquery");
-        CrashSearch crashSearch = new CrashSearch();
+        CrashSearch crashSearch = new CrashSearch(lookupManager);
         crashSearch.getCrashSeverities().add(new CrashSeverity());
         crashSearch.getCrashSeverities().get(0).setId(2L);
         mav.addObject(crashSearch);

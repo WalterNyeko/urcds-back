@@ -1,7 +1,7 @@
 package com.sweroad.query;
 
 import com.sweroad.model.*;
-
+import com.sweroad.service.LookupManager;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,6 +11,7 @@ import java.util.List;
  */
 public class CrashSearch {
 
+    private LookupManager lookupManager;
     private Date startDate;
     private Date endDate;
     private List<CrashSeverity> crashSeverities = new ArrayList<CrashSeverity>();
@@ -24,16 +25,20 @@ public class CrashSearch {
     private List<RoadwayCharacter> roadwayCharacters = new ArrayList<RoadwayCharacter>();
     private List<JunctionType> junctionTypes = new ArrayList<JunctionType>();
     private List<VehicleType> vehicleTypes = new ArrayList<VehicleType>();
-    private List<LabelValue> licenseTypes = new ArrayList<LabelValue>();
+    private List<LabelValue> driverLicenseTypes = new ArrayList<LabelValue>();
     private List<LabelValue> driverGenders = new ArrayList<LabelValue>();
-    private List<LabelValue> driverBeltUseds = new ArrayList<LabelValue>();
+    private List<LabelValue> driverBeltUsedOptions = new ArrayList<LabelValue>();
     private List<LabelValue> driverAgeRanges = new ArrayList<LabelValue>();
     private List<CasualtyType> driverCasualtyTypes = new ArrayList<CasualtyType>();
     private List<CasualtyType> casualtyTypes = new ArrayList<CasualtyType>();
     private List<CasualtyClass> casualtyClasses = new ArrayList<CasualtyClass>();
     private List<LabelValue> casualtyGenders = new ArrayList<LabelValue>();
     private List<LabelValue> casualtyAgeRanges = new ArrayList<LabelValue>();
-    private List<LabelValue> casualtyBeltUseds = new ArrayList<LabelValue>();
+    private List<LabelValue> casualtyBeltUsedOptions = new ArrayList<LabelValue>();
+
+    public CrashSearch(LookupManager lookupManager) {
+        this.lookupManager = lookupManager;
+    }
 
     public Date getStartDate() {
         return this.startDate;
@@ -155,12 +160,12 @@ public class CrashSearch {
         this.casualtyClasses = casualtyClasses;
     }
 
-    public List<LabelValue> getLicenseTypes() {
-        return licenseTypes;
+    public List<LabelValue> getDriverLicenseTypes() {
+        return driverLicenseTypes;
     }
 
-    public void setLicenseTypes(List<LabelValue> licenseTypes) {
-        this.licenseTypes = licenseTypes;
+    public void setDriverLicenseTypes(List<LabelValue> driverLicenseTypes) {
+        this.driverLicenseTypes = driverLicenseTypes;
     }
 
     public List<LabelValue> getDriverGenders() {
@@ -171,12 +176,12 @@ public class CrashSearch {
         this.driverGenders = driverGenders;
     }
 
-    public List<LabelValue> getDriverBeltUseds() {
-        return driverBeltUseds;
+    public List<LabelValue> getDriverBeltUsedOptions() {
+        return driverBeltUsedOptions;
     }
 
-    public void setDriverBeltUseds(List<LabelValue> driverBeltUseds) {
-        this.driverBeltUseds = driverBeltUseds;
+    public void setDriverBeltUsedOptions(List<LabelValue> driverBeltUsedOptions) {
+        this.driverBeltUsedOptions = driverBeltUsedOptions;
     }
 
     public List<LabelValue> getDriverAgeRanges() {
@@ -211,12 +216,12 @@ public class CrashSearch {
         this.casualtyAgeRanges = casualtyAgeRanges;
     }
 
-    public List<LabelValue> getCasualtyBeltUseds() {
-        return casualtyBeltUseds;
+    public List<LabelValue> getCasualtyBeltUsedOptions() {
+        return casualtyBeltUsedOptions;
     }
 
-    public void setCasualtyBeltUseds(List<LabelValue> casualtyBeltUseds) {
-        this.casualtyBeltUseds = casualtyBeltUseds;
+    public void setCasualtyBeltUsedOptions(List<LabelValue> casualtyBeltUsedOptions) {
+        this.casualtyBeltUsedOptions = casualtyBeltUsedOptions;
     }
 
     public CrashQuery toQuery() {
@@ -224,8 +229,14 @@ public class CrashSearch {
     }
 
     private CrashQuery generateQuery() {
-        return new CrashQuery.CrashQueryBuilder()
-                .addQueryable(crashSeverities)
+        CrashQuery.CrashQueryBuilder crashQueryBuilder = new CrashQuery.CrashQueryBuilder();
+        addQueryableParameters(crashQueryBuilder);
+        addDriverLicenseType(crashQueryBuilder);
+        return crashQueryBuilder.build();
+    }
+
+    private void addQueryableParameters(CrashQuery.CrashQueryBuilder crashQueryBuilder) {
+        crashQueryBuilder.addQueryable(crashSeverities)
                 .addQueryable(collisionTypes)
                 .addQueryable(crashCauses)
                 .addQueryable(vehicleFailureTypes)
@@ -235,6 +246,49 @@ public class CrashSearch {
                 .addQueryable(surfaceTypes)
                 .addQueryable(roadwayCharacters)
                 .addQueryable(junctionTypes)
+                .joinVehicles(joinVehicles())
+                .addQueryable(vehicleTypes)
+                .joinCasualties(joinCasualties());
+    }
+
+    private void addDriverLicenseType(CrashQuery.CrashQueryBuilder crashQueryBuilder) {
+        if(driverLicenseTypes != null && driverLicenseTypes.size() > 0 &&
+                driverLicenseTypes.size() < lookupManager.getAllLicenseTypes().size()) {
+            String values = "";
+            for(LabelValue driverLicenseType : driverLicenseTypes) {
+                values += driverLicenseType.getId() + ", ";
+            }
+            values = values.substring(0, values.length() - 2);
+            crashQueryBuilder.addCustomQueryable(createCustomQueryableForLicenseType(values));
+        }
+    }
+
+    private CustomQueryable createCustomQueryableForLicenseType(String values) {
+        return new CustomQueryable.CustomQueryableBuilder()
+                .addCrashJoinType(CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE)
+                .addProperty("driver.licenseValid")
+                .addComparison(Comparison.IN)
+                .addParameterName("licenseValid")
+                .addParameterValue(values)
+                .shouldEncloseInParenthesis(true)
+                .shouldUseLiterals(true)
                 .build();
+    }
+
+    private boolean joinVehicles() {
+        return (vehicleTypes != null && vehicleTypes.size() > 0) ||
+                (driverLicenseTypes != null && driverLicenseTypes.size() > 0) ||
+                (driverGenders != null && driverGenders.size() > 0) ||
+                (driverAgeRanges != null && driverAgeRanges.size() > 0) ||
+                (driverBeltUsedOptions != null && driverBeltUsedOptions.size() > 0) ||
+                (driverCasualtyTypes != null && driverCasualtyTypes.size() > 0);
+    }
+
+    private boolean joinCasualties() {
+        return (casualtyTypes != null && casualtyTypes.size() > 0) ||
+                (casualtyClasses != null && casualtyClasses.size() > 0) ||
+                (casualtyGenders != null && casualtyGenders.size() > 0) ||
+                (casualtyAgeRanges != null && casualtyAgeRanges.size() > 0) ||
+                (casualtyBeltUsedOptions != null && casualtyBeltUsedOptions.size() > 0);
     }
 }

@@ -143,27 +143,31 @@ public class CrashQuery extends BaseModel {
             return cal.getTime();
         }
 
-        public CrashQueryBuilder addCustomQueryable(CrashJoinType joinType, String property, Comparison comparison,
-                                                    String paramName, Object paramValue, boolean encloseInParenthesis) {
+        public CrashQueryBuilder addCustomQueryable(CustomQueryable customQueryable) {
             StringBuilder comparisonClause = new StringBuilder("");
-            if (joinType == CrashJoinType.CASUALTY) {
+            if (customQueryable.getJoinType() == CrashJoinType.CASUALTY) {
                 this.joinCasualties(true);
-                property = Crash.CASUALTY_ALIAS_DOT.concat(property);
-            } else if (joinType == CrashJoinType.VEHICLE) {
+                customQueryable.setProperty(Crash.CASUALTY_ALIAS_DOT.concat(customQueryable.getProperty()));
+            } else if (customQueryable.getJoinType() == CrashJoinType.VEHICLE) {
                 this.joinVehicles(true);
-                property = Crash.VEHICLE_ALIAS_DOT.concat(property);
+                customQueryable.setProperty(Crash.VEHICLE_ALIAS_DOT.concat(customQueryable.getProperty()));
             }
 
-            comparisonClause.append(property).append(comparison.getSymbol());
-            if (encloseInParenthesis) {
+            comparisonClause.append(customQueryable.getProperty()).append(customQueryable.getComparison().getSymbol());
+            if (customQueryable.shouldEncloseInParenthesis()) {
                 comparisonClause.append("(");
             }
-            comparisonClause.append(":").append(paramName);
-            if (encloseInParenthesis) {
+            if (customQueryable.shouldUseLiterals()) {
+                comparisonClause.append(customQueryable.getParameterValue());
+            } else {
+                comparisonClause.append(":").append(customQueryable.getParameterName());
+            }
+            if (customQueryable.shouldEncloseInParenthesis()) {
                 comparisonClause.append(")");
             }
             customQueryables.put(comparisonClause.toString(), new TreeMap<String, Object>());
-            customQueryables.get(comparisonClause.toString()).put(paramName, paramValue);
+            customQueryables.get(comparisonClause.toString()).put(customQueryable.getParameterName(),
+                    customQueryable.getParameterValue());
             return this;
         }
 

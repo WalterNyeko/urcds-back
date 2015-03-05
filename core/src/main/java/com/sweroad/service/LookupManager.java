@@ -19,9 +19,17 @@ public interface LookupManager {
 
     List<LabelValue> getAllLicenseTypes();
 
+    List<LabelValue> getFilteredLicenseTypes(List<LabelValue> selectedValues);
+
     List<LabelValue> getAllGenders();
+
+    List<LabelValue> getFilteredGenders(List<LabelValue> selectedValues);
 
     List<LabelValue> getAllBeltUsedOptions();
 
+    List<LabelValue> getFilteredBeltUsedOptions(List<LabelValue> selectedValues);
+
     List<LabelValue> getAllAgeRanges();
+
+    List<LabelValue> getFilteredAgeRanges(List<LabelValue> selectedValues);
 }

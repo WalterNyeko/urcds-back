@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import com.sweroad.model.*;
 import com.sweroad.query.Comparison;
 import com.sweroad.query.CrashQuery;
+import com.sweroad.query.CustomQueryable;
 import com.sweroad.service.GenericManager;
 import com.sweroad.util.DateUtil;
 import org.junit.Test;
@@ -232,12 +233,26 @@ public class CrashDaoTest extends BaseDaoTestCase {
 
     @Test
     public void testFindAllCrashesInvolvingFemaleDriversAbove30Years() {
+        CustomQueryable customQueryableGreaterThan30 = new CustomQueryable.CustomQueryableBuilder()
+                .addCrashJoinType(CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE)
+                .addProperty("driver.age")
+                .addComparison(Comparison.GT)
+                .addParameterName("age")
+                .addParameterValue(30)
+                .shouldEncloseInParenthesis(false)
+                .build();
+        CustomQueryable customQueryableFemaleDriver = new CustomQueryable.CustomQueryableBuilder()
+                .addCrashJoinType(CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE)
+                .addProperty("driver.gender")
+                .addComparison(Comparison.EQ)
+                .addParameterName("gender")
+                .addParameterValue("F")
+                .shouldEncloseInParenthesis(false)
+                .build();
         CrashQuery crashQuery = new CrashQuery.CrashQueryBuilder()
                 .joinVehicles(true)
-                .addCustomQueryable(CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE,
-                        "driver.age", Comparison.GT, "age", 30, false)
-                .addCustomQueryable(CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE,
-                        "driver.gender", Comparison.EQ, "gender", "F", false)
+                .addCustomQueryable(customQueryableGreaterThan30)
+                .addCustomQueryable(customQueryableFemaleDriver)
                 .build();
         List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashQuery);
         assertEquals(3, crashes.size());
@@ -245,12 +260,26 @@ public class CrashDaoTest extends BaseDaoTestCase {
 
     @Test
     public void testFindAllCrashesInvolvingCasualtiesBetweenAge10And20() {
+        CustomQueryable customQueryableGreaterThanEqualTo10 = new CustomQueryable.CustomQueryableBuilder()
+                .addCrashJoinType(CrashQuery.CrashQueryBuilder.CrashJoinType.CASUALTY)
+                .addProperty("age")
+                .addComparison(Comparison.GTE)
+                .addParameterName("age1")
+                .addParameterValue(10)
+                .shouldEncloseInParenthesis(false)
+                .build();
+        CustomQueryable customQueryableLessThanEqualTo20 = new CustomQueryable.CustomQueryableBuilder()
+                .addCrashJoinType(CrashQuery.CrashQueryBuilder.CrashJoinType.CASUALTY)
+                .addProperty("age")
+                .addComparison(Comparison.LTE)
+                .addParameterName("age2")
+                .addParameterValue(20)
+                .shouldEncloseInParenthesis(false)
+                .build();
         CrashQuery crashQuery = new CrashQuery.CrashQueryBuilder()
                 .joinCasualties(true)
-                .addCustomQueryable(CrashQuery.CrashQueryBuilder.CrashJoinType.CASUALTY,
-                        "age", Comparison.GTE, "age1", 10, false)
-                .addCustomQueryable(CrashQuery.CrashQueryBuilder.CrashJoinType.CASUALTY,
-                        "age", Comparison.LTE, "age2", 20, false)
+                .addCustomQueryable(customQueryableGreaterThanEqualTo10)
+                .addCustomQueryable(customQueryableLessThanEqualTo20)
                 .build();
         List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashQuery);
         assertEquals(4, crashes.size());
@@ -258,14 +287,35 @@ public class CrashDaoTest extends BaseDaoTestCase {
 
     @Test
     public void testFindAllCrashesInvolvingFemaleCasualtiesBetweenAge10And20() {
+        CustomQueryable customQueryableGreaterThanEqualTo10 = new CustomQueryable.CustomQueryableBuilder()
+                .addCrashJoinType(CrashQuery.CrashQueryBuilder.CrashJoinType.CASUALTY)
+                .addProperty("age")
+                .addComparison(Comparison.GTE)
+                .addParameterName("age1")
+                .addParameterValue(10)
+                .shouldEncloseInParenthesis(false)
+                .build();
+        CustomQueryable customQueryableLessThanEqualTo20 = new CustomQueryable.CustomQueryableBuilder()
+                .addCrashJoinType(CrashQuery.CrashQueryBuilder.CrashJoinType.CASUALTY)
+                .addProperty("age")
+                .addComparison(Comparison.LTE)
+                .addParameterName("age2")
+                .addParameterValue(20)
+                .shouldEncloseInParenthesis(false)
+                .build();
+        CustomQueryable customQueryableFemaleDriver = new CustomQueryable.CustomQueryableBuilder()
+                .addCrashJoinType(CrashQuery.CrashQueryBuilder.CrashJoinType.CASUALTY)
+                .addProperty("gender")
+                .addComparison(Comparison.EQ)
+                .addParameterName("gender")
+                .addParameterValue("F")
+                .shouldEncloseInParenthesis(false)
+                .build();
         CrashQuery crashQuery = new CrashQuery.CrashQueryBuilder()
                 .joinCasualties(true)
-                .addCustomQueryable(CrashQuery.CrashQueryBuilder.CrashJoinType.CASUALTY,
-                        "age", Comparison.GTE, "age1", 10, false)
-                .addCustomQueryable(CrashQuery.CrashQueryBuilder.CrashJoinType.CASUALTY,
-                        "age", Comparison.LTE, "age2", 20, false)
-                .addCustomQueryable(CrashQuery.CrashQueryBuilder.CrashJoinType.CASUALTY,
-                        "gender", Comparison.EQ, "gender", "F", false)
+                .addCustomQueryable(customQueryableGreaterThanEqualTo10)
+                .addCustomQueryable(customQueryableLessThanEqualTo20)
+                .addCustomQueryable(customQueryableFemaleDriver)
                 .build();
         List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashQuery);
         assertEquals(1, crashes.size());
@@ -275,12 +325,26 @@ public class CrashDaoTest extends BaseDaoTestCase {
     public void testFindAllCrashesInvolvingFemaleDriversAbove30YearsAndPedestrians() {
         List<CasualtyClass> casualtyClasses = new ArrayList<CasualtyClass>();
         casualtyClasses.add(casualtyClassManager.get(1L));
+        CustomQueryable customQueryableGreaterThan30 = new CustomQueryable.CustomQueryableBuilder()
+                .addCrashJoinType(CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE)
+                .addProperty("driver.age")
+                .addComparison(Comparison.GT)
+                .addParameterName("age")
+                .addParameterValue(30)
+                .shouldEncloseInParenthesis(false)
+                .build();
+        CustomQueryable customQueryableFemaleDriver = new CustomQueryable.CustomQueryableBuilder()
+                .addCrashJoinType(CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE)
+                .addProperty("driver.gender")
+                .addComparison(Comparison.EQ)
+                .addParameterName("gender")
+                .addParameterValue("F")
+                .shouldEncloseInParenthesis(false)
+                .build();
         CrashQuery crashQuery = new CrashQuery.CrashQueryBuilder()
                 .joinVehicles(true)
-                .addCustomQueryable(CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE,
-                        "driver.age", Comparison.GT, "age", 30, false)
-                .addCustomQueryable(CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE,
-                        "driver.gender", Comparison.EQ, "gender", "F", false)
+                .addCustomQueryable(customQueryableGreaterThan30)
+                .addCustomQueryable(customQueryableFemaleDriver)
                 .addQueryable(casualtyClasses)
                 .joinCasualties(true)
                 .build();

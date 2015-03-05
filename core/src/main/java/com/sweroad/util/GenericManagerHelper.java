@@ -1,5 +1,6 @@
 package com.sweroad.util;
 
+import com.sweroad.model.LabelValue;
 import com.sweroad.query.Queryable;
 import com.sweroad.service.GenericManager;
 

@@ -45,6 +45,19 @@ public class LookupManagerImpl implements LookupManager {
     }
 
     @Override
+    public List<LabelValue> getFilteredLicenseTypes(List<LabelValue> selectedValues) {
+        List<LabelValue> filteredLicenseTypes = new ArrayList<LabelValue>();
+        for(LabelValue labelValue : getAllLicenseTypes()) {
+            for(LabelValue selectedValue : selectedValues) {
+                if(selectedValue.getValue() != null && selectedValue.getValue().equals(labelValue.getValue())) {
+                    filteredLicenseTypes.add(labelValue);
+                }
+            }
+        }
+        return filteredLicenseTypes;
+    }
+
+    @Override
     public List<LabelValue> getAllGenders() {
         List<LabelValue> genders = new ArrayList<LabelValue>();
         addLabelValueToList("Male", "M", genders);
@@ -54,12 +67,38 @@ public class LookupManagerImpl implements LookupManager {
     }
 
     @Override
+    public List<LabelValue> getFilteredGenders(List<LabelValue> selectedValues) {
+        List<LabelValue> filteredGenders = new ArrayList<LabelValue>();
+        for(LabelValue labelValue : getAllGenders()) {
+            for(LabelValue selectedValue : selectedValues) {
+                if(selectedValue.getValue() != null && selectedValue.getValue().equals(labelValue.getValue())) {
+                    filteredGenders.add(labelValue);
+                }
+            }
+        }
+        return filteredGenders;
+    }
+
+    @Override
     public List<LabelValue> getAllBeltUsedOptions() {
         List<LabelValue> beltusedOptions = new ArrayList<LabelValue>();
         addLabelValueToList("Yes", "1", beltusedOptions);
         addLabelValueToList("No", "0", beltusedOptions);
         addLabelValueToList("Unknown", "-1", beltusedOptions);
         return beltusedOptions;
+    }
+
+    @Override
+    public List<LabelValue> getFilteredBeltUsedOptions(List<LabelValue> selectedValues) {
+        List<LabelValue> filteredBeltUsedOptions = new ArrayList<LabelValue>();
+        for(LabelValue labelValue : getAllBeltUsedOptions()) {
+            for(LabelValue selectedValue : selectedValues) {
+                if(selectedValue.getValue() != null && selectedValue.getValue().equals(labelValue.getValue())) {
+                    filteredBeltUsedOptions.add(labelValue);
+                }
+            }
+        }
+        return filteredBeltUsedOptions;
     }
 
     @Override
@@ -74,6 +113,19 @@ public class LookupManagerImpl implements LookupManager {
         addLabelValueToList("60-69", "7", ageRanges);
         addLabelValueToList("70 and above", "8", ageRanges);
         return ageRanges;
+    }
+
+    @Override
+    public List<LabelValue> getFilteredAgeRanges(List<LabelValue> selectedValues) {
+        List<LabelValue> filteredAgeRanges = new ArrayList<LabelValue>();
+        for(LabelValue labelValue : getAllAgeRanges()) {
+            for(LabelValue selectedValue : selectedValues) {
+                if(selectedValue.getValue() != null && selectedValue.getValue().equals(labelValue.getValue())) {
+                    filteredAgeRanges.add(labelValue);
+                }
+            }
+        }
+        return filteredAgeRanges;
     }
 
     private void addLabelValueToList(String label, String value, List<LabelValue> labelValues) {
