@@ -12,6 +12,7 @@ public class CustomQueryable {
     private Object parameterValue;
     private boolean encloseInParenthesis;
     private boolean useLiterals;
+    private boolean includeNulls;
 
     public CustomQueryable(CustomQueryableBuilder builder) {
         this.joinType = builder.joinType;
@@ -21,14 +22,11 @@ public class CustomQueryable {
         this.parameterValue = builder.parameterValue;
         this.encloseInParenthesis = builder.encloseInParenthesis;
         this.useLiterals = builder.useLiterals;
+        this.includeNulls = builder.includeNulls;
     }
 
     public CrashQuery.CrashQueryBuilder.CrashJoinType getJoinType() {
         return joinType;
-    }
-
-    public void setJoinType(CrashQuery.CrashQueryBuilder.CrashJoinType joinType) {
-        this.joinType = joinType;
     }
 
     public String getProperty() {
@@ -43,40 +41,24 @@ public class CustomQueryable {
         return comparison;
     }
 
-    public void setComparison(Comparison comparison) {
-        this.comparison = comparison;
-    }
-
     public String getParameterName() {
         return parameterName;
-    }
-
-    public void setParameterName(String parameterName) {
-        this.parameterName = parameterName;
     }
 
     public Object getParameterValue() {
         return parameterValue;
     }
 
-    public void setParameterValue(Object parameterValue) {
-        this.parameterValue = parameterValue;
-    }
-
     public boolean shouldEncloseInParenthesis() {
         return encloseInParenthesis;
-    }
-
-    public void setEncloseInParenthesis(boolean encloseInParenthesis) {
-        this.encloseInParenthesis = encloseInParenthesis;
     }
 
     public boolean shouldUseLiterals() {
         return useLiterals;
     }
 
-    public void setUseLiterals(boolean useLiterals) {
-        this.useLiterals = useLiterals;
+    public boolean shouldIncludeNulls() {
+        return includeNulls;
     }
 
     public static class CustomQueryableBuilder {
@@ -88,6 +70,7 @@ public class CustomQueryable {
         private Object parameterValue;
         private boolean encloseInParenthesis;
         private boolean useLiterals;
+        private boolean includeNulls;
 
         public CustomQueryableBuilder addCrashJoinType(CrashQuery.CrashQueryBuilder.CrashJoinType joinType) {
             this.joinType = joinType;
@@ -121,6 +104,11 @@ public class CustomQueryable {
 
         public CustomQueryableBuilder shouldUseLiterals(boolean useLiterals) {
             this.useLiterals = useLiterals;
+            return this;
+        }
+
+        public CustomQueryableBuilder shouldIncludeNulls(boolean includeNulls) {
+            this.includeNulls = includeNulls;
             return this;
         }
 

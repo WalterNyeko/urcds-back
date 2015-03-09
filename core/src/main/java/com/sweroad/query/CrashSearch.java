@@ -2,6 +2,8 @@ package com.sweroad.query;
 
 import com.sweroad.model.*;
 import com.sweroad.service.LookupManager;
+import com.sweroad.service.impl.LookupManagerImpl;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -36,8 +38,8 @@ public class CrashSearch {
     private List<LabelValue> casualtyAgeRanges = new ArrayList<LabelValue>();
     private List<LabelValue> casualtyBeltUsedOptions = new ArrayList<LabelValue>();
 
-    public CrashSearch(LookupManager lookupManager) {
-        this.lookupManager = lookupManager;
+    public CrashSearch() {
+        this.lookupManager = new LookupManagerImpl();
     }
 
     public Date getStartDate() {
@@ -254,23 +256,44 @@ public class CrashSearch {
     private void addDriverLicenseType(CrashQuery.CrashQueryBuilder crashQueryBuilder) {
         if(driverLicenseTypes != null && driverLicenseTypes.size() > 0 &&
                 driverLicenseTypes.size() < lookupManager.getAllLicenseTypes().size()) {
-            String values = "";
+            List<Boolean> licenseTypeOptions = new ArrayList<Boolean>();
+            boolean includeNull = false;
             for(LabelValue driverLicenseType : driverLicenseTypes) {
-                values += driverLicenseType.getId() + ", ";
+                if(driverLicenseType.getId() != null && driverLicenseType.getId().equals(1L)) {
+                    licenseTypeOptions.add(Boolean.TRUE);
+                } else if (driverLicenseType.getId() != null && driverLicenseType.getId().equals(0L)) {
+                    licenseTypeOptions.add(Boolean.FALSE);
+                } else if (driverLicenseType.getId() != null && driverLicenseType.getId().equals(-1L)) {
+                    includeNull = true;
+                }
             }
-            values = values.substring(0, values.length() - 2);
-            crashQueryBuilder.addCustomQueryable(createCustomQueryableForLicenseType(values));
+            if(licenseTypeOptions.size() > 0) {
+                crashQueryBuilder.addCustomQueryable(createCustomQueryableForLicenseType(licenseTypeOptions, includeNull));
+            } else if(includeNull) {
+                crashQueryBuilder.addCustomQueryable(createCustomQueryableForNullLicenseType());
+            }
         }
     }
 
-    private CustomQueryable createCustomQueryableForLicenseType(String values) {
+    private CustomQueryable createCustomQueryableForLicenseType(Object paramValue, boolean includeNull) {
         return new CustomQueryable.CustomQueryableBuilder()
                 .addCrashJoinType(CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE)
                 .addProperty("driver.licenseValid")
                 .addComparison(Comparison.IN)
                 .addParameterName("licenseValid")
-                .addParameterValue(values)
+                .addParameterValue(paramValue)
                 .shouldEncloseInParenthesis(true)
+                .shouldIncludeNulls(includeNull)
+                .build();
+    }
+
+    private CustomQueryable createCustomQueryableForNullLicenseType() {
+        return new CustomQueryable.CustomQueryableBuilder()
+                .addCrashJoinType(CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE)
+                .addProperty("driver.licenseValid")
+                .addComparison(Comparison.IS)
+                .addParameterName("licenseValid")
+                .addParameterValue("NULL")
                 .shouldUseLiterals(true)
                 .build();
     }

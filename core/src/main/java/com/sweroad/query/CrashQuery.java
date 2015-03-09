@@ -145,6 +145,47 @@ public class CrashQuery extends BaseModel {
 
         public CrashQueryBuilder addCustomQueryable(CustomQueryable customQueryable) {
             StringBuilder comparisonClause = new StringBuilder("");
+            prefixQueryableProperty(customQueryable, comparisonClause);
+            appendParamNameOrValue(customQueryable, comparisonClause);
+            addToCustomQueryables(customQueryable, comparisonClause);
+            return this;
+        }
+
+        private void addToCustomQueryables(CustomQueryable customQueryable, StringBuilder comparisonClause) {
+            customQueryables.put(comparisonClause.toString(), new TreeMap<String, Object>());
+            if (!customQueryable.shouldUseLiterals()) {
+                customQueryables.get(comparisonClause.toString()).put(customQueryable.getParameterName(),
+                        customQueryable.getParameterValue());
+            }
+        }
+
+        private void appendNullValueInclusion(CustomQueryable customQueryable, StringBuilder comparisonClause) {
+            if(customQueryable.shouldIncludeNulls()) {
+                comparisonClause.append(" or ").append(customQueryable.getProperty()).append(" is NULL");
+            }
+        }
+
+        private void appendParamNameOrValue(CustomQueryable customQueryable, StringBuilder comparisonClause) {
+            String paramOrValue = customQueryable.shouldUseLiterals() ? customQueryable.getParameterValue().toString()
+                    : ":".concat(getCustomQueryableParamName(customQueryable));
+            if (customQueryable.shouldEncloseInParenthesis()) {
+                comparisonClause.append("(");
+                comparisonClause.append(paramOrValue);
+                comparisonClause.append(")");
+            } else {
+                comparisonClause.append(paramOrValue);
+            }
+            appendNullValueInclusion(customQueryable, comparisonClause);
+        }
+
+        private String getCustomQueryableParamName(CustomQueryable customQueryable) {
+            if (customQueryable.getParameterValue() instanceof List) {
+                return getParamName(customQueryable.getParameterName());
+            }
+            return customQueryable.getParameterName();
+        }
+
+        private void prefixQueryableProperty(CustomQueryable customQueryable, StringBuilder comparisonClause) {
             if (customQueryable.getJoinType() == CrashJoinType.CASUALTY) {
                 this.joinCasualties(true);
                 customQueryable.setProperty(Crash.CASUALTY_ALIAS_DOT.concat(customQueryable.getProperty()));
@@ -152,23 +193,7 @@ public class CrashQuery extends BaseModel {
                 this.joinVehicles(true);
                 customQueryable.setProperty(Crash.VEHICLE_ALIAS_DOT.concat(customQueryable.getProperty()));
             }
-
             comparisonClause.append(customQueryable.getProperty()).append(customQueryable.getComparison().getSymbol());
-            if (customQueryable.shouldEncloseInParenthesis()) {
-                comparisonClause.append("(");
-            }
-            if (customQueryable.shouldUseLiterals()) {
-                comparisonClause.append(customQueryable.getParameterValue());
-            } else {
-                comparisonClause.append(":").append(customQueryable.getParameterName());
-            }
-            if (customQueryable.shouldEncloseInParenthesis()) {
-                comparisonClause.append(")");
-            }
-            customQueryables.put(comparisonClause.toString(), new TreeMap<String, Object>());
-            customQueryables.get(comparisonClause.toString()).put(customQueryable.getParameterName(),
-                    customQueryable.getParameterValue());
-            return this;
         }
 
         public CrashQueryBuilder setUseMonth(boolean useMonth) {

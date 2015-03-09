@@ -351,4 +351,118 @@ public class CrashDaoTest extends BaseDaoTestCase {
         List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashQuery);
         assertEquals(3, crashes.size());
     }
+
+    @Test
+    public void testFindAllCrashesInvolvingMotorVehiclesWithDriversHavingValidLicense() {
+        List<Boolean> licenseValidOptions = new ArrayList<Boolean>();
+        licenseValidOptions.add(Boolean.TRUE);
+        CustomQueryable customQueryable = new CustomQueryable.CustomQueryableBuilder()
+                .addCrashJoinType(CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE)
+                .addProperty("driver.licenseValid")
+                .addComparison(Comparison.IN)
+                .addParameterName("licenseValid")
+                .addParameterValue(licenseValidOptions)
+                .shouldEncloseInParenthesis(true)
+                .build();
+        vehicleTypes = new ArrayList<VehicleType>();
+        vehicleTypes.add(vehicleTypeManager.get(1L));
+        CrashQuery crashQuery = new CrashQuery.CrashQueryBuilder()
+                .joinVehicles(true)
+                .addQueryable(vehicleTypes)
+                .addCustomQueryable(customQueryable)
+                .build();
+        List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashQuery);
+        assertEquals(16, crashes.size());
+    }
+
+    @Test
+    public void testFindAllCrashesInvolvingMotorVehiclesWithDriversHavingInvalidLicense() {
+        List<Boolean> licenseValidOptions = new ArrayList<Boolean>();
+        licenseValidOptions.add(Boolean.FALSE);
+        CustomQueryable customQueryable = new CustomQueryable.CustomQueryableBuilder()
+                .addCrashJoinType(CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE)
+                .addProperty("driver.licenseValid")
+                .addComparison(Comparison.IN)
+                .addParameterName("licenseValid")
+                .addParameterValue(licenseValidOptions)
+                .shouldEncloseInParenthesis(true)
+                .build();
+        vehicleTypes = new ArrayList<VehicleType>();
+        vehicleTypes.add(vehicleTypeManager.get(1L));
+        CrashQuery crashQuery = new CrashQuery.CrashQueryBuilder()
+                .joinVehicles(true)
+                .addQueryable(vehicleTypes)
+                .addCustomQueryable(customQueryable)
+                .build();
+        List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashQuery);
+        assertEquals(2, crashes.size());
+    }
+
+    @Test
+    public void testFindAllCrashesInvolvingMotorVehiclesWithDriversHavingValidOrInvalidLicense() {
+        List<Boolean> licenseValidOptions = new ArrayList<Boolean>();
+        licenseValidOptions.add(Boolean.TRUE);
+        licenseValidOptions.add(Boolean.FALSE);
+        CustomQueryable customQueryable = new CustomQueryable.CustomQueryableBuilder()
+                .addCrashJoinType(CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE)
+                .addProperty("driver.licenseValid")
+                .addComparison(Comparison.IN)
+                .addParameterName("licenseValid")
+                .addParameterValue(licenseValidOptions)
+                .shouldEncloseInParenthesis(true)
+                .build();
+        vehicleTypes = new ArrayList<VehicleType>();
+        vehicleTypes.add(vehicleTypeManager.get(1L));
+        CrashQuery crashQuery = new CrashQuery.CrashQueryBuilder()
+                .joinVehicles(true)
+                .addQueryable(vehicleTypes)
+                .addCustomQueryable(customQueryable)
+                .build();
+        List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashQuery);
+        assertEquals(18, crashes.size());
+    }
+
+    @Test
+    public void testFindAllCrashesInvolvingMotorVehiclesWithDriversHavingNullLicenseType() {
+        CustomQueryable customQueryable = new CustomQueryable.CustomQueryableBuilder()
+                .addCrashJoinType(CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE)
+                .addProperty("driver.licenseValid")
+                .addComparison(Comparison.IS)
+                .shouldUseLiterals(true)
+                .addParameterValue("NULL")
+                .build();
+        vehicleTypes = new ArrayList<VehicleType>();
+        vehicleTypes.add(vehicleTypeManager.get(1L));
+        CrashQuery crashQuery = new CrashQuery.CrashQueryBuilder()
+                .joinVehicles(true)
+                .addQueryable(vehicleTypes)
+                .addCustomQueryable(customQueryable)
+                .build();
+        List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashQuery);
+        assertEquals(3, crashes.size());
+    }
+
+    @Test
+    public void testFindAllCrashesInvolvingMotorVehiclesWithDriversHavingValidOrNullLicense() {
+        List<Boolean> licenseValidOptions = new ArrayList<Boolean>();
+        licenseValidOptions.add(Boolean.TRUE);
+        CustomQueryable customQueryable = new CustomQueryable.CustomQueryableBuilder()
+                .addCrashJoinType(CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE)
+                .addProperty("driver.licenseValid")
+                .addComparison(Comparison.IN)
+                .addParameterName("licenseValid")
+                .addParameterValue(licenseValidOptions)
+                .shouldEncloseInParenthesis(true)
+                .shouldIncludeNulls(true)
+                .build();
+        vehicleTypes = new ArrayList<VehicleType>();
+        vehicleTypes.add(vehicleTypeManager.get(1L));
+        CrashQuery crashQuery = new CrashQuery.CrashQueryBuilder()
+                .joinVehicles(true)
+                .addQueryable(vehicleTypes)
+                .addCustomQueryable(customQueryable)
+                .build();
+        List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashQuery);
+        assertEquals(19, crashes.size());
+    }
 }

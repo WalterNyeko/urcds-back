@@ -602,7 +602,7 @@
 			<value description="gender">M</value>
 			<value description="belt_used">1</value>
 			<value description="license_number">123789</value>
-			<value description="license_valid">1</value>
+			<value description="license_valid">0</value>
 			<value description="casualty_type_id">3</value>
 			<value description="date_created">2014-06-04 18:15:00</value>
 		</row>
@@ -758,7 +758,7 @@
             <value description="gender">F</value>
             <value description="belt_used">0</value>
             <value description="license_number">12342356</value>
-            <value description="license_valid">1</value>
+            <value description="license_valid">0</value>
             <value description="casualty_type_id">3</value>
             <value description="date_created">2014-06-03 18:15:00</value>
         </row>
@@ -768,7 +768,7 @@
             <value description="gender">M</value>
             <value description="belt_used">1</value>
             <value description="license_number">12378459</value>
-            <value description="license_valid">1</value>
+            <value description="license_valid">0</value>
             <value description="casualty_type_id">2</value>
             <value description="date_created">2014-06-04 18:15:00</value>
         </row>
@@ -924,7 +924,7 @@
             <value description="gender">M</value>
             <value description="belt_used">0</value>
             <value description="license_number">12342356</value>
-            <value description="license_valid">1</value>
+            <null/>
             <value description="casualty_type_id">4</value>
             <value description="date_created">2014-06-03 18:15:00</value>
         </row>
@@ -934,7 +934,7 @@
             <value description="gender">M</value>
             <value description="belt_used">1</value>
             <value description="license_number">12378459</value>
-            <value description="license_valid">1</value>
+            <null/>
             <value description="casualty_type_id">4</value>
             <value description="date_created">2014-06-04 18:15:00</value>
         </row>
@@ -944,7 +944,7 @@
             <value description="gender">F</value>
             <value description="belt_used">0</value>
             <value description="license_number">12342356</value>
-            <value description="license_valid">1</value>
+            <null/>
             <value description="casualty_type_id">4</value>
             <value description="date_created">2014-06-03 18:15:00</value>
         </row>
@@ -954,7 +954,7 @@
             <value description="gender">M</value>
             <value description="belt_used">1</value>
             <value description="license_number">12378459</value>
-            <value description="license_valid">1</value>
+            <value description="license_valid">0</value>
             <value description="casualty_type_id">4</value>
             <value description="date_created">2014-06-04 18:15:00</value>
         </row>

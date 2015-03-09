@@ -10,7 +10,9 @@ public enum Comparison {
     GTE(" >= "),
     LT(" < "),
     LTE(" <= "),
-    IN(" in ");
+    IN(" in "),
+    IS(" is "),
+    IS_NOT(" is not ");
 
     Comparison(String symbol) {
         this.symbol = symbol;

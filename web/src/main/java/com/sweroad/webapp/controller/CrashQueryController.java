@@ -27,13 +27,11 @@ public class CrashQueryController extends  BaseFormController {
 
     @Autowired
     private CrashQueryManager crashQueryManager;
-    @Autowired
-    private LookupManager lookupManager;
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView showForm() {
         ModelAndView mav = new ModelAndView("analysis/crashquery");
-        CrashSearch crashSearch = new CrashSearch(lookupManager);
+        CrashSearch crashSearch = new CrashSearch();
         crashSearch.getCrashSeverities().add(new CrashSeverity());
         crashSearch.getCrashSeverities().get(0).setId(2L);
         mav.addObject(crashSearch);
