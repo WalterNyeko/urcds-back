@@ -62,15 +62,19 @@
     <p>&nbsp;</p>
 </div>
 <input id='crashesJSON' type='hidden' value='${crashesJSON}' />
+<input id='crashAttributesJSON' type='hidden' value='${crashAttributesJSON}' />
 <input id="accessAttributeName" type="hidden" value="data-crashanalysis-id">
 <script type="text/javascript">
     $(document).ready(function() {
         localStorage.setItem("crashesJSON", null);
+        localStorage.setItem("crashAttributesJSON", null);
         $("#gMaps").hide();
-        var jsonText = $.trim($("#crashesJSON").val());
-        if(jsonText.length > 0) {
-            var crashJson = '{"crashes" : ' + jsonText + '}';
+        var crashJsonText = $.trim($("#crashesJSON").val());
+        var attributesJsonText = $.trim($("#crashAttributesJSON").val());
+        if(crashJsonText.length > 0) {
+            var crashJson = '{"crashes" : ' + crashJsonText + '}';
             localStorage.setItem("crashesJSON", crashJson);
+            localStorage.setItem("crashAttributesJSON", attributesJsonText);
             $("#gMaps").show();
         }
     });

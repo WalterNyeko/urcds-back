@@ -98,14 +98,18 @@ function createOptions(divId, chartTitle) {
                 allowPointSelect: true,
                 cursor: 'pointer',
                 dataLabels: {
-                    enabled: true,
+                    enabled: false,
                     color: '#000000',
                     connectorColor: '#000000',
                     formatter: function () {
                         return '<b>' + this.point.name + '</b>: '
                             + Highcharts.numberFormat(this.percentage, 2) + ' %';
+                    },
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
                     }
-                }
+                },
+                showInLegend: true
             }
         },
         series: []
@@ -120,6 +124,8 @@ function loadCrashSeverityChart() {
             var options = createOptions("container-severity",
                 "Crash Severity");
             options.series = $.parseJSON(result);
+            $('.crashCount').html('(based on ' + options.series[0].crashCount + ' crashes)');
+            $('.crashCount').css('margin-top', '0px');
             var chart = new Highcharts.Chart(options);
         }
     });
@@ -131,7 +137,7 @@ function loadCrashCauseChart() {
         success: function (result) {
             var options = createOptions("container-cause",
                 "Main Cause of Crash");
-            options.series = $.parseJSON(result);
+            options.series = $.parseJSON(result)
             var chart = new Highcharts.Chart(options);
         }
     });

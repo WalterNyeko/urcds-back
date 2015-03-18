@@ -35,8 +35,10 @@ public class ChartController extends BaseFormController {
     @ResponseBody
     String getCrashSeverityPieChart(HttpServletRequest request)
             throws Exception {
+        List<Crash> crashes = crashManager.getAvailableCrashes();
         String chart = "[{\"type\":\"pie\",\"name\":\"Crash Severity Pie Chart\",";
-        chart += constructCrashChartData();
+        chart +=  "\"crashCount\" : " + crashes.size() + ",";
+        chart += constructCrashChartData(crashes);
         chart += "}]";
         return chart;
     }
@@ -61,9 +63,9 @@ public class ChartController extends BaseFormController {
         return chart;
     }
 
-    private String constructCrashChartData() {
+    private String constructCrashChartData(List<Crash> crashes) {
         String data = "\"data\":[";
-        Map<String, Integer> severityNumbers = getCrashSeverityNumbers();
+        Map<String, Integer> severityNumbers = getCrashSeverityNumbers(crashes);
         for (Map.Entry<String, Integer> entry : severityNumbers.entrySet()) {
             data += "[\"" + entry.getKey() + "\", " + entry.getValue() + "],";
         }
@@ -72,9 +74,8 @@ public class ChartController extends BaseFormController {
         return data;
     }
 
-    private Map<String, Integer> getCrashSeverityNumbers() {
+    private Map<String, Integer> getCrashSeverityNumbers(List<Crash> crashes) {
         List<CrashSeverity> severities = crashSeverityManager.getAllDistinct();
-        List<Crash> crashes = crashManager.getAllDistinct();
         Map<String, Integer> severityNumbers = new HashMap<String, Integer>();
         for (CrashSeverity severity : severities) {
             severityNumbers.put(severity.getName(),
@@ -100,7 +101,7 @@ public class ChartController extends BaseFormController {
         int count = 1;
         int sum = 0;
         for (Map.Entry<String, Integer> entry : causeNumbers.entrySet()) {
-            if (count++ < 12) {
+            if (count++ < 8) {
                 data += "[\"" + entry.getKey() + "\", " + entry.getValue() + "],";
             } else {
                 sum += entry.getValue();
@@ -117,7 +118,7 @@ public class ChartController extends BaseFormController {
 
     private Map<String, Integer> getCrashCauseNumbers() {
         List<CrashCause> causes = crashCauseManager.getAllDistinct();
-        List<Crash> crashes = crashManager.getAllDistinct();
+        List<Crash> crashes = crashManager.getAvailableCrashes();
         Map<String, Integer> causeNumbers = new HashMap<String, Integer>();
         for (CrashCause cause : causes) {
             int count = getNumberOfCrashesByCauseId(crashes, cause.getId());

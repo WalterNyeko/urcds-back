@@ -8,9 +8,8 @@
         <%--<img src="/images/query-icon.png" title="<fmt:message key="crashAnalysis.AdvancedSelect" />" height="20"/>--%>
         <fmt:message key="crashAnalysis.AdvancedSelect" />
     </a>|
-    <a href="" onclick="return false;">
-        <%--<img src="/images/crosstab-icon.png" title="<fmt:message key="crashAnalysis.CrossTabulation" />" height="20"/>--%>
-        <fmt:message key="crashAnalysis.CrossTabulation" />
+    <a href="/crashstats">
+        <fmt:message key="rcds.crashStatistics" />
     </a>|
     <a href="<c:url value='/analysisdownloadexcel'/>">
         <%--<img src="/images/excel-icon.png" title="<fmt:message key="button.exportToExcel" />" height="20"/>--%>
