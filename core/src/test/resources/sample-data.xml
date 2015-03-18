@@ -213,6 +213,10 @@
 			<value description="id">4</value>
 			<value description="name">Not injured</value>
 		</row>
+        <row>
+            <value description="id">5</value>
+            <value description="name">Unknown</value>
+        </row>
 	</table>
 	<table name="collision_type">
 		<column>id</column>
@@ -249,6 +253,10 @@
 			<value description="id">8</value>
 			<value description="name">Others</value>
 		</row>
+        <row>
+            <value description="id">9</value>
+            <value description="name">Unknown</value>
+        </row>
 	</table>
 	<table name="crash_cause">
 		<column>id</column>
@@ -323,8 +331,12 @@
 		</row>
 		<row>
 			<value description="id">18</value>
-			<value description="name">Unknown cause (Hit &amp;&amp; Run)</value>
+			<value description="name">Hit &amp; Run</value>
 		</row>
+        <row>
+            <value description="id">19</value>
+            <value description="name">Unknown</value>
+        </row>
 	</table>
 	<table name="crash_severity">
 		<column>id</column>
@@ -345,6 +357,10 @@
 			<value description="id">4</value>
 			<value description="name">Damage Only</value>
 		</row>
+        <row>
+            <value description="id">5</value>
+            <value description="name">Unknown</value>
+        </row>
 	</table>
 	<table name="junction_type">
 		<column>id</column>
@@ -416,7 +432,7 @@
 		<column>name</column>
 		<row>
 			<value description="id">1</value>
-			<value description="name">Straight slight curve</value>
+			<value description="name">Straight or slight curve</value>
 		</row>
 		<row>
 			<value description="id">2</value>
@@ -500,7 +516,7 @@
 		</row>
 		<row>
 			<value description="id">2</value>
-			<value description="name">Trailers &amp;&amp; Semi-Trailer</value>
+			<value description="name">Trailers &amp; Semi-Trailer</value>
 		</row>
 		<row>
 			<value description="id">3</value>
@@ -1424,7 +1440,7 @@
             <value description="id">15</value>
             <value description="age">37</value>
             <value description="gender">F</value>
-            <value description="belt_used">0</value>
+            <null/>
             <value description="license_number">12342356</value>
             <value description="license_valid">1</value>
             <value description="casualty_type_id">2</value>
@@ -1434,7 +1450,7 @@
             <value description="id">16</value>
             <value description="age">33</value>
             <value description="gender">M</value>
-            <value description="belt_used">1</value>
+            <null/>
             <value description="license_number">12378459</value>
             <value description="license_valid">1</value>
             <value description="casualty_type_id">1</value>
@@ -1478,7 +1494,7 @@
             <value description="id">7</value>
             <value description="age">25</value>
             <value description="gender">F</value>
-            <value description="belt_or_helmet_used">1</value>
+            <null/>
             <value description="casualty_class_id">4</value>
             <value description="casualty_type_id">3</value>
             <value description="vehicle_id">15</value>
@@ -1488,7 +1504,7 @@
             <value description="id">8</value>
             <value description="age">11</value>
             <value description="gender">M</value>
-            <value description="belt_or_helmet_used">0</value>
+            <null/>
             <value description="casualty_class_id">1</value>
             <value description="casualty_type_id">1</value>
             <value description="vehicle_id">15</value>
@@ -1745,7 +1761,7 @@
         <row>
             <value description="id">9</value>
             <value description="age">25</value>
-            <value description="gender">F</value>
+            <null/>
             <value description="belt_or_helmet_used">1</value>
             <value description="casualty_class_id">4</value>
             <value description="casualty_type_id">3</value>
@@ -1755,7 +1771,7 @@
         <row>
             <value description="id">10</value>
             <value description="age">11</value>
-            <value description="gender">M</value>
+            <null/>
             <value description="belt_or_helmet_used">0</value>
             <value description="casualty_class_id">1</value>
             <value description="casualty_type_id">1</value>
@@ -1857,7 +1873,7 @@
         <row>
             <value description="id">20</value>
             <value description="age">18</value>
-            <value description="gender">M</value>
+            <null/>
             <value description="belt_used">0</value>
             <value description="license_number">123456</value>
             <value description="license_valid">1</value>
@@ -1867,7 +1883,7 @@
         <row>
             <value description="id">21</value>
             <value description="age">39</value>
-            <value description="gender">M</value>
+            <null/>
             <value description="belt_used">1</value>
             <value description="license_number">123789</value>
             <value description="license_valid">1</value>
@@ -2178,4 +2194,221 @@
         </row>
     </table>
     <!-- End of Crash 10 Data -->
+    <!-- Injury Data Tables -->
+    <table name="hospital">
+        <column>id</column>
+        <column>name</column>
+        <column>district_id</column>
+        <row>
+            <value description="id">1</value>
+            <value description="name">Mulago Hospital</value>
+            <value description="district_id">3</value>
+        </row>
+    </table>
+    <table name="patient_status">
+        <column>id</column>
+        <column>name</column>
+        <row>
+            <value description="id">1</value>
+            <value description="name">Discharged</value>
+        </row>
+        <row>
+            <value description="id">2</value>
+            <value description="name">Died</value>
+        </row>
+        <row>
+            <value description="id">3</value>
+            <value description="name">Still in the hospital</value>
+        </row>
+        <row>
+            <value description="id">4</value>
+            <value description="name">Run away</value>
+        </row>
+        <row>
+            <value description="id">5</value>
+            <value description="name">Referred to another health facility</value>
+        </row>
+    </table>
+    <table name="patient_disposition">
+        <column>id</column>
+        <column>name</column>
+        <row>
+            <value description="id">1</value>
+            <value description="name">Treated and sent home</value>
+        </row>
+        <row>
+            <value description="id">2</value>
+            <value description="name">Admitted-IP No</value>
+        </row>
+        <row>
+            <value description="id">3</value>
+            <value description="name">Died in casualty</value>
+        </row>
+        <row>
+            <value description="id">4</value>
+            <value description="name">Referred</value>
+        </row>
+        <row>
+            <value description="id">5</value>
+            <value description="name">Dead on arrival</value>
+        </row>
+    </table>
+    <table name="injury_type">
+        <column>id</column>
+        <column>name</column>
+        <row>
+            <value description="id">1</value>
+            <value description="name">Head/Neck/Face</value>
+        </row>
+        <row>
+            <value description="id">2</value>
+            <value description="name">Chest</value>
+        </row>
+        <row>
+            <value description="id">3</value>
+            <value description="name">Spinal cord injury</value>
+        </row>
+        <row>
+            <value description="id">4</value>
+            <value description="name">Abdomen/Pelvis/Perineum</value>
+        </row>
+        <row>
+            <value description="id">5</value>
+            <value description="name">Bony Pelvis &amp; Extremities</value>
+        </row>
+    </table>
+    <table name="road_user_type">
+        <column>id</column>
+        <column>name</column>
+        <row>
+            <value description="id">1</value>
+            <value description="name">Pedestrian</value>
+        </row>
+        <row>
+            <value description="id">2</value>
+            <value description="name">Driver</value>
+        </row>
+        <row>
+            <value description="id">3</value>
+            <value description="name">Passenger</value>
+        </row>
+        <row>
+            <value description="id">4</value>
+            <value description="name">Unknown</value>
+        </row>
+    </table>
+    <table name="transport_mode">
+        <column>id</column>
+        <column>name</column>
+        <row>
+            <value description="id">1</value>
+            <value description="name">Pedestrian</value>
+        </row>
+        <row>
+            <value description="id">2</value>
+            <value description="name">Bicycle</value>
+        </row>
+        <row>
+            <value description="id">3</value>
+            <value description="name">Motorcycle</value>
+        </row>
+        <row>
+            <value description="id">4</value>
+            <value description="name">Car</value>
+        </row>
+        <row>
+            <value description="id">5</value>
+            <value description="name">Minibus</value>
+        </row>
+        <row>
+            <value description="id">6</value>
+            <value description="name">Medium Bus</value>
+        </row>
+        <row>
+            <value description="id">7</value>
+            <value description="name">Heavy Bus</value>
+        </row>
+        <row>
+            <value description="id">8</value>
+            <value description="name">Small Truck</value>
+        </row>
+        <row>
+            <value description="id">9</value>
+            <value description="name">Heavy Truck</value>
+        </row>
+        <row>
+            <value description="id">10</value>
+            <value description="name">Tractor</value>
+        </row>
+        <row>
+            <value description="id">11</value>
+            <value description="name">Others</value>
+        </row>
+        <row>
+            <value description="id">12</value>
+            <value description="name">Unknown</value>
+        </row>
+    </table>
+    <table name="patient">
+        <column>id</column>
+        <column>hospital_outpatient_no</column>
+        <column>hospital_inpatient_no</column>
+        <column>hospital_id</column>
+        <column>gender</column>
+        <column>age</column>
+        <column>village</column>
+        <column>district_id</column>
+        <column>injury_description</column>
+        <column>injury_datetime</column>
+        <column>transport_mode_id</column>
+        <column>rode_user_type_id</column>
+        <column>counterpart_transport_mode_id</column>
+        <column>belt_used</column>
+        <column>helmet_used</column>
+        <column>patient_disposition_id</column>
+        <column>patient_status_id</column>
+        <column>form_filled_by</column>
+        <column>form_filled_on</column>
+        <column>form_checked_by</column>
+        <column>form_checked_on</column>
+        <column>date_created</column>
+        <column>created_by</column>
+        <row>
+            <value description="id">1</value>
+            <value description="hospital_outpatient_no">123456</value>
+            <value description="hospital_inpatient_no">654321</value>
+            <value description="hospital_id">1</value>
+            <value description="gender">M</value>
+            <value description="age">37</value>
+            <value description="village">Butabika</value>
+            <value description="district_id">3</value>
+            <value description="injury_description">Lost leg</value>
+            <value description="injury_datetime">2014-05-18 08:21:00</value>
+            <value description="transport_mode_id">4</value>
+            <value description="rode_user_type_id">1</value>
+            <value description="counterpart_transport_mode_id">3</value>
+            <value description="belt_used">1</value>
+            <null/>
+            <value description="patient_disposition_id">1</value>
+            <value description="patient_status_id">1</value>
+            <value description="form_filled_by">Kamoga</value>
+            <value description="form_filled_on">2014-05-23 08:30:00</value>
+            <value description="form_checked_by">Golola</value>
+            <value description="form_checked_on">2014-05-24 08:45:00</value>
+            <value description="date_created">2014-05-26 08:57:00</value>
+            <null/>
+        </row>
+    </table>
+    <table name="patient_injury">
+        <column>patient_id</column>
+        <column>injury_type_id</column>
+        <row>
+            <value description="patient_id">1</value>
+            <value description="injury_type_id">1</value>
+        </row>
+        <row>
+            <value description="patient_id">1</value>
+            <value description="injury_type_id">5</value>
+        </row>
+    </table>
 </dataset>

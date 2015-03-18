@@ -1,6 +1,10 @@
 package com.sweroad.query;
 
 import com.sweroad.model.*;
+import com.sweroad.query.service.AgeQueryableService;
+import com.sweroad.query.service.BooleanTypeQueryableService;
+import com.sweroad.query.service.CustomQueryableService;
+import com.sweroad.query.service.GenderQueryableService;
 import com.sweroad.service.LookupManager;
 import com.sweroad.service.impl.LookupManagerImpl;
 
@@ -14,6 +18,7 @@ import java.util.List;
 public class CrashSearch {
 
     private LookupManager lookupManager;
+    private List<CustomQueryableService> customQueryableServices;
     private Date startDate;
     private Date endDate;
     private List<CrashSeverity> crashSeverities = new ArrayList<CrashSeverity>();
@@ -227,91 +232,98 @@ public class CrashSearch {
     }
 
     public CrashQuery toQuery() {
-        return this.generateQuery();
+        return new QueryGenerator().generateQuery();
     }
 
-    private CrashQuery generateQuery() {
-        CrashQuery.CrashQueryBuilder crashQueryBuilder = new CrashQuery.CrashQueryBuilder();
-        addQueryableParameters(crashQueryBuilder);
-        addDriverLicenseType(crashQueryBuilder);
-        return crashQueryBuilder.build();
-    }
+    private class QueryGenerator {
+        private CrashQuery generateQuery() {
+            CrashQuery.CrashQueryBuilder crashQueryBuilder = new CrashQuery.CrashQueryBuilder();
+            addQueryables(crashQueryBuilder);
+            addCustomQueryables(crashQueryBuilder);
+            addLiteralQueryables(crashQueryBuilder);
+            addJoins(crashQueryBuilder);
+            return crashQueryBuilder.build();
+        }
 
-    private void addQueryableParameters(CrashQuery.CrashQueryBuilder crashQueryBuilder) {
-        crashQueryBuilder.addQueryable(crashSeverities)
-                .addQueryable(collisionTypes)
-                .addQueryable(crashCauses)
-                .addQueryable(vehicleFailureTypes)
-                .addQueryable(weathers)
-                .addQueryable(surfaceConditions)
-                .addQueryable(roadSurfaces)
-                .addQueryable(surfaceTypes)
-                .addQueryable(roadwayCharacters)
-                .addQueryable(junctionTypes)
-                .joinVehicles(joinVehicles())
-                .addQueryable(vehicleTypes)
-                .joinCasualties(joinCasualties());
-    }
+        private void addQueryables(CrashQuery.CrashQueryBuilder crashQueryBuilder) {
+            crashQueryBuilder.addQueryable(crashSeverities)
+                    .addQueryable(collisionTypes)
+                    .addQueryable(crashCauses)
+                    .addQueryable(vehicleFailureTypes)
+                    .addQueryable(weathers)
+                    .addQueryable(surfaceConditions)
+                    .addQueryable(roadSurfaces)
+                    .addQueryable(surfaceTypes)
+                    .addQueryable(roadwayCharacters)
+                    .addQueryable(junctionTypes)
+                    .addQueryable(vehicleTypes)
+                    .addQueryable(casualtyClasses)
+                    .addQueryable(casualtyTypes);
+        }
 
-    private void addDriverLicenseType(CrashQuery.CrashQueryBuilder crashQueryBuilder) {
-        if(driverLicenseTypes != null && driverLicenseTypes.size() > 0 &&
-                driverLicenseTypes.size() < lookupManager.getAllLicenseTypes().size()) {
-            List<Boolean> licenseTypeOptions = new ArrayList<Boolean>();
-            boolean includeNull = false;
-            for(LabelValue driverLicenseType : driverLicenseTypes) {
-                if(driverLicenseType.getId() != null && driverLicenseType.getId().equals(1L)) {
-                    licenseTypeOptions.add(Boolean.TRUE);
-                } else if (driverLicenseType.getId() != null && driverLicenseType.getId().equals(0L)) {
-                    licenseTypeOptions.add(Boolean.FALSE);
-                } else if (driverLicenseType.getId() != null && driverLicenseType.getId().equals(-1L)) {
-                    includeNull = true;
-                }
-            }
-            if(licenseTypeOptions.size() > 0) {
-                crashQueryBuilder.addCustomQueryable(createCustomQueryableForLicenseType(licenseTypeOptions, includeNull));
-            } else if(includeNull) {
-                crashQueryBuilder.addCustomQueryable(createCustomQueryableForNullLicenseType());
+        private void addCustomQueryables(CrashQuery.CrashQueryBuilder crashQueryBuilder) {
+            addCustomQueryableForDriverCasualtyType(crashQueryBuilder);
+            addCustomQueryableServices();
+            for (CustomQueryableService customQueryableService : customQueryableServices) {
+                customQueryableService.addToCrashQueryBuilder(crashQueryBuilder);
             }
         }
-    }
 
-    private CustomQueryable createCustomQueryableForLicenseType(Object paramValue, boolean includeNull) {
-        return new CustomQueryable.CustomQueryableBuilder()
-                .addCrashJoinType(CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE)
-                .addProperty("driver.licenseValid")
-                .addComparison(Comparison.IN)
-                .addParameterName("licenseValid")
-                .addParameterValue(paramValue)
-                .shouldEncloseInParenthesis(true)
-                .shouldIncludeNulls(includeNull)
-                .build();
-    }
+        private void addLiteralQueryables(CrashQuery.CrashQueryBuilder crashQueryBuilder) {
+            new AgeQueryableService(driverAgeRanges, CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE)
+                    .addToCrashQueryBuilder(crashQueryBuilder);
+            new AgeQueryableService(casualtyAgeRanges, CrashQuery.CrashQueryBuilder.CrashJoinType.CASUALTY)
+                    .addToCrashQueryBuilder(crashQueryBuilder);
+        }
 
-    private CustomQueryable createCustomQueryableForNullLicenseType() {
-        return new CustomQueryable.CustomQueryableBuilder()
-                .addCrashJoinType(CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE)
-                .addProperty("driver.licenseValid")
-                .addComparison(Comparison.IS)
-                .addParameterName("licenseValid")
-                .addParameterValue("NULL")
-                .shouldUseLiterals(true)
-                .build();
-    }
+        private void addJoins(CrashQuery.CrashQueryBuilder crashQueryBuilder) {
+            crashQueryBuilder
+                    .joinVehicles(joinVehicles())
+                    .joinCasualties(joinCasualties());
+        }
 
-    private boolean joinVehicles() {
-        return (vehicleTypes != null && vehicleTypes.size() > 0) ||
-                (driverLicenseTypes != null && driverLicenseTypes.size() > 0) ||
-                (driverGenders != null && driverGenders.size() > 0) ||
-                (driverAgeRanges != null && driverAgeRanges.size() > 0) ||
-                (driverBeltUsedOptions != null && driverBeltUsedOptions.size() > 0) ||
-                (driverCasualtyTypes != null && driverCasualtyTypes.size() > 0);
-    }
+        private boolean joinVehicles() {
+            return (vehicleTypes != null && vehicleTypes.size() > 0) ||
+                    (driverLicenseTypes != null && driverLicenseTypes.size() > 0) ||
+                    (driverGenders != null && driverGenders.size() > 0) ||
+                    (driverAgeRanges != null && driverAgeRanges.size() > 0) ||
+                    (driverBeltUsedOptions != null && driverBeltUsedOptions.size() > 0) ||
+                    (driverCasualtyTypes != null && driverCasualtyTypes.size() > 0);
+        }
 
-    private boolean joinCasualties() {
-        return (casualtyTypes != null && casualtyTypes.size() > 0) ||
-                (casualtyClasses != null && casualtyClasses.size() > 0) ||
-                (casualtyGenders != null && casualtyGenders.size() > 0) ||
-                (casualtyAgeRanges != null && casualtyAgeRanges.size() > 0) ||
-                (casualtyBeltUsedOptions != null && casualtyBeltUsedOptions.size() > 0);
+        private boolean joinCasualties() {
+            return (casualtyTypes != null && casualtyTypes.size() > 0) ||
+                    (casualtyClasses != null && casualtyClasses.size() > 0) ||
+                    (casualtyGenders != null && casualtyGenders.size() > 0) ||
+                    (casualtyAgeRanges != null && casualtyAgeRanges.size() > 0) ||
+                    (casualtyBeltUsedOptions != null && casualtyBeltUsedOptions.size() > 0);
+        }
+
+        private void addCustomQueryableServices() {
+            customQueryableServices = new ArrayList<CustomQueryableService>();
+            customQueryableServices.add(new BooleanTypeQueryableService(driverLicenseTypes, lookupManager.getAllLicenseTypes(),
+                    CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE, "licenseValid", "driver"));
+            customQueryableServices.add(new GenderQueryableService(driverGenders, lookupManager,
+                    CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE));
+            customQueryableServices.add(new GenderQueryableService(casualtyGenders, lookupManager,
+                    CrashQuery.CrashQueryBuilder.CrashJoinType.CASUALTY));
+            customQueryableServices.add(new BooleanTypeQueryableService(driverBeltUsedOptions, lookupManager.getAllBeltUsedOptions(),
+                    CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE, "beltUsed", "driver"));
+            customQueryableServices.add(new BooleanTypeQueryableService(casualtyBeltUsedOptions, lookupManager.getAllBeltUsedOptions(),
+                    CrashQuery.CrashQueryBuilder.CrashJoinType.CASUALTY, "beltOrHelmetUsed", ""));
+        }
+
+        private void addCustomQueryableForDriverCasualtyType(CrashQuery.CrashQueryBuilder crashQueryBuilder) {
+            if (driverCasualtyTypes != null && driverCasualtyTypes.size() > 0) {
+                crashQueryBuilder.addCustomQueryable(new CustomQueryable.CustomQueryableBuilder()
+                        .addCrashJoinType(CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE)
+                        .addProperty("driver.casualtyType")
+                        .addComparison(Comparison.IN)
+                        .addParameterName("driverCasualtyType")
+                        .addParameterValue(driverCasualtyTypes)
+                        .shouldEncloseInParenthesis(true)
+                        .build());
+            }
+        }
     }
 }

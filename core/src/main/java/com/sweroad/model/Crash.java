@@ -567,15 +567,27 @@ public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertib
     }
 
     public void addCasualty(Casualty casualty) {
+        if(casualties == null) {
+            casualties = new ArrayList<Casualty>();
+        }
         casualties.add(casualty);
     }
 
     public void addVehicle(Vehicle vehicle) {
+        if(vehicles == null) {
+            vehicles = new ArrayList<Vehicle>();
+        }
         vehicles.add(vehicle);
     }
 
     public int getCasualtyCount() {
-        return casualties.size();
+        int numInjuredDrivers = 0;
+        for(Vehicle vehicle : vehicles) {
+            if(vehicle.getDriver() != null && vehicle.getDriver().isCasualty()) {
+                numInjuredDrivers++;
+            }
+        }
+        return casualties.size() + numInjuredDrivers;
     }
 
     public int getVehicleCount() {

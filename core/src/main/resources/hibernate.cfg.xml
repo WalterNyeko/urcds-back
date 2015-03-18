@@ -29,5 +29,12 @@
 		<mapping class="com.sweroad.model.Weather" />
         <mapping class="com.sweroad.model.Audit" />
         <mapping class="com.sweroad.model.SearchCriteria" />
+        <mapping class="com.sweroad.model.Hospital" />
+        <mapping class="com.sweroad.model.InjuryType" />
+        <mapping class="com.sweroad.model.PatientStatus" />
+        <mapping class="com.sweroad.model.PatientDisposition" />
+        <mapping class="com.sweroad.model.RoadUserType" />
+        <mapping class="com.sweroad.model.TransportMode" />
+        <mapping class="com.sweroad.model.Patient" />
 	</session-factory>
 </hibernate-configuration>

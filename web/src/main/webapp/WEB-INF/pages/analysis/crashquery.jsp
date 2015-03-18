@@ -322,7 +322,7 @@
                                         </tr>
                                         <tr>
                                             <td style="border-top: none; border-left: none;">
-                                                <c:forEach var="licenseType" items="${licenseTypes}" varStatus="status">
+                                                <c:forEach var="licenseType" items="${booleanTypes}" varStatus="status">
                                                     <form:checkbox
                                                             path="driverLicenseTypes[${status.index}].value" value="${licenseType.value}" />&nbsp;&nbsp;${licenseType.label} <br/>
                                                 </c:forEach>

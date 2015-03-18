@@ -1,6 +1,7 @@
 package com.sweroad.service.impl;
 
 import com.sweroad.dao.LookupDao;
+import com.sweroad.model.AgeRange;
 import com.sweroad.model.LabelValue;
 import com.sweroad.model.Role;
 import com.sweroad.service.LookupManager;
@@ -104,14 +105,14 @@ public class LookupManagerImpl implements LookupManager {
     @Override
     public List<LabelValue> getAllAgeRanges() {
         List<LabelValue> ageRanges = new ArrayList<LabelValue>();
-        addLabelValueToList("Below 10", "1", ageRanges);
-        addLabelValueToList("10-19", "2", ageRanges);
-        addLabelValueToList("20-29", "3", ageRanges);
-        addLabelValueToList("30-39", "4", ageRanges);
-        addLabelValueToList("40-49", "5", ageRanges);
-        addLabelValueToList("50-59", "6", ageRanges);
-        addLabelValueToList("60-69", "7", ageRanges);
-        addLabelValueToList("70 and above", "8", ageRanges);
+        ageRanges.add(new AgeRange(1L, 0, 9));
+        ageRanges.add(new AgeRange(2L, 10, 19));
+        ageRanges.add(new AgeRange(3L, 20, 29));
+        ageRanges.add(new AgeRange(4L, 30, 39));
+        ageRanges.add(new AgeRange(5L, 40, 49));
+        ageRanges.add(new AgeRange(6L, 50, 59));
+        ageRanges.add(new AgeRange(7L, 60, 69));
+        ageRanges.add(new AgeRange(8L, 70, null));
         return ageRanges;
     }
 
@@ -129,10 +130,9 @@ public class LookupManagerImpl implements LookupManager {
     }
 
     private void addLabelValueToList(String label, String value, List<LabelValue> labelValues) {
-        LabelValue licenseType = new LabelValue();
-        licenseType.setLabel(label);
-        licenseType.setValue(value);
-        labelValues.add(licenseType);
+        LabelValue labelValue = new LabelValue();
+        labelValue.setLabel(label);
+        labelValue.setValue(value);
+        labelValues.add(labelValue);
     }
-
 }

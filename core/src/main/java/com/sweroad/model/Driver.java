@@ -223,6 +223,16 @@ public class Driver extends BaseModel {
         return casualty;
     }
 
+    public boolean isCasualty() {
+        if (this.casualtyType == null) {
+            return false;
+        }
+        if (this.casualtyType.getId().equals(Constants.NOT_INJURED_ID)) {
+            return false;
+        }
+        return true;
+    }
+
     @Override
     public String toString() {
         return String.format("Driver: License No.: {%s}; Age: {%d}; Gender: {%s}", licenseNumber, age, gender);

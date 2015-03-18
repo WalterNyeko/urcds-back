@@ -61,9 +61,16 @@ public class CrashQueryTest extends BaseManagerTestCase {
         return casualtyClasses;
     }
 
+    private List<CasualtyType> getCasualtyTypes() {
+        List<CasualtyType> casualtyTypes = new ArrayList<CasualtyType>();
+        casualtyTypes.add(new CasualtyType());
+        casualtyTypes.get(0).setId(3L);
+        return casualtyTypes;
+    }
+
     @Test
     public void testHqlQueryGeneratedForCrashSeverities() {
-        String expected = "Select c from Crash c where c.crashSeverity in (:crashSeverityList)";
+        String expected = "Select DISTINCT c from Crash c where c.crashSeverity in (:crashSeverityList)";
         List<CrashSeverity> severities = getCrashSeverities();
         crashQuery = new CrashQuery.CrashQueryBuilder().addQueryable(severities).build();
         assertEquals(expected, crashQuery.toString());
@@ -71,7 +78,7 @@ public class CrashQueryTest extends BaseManagerTestCase {
 
     @Test
     public void testHqlQueryGeneratedForCrashSeveritiesAndCollisionTypes() {
-        String expected = "Select c from Crash c where c.collisionType in (:collisionTypeList) and " +
+        String expected = "Select DISTINCT c from Crash c where c.collisionType in (:collisionTypeList) and " +
                 "c.crashSeverity in (:crashSeverityList)";
         List<CrashSeverity> severities = getCrashSeverities();
         List<CollisionType> collisionTypes = getCollisionTypes();
@@ -84,7 +91,7 @@ public class CrashQueryTest extends BaseManagerTestCase {
 
     @Test
     public void testHqlQueryGeneratedForCrashSeveritiesCollisionTypesAndWeather() {
-        String expected = "Select c from Crash c where c.collisionType in (:collisionTypeList) and " +
+        String expected = "Select DISTINCT c from Crash c where c.collisionType in (:collisionTypeList) and " +
                 "c.crashSeverity in (:crashSeverityList) and " +
                 "c.weather in (:weatherList)";
         List<CrashSeverity> severities = getCrashSeverities();
@@ -100,7 +107,7 @@ public class CrashQueryTest extends BaseManagerTestCase {
 
     @Test
     public void testHqlQueryGeneratedForCrashSeveritiesAndStartDate() throws Exception {
-        String expected = "Select c from Crash c where c.crashSeverity in (:crashSeverityList) and c.crashDateTime >= :startDate";
+        String expected = "Select DISTINCT c from Crash c where c.crashSeverity in (:crashSeverityList) and c.crashDateTime >= :startDate";
         List<CrashSeverity> severities = getCrashSeverities();
         Date startDate = DateUtil.convertStringToDate("01/06/2014");
         crashQuery = new CrashQuery.CrashQueryBuilder()
@@ -112,7 +119,7 @@ public class CrashQueryTest extends BaseManagerTestCase {
 
     @Test
     public void testHqlQueryGeneratedForStartDate() throws Exception {
-        String expected = "Select c from Crash c where c.crashDateTime >= :startDate";
+        String expected = "Select DISTINCT c from Crash c where c.crashDateTime >= :startDate";
         Date startDate = DateUtil.convertStringToDate("01/06/2014");
         crashQuery = new CrashQuery.CrashQueryBuilder()
                 .addStartDate(startDate)
@@ -122,7 +129,7 @@ public class CrashQueryTest extends BaseManagerTestCase {
 
     @Test
     public void testHqlQueryGeneratedForEndDate() throws Exception {
-        String expected = "Select c from Crash c where c.crashDateTime <= :endDate";
+        String expected = "Select DISTINCT c from Crash c where c.crashDateTime <= :endDate";
         Date endDate = DateUtil.convertStringToDate("31/12/2014");
         crashQuery = new CrashQuery.CrashQueryBuilder()
                 .addEndDate(endDate)
@@ -132,7 +139,7 @@ public class CrashQueryTest extends BaseManagerTestCase {
 
     @Test
     public void testHqlQueryGeneratedForDateRange() throws Exception {
-        String expected = "Select c from Crash c where c.crashDateTime between :startDate and :endDate";
+        String expected = "Select DISTINCT c from Crash c where c.crashDateTime between :startDate and :endDate";
         Date startDate = DateUtil.convertStringToDate("01/06/2014");
         Date endDate = DateUtil.convertStringToDate("31/12/2014");
         crashQuery = new CrashQuery.CrashQueryBuilder()
@@ -144,7 +151,7 @@ public class CrashQueryTest extends BaseManagerTestCase {
 
     @Test
     public void testHqlQueryGeneratedForStartMonth() throws Exception {
-        String expected = "Select c from Crash c where ((month(c.crashDateTime) >= month(:startDate) and " +
+        String expected = "Select DISTINCT c from Crash c where ((month(c.crashDateTime) >= month(:startDate) and " +
                 "year(c.crashDateTime) = year(:startDate)) or year(c.crashDateTime) > year(:startDate))";
         Date startDate = DateUtil.convertStringToDate("01/06/2014");
         crashQuery = new CrashQuery.CrashQueryBuilder()
@@ -156,7 +163,7 @@ public class CrashQueryTest extends BaseManagerTestCase {
 
     @Test
     public void testHqlQueryGeneratedForEndMonth() throws Exception {
-        String expected = "Select c from Crash c where ((month(c.crashDateTime) <= month(:endDate) and " +
+        String expected = "Select DISTINCT c from Crash c where ((month(c.crashDateTime) <= month(:endDate) and " +
                 "year(c.crashDateTime) = year(:endDate)) or year(c.crashDateTime) < year(:endDate))";
         Date endDate = DateUtil.convertStringToDate("31/12/2014");
         crashQuery = new CrashQuery.CrashQueryBuilder()
@@ -168,7 +175,7 @@ public class CrashQueryTest extends BaseManagerTestCase {
 
     @Test
     public void testHqlQueryGeneratedForMonthRange() throws Exception {
-        String expected = "Select c from Crash c where (((month(c.crashDateTime) >= month(:startDate) and " +
+        String expected = "Select DISTINCT c from Crash c where (((month(c.crashDateTime) >= month(:startDate) and " +
                 "year(c.crashDateTime) = year(:startDate)) or year(c.crashDateTime) > year(:startDate))) " +
                 "and (((month(c.crashDateTime) <= month(:endDate) and " +
                 "year(c.crashDateTime) = year(:endDate)) or year(c.crashDateTime) < year(:endDate)))";
@@ -184,7 +191,7 @@ public class CrashQueryTest extends BaseManagerTestCase {
 
     @Test
     public void testHqlQueryGeneratedForStartYear() throws Exception {
-        String expected = "Select c from Crash c where year(c.crashDateTime) >= year(:startDate)";
+        String expected = "Select DISTINCT c from Crash c where year(c.crashDateTime) >= year(:startDate)";
         Date startDate = DateUtil.convertStringToDate("01/06/2014");
         crashQuery = new CrashQuery.CrashQueryBuilder()
                 .addStartDate(startDate)
@@ -195,7 +202,7 @@ public class CrashQueryTest extends BaseManagerTestCase {
 
     @Test
     public void testHqlQueryGeneratedForEndYear() throws Exception {
-        String expected = "Select c from Crash c where year(c.crashDateTime) <= year(:endDate)";
+        String expected = "Select DISTINCT c from Crash c where year(c.crashDateTime) <= year(:endDate)";
         Date endDate = DateUtil.convertStringToDate("31/12/2014");
         crashQuery = new CrashQuery.CrashQueryBuilder()
                 .addEndDate(endDate)
@@ -206,7 +213,7 @@ public class CrashQueryTest extends BaseManagerTestCase {
 
     @Test
     public void testHqlQueryGeneratedForYearRange() throws Exception {
-        String expected = "Select c from Crash c where year(c.crashDateTime) between year(:startDate) and year(:endDate)";
+        String expected = "Select DISTINCT c from Crash c where year(c.crashDateTime) between year(:startDate) and year(:endDate)";
         Date startDate = DateUtil.convertStringToDate("01/06/2014");
         Date endDate = DateUtil.convertStringToDate("31/12/2014");
         crashQuery = new CrashQuery.CrashQueryBuilder()
@@ -219,7 +226,7 @@ public class CrashQueryTest extends BaseManagerTestCase {
 
     @Test
     public void testHqlQueryGeneratedForStartHour() {
-        String expected = "Select c from Crash c where hour(c.crashDateTime) >= :startHour";
+        String expected = "Select DISTINCT c from Crash c where hour(c.crashDateTime) >= :startHour";
         crashQuery = new CrashQuery.CrashQueryBuilder()
                 .addStartHour(10)
                 .build();
@@ -228,7 +235,7 @@ public class CrashQueryTest extends BaseManagerTestCase {
 
     @Test
     public void testHqlQueryGeneratedForEndHour() {
-        String expected = "Select c from Crash c where hour(c.crashDateTime) <= :endHour";
+        String expected = "Select DISTINCT c from Crash c where hour(c.crashDateTime) <= :endHour";
         crashQuery = new CrashQuery.CrashQueryBuilder()
                 .addEndHour(10)
                 .build();
@@ -237,7 +244,7 @@ public class CrashQueryTest extends BaseManagerTestCase {
 
     @Test
     public void testHqlQueryGeneratedForHourRange() {
-        String expected = "Select c from Crash c where hour(c.crashDateTime) between :startHour and :endHour";
+        String expected = "Select DISTINCT c from Crash c where hour(c.crashDateTime) between :startHour and :endHour";
         crashQuery = new CrashQuery.CrashQueryBuilder()
                 .addStartHour(8)
                 .addEndHour(17)
@@ -247,7 +254,7 @@ public class CrashQueryTest extends BaseManagerTestCase {
 
     @Test
     public void testHqlQueryGeneratedForCrashSeveritiesAndHourRange() {
-        String expected = "Select c from Crash c where c.crashSeverity in (:crashSeverityList) and " +
+        String expected = "Select DISTINCT c from Crash c where c.crashSeverity in (:crashSeverityList) and " +
                 "hour(c.crashDateTime) between :startHour and :endHour";
         List<CrashSeverity> severities = getCrashSeverities();
         crashQuery = new CrashQuery.CrashQueryBuilder()
@@ -260,7 +267,7 @@ public class CrashQueryTest extends BaseManagerTestCase {
 
     @Test
     public void testHqlQueryGeneratedForCrashesInvolvingMediumOmnibusesAndMotorcycles() {
-        String expected = "Select c from Crash c join c.vehicles v where v.vehicleType in (:vehicleTypeList)";
+        String expected = "Select DISTINCT c from Crash c join c.vehicles v where v.vehicleType in (:vehicleTypeList)";
         List<VehicleType> vehicleTypes = getVehicleTypes();
         crashQuery = new CrashQuery.CrashQueryBuilder()
                 .addQueryable(vehicleTypes)
@@ -271,7 +278,7 @@ public class CrashQueryTest extends BaseManagerTestCase {
 
     @Test
     public void testHqlQueryGeneratedForCrashesInvolvingPedestrians() {
-        String expected = "Select c from Crash c join c.casualties i where i.casualtyClass in (:casualtyClassList)";
+        String expected = "Select DISTINCT c from Crash c join c.casualties i where i.casualtyClass in (:casualtyClassList)";
         crashQuery = new CrashQuery.CrashQueryBuilder()
                 .addQueryable(getCasualtyClasses())
                 .joinCasualties(true)
@@ -280,8 +287,20 @@ public class CrashQueryTest extends BaseManagerTestCase {
     }
 
     @Test
+    public void testHqlQueryGeneratedForCrashesInvolvingSlightlyInjuredPedestrians() {
+        String expected = "Select DISTINCT c from Crash c join c.casualties i where i.casualtyClass in (:casualtyClassList) and " +
+                "i.casualtyType in (:casualtyTypeList)";
+        crashQuery = new CrashQuery.CrashQueryBuilder()
+                .addQueryable(getCasualtyClasses())
+                .addQueryable(getCasualtyTypes())
+                .joinCasualties(true)
+                .build();
+        assertEquals(expected, crashQuery.toString());
+    }
+
+    @Test
     public void testHqlQueryGeneratedForCrashesInvolvingFemaleDriversAbove30Years() {
-        String expected = "Select c from Crash c join c.vehicles v where v.driver.age > :age and v.driver.gender = :gender";
+        String expected = "Select DISTINCT c from Crash c join c.vehicles v where v.driver.age > :age and v.driver.gender = :gender";
         CustomQueryable customQueryableGreaterThan30 = new CustomQueryable.CustomQueryableBuilder()
                 .addCrashJoinType(CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE)
                 .addProperty("driver.age")
@@ -308,7 +327,7 @@ public class CrashQueryTest extends BaseManagerTestCase {
 
     @Test
     public void testHqlQueryGeneratedForCrashesInvolvingCasualtiesBetween10And20Years() {
-        String expected = "Select c from Crash c join c.casualties i where i.age <= :age2 and i.age >= :age1";
+        String expected = "Select DISTINCT c from Crash c join c.casualties i where i.age <= :age2 and i.age >= :age1";
         CustomQueryable customQueryableGreaterThanEqualTo10 = new CustomQueryable.CustomQueryableBuilder()
                 .addCrashJoinType(CrashQuery.CrashQueryBuilder.CrashJoinType.CASUALTY)
                 .addProperty("age")
@@ -335,7 +354,7 @@ public class CrashQueryTest extends BaseManagerTestCase {
 
     @Test
     public void testHqlQueryGeneratedForCrashesInvolvingFemaleDriversAbove30YearsAndPedestrians() {
-        String expected = "Select c from Crash c join c.casualties i join c.vehicles v " +
+        String expected = "Select DISTINCT c from Crash c join c.casualties i join c.vehicles v " +
                 "where i.casualtyClass in (:casualtyClassList) and v.driver.age > :age and v.driver.gender = :gender";
         CustomQueryable customQueryableGreaterThan30 = new CustomQueryable.CustomQueryableBuilder()
                 .addCrashJoinType(CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE)
