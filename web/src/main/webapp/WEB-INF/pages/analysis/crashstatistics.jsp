@@ -41,7 +41,7 @@
     <div class="content-wrapper">
         <table cellpadding="3" width="100%" class="stats-tab">
             <tr>
-                <td width="40%" id="stats" valign="top">
+                <td width="40%" id="stats" style="padding-right: 30px;">
 
                 </td>
                 <td width="60%">

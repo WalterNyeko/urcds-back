@@ -34,13 +34,15 @@ var Tabulation = (function() {
     Tabulation.prototype.tabulateCounts = function(attribute) {
         $('#stats').html('');
         var attrName = $('#crashAttribute option:selected').text();
-        var table = $('<table class="tabulated-data">');
+        var table = $('<table class="table table-condensed table-striped table-hover">');
         var thead = $('<thead>');
         var tbody = $('<tbody>');
-        var tfoot = $('<tfoot>');
+        var tfoot = $('<tfoot style="font-weight: bold;">');
         var headerRow = $('<tr>');
-        var headerCell1 = $('<th>').append(attrName);
-        var headerCell2 = $('<th>').append('Crashes');
+        var header1 = $('<a href="" onclick="return false">').append(attrName);
+        var headerCell1 = $('<th>').append(header1);
+        var header2 = $('<a href="" onclick="return false">').append('Crashes');
+        var headerCell2 = $('<th style="text-align: right !important;">').append(header2);
         thead.append(headerRow.append(headerCell1).append(headerCell2));
         var total = 0;
         this.attributeCounts.forEach(function(attr) {
