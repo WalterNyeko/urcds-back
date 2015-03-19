@@ -22,11 +22,11 @@ var Tabulation = (function() {
                 return crashAttr && crashAttr['id'] === attr.id
             }).length});
         });
-        var totalCount = ctx.attributeCounts.reduce(function(a, b) {
-            return a.count + b.count;
+        var notSpec = this.crashes.length - this.attributeCounts.reduce(function(total, b) {
+            return total + b.count;
         }, 0);
-        if (totalCount) {
-           this.attributeCounts.push({"name" : "Not specified", "count" : totalCount});
+        if (notSpec) {
+           this.attributeCounts.push({"name" : "Not specified", "count" : notSpec});
         }
         this.tabulateCounts(attribute);
     }
@@ -50,10 +50,6 @@ var Tabulation = (function() {
             tbody.append(row.append(cell1).append(cell2));
             total += attr.count;
         });
-//        var notSpecRow = $('<tr>');
-//        var notSpecCell1 = $('<td style="font-style: italic;">').append('Not Specified');
-//        var notSpecCell2 = $('<td style="font-style: italic;" align="right">').append(this.crashes.length - total);
-//        tbody.append(notSpecRow.append(notSpecCell1).append(notSpecCell2));
         var footerRow = $('<tr>');
         var footerCell1 = $('<td>').append('Total');
         var footerCell2 = $('<td align="right">').append(this.crashes.length);

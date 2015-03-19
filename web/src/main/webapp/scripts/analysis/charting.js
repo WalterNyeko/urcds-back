@@ -12,7 +12,22 @@ var charting = (function() {
             var attribute = [attr.name, attr.count];
             chart.data.push(attribute);
         });
+        charting.reorderAndSlice(chart);
         new Highcharts.Chart(charting.createPieChartOptions(chart, divId));
+    }
+    charting.reorderAndSlice = function(chart) {
+        var second = chart.data[1];
+        var third = chart.data[2];
+        if(second && third) {
+            var newSecond = {
+                name : second[0],
+                y : second[1],
+                sliced : true,
+                selected : true
+            };
+            chart.data[1] = third;
+            chart.data[2] = newSecond;
+        }
     }
     charting.createPieChartOptions = function(chart, divId) {
         var options = {
@@ -49,6 +64,11 @@ var charting = (function() {
                     },
                     showInLegend: true
                 }
+            },
+            legend : {
+              labelFormatter: function() {
+                  return this.name + ' (' + Highcharts.numberFormat(this.percentage, 2) + ' %)';
+              }
             },
             series: [chart]
         };

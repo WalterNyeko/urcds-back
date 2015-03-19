@@ -112,6 +112,11 @@ function createOptions(divId, chartTitle) {
                 showInLegend: true
             }
         },
+        legend : {
+            labelFormatter: function() {
+                return this.name + ' (' + Highcharts.numberFormat(this.percentage, 2) + ' %)';
+            }
+        },
         series: []
     };
     return options;
