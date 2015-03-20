@@ -9,6 +9,7 @@ function initCrashValidation() {
     validationFunctions.push(checkGpsCoordinateLimits);
     validationFunctions.push(checkWeather);
     validationFunctions.push(checkRoadwayCharacter);
+    initFormChangeDetection('#crashForm');
 }
 
 var validateCrashData = function() {
@@ -126,4 +127,39 @@ var validateCrashSearch = function() {
         return false;
     }
     return true;
+}
+var initFormChangeDetection = function(formName) {
+    var doc = $(document);
+    var form = $(formName);
+    form.find(':text select').each(function() {
+        $(this).data('initial_value', $(this).val());
+    });
+    form.find(':text').on('blur focusout paste', function() {
+        detectTextChange($(this));
+    });
+    form.find('select').change(function() {
+        bindBeforeUnload();
+    });
+    form.find(':radio').change(function() {
+        bindBeforeUnload();
+    });
+    form.find(':checkbox').change(function() {
+        bindBeforeUnload();
+    });
+}
+
+var detectTextChange = function(element) {
+    if(element.val() !== element.data('initial_value')) {
+        bindBeforeUnload();
+    }
+}
+
+var bindBeforeUnload = function() {
+    $(window).on('beforeunload', function() {
+        return 'You have unsaved changes. They will be lost if you go ahead and leave this page without saving.';
+    });
+}
+
+var unbindBeforeUnload = function() {
+    $(window).off('beforeunload');
 }

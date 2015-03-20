@@ -2,6 +2,7 @@
 <head>
     <title><fmt:message key="crashForm.title" /></title>
     <meta name="menue" content="CrashMenu" />
+    <scripts type="text/javascript" src="/scripts/crash-validator.js"></scripts>
     <script type="text/javascript">
         initPopupFormLinks();
     </script>
@@ -128,9 +129,9 @@
                                                 <fmt:message key="button.edit" />
                                             </a>
                                             |
-                                            <a href="/crashformvehicledelete?id=${vehicle.id}" onclick="return confirmMessage('<fmt:message key="rcds.confirmDelete" />');">
+                                            <a href="/crashformvehicledelete?id=${vehicle.id}" onclick="return confirmMessage('<fmt:message key="rcds.confirmRemove" />');">
                                                 <i class="icon-delete"></i>
-                                                <fmt:message key="button.delete" />
+                                                <fmt:message key="button.remove" />
                                             </a>
                                         </td>
                                     </tr>
@@ -199,9 +200,9 @@
                                                 <a href="/crashformcasualty?id=${casualty.id}" class="popup-form"> <i
                                                     class="icon-edit"></i> <fmt:message key="button.edit" />
                                             </a> | <a href="/crashformcasualtydelete?id=${casualty.id}"
-                                                onclick="return confirmMessage('<fmt:message key="rcds.confirmDelete" />');">
+                                                onclick="return confirmMessage('<fmt:message key="rcds.confirmRemove" />');">
                                                     <i class="icon-delete"></i> <fmt:message
-                                                        key="button.delete" />
+                                                        key="button.remove" />
                                             </a></td>
                                         </tr>
                                     </c:forEach>

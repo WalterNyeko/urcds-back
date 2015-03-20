@@ -143,14 +143,25 @@ public class CrashFormController extends BaseFormController {
     public void onSubmit(HttpServletRequest request,
                          HttpServletResponse response) throws Exception {
         Crash crash = (Crash) request.getSession().getAttribute("crash");
-        if (crash.getCrashDateTimeString() != null
+        if (crash != null && crash.getCrashDateTimeString() != null
                 && !"".equals(crash.getCrashDateTimeString())) {
             crash.setCrashDateTime(DateUtil.parseDate("dd/MM/yyyy hh:mm", crash
                     .getCrashDateTimeString()));
         }
-        crashManager.saveCrash(crash);
+        try {
+            String successMessage = getCrashSaveMessage(crash);
+            crashManager.saveCrash(crash);
+            saveMessage(request, successMessage);
+        } catch (Exception e) {
+            logException(request, e, "FAILURE: Crash " + crash.getTarNo() + " failed to save.");
+        }
         request.getSession().removeAttribute("crash");
         response.sendRedirect("/crashes");
+    }
+
+    private String getCrashSaveMessage(Crash crash) {
+        String savedOrUpdated = crash.getId().equals(DEFAULT_ID) ? "saved" : "updated";
+        return "Crash " + crash.getTarNo() + " was " + savedOrUpdated + " successfully.";
     }
 
     @ModelAttribute
@@ -185,8 +196,10 @@ public class CrashFormController extends BaseFormController {
         Crash crash = (Crash) request.getSession().getAttribute("crash");
         if (vehicle.getId().equals(DEFAULT_ID)) {
             addVehicleToCrash(vehicle, crash);
+            saveMessage(request, "Vehicle " + vehicle.getNumber() + " added successfully.");
         } else {
             updateCrashVehicle(vehicle, crash);
+            saveMessage(request, "Vehicle " + vehicle.getNumber() + " updated successfully.");
         }
         request.getSession().setAttribute("crash", crash);
         return showForm2(crash, errors, request, response);
@@ -200,8 +213,10 @@ public class CrashFormController extends BaseFormController {
         Crash crash = (Crash) request.getSession().getAttribute("crash");
         if (casualty.getId().equals(DEFAULT_ID)) {
             addCasualtyToCrash(casualty, crash);
+            saveMessage(request, "Casualty added successfully.");
         } else {
             updateCrashCasualty(casualty, crash);
+            saveMessage(request, "Casualty updated successfully.");
         }
         request.getSession().setAttribute("crash", crash);
         return showForm2(crash, errors, request, response);
@@ -242,6 +257,7 @@ public class CrashFormController extends BaseFormController {
             Crash crash = (Crash) request.getSession().getAttribute("crash");
             crashManager.removeCasualtyFromCrash(crash, Long.parseLong(id));
             request.getSession().setAttribute("crash", crash);
+            saveMessage(request, "Casualty removed successfully");
         }
         return crashForm2(request);
     }
@@ -256,6 +272,7 @@ public class CrashFormController extends BaseFormController {
             crashManager.removeVehicleFromCrash(crash, Long.parseLong(id));
             CrashFormHelper.resetVehicleNumbers(crash);
             request.getSession().setAttribute("crash", crash);
+            saveMessage(request, "Vehicle removed successfully");
         }
         return crashForm2(request);
     }

@@ -238,4 +238,11 @@ public class BaseFormController implements ServletContextAware {
     protected ServletContext getServletContext() {
         return servletContext;
     }
+
+    protected void logException(HttpServletRequest request, Exception e, String friendlyMessage) {
+        log.error(friendlyMessage);
+        log.error(e.getMessage());
+        e.printStackTrace();
+        saveError(request, friendlyMessage);
+    }
 }

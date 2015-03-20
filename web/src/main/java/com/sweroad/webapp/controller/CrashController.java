@@ -59,11 +59,11 @@ public class CrashController extends BaseFormController {
         try {
             String id = request.getParameter("id");
             crashManager.removeCrashById(new Long(id));
-            return showCrashes();
+            saveMessage(request, "Crash was removed successfully");
         } catch (Exception e) {
-            log.error("Remove crash failed: " + e.getLocalizedMessage());
-            return showCrashes();
+            logException(request, e, "Remove crash failed");
         }
+        return showCrashes();
     }
 
     @RequestMapping(value = "/crashrestore", method = RequestMethod.GET)
@@ -71,10 +71,10 @@ public class CrashController extends BaseFormController {
         try {
             String id = request.getParameter("id");
             crashManager.restoreCrashById(new Long(id));
-            return showCrashes();
+            saveMessage(request, "Crash was restored successfully");
         } catch (Exception e) {
-            log.error("Restore crash failed: " + e.getLocalizedMessage());
-            return showCrashes();
+            logException(request, e, "Restore crash failed");
         }
+        return showCrashes();
     }
 }

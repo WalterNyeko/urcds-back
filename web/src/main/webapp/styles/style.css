@@ -481,3 +481,11 @@ table.stats-tab td {
     padding: 5px;
     vertical-align: top;
 }
+.notification {
+    width: 30%;
+    right: 3%;
+    margin-top: -15px;
+    position: absolute;
+    z-index: 10;
+    box-shadow: 10px 10px 5px #888888;
+}
