@@ -1,8 +1,8 @@
 <%@ include file="/common/taglibs.jsp"%>
 <head>
     <title><fmt:message key="crashForm.title" /></title>
-    <meta name="menue" content="CrashMenu" />
-    <scripts type="text/javascript" src="/scripts/crash-validator.js"></scripts>
+    <meta name="menu" content="CrashMenu" />
+    <script type="text/javascript" src="/scripts/crash-validator.js"></script>
     <script type="text/javascript">
         initPopupFormLinks();
     </script>
@@ -124,12 +124,13 @@
                                             </c:if>
                                         </td>
                                         <td class="padd2" align="center">
-                                            <a href="/crashformvehicle?id=${vehicle.id}" class="popup-form">
+                                            <a href="" onclick="return loadVehicleForm({url: '/crashformvehicle?id=${vehicle.id}'});">
                                                 <i class="icon-edit"></i>
                                                 <fmt:message key="button.edit" />
                                             </a>
                                             |
-                                            <a href="/crashformvehicledelete?id=${vehicle.id}" onclick="return confirmMessage('<fmt:message key="rcds.confirmRemove" />');">
+                                            <a href="/crashformvehicledelete?id=${vehicle.id}"
+                                               onclick="return confirmDialog({message : '<fmt:message key="rcds.confirmRemove" />', aLink : this});">
                                                 <i class="icon-delete"></i>
                                                 <fmt:message key="button.remove" />
                                             </a>
@@ -141,9 +142,12 @@
 					</c:forEach>
 				</c:if>
 				<tr>
-					<td><a href="/crashformvehicle" class="popup-form"> <i class="icon-ok"></i> <fmt:message
-								key="button.addVehicle" />
-					</a></td>
+					<td>
+                        <a href="" onclick="return loadVehicleForm({url: '/crashformvehicle'});">
+                            <i class="icon-ok"></i>
+                            <fmt:message key="button.addVehicle" />
+					    </a>
+                    </td>
 				</tr>
 				<c:if test="${crash.casualties ne null and not empty crash.casualties}">
                     <tr>
@@ -197,10 +201,12 @@
                                                     </c:otherwise>
                                                 </c:choose></td>
                                             <td class="padd2" align="center">
-                                                <a href="/crashformcasualty?id=${casualty.id}" class="popup-form"> <i
-                                                    class="icon-edit"></i> <fmt:message key="button.edit" />
-                                            </a> | <a href="/crashformcasualtydelete?id=${casualty.id}"
-                                                onclick="return confirmMessage('<fmt:message key="rcds.confirmRemove" />');">
+                                                <a href="" onclick="return loadCasualtyForm({url: '/crashformcasualty?id=${casualty.id}'});">
+                                                    <i class="icon-edit"></i>
+                                                    <fmt:message key="button.edit" />
+                                                </a> |
+                                                <a href="/crashformcasualtydelete?id=${casualty.id}"
+                                                onclick="return confirmDialog({message : '<fmt:message key="rcds.confirmRemove" />', aLink : this});">
                                                     <i class="icon-delete"></i> <fmt:message
                                                         key="button.remove" />
                                             </a></td>
@@ -211,9 +217,12 @@
 					</tr>
 				</c:if>
 				<tr>
-					<td><a href="/crashformcasualty" class="popup-form"> <i class="icon-ok"></i>
+					<td>
+                        <a href="" onclick="return loadCasualtyForm({url: '/crashformcasualty'});">
+                            <i class="icon-ok"></i>
 							<fmt:message key="button.addCasualty" />
-					</a></td>
+					    </a>
+                    </td>
 				</tr>
 				<tr>
                     <td>
@@ -246,4 +255,3 @@
 		</div>
 	</form:form>
 </div>
-<div id="ajax-modal" class="modal container fade" tabindex="-1" style="display: none; margin-top: 40px;" aria-hidden="true"></div>

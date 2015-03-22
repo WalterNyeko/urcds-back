@@ -18,18 +18,90 @@ function loadSelectCrash(params) {
                 if(validateCrashSearch()) {
                     $("#selectCrashForm").submit();
                 }
+            },
+            'Cancel' : function () {
+                $(".ui-dialog").remove();
+                $(".ui-widget-overlay").remove();
             }
         },
         open: function () {
             openDialog({
                 dialogDiv: this,
-                showClose: true
+                showClose: false
             });
         }
     });
     params.responseDiv = $("#select-crash");
     params.rootElementId = "selectCrashForm";
     params.dialogDiv = $("#select-crash");
+    sendRequest(params);
+    return false;
+}
+
+function loadVehicleForm(params) {
+    $("<div id='vehicle-dialog' style='min-width: 850px;' title='Vehicle Form'>" +
+        "<div style='clear: both; margin-top: 2%; text-align: justify'>Loading..." +
+        "</div></div>").appendTo("body");
+
+    $("#vehicle-dialog").dialog({
+        autoOpen: true,
+        closeOnEscape: false,
+        modal: true,
+        width: 'auto',
+        buttons: {
+            'Save' : function () {
+                $("#vehicleform").submit();
+            },
+            'Cancel' : function () {
+                $(".ui-dialog").remove();
+                $(".ui-widget-overlay").remove();
+            }
+        },
+        open: function () {
+            openDialog({
+                dialogDiv: this,
+                showClose: false
+            });
+        }
+    });
+    params.responseDiv = $("#vehicle-dialog");
+    params.rootElementId = "vehicleform";
+    params.dialogDiv = $("#vehicle-dialog");
+    sendRequest(params);
+    return false;
+}
+
+function loadCasualtyForm(params) {
+    $("<div id='casualty-dialog' style='min-width: 1100px;' title='Casualty Form'>" +
+        "<div style='clear: both; margin-top: 2%; text-align: justify'>Loading..." +
+        "</div></div>").appendTo("body");
+
+    $("#casualty-dialog").dialog({
+        autoOpen: true,
+        closeOnEscape: false,
+        modal: true,
+        width: 'auto',
+        buttons: {
+            'Save' : function () {
+                if (validateFields()) {
+                    $("#casualtyform").submit();
+                }
+            },
+            'Cancel' : function () {
+                $(".ui-dialog").remove();
+                $(".ui-widget-overlay").remove();
+            }
+        },
+        open: function () {
+            openDialog({
+                dialogDiv: this,
+                showClose: false
+            });
+        }
+    });
+    params.responseDiv = $("#casualty-dialog");
+    params.rootElementId = "casualtyform";
+    params.dialogDiv = $("#casualty-dialog");
     sendRequest(params);
     return false;
 }
@@ -46,6 +118,7 @@ function sendRequest(params) {
                     $(params.responseDiv).append(rootElement);
                 }
             }
+            console.log(result);
         },
         complete: function() {
             if(params.dialogDiv) {

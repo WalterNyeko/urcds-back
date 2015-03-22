@@ -17,14 +17,14 @@ public class CrashHtmlHelper extends HtmlHelper {
 	public static String createRemoveLink(long crashId) {
 		String removeIcon = HtmlHelper.createImage("/images/bt_remove.gif", "Remove", "4", null, null);
 		String removeLink = HtmlHelper.createAnchor(removeIcon, "crashremove?id=" + crashId, "Remove crash",
-				"setAccessedObject(this); return confirm('Remove crash?');");
+				"setAccessedObject(this); return confirmDialog({message : 'Remove crash?', aLink : this});");
 		return removeLink;
 	}
 	
 	public static String createRestoreLink(long crashId) {
 		String removeIcon = HtmlHelper.createImage("/images/bt_restore.gif", "Restore", "4", null, null);
 		String removeLink = HtmlHelper.createAnchor(removeIcon, "crashrestore?id=" + crashId, "Restore crash",
-				"setAccessedObject(this); return confirm('Restore removed crash?');", "data-crashes-id=" + crashId);
+				"setAccessedObject(this); return confirmDialog({message : 'Restore removed crash?', aLink : this});", "data-crashes-id=" + crashId);
 		return removeLink;
 	}
 

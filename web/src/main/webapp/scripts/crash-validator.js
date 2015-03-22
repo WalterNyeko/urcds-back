@@ -43,6 +43,9 @@ var clearWarningMessage = function(){
 
 var checkDate = function() {
     var crashDate = getCrashDate();
+    if (crashDate == null) {
+        return;
+    }
     var today = new Date();
     if (crashDate > today) {
         validationWarningMessage.push("The crash date specified is a future date.");
@@ -50,7 +53,10 @@ var checkDate = function() {
 }
 
 var getCrashDate = function() {
-    var dateString = $("#crashDateTimeString").val();
+    var dateString = $.trim($("#crashDateTimeString").val());
+    if (!dateString.length) {
+        return null;
+    }
     var dataSplit = dateString.split('/');
     var dateConverted;
 
@@ -131,14 +137,17 @@ var validateCrashSearch = function() {
 var initFormChangeDetection = function(formName) {
     var doc = $(document);
     var form = $(formName);
-    form.find(':text select').each(function() {
-        $(this).data('initial_value', $(this).val());
+    form.find(':text').each(function() {
+        this.oldValue = this.value;
+    });
+    form.find('select').each(function() {
+        this.oldValue = this.value;
     });
     form.find(':text').on('blur focusout paste', function() {
-        detectTextChange($(this));
+        detectTextChange(this);
     });
     form.find('select').change(function() {
-        bindBeforeUnload();
+        detectTextChange(this);
     });
     form.find(':radio').change(function() {
         bindBeforeUnload();
@@ -149,7 +158,7 @@ var initFormChangeDetection = function(formName) {
 }
 
 var detectTextChange = function(element) {
-    if(element.val() !== element.data('initial_value')) {
+    if(element.oldValue !== element.value) {
         bindBeforeUnload();
     }
 }

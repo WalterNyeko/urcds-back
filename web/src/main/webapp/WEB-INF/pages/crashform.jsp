@@ -8,9 +8,6 @@
     <script type="text/javascript" src="/scripts/crash-validator.js"></script>
     <script type="text/javascript">
         $( document ).ready(function() {
-            $(".submit").click(function(){
-                return validateFields();
-            });
             loadGpsCoordinates();
             loadCrashTime();
             generateCoordDegrees();
@@ -421,8 +418,8 @@
 							<fmt:message key="button.cancel" />
 						</a>
 					</td>
-					<td align="right"><input type="submit" class="btn btn-primary submit"
-						value="<fmt:message key='button.next'/>" onclick="bCancel=false; return validateGpsCoordinates();"></td>
+					<td align="right"><input type="button" class="btn btn-primary submit"
+						value="<fmt:message key='button.next'/>" onclick="bCancel=false; submitForm();"></td>
 				</tr>
 			</table>
 		</div>
@@ -442,6 +439,14 @@
     </div>
     <div class="modal-footer">
         <button type="button" data-dismiss="modal" class="btn btn-default">Back</button>
-        <button type="button" class="btn btn-primary" onclick="document.getElementById('crashForm').submit();">Proceed Anyway</button>
+        <button type="button" class="btn btn-primary" onclick="submitForm()">Proceed Anyway</button>
     </div>
 </div>
+<script type="text/javascript">
+    function submitForm() {
+        if(validateFields() && validateGpsCoordinates()) {
+            unbindBeforeUnload();
+            document.getElementById('crashForm').submit();
+        }
+    }
+</script>

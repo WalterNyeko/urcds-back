@@ -180,7 +180,7 @@ function loadDialog(params) {
 
 function alertDialog(params) {
 
-    $("<div id='alertDialog' title='Message Alert'>" +
+    $("<div id='alertDialog' title='Message Alert' style='z-index: 3000;'>" +
         "<div style='clear: both; margin-top: 2%; text-align: justify;'>" +
         params.message +
         "</div></div>").appendTo("body");
@@ -214,6 +214,53 @@ function alertDialog(params) {
     return false;
 }
 
+function confirmDialog(params){
+
+    $("<div id='confirmDialog' title='Confirm Action'>" +
+        "<div style='clear: both; margin-top: 2%; text-align: justify'>" +
+        params.message +
+        "</div></div>").appendTo("body");
+
+    var height = params.height ? params.height : 180;
+    var width = params.weight ? params.width : 400;
+
+    $("#confirmDialog").dialog({
+        autoOpen : true,
+        closeOnEscape: false,
+        modal : true,
+        height: height,
+        width: width,
+        buttons:{
+            'Yes': function() {
+                $("#confirmDialog").remove();
+                if(params.aLink){
+                    var href = $(params.aLink).attr('href');
+                    window.location.href = href;
+                } else if (params.redirectLink){
+                    window.location.href = params.redirectLink;
+                } else if (params.checkbox) {
+                    var isChecked = $(params.checkbox).is(':checked');
+                    $(params.checkbox).attr("checked", !isChecked);
+                }
+            },
+            'No': function() {
+                $("#confirmDialog").remove();
+            }
+        },
+
+        open: function(event, ui) {
+
+            openDialog({
+                dialogDiv: this
+            });
+            if(params.aLink && params.highlightRow) {
+                setAccessedObjected(params.aLink);
+            }
+        }
+    });
+    return false;
+}
+
 function openDialog(params) {
     if(!params.showClose) {
         $(".ui-dialog-titlebar-close", $(params.dialogDiv).parent()).hide();
@@ -222,6 +269,7 @@ function openDialog(params) {
     $('.ui-widget-content').css('border', '0');
     $('.ui-dialog').zIndex(2000);
     $('.ui-dialog .ui-dialog-titlebar').find('span').css('color', "#2C6CAF");
+    $('.ui-widget-overlay').zIndex(100);
 }
 
 function validateInteger(num) {
