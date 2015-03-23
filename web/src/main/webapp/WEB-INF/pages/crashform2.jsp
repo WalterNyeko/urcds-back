@@ -4,7 +4,9 @@
     <meta name="menu" content="CrashMenu" />
     <script type="text/javascript" src="/scripts/crash-validator.js"></script>
     <script type="text/javascript">
-        initPopupFormLinks();
+        $( document ).ready(function() {
+            initCrashValidation();
+        });
     </script>
 </head>
 <div class="col-sm-15">
@@ -15,6 +17,7 @@
             <fmt:message key="crashForm.heading" />
         </h3>
         <appfuse:label styleClass="control-label" key="crashForm.tarNo" />: ${crash.tarNo}
+        <form:hidden path="dirty" id="dirty" />
 		<div class="col-sm-15">
 			<table cellpadding="4" width="100%">
 				<c:if test="${crash.vehicles ne null }">
@@ -229,13 +232,13 @@
                         <table width="100%">
                             <tr>
                                 <td width="50%">
-                                    <a class="btn btn-default" href="/crashform?id=${crash.id}&back=true">
+                                    <a class="btn btn-default" href="/crashform?id=${crash.id}&back=true" onclick="unbindBeforeUnload()">
                                         <i class="icon-ok"></i>
                                         <fmt:message key="button.back" />
                                     </a>
                                 </td>
                                 <td width="50%" align="right">
-                                    <a class="btn btn-primary" href="/crashformsubmit">
+                                    <a class="btn btn-primary" href="/crashformsubmit" onclick="unbindBeforeUnload()">
                                         <i class="icon-ok"></i>
                                         <c:choose>
                                             <c:when test="${crash.id eq 0 }">

@@ -131,6 +131,7 @@ public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertib
     private Double latitudeNumeric;
     @Column(name = "longitude_numeric")
     private Double longitudeNumeric;
+    private transient boolean dirty;
 
     /**
      * @return the casualties
@@ -731,6 +732,14 @@ public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertib
 
     public void setLongitudeNumeric(Double longitudeNumeric) {
         this.longitudeNumeric = longitudeNumeric;
+    }
+
+    public boolean isDirty() {
+        return dirty;
+    }
+
+    public void setDirty(boolean dirty) {
+        this.dirty = dirty;
     }
 
     /**

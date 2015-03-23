@@ -356,30 +356,6 @@ function displayCoordinate(coordinate) {
     return coordParts[0].concat("&deg ").concat(coordParts[1]).concat("\'");
 }
 
-function initPopupFormLinks() {
-    $(document).ready(function() {
-        $("a.popup-form").each(function() {
-           $(this).click(function() {
-               var url = $(this).attr("href");
-               var $modal = $('#ajax-modal');
-               $modal.zIndex(2000);
-               $('body').modalmanager('loading');
-               $modal.load(url, '', function(){
-                   var modalBody = $modal.find('.modal-body');
-                   var modalFooter = $modal.find('.modal-footer');
-                   $modal.html('');
-                   $modal.append(modalBody);
-                   if(modalFooter) {
-                       $modal.append(modalFooter);
-                   }
-                   $modal.modal();
-               });
-               return false;
-           });
-        });
-    });
-}
-
 /***
  Last accessed highlight functions
  ***/

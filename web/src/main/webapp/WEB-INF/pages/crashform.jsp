@@ -33,7 +33,9 @@
 										key="crashForm.tarNo" /></td>
 								<td width="60%">
 									<form:input cssClass="form-control req-val" path="tarNo" id="tarNo" data-labelName="${tarNoLabel}"
-										autofocus="true" /><form:hidden path="id" />
+										autofocus="true" />
+                                    <form:hidden path="id" />
+                                    <form:hidden path="dirty" id="dirty" />
 									</td>
 							</tr>
 							<tr>
@@ -419,7 +421,7 @@
 						</a>
 					</td>
 					<td align="right"><input type="button" class="btn btn-primary submit"
-						value="<fmt:message key='button.next'/>" onclick="bCancel=false; submitForm();"></td>
+						value="<fmt:message key='button.next'/>" onclick="bCancel=false; onSubmit();"></td>
 				</tr>
 			</table>
 		</div>
@@ -443,10 +445,13 @@
     </div>
 </div>
 <script type="text/javascript">
-    function submitForm() {
+    function onSubmit() {
         if(validateFields() && validateGpsCoordinates()) {
-            unbindBeforeUnload();
-            document.getElementById('crashForm').submit();
+            submitForm();
         }
+    }
+    function submitForm() {
+        unbindBeforeUnload();
+        document.getElementById('crashForm').submit();
     }
 </script>

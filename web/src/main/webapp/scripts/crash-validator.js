@@ -150,17 +150,31 @@ var initFormChangeDetection = function(formName) {
         detectTextChange(this);
     });
     form.find(':radio').change(function() {
+        dirtyFormObject();
         bindBeforeUnload();
     });
     form.find(':checkbox').change(function() {
+        dirtyFormObject();
         bindBeforeUnload();
     });
+    if(isFormObjectDirty()) {
+        bindBeforeUnload();
+    }
 }
 
 var detectTextChange = function(element) {
     if(element.oldValue !== element.value) {
+        dirtyFormObject();
         bindBeforeUnload();
     }
+}
+
+var isFormObjectDirty = function() {
+    return $('#dirty').val() === 'true';
+}
+
+var dirtyFormObject = function() {
+    $('#dirty').val('true');
 }
 
 var bindBeforeUnload = function() {
@@ -172,3 +186,90 @@ var bindBeforeUnload = function() {
 var unbindBeforeUnload = function() {
     $(window).off('beforeunload');
 }
+
+var crashSeverityValidation = (function() {
+    var crashSeverityValidation = Object.create(null);
+    crashSeverityValidation.severityValidations = [];
+    crashSeverityValidation.severityValidations.push(crashSeverityValidation.fatalCrashValidator());
+    crashSeverityValidation.severityValidations.push(crashSeverityValidation.seriousCrashValidator());
+    crashSeverityValidation.severityValidations.push(crashSeverityValidation.slightCrashValidator());
+
+    crashSeverityValidation.fatalCrashValidator = function() {
+        return {
+            severityId : 1,
+            allowedCasualtyTypes : [1, 2, 3, 4, 5],
+            mustHaveCasualtyType : 1,
+            warningMessages : [],
+            validate : function(casualtyTypes) {
+                var ctx = this;
+                if (!casualtyTypes.filter(function(x) { return x === ctx.mustHaveCasualtyType }).length) {
+                    ctx.warningMessages.push('Crash severity is <b><i>Fatal</i></b> but none of the casualties or drivers is fatally injured');
+                }
+            }
+        };
+    }
+    crashSeverityValidation.seriousCrashValidator = function() {
+        return {
+            severityId : 2,
+            allowedCasualtyTypes : [2, 3, 4, 5],
+            mustHaveCasualtyType : 2,
+            mustNotHaveCasualtyTypes : [1],
+            casualtyTypeInvalid : function(casualtyTypeId) {
+                return this.mustNotHaveCasualtyTypes.indexOf(casualtyTypeId) > -1;
+            },
+            warningMessages : [],
+            validate : function(casualtyTypes) {
+                var ctx = this;
+                if (!casualtyTypes.filter(function(x) { return x === ctx.mustHaveCasualtyType }).length) {
+                    ctx.warningMessages.push('Crash severity is <b><i>Serious</i></b> but none of the casualties or drivers is seriously injured.');
+                }
+                if (casualtyTypes.filter(function(x) { return ctx.casualtyTypeInvalid(x) }).length) {
+                    ctx.warningMessages.push('Crash severity is <b><i>Serious</i></b> but at least one of the casualties or drivers is fatally injured.');
+                }
+            }
+        };
+    }
+    crashSeverityValidation.slightCrashValidator = function() {
+        return {
+            severityId : 3,
+            allowedCasualtyTypes : [3, 4, 5],
+            mustHaveCasualtyType : 3,
+            mustNotHaveCasualtyTypes : [1, 2],
+            casualtyTypeInvalid : function(casualtyTypeId) {
+                return this.mustNotHaveCasualtyTypes.indexOf(casualtyTypeId) > -1;
+            },
+            warningMessages : [],
+            validate : function(casualtyTypes) {
+                var ctx = this;
+                if (!casualtyTypes.filter(function(x) { return x === ctx.mustHaveCasualtyType }).length) {
+                    ctx.warningMessages.push('Crash severity is <b><i>Slight</i></b> but none of the casualties or drivers is slightly injured.');
+                }
+                if (casualtyTypes.filter(function(x) { return ctx.casualtyTypeInvalid(x) }).length) {
+                    ctx.warningMessages.push('Crash severity is <b><i>Slight</i></b> but at least one of the casualties or drivers is fatally or seriously injured.');
+                }
+            }
+        };
+    }
+    crashSeverityValidation.damageOnlyCrashValidator = function() {
+        return {
+            severityId : 4,
+            allowedCasualtyTypes : [4, 5],
+            mustHaveCasualtyType : 4,
+            mustNotHaveCasualtyTypes : [1, 2, 3],
+            casualtyTypeInvalid : function(casualtyTypeId) {
+                return this.mustNotHaveCasualtyTypes.indexOf(casualtyTypeId) > -1;
+            },
+            warningMessages : [],
+            validate : function(casualtyTypes) {
+                var ctx = this;
+                if (!casualtyTypes.filter(function(x) { return x === ctx.mustHaveCasualtyType }).length) {
+                    ctx.warningMessages.push('Crash severity is <b><i>Damage Only</i></b> but at least one of the casualties or drivers is injured.');
+                }
+                if (casualtyTypes.filter(function(x) { return ctx.casualtyTypeInvalid(x) }).length) {
+                    ctx.warningMessages.push('Crash severity is <b><i>Damage Only</i></b> but at least one of the casualties or drivers is fatally or seriously injured.');
+                }
+            }
+        };
+    }
+    return crashSeverityValidation;
+})();

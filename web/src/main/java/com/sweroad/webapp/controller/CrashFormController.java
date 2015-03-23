@@ -56,12 +56,8 @@ public class CrashFormController extends BaseFormController {
         String id = request.getParameter("id");
         if (!StringUtils.isBlank(id)) {
             Long crashId = new Long(id);
-            if (crashId > 0) {
-                crash = getCrashById(request, crashId);
-                request.getSession().setAttribute("crash", crash);
-            } else {
-                crash = (Crash) request.getSession().getAttribute("crash");
-            }
+            crash = getCrashById(request, crashId);
+            request.getSession().setAttribute("crash", crash);
         } else {
             crash = new Crash();
             crash.setId(DEFAULT_ID);
@@ -201,6 +197,7 @@ public class CrashFormController extends BaseFormController {
             updateCrashVehicle(vehicle, crash);
             saveMessage(request, "Vehicle " + vehicle.getNumber() + " updated successfully.");
         }
+        crash.setDirty(true);
         request.getSession().setAttribute("crash", crash);
         return showForm2(crash, errors, request, response);
     }
@@ -218,6 +215,7 @@ public class CrashFormController extends BaseFormController {
             updateCrashCasualty(casualty, crash);
             saveMessage(request, "Casualty updated successfully.");
         }
+        crash.setDirty(true);
         request.getSession().setAttribute("crash", crash);
         return showForm2(crash, errors, request, response);
     }
@@ -258,6 +256,7 @@ public class CrashFormController extends BaseFormController {
             crashManager.removeCasualtyFromCrash(crash, Long.parseLong(id));
             request.getSession().setAttribute("crash", crash);
             saveMessage(request, "Casualty removed successfully");
+            crash.setDirty(true);
         }
         return crashForm2(request);
     }
@@ -273,6 +272,7 @@ public class CrashFormController extends BaseFormController {
             CrashFormHelper.resetVehicleNumbers(crash);
             request.getSession().setAttribute("crash", crash);
             saveMessage(request, "Vehicle removed successfully");
+            crash.setDirty(true);
         }
         return crashForm2(request);
     }
