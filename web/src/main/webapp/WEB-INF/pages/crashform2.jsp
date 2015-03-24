@@ -5,19 +5,19 @@
     <script type="text/javascript" src="/scripts/crash-validator.js"></script>
     <script type="text/javascript">
         $( document ).ready(function() {
-            initCrashValidation();
+            initVehicleAndCasualtyValidation();
         });
     </script>
 </head>
 <div class="col-sm-15">
 	<form:form commandName="crash" method="post" action="/crashformsubmit"
-		id="crashform" autocomplete="off" cssClass="well"
-		onsubmit="return validateCrash(this)">
+		id="crashform" autocomplete="off" cssClass="well">
         <h3>
             <fmt:message key="crashForm.heading" />
         </h3>
         <appfuse:label styleClass="control-label" key="crashForm.tarNo" />: ${crash.tarNo}
         <form:hidden path="dirty" id="dirty" />
+        <form:hidden path="crashSeverity.id" id="crashSeverityId" />
 		<div class="col-sm-15">
 			<table cellpadding="4" width="100%">
 				<c:if test="${crash.vehicles ne null }">
@@ -121,9 +121,9 @@
                                             </c:choose>
                                         </td>
                                         <td class="padd2">
-                                            <c:if
-                                                    test="${vehicle.driver ne null and vehicle.driver.casualtyType ne null }">
+                                            <c:if test="${vehicle.driver ne null and vehicle.driver.casualtyType ne null }">
                                                 ${vehicle.driver.casualtyType.name}
+                                                <input type="hidden" data-name="casualtyType" value="${vehicle.driver.casualtyType.id}">
                                             </c:if>
                                         </td>
                                         <td class="padd2" align="center">
@@ -186,7 +186,10 @@
                                         <tr>
                                             <td class="padd2"><appfuse:label styleClass="form-label"
                                                     key="crash.person" />&nbsp;${status.index + 1}</td>
-                                            <td class="padd2">${casualty.casualtyType.name}</td>
+                                            <td class="padd2">
+                                                ${casualty.casualtyType.name}
+                                                <input type="hidden" data-name="casualtyType" value="${casualty.casualtyType.id}">
+                                            </td>
                                             <td class="padd2" align="center">${casualty.gender}</td>
                                             <td class="padd2" align="right">${casualty.age}</td>
                                             <td class="padd2">${casualty.casualtyClass.name}</td>
@@ -238,7 +241,7 @@
                                     </a>
                                 </td>
                                 <td width="50%" align="right">
-                                    <a class="btn btn-primary" href="/crashformsubmit" onclick="unbindBeforeUnload()">
+                                    <a class="btn btn-primary" href="" onclick="return onSubmit()">
                                         <i class="icon-ok"></i>
                                         <c:choose>
                                             <c:when test="${crash.id eq 0 }">
@@ -258,3 +261,31 @@
 		</div>
 	</form:form>
 </div>
+<div id="warning-modal" class="modal fade" tabindex="-1" style="display: none; margin-top: 40px; color: #000;" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+        <h4 class="modal-title" style="color: #800000; font-weight: bold;">Warning</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div id="warning-content" class="col-md-15">
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-default">Back</button>
+        <button type="button" class="btn btn-primary" onclick="submitForm()">Proceed Anyway</button>
+    </div>
+</div>
+<script type="text/javascript">
+    function onSubmit() {
+        if(validateCrashData()) {
+            submitForm();
+        }
+        return false;
+    }
+    function submitForm() {
+        unbindBeforeUnload();
+        window.location.href = '/crashformsubmit';
+    }
+</script>

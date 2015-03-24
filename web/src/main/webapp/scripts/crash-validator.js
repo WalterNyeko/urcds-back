@@ -12,6 +12,11 @@ function initCrashValidation() {
     initFormChangeDetection('#crashForm');
 }
 
+function initVehicleAndCasualtyValidation() {
+    validationFunctions.push(checkCasualtyTypes);
+    initFormChangeDetection('#crashForm');
+}
+
 var validateCrashData = function() {
     validationWarningMessage.length = 0;
     $(validationFunctions).each(function() {
@@ -48,7 +53,7 @@ var checkDate = function() {
     }
     var today = new Date();
     if (crashDate > today) {
-        validationWarningMessage.push("The crash date specified is a future date.");
+        validationWarningMessage.push("The <b><i>crash date</i></b> specified is a future date.");
     }
 }
 
@@ -77,23 +82,40 @@ var checkGpsCoordinateLimits = function() {
         var latitude = parseFloat($("#tdLat").attr('data-lat-val'));
         var longitude = parseFloat($("#tdLon").attr('data-lon-val'));
         if(latitude <= -2 || latitude >= 3) {
-            validationWarningMessage.push("The GPS latitude value provided seems to be outside the country.");
+            validationWarningMessage.push("The <b><i>GPS latitude</i></b> value provided seems to be outside the country.");
         }
         if(longitude < 30 || longitude > 33) {
-            validationWarningMessage.push("The GPS longitude value provided seems to be outside the country.");
+            validationWarningMessage.push("The <b><i>GPS longitude</i></b> value provided seems to be outside the country.");
         }
     }
 }
 
 var checkWeather = function() {
     if($("#crashForm input[name='weather.id']:checked").val() == 2 && $("#crashForm input[name='roadSurface.id']:checked").val() == 2) {
-        validationWarningMessage.push("You specified weather as <i>Rain</i> and Road surface as <i>Dry</i>");
+        validationWarningMessage.push("You specified weather as <b><i>Rain</i></b> and Road surface as <b><i>Dry</i></b>");
     }
 }
 
 var checkRoadwayCharacter = function() {
     if($("#crashForm input[name='roadwayCharacter.id']:checked").val() == 1 && $("#crashForm input[name='junctionType.id']:checked").val() == 4) {
-        validationWarningMessage.push("You specified Character of Roadway as <i>Straight slight curve</i> and Junction Type as <i>Roundabout</i>");
+        validationWarningMessage.push("You specified Character of Roadway as <b><i>Straight slight curve</i></b> and Junction Type as <b><i>Roundabout</i></b>");
+    }
+}
+
+var checkCasualtyTypes = function() {
+    if ($('input[type="hidden"][data-name="casualtyType"]').length) {
+        var casualtyTypes = [];
+        var crashSeverityId = parseInt($('#crashSeverityId').val());
+        $('input[type="hidden"][data-name="casualtyType"]').each(function() {
+           casualtyTypes.push(parseInt(this.value));
+        });
+        var validator = crashSeverityValidation.getValidator(crashSeverityId);
+        if (validator) {
+            validator.validate(casualtyTypes);
+            validator.warningMessages.forEach(function(x) {
+                validationWarningMessage.push(x);
+            });
+        }
     }
 }
 
@@ -190,14 +212,10 @@ var unbindBeforeUnload = function() {
 var crashSeverityValidation = (function() {
     var crashSeverityValidation = Object.create(null);
     crashSeverityValidation.severityValidations = [];
-    crashSeverityValidation.severityValidations.push(crashSeverityValidation.fatalCrashValidator());
-    crashSeverityValidation.severityValidations.push(crashSeverityValidation.seriousCrashValidator());
-    crashSeverityValidation.severityValidations.push(crashSeverityValidation.slightCrashValidator());
 
     crashSeverityValidation.fatalCrashValidator = function() {
         return {
             severityId : 1,
-            allowedCasualtyTypes : [1, 2, 3, 4, 5],
             mustHaveCasualtyType : 1,
             warningMessages : [],
             validate : function(casualtyTypes) {
@@ -211,7 +229,6 @@ var crashSeverityValidation = (function() {
     crashSeverityValidation.seriousCrashValidator = function() {
         return {
             severityId : 2,
-            allowedCasualtyTypes : [2, 3, 4, 5],
             mustHaveCasualtyType : 2,
             mustNotHaveCasualtyTypes : [1],
             casualtyTypeInvalid : function(casualtyTypeId) {
@@ -232,7 +249,6 @@ var crashSeverityValidation = (function() {
     crashSeverityValidation.slightCrashValidator = function() {
         return {
             severityId : 3,
-            allowedCasualtyTypes : [3, 4, 5],
             mustHaveCasualtyType : 3,
             mustNotHaveCasualtyTypes : [1, 2],
             casualtyTypeInvalid : function(casualtyTypeId) {
@@ -253,7 +269,6 @@ var crashSeverityValidation = (function() {
     crashSeverityValidation.damageOnlyCrashValidator = function() {
         return {
             severityId : 4,
-            allowedCasualtyTypes : [4, 5],
             mustHaveCasualtyType : 4,
             mustNotHaveCasualtyTypes : [1, 2, 3],
             casualtyTypeInvalid : function(casualtyTypeId) {
@@ -263,13 +278,38 @@ var crashSeverityValidation = (function() {
             validate : function(casualtyTypes) {
                 var ctx = this;
                 if (!casualtyTypes.filter(function(x) { return x === ctx.mustHaveCasualtyType }).length) {
-                    ctx.warningMessages.push('Crash severity is <b><i>Damage Only</i></b> but at least one of the casualties or drivers is injured.');
+                    ctx.warningMessages.push('Crash severity is <b><i>Damage Only</i></b> but none one of the casualties or drivers is not injured.');
                 }
                 if (casualtyTypes.filter(function(x) { return ctx.casualtyTypeInvalid(x) }).length) {
-                    ctx.warningMessages.push('Crash severity is <b><i>Damage Only</i></b> but at least one of the casualties or drivers is fatally or seriously injured.');
+                    ctx.warningMessages.push('Crash severity is <b><i>Damage Only</i></b> but at least one of the casualties or drivers is fatally, seriously or slightly injured.');
                 }
             }
         };
     }
+
+    crashSeverityValidation.unknownCrashSeverityValidator = function() {
+        return {
+            severityId : 5,
+            mustHaveCasualtyType : 5,
+            mustNotHaveCasualtyTypes : [1, 2, 3, 4],
+            casualtyTypeInvalid : function(casualtyTypeId) {
+                return this.mustNotHaveCasualtyTypes.indexOf(casualtyTypeId) > -1;
+            },
+            warningMessages : [],
+            validate : function(casualtyTypes) {
+                var ctx = this;
+                if (casualtyTypes.filter(function(x) { return ctx.casualtyTypeInvalid(x) }).length) {
+                    ctx.warningMessages.push('Crash severity is <b><i>Unknown</i></b> but a known casualty type has been specified for at least one of the casualties or drivers.');
+                }
+            }
+        };
+    }
+    crashSeverityValidation.getValidator = function(crashSeverityId) {
+        return this.severityValidations.filter(function(x) { return x.severityId === crashSeverityId; })[0];
+    }
+    crashSeverityValidation.severityValidations.push(crashSeverityValidation.fatalCrashValidator());
+    crashSeverityValidation.severityValidations.push(crashSeverityValidation.seriousCrashValidator());
+    crashSeverityValidation.severityValidations.push(crashSeverityValidation.slightCrashValidator());
+    crashSeverityValidation.severityValidations.push(crashSeverityValidation.damageOnlyCrashValidator());
     return crashSeverityValidation;
 })();

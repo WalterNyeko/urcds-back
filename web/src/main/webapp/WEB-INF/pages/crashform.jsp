@@ -421,7 +421,7 @@
 						</a>
 					</td>
 					<td align="right"><input type="button" class="btn btn-primary submit"
-						value="<fmt:message key='button.next'/>" onclick="bCancel=false; onSubmit();"></td>
+						value="<fmt:message key='button.next'/>" onclick="bCancel=false; return onSubmit();"></td>
 				</tr>
 			</table>
 		</div>
@@ -449,6 +449,7 @@
         if(validateFields() && validateGpsCoordinates()) {
             submitForm();
         }
+        return false;
     }
     function submitForm() {
         unbindBeforeUnload();

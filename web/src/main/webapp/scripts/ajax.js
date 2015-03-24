@@ -50,7 +50,9 @@ function loadVehicleForm(params) {
         width: 'auto',
         buttons: {
             'Save' : function () {
+                unbindBeforeUnload();
                 $("#vehicleform").submit();
+
             },
             'Cancel' : function () {
                 $(".ui-dialog").remove();
@@ -84,6 +86,7 @@ function loadCasualtyForm(params) {
         buttons: {
             'Save' : function () {
                 if (validateFields()) {
+                    unbindBeforeUnload();
                     $("#casualtyform").submit();
                 }
             },

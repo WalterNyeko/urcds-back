@@ -149,7 +149,7 @@ public class CrashFormController extends BaseFormController {
             crashManager.saveCrash(crash);
             saveMessage(request, successMessage);
         } catch (Exception e) {
-            logException(request, e, "FAILURE: Crash " + crash.getTarNo() + " failed to save.");
+            logException(request, e, "FAILURE: Crash " + crash.getTarNo() + " failed to save. Please contact your System Administrator.");
         }
         request.getSession().removeAttribute("crash");
         response.sendRedirect("/crashes");
@@ -190,14 +190,18 @@ public class CrashFormController extends BaseFormController {
                                        HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Crash crash = (Crash) request.getSession().getAttribute("crash");
-        if (vehicle.getId().equals(DEFAULT_ID)) {
-            addVehicleToCrash(vehicle, crash);
-            saveMessage(request, "Vehicle " + vehicle.getNumber() + " added successfully.");
-        } else {
-            updateCrashVehicle(vehicle, crash);
-            saveMessage(request, "Vehicle " + vehicle.getNumber() + " updated successfully.");
+        try {
+            if (vehicle.getId().equals(DEFAULT_ID)) {
+                addVehicleToCrash(vehicle, crash);
+                saveMessage(request, "Vehicle " + vehicle.getNumber() + " added successfully.");
+            } else {
+                updateCrashVehicle(vehicle, crash);
+                saveMessage(request, "Vehicle " + vehicle.getNumber() + " updated successfully.");
+            }
+            crash.setDirty(true);
+        } catch (Exception e) {
+            logException(request, e, "FAILURE: Vehicle " + vehicle.getNumber() + " failed to save. Please try again.");
         }
-        crash.setDirty(true);
         request.getSession().setAttribute("crash", crash);
         return showForm2(crash, errors, request, response);
     }
@@ -208,14 +212,18 @@ public class CrashFormController extends BaseFormController {
                                         BindingResult errors, HttpServletRequest request,
                                         HttpServletResponse response) throws Exception {
         Crash crash = (Crash) request.getSession().getAttribute("crash");
-        if (casualty.getId().equals(DEFAULT_ID)) {
-            addCasualtyToCrash(casualty, crash);
-            saveMessage(request, "Casualty added successfully.");
-        } else {
-            updateCrashCasualty(casualty, crash);
-            saveMessage(request, "Casualty updated successfully.");
+        try {
+            if (casualty.getId().equals(DEFAULT_ID)) {
+                addCasualtyToCrash(casualty, crash);
+                saveMessage(request, "Casualty added successfully.");
+            } else {
+                updateCrashCasualty(casualty, crash);
+                saveMessage(request, "Casualty updated successfully.");
+            }
+            crash.setDirty(true);
+        } catch (Exception e) {
+            logException(request, e, "FAILURE: Casualty information failed to save. Please try again.");
         }
-        crash.setDirty(true);
         request.getSession().setAttribute("crash", crash);
         return showForm2(crash, errors, request, response);
     }
