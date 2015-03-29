@@ -362,7 +362,7 @@ table.crashform-gray th {
 }
 
 table.crashform-gray tr:hover {
-    background-color: #F5F1F1;
+    background-color: #F5F1F1 !important;
 }
 
 /*form#crashform input[type="text"], select {*/
@@ -389,7 +389,11 @@ td.blue-header {
 	background-color: #2B65EC !important;
 	color: #FFF !important;
 	text-align: center;
-}
+}td.orange-header {
+     background-color: #EDB32B !important;
+     color: #FFF !important;
+     text-align: center;
+ }
 .drop-shadow {
     box-shadow: 1px 1px 2px #333;
 }
@@ -488,4 +492,28 @@ table.stats-tab td {
     position: absolute;
     z-index: 10;
     box-shadow: 10px 10px 5px #888888;
+}
+table.crosstab-orange {
+    border: solid 1px black;
+    border-collapse: collapse;
+}
+
+table.crosstab-orange td {
+    border: solid 1px #2C6CAF;
+    padding: 3px;
+    color: #000;
+    background-color: #FFF;
+    vertical-align: top;
+}
+
+table.crosstab-orange th {
+    border: solid 1px #2C6CAF;
+    background-color: #EDB32B;
+    padding: 5px;
+    color: #FFF;
+    text-align: center;
+}
+
+table.crosstab-orange tr:hover {
+    background-color: #F5F1F1 !important;
 }

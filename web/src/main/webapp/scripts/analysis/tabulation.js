@@ -10,15 +10,15 @@ var Tabulation = (function() {
         this.attributeCounts = [];
     }
 
-    Tabulation.prototype.countCrashes = function(attribute) {
+    Tabulation.prototype.countCrashes = function(attribute, crashProp) {
         var ctx = this;
-        this.attributeCounts = [];
+        this.attributeCounts.length = 0;
         var attributes = this.crashAttributes[attribute];
         attributes.forEach(function(attr) {
             ctx.attributeCounts.push({
-                "name" : attr.name,
-                "count" : ctx.crashes.filter(function(c) {
-                var crashAttr = c[attribute];
+                name : attr.name,
+                count : ctx.crashes.filter(function(c) {
+                var crashAttr = crashProp ? c[crashProp][attribute] : c[attribute];
                 return crashAttr && crashAttr['id'] === attr.id
             }).length});
         });
@@ -28,10 +28,10 @@ var Tabulation = (function() {
         if (notSpec) {
            this.attributeCounts.push({"name" : "Not specified", "count" : notSpec});
         }
-        this.tabulateCounts(attribute);
+        this.tabulateCounts();
     }
 
-    Tabulation.prototype.tabulateCounts = function(attribute) {
+    Tabulation.prototype.tabulateCounts = function() {
         $('#stats').html('');
         var attrName = $('#crashAttribute option:selected').text();
         var table = $('<table class="table table-condensed table-striped table-hover">');

@@ -74,5 +74,27 @@ var charting = (function() {
         };
         return options;
     }
+    charting.createBarChart = function(tabulation, name, divId) {
+        var chart = {};
+        chart.type = 'column';
+
+
+    }
+    charting.createBarChartOptions = function(chart, divId) {
+        var options = {
+            chart: {
+                renderTo: divId,
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text : chart.name
+            },
+            xAxis {
+
+            }
+        };
+    }
     return charting;
 })();

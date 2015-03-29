@@ -1,6 +1,6 @@
 <%@ include file="/common/taglibs.jsp"%>
 <head>
-    <title><fmt:message key="crashAnalysis.heading" /></title>
+    <title><fmt:message key="rcds.crashStatistics" /></title>
     <meta name="menu" content="AnalysisMenu" />
     <script src="/scripts/highcharts.js"></script>
     <script src="/scripts/themes/grid.js"></script>
@@ -30,7 +30,9 @@
         <option value="collisionType">Collision Type</option>
         <option value="crashCause">Crash Cause</option>
         <option selected value="crashSeverity">Crash Severity</option>
+        <option value="district" data-prefix="policeStation">District</option>
         <option value="junctionType">Junction Type</option>
+        <option value="policeStation">Police Station</option>
         <option value="roadSurface">Road Surface</option>
         <option value="roadwayCharacter">Roadway Character</option>
         <option value="surfaceCondition">Surface Condition</option>
@@ -59,7 +61,8 @@
         var tabulation = new Tabulation();
         tabulation.countCrashes('crashSeverity');
         $('#crashAttribute').change(function() {
-            tabulation.countCrashes($(this).val());
+            var selectedOption = $(this).find('option:selected');
+            tabulation.countCrashes($(this).val(), selectedOption.attr('data-prefix'));
         })
     });
 </script>

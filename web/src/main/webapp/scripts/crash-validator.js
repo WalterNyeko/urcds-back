@@ -219,6 +219,7 @@ var crashSeverityValidation = (function() {
             mustHaveCasualtyType : 1,
             warningMessages : [],
             validate : function(casualtyTypes) {
+                this.warningMessages.length = 0;
                 var ctx = this;
                 if (!casualtyTypes.filter(function(x) { return x === ctx.mustHaveCasualtyType }).length) {
                     ctx.warningMessages.push('Crash severity is <b><i>Fatal</i></b> but none of the casualties or drivers is fatally injured');
@@ -236,6 +237,7 @@ var crashSeverityValidation = (function() {
             },
             warningMessages : [],
             validate : function(casualtyTypes) {
+                this.warningMessages.length = 0;
                 var ctx = this;
                 if (!casualtyTypes.filter(function(x) { return x === ctx.mustHaveCasualtyType }).length) {
                     ctx.warningMessages.push('Crash severity is <b><i>Serious</i></b> but none of the casualties or drivers is seriously injured.');
@@ -256,6 +258,7 @@ var crashSeverityValidation = (function() {
             },
             warningMessages : [],
             validate : function(casualtyTypes) {
+                this.warningMessages.length = 0;
                 var ctx = this;
                 if (!casualtyTypes.filter(function(x) { return x === ctx.mustHaveCasualtyType }).length) {
                     ctx.warningMessages.push('Crash severity is <b><i>Slight</i></b> but none of the casualties or drivers is slightly injured.');
@@ -276,6 +279,7 @@ var crashSeverityValidation = (function() {
             },
             warningMessages : [],
             validate : function(casualtyTypes) {
+                this.warningMessages.length = 0;
                 var ctx = this;
                 if (!casualtyTypes.filter(function(x) { return x === ctx.mustHaveCasualtyType }).length) {
                     ctx.warningMessages.push('Crash severity is <b><i>Damage Only</i></b> but none one of the casualties or drivers is not injured.');
@@ -297,6 +301,7 @@ var crashSeverityValidation = (function() {
             },
             warningMessages : [],
             validate : function(casualtyTypes) {
+                this.warningMessages.length = 0;
                 var ctx = this;
                 if (casualtyTypes.filter(function(x) { return ctx.casualtyTypeInvalid(x) }).length) {
                     ctx.warningMessages.push('Crash severity is <b><i>Unknown</i></b> but a known casualty type has been specified for at least one of the casualties or drivers.');
@@ -311,5 +316,6 @@ var crashSeverityValidation = (function() {
     crashSeverityValidation.severityValidations.push(crashSeverityValidation.seriousCrashValidator());
     crashSeverityValidation.severityValidations.push(crashSeverityValidation.slightCrashValidator());
     crashSeverityValidation.severityValidations.push(crashSeverityValidation.damageOnlyCrashValidator());
+    crashSeverityValidation.severityValidations.push(crashSeverityValidation.unknownCrashSeverityValidator());
     return crashSeverityValidation;
 })();

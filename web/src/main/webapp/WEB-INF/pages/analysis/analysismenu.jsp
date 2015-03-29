@@ -11,6 +11,9 @@
     <a href="/crashstats">
         <fmt:message key="rcds.crashStatistics" />
     </a>|
+    <a href="/crosstabs">
+        <fmt:message key="rcds.CrossTabulations" />
+    </a>|
     <a href="<c:url value='/analysisdownloadexcel'/>">
         <%--<img src="/images/excel-icon.png" title="<fmt:message key="button.exportToExcel" />" height="20"/>--%>
         <fmt:message key="button.exportToExcel" />
