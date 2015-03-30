@@ -2,7 +2,10 @@
 <head>
     <title><fmt:message key="rcds.CrossTabulations" /></title>
     <meta name="menu" content="AnalysisMenu" />
+    <script src="/scripts/highcharts.js"></script>
+    <script src="/scripts/modules/exporting.js"></script>
     <script type="text/javascript" src="/scripts/analysis/crosstab.js"></script>
+    <script type="text/javascript" src="/scripts/analysis/charting.js"></script>
 </head>
 <div class="col-sm-15">
 	<h2>
@@ -54,14 +57,17 @@
     <div class="content-wrapper">
         <table cellpadding="3" width="100%" class="cross-tab">
             <tr>
-                <td width="100%" id="crosstabs" style="padding-right: 30px;">
+                <td width="100%" id="crosstabs">
 
                 </td>
-                <%--<td width="60%">--%>
-                    <%--<div id="stat-chart" style="width:100%">--%>
+            </tr>
+            <tr>
+                <td width="100%">
+                    <br/>
+                    <div id="crosstab-chart" style="width:100%">
 
-                    <%--</div>--%>
-                <%--</td>--%>
+                    </div>
+                </td>
             </tr>
         </table>
     </div>
@@ -74,7 +80,7 @@
         $('#xCrashAttribute, #yCrashAttribute').change(function() {
             var xSelectedOption = $('#xCrashAttribute').find('option:selected');
             var ySelectedOption = $('#yCrashAttribute').find('option:selected');
-            crossTabulation.countCrashes($('#xCrashAttribute').val(), $('#yCrashAttribute').val(), xSelectedOption.attr('data-prefi x'), ySelectedOption.attr('data-prefix'));
+            crossTabulation.countCrashes($('#xCrashAttribute').val(), $('#yCrashAttribute').val(), xSelectedOption.attr('data-prefix'), ySelectedOption.attr('data-prefix'));
         })
     });
 </script>

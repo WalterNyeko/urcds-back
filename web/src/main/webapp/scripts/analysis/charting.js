@@ -74,27 +74,68 @@ var charting = (function() {
         };
         return options;
     }
-    charting.createBarChart = function(tabulation, name, divId) {
+    charting.createBarChart = function(crossTabulation, title, divId) {
         var chart = {};
         chart.type = 'column';
-
-
+        chart.title = title;
+        chart.subtitle = 'based on ' + crossTabulation.crashes.length + ' crashes';
+        chart.categories = [];
+        chart.series = [];
+        crossTabulation.attributeCounts.forEach(function(xAttr) {
+            chart.categories.push(xAttr.xName);
+            xAttr.yAttributeCounts.forEach(function(yAttr) {
+                var y = chart.series.filter(function(s) {return s.name === yAttr.yName})[0];
+                if (y) {
+                    y.data.push(yAttr.count);
+                } else {
+                    chart.series.push({ name: yAttr.yName, data: [yAttr.count]});
+                }
+            });
+        });
+        new Highcharts.Chart(charting.createBarChartOptions(chart, divId));
     }
     charting.createBarChartOptions = function(chart, divId) {
         var options = {
             chart: {
+                type: chart.type,
                 renderTo: divId,
                 plotBackgroundColor: null,
                 plotBorderWidth: null,
                 plotShadow: false
             },
             title: {
-                text : chart.name
+                text : chart.title
             },
-            xAxis {
-
-            }
+            subtitle: {
+                text: chart.subtitle
+            },
+            xAxis : {
+                categories: chart.categories,
+                crosshair: true
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'No. of Crashes'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y}</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                columns: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: chart.series
         };
+        return options;
     }
     return charting;
 })();

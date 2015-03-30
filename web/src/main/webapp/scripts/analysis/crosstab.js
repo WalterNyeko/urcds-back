@@ -73,7 +73,7 @@ var CrossTabulation = (function () {
 //        tfoot.append(footerRow.append(footerCell1).append(footerCell2));
         table.append(thead).append(tbody);//.append(tfoot);
         $('#crosstabs').append(table);
-        //charting.createPieChart(this, attrName, 'stat-chart');
+        charting.createBarChart(this, xAttrName + ' by ' + yAttrName, 'crosstab-chart');
     }
     return CrossTabulation;
 })();

@@ -5,7 +5,7 @@
 <meta name="menu" content="Home" />
 <script src="/scripts/script.js"></script>
 <script src="/scripts/highcharts.js"></script>
-<script src="/scripts/themes/grid-light.js"></script>
+<%--<script src="/scripts/themes/grid-light.js"></script>--%>
 </head>
 <body class="home">
 

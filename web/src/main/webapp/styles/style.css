@@ -496,6 +496,7 @@ table.stats-tab td {
 table.crosstab-orange {
     border: solid 1px black;
     border-collapse: collapse;
+    min-width: 100%;
 }
 
 table.crosstab-orange td {
