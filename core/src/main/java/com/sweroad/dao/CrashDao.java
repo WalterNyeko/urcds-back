@@ -12,7 +12,7 @@ public interface CrashDao extends GenericDao<Crash, Long> {
      * @param tarNo
      * @return
      */
-    Crash findByTarNo(String tarNo);
+    List<Crash> findByTarNo(String tarNo);
 
     /**
      * Gets list of crashes that fit crash criteria

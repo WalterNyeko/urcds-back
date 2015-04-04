@@ -85,4 +85,6 @@ public interface CrashManager extends GenericManager<Crash, Long> {
      * @param id
      */
 	void restoreCrashById(Long id);
+
+    List<Crash> findByTarNo(String tarNo);
 }

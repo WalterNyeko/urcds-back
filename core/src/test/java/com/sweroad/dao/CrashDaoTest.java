@@ -1,5 +1,6 @@
 package com.sweroad.dao;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -10,6 +11,8 @@ import com.sweroad.query.CrashSearch;
 import com.sweroad.query.CustomQueryable;
 import com.sweroad.service.GenericManager;
 import com.sweroad.util.DateUtil;
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -35,7 +38,7 @@ public class CrashDaoTest extends BaseDaoTestCase {
 
     @Test
     public void testThatFindCrashByTaNoWorks() {
-        Crash crash = crashDao.findByTarNo("A1509/LGZ");
+        Crash crash = crashDao.findByTarNo("A1509/LGZ").get(0);
         assertNotNull(crash);
     }
 

@@ -1,10 +1,7 @@
 package com.sweroad.webapp.controller;
 
 import com.mysql.jdbc.StringUtils;
-import com.sweroad.model.Casualty;
-import com.sweroad.model.Crash;
-import com.sweroad.model.SearchCriteria;
-import com.sweroad.model.Vehicle;
+import com.sweroad.model.*;
 import com.sweroad.service.CasualtyManager;
 import com.sweroad.service.CrashManager;
 import com.sweroad.service.SearchCriteriaManager;
@@ -93,6 +90,7 @@ public class CrashAnalysisController extends BaseFormController {
             mav.addAllObjects(crashManager.getOrderedRefData());
             mav.addObject("years", CrashAnalysisHelper.getYearsForSearch());
             mav.addObject("months", CrashAnalysisHelper.getMonthsForSearch(request));
+            JsonHelper.policeStationsToJsonAndSetInAttribute(request, (List<PoliceStation>) mav.getModelMap().get("policeStations"));
             return mav;
         } catch (Exception e) {
             log.error("Select crash failed: " + e.getLocalizedMessage());

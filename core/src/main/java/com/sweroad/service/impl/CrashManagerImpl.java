@@ -417,4 +417,9 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
         crash.setRemoved(false);
         genericCrashManager.save(crash);
     }
+
+    @Override
+    public List<Crash> findByTarNo(String tarNo) {
+        return crashDao.findByTarNo(tarNo);
+    }
 }

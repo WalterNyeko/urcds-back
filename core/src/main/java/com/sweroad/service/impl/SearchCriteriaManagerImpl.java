@@ -33,6 +33,9 @@ public class SearchCriteriaManagerImpl implements SearchCriteriaManager {
     }
 
     private boolean meetsCriteria(SearchCriteria searchCriteria, Crash crash) {
+        if (!meetsPoliceStationCriteria(searchCriteria, crash)) {
+            return false;
+        }
         if (!meetsDistrictCriteria(searchCriteria, crash)) {
             return false;
         }
@@ -45,7 +48,9 @@ public class SearchCriteriaManagerImpl implements SearchCriteriaManager {
         if (!meetsCrashCauseCriteria(searchCriteria, crash)) {
             return false;
         }
-
+        if (!meetsVehicleTypeCriteria(searchCriteria, crash)) {
+            return false;
+        }
         if (!meetsDateCriteria(searchCriteria, crash)) {
             return false;
         }
@@ -224,6 +229,32 @@ public class SearchCriteriaManagerImpl implements SearchCriteriaManager {
         return false;
     }
 
+    private boolean meetsPoliceStationCriteria(SearchCriteria searchCriteria, Crash crash) {
+        if (searchCriteria.getCrash().getPoliceStation().getId() != null) {
+            if (crash.getPoliceStation() != null && crash.getPoliceStation()
+                    .equals(searchCriteria.getCrash().getPoliceStation())) {
+                return true;
+            }
+        } else {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean meetsVehicleTypeCriteria(SearchCriteria searchCriteria, Crash crash) {
+        if (searchCriteria.getVehicleType().getId() != null) {
+            if(crash.getVehicles() != null) {
+                for(Vehicle vehicle : crash.getVehicles()) {
+                    if (vehicle.getVehicleType() != null && vehicle.getVehicleType().getId().equals(searchCriteria.getVehicleType().getId())) {
+                        return true;
+                    }
+                }
+            }
+        } else {
+            return true;
+        }
+        return false;
+    }
     private boolean meetsCrashSeverityCriteria(SearchCriteria searchCriteria, Crash crash) {
         if (searchCriteria.getCrash().getCrashSeverity().getId() != null) {
             if (crash.getCrashSeverity() != null && crash.getCrashSeverity()

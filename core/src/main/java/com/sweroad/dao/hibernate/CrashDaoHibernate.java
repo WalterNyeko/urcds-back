@@ -1,5 +1,6 @@
 package com.sweroad.dao.hibernate;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -22,12 +23,12 @@ public class CrashDaoHibernate extends GenericDaoHibernate<Crash, Long> implemen
 
     @SuppressWarnings("unchecked")
     @Override
-    public Crash findByTarNo(String tarNo) {
+    public List<Crash> findByTarNo(String tarNo) {
         List<Crash> crashList = getSession().createCriteria(Crash.class).add(Restrictions.eq("tarNo", tarNo)).list();
         if (crashList.size() > 0) {
-            return crashList.get(0);
+            return crashList;
         }
-        return null;
+        return new ArrayList<Crash>();
     }
 
     public List<Crash> findCrashesByQueryCrash(CrashQuery crashQuery) {

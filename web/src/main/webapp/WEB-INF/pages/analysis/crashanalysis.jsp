@@ -3,7 +3,6 @@
     <title><fmt:message key="crashAnalysis.heading" /></title>
     <meta name="menu" content="AnalysisMenu" />
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdGBHIqR--XabhAy6UddDj4toKlEyJzAA"></script>
-    <script type="text/javascript" src="/scripts/crash-validator.js"></script>
 </head>
 <div class="col-sm-15">
 	<h2>

@@ -18,5 +18,11 @@
 			<menu:displayMenu name="UserMenu" />
 			<menu:displayMenu name="Logout" />
 		</ul>
+        <c:if test="${not empty pageContext.request.remoteUser}">
+            <div style="float: right; margin-top: 15px;">
+                <input id="searchTerm" placeholder="Search by TAR No..." />
+                <input id="searchButton" type="button" value="Search" />
+            </div>
+        </c:if>
 	</div>
 </menu:useMenuDisplayer>

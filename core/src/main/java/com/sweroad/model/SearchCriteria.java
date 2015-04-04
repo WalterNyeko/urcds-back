@@ -42,6 +42,8 @@ public class SearchCriteria extends BaseModel {
     private District district;
     @Transient
     private Crash crash;
+    @Transient
+    private VehicleType vehicleType;
     private Integer startYear;
     private Integer startMonth;
     private Integer endYear;
@@ -149,6 +151,14 @@ public class SearchCriteria extends BaseModel {
 
     public void setDistrict(District district) {
         this.district = district;
+    }
+
+    public VehicleType getVehicleType() {
+        return vehicleType;
+    }
+
+    public void setVehicleType(VehicleType vehicleType) {
+        this.vehicleType = vehicleType;
     }
 
     public Integer getStartYear() {

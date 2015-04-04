@@ -815,7 +815,7 @@ public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertib
     @Override
     @Transient
     public String getClassAlias() {
-        return "Crash";
+        return this.getClass().getSimpleName();
     }
 
     @Override

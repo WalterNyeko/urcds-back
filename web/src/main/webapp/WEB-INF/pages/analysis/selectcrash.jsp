@@ -1,4 +1,5 @@
 <%@ include file="/common/taglibs.jsp"%>
+<fmt:message key="crashForm.policeStation" var="policeStationLabel" />
 
 <form:form commandName="criteria" method="post" action="/analysiscrashselect"
     id="selectCrashForm" autocomplete="off">
@@ -52,7 +53,7 @@
                         <td><appfuse:label styleClass="form-label"
                                 key="crashForm.district" /></td>
                         <td><form:select path="district.id"
-                                cssClass="form-control">
+                                cssClass="form-control district-select">
                                 <form:option value="">
                                     <fmt:message key="crashAnalysis.any" />
                                 </form:option>
@@ -63,13 +64,27 @@
                     </tr>
                     <tr>
                         <td><appfuse:label styleClass="form-label"
-                                           key="crashForm.collisionType" /></td>
+                                           key="crashForm.crashSeverity" /></td>
                         <td>
-                            <form:select path="crash.collisionType.id" cssClass="form-control">
+                            <form:select path="crash.crashSeverity.id"
+                                         cssClass="form-control">
                                 <form:option value="">
                                     <fmt:message key="crashAnalysis.any" />
                                 </form:option>
-                                <form:options items="${collisionTypes}" itemValue="id"
+                                <form:options items="${crashSeverities}" itemValue="id"
+                                              itemLabel="name" />
+                            </form:select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><appfuse:label styleClass="form-label"
+                                           key="crashForm.mainCauseOfCrash" /></td>
+                        <td>
+                            <form:select path="crash.crashCause.id" cssClass="form-control">
+                                <form:option value="">
+                                    <fmt:message key="crashAnalysis.any" />
+                                </form:option>
+                                <form:options items="${crashCauses}" itemValue="id"
                                               itemLabel="name" />
                             </form:select>
                         </td>
@@ -127,27 +142,40 @@
                     </tr>
                     <tr>
                         <td><appfuse:label styleClass="form-label"
-                                           key="crashForm.crashSeverity" /></td>
+                                           key="crashForm.policeStation" /></td>
                         <td>
-                            <form:select path="crash.crashSeverity.id"
-                                         cssClass="form-control">
+                            <form:select path="crash.policeStation.id" cssClass="form-control req-val police-station-select" data-labelName="${policeStationLabel}">
                                 <form:option value="">
                                     <fmt:message key="crashAnalysis.any" />
                                 </form:option>
-                                <form:options items="${crashSeverities}" itemValue="id"
+                                <form:options items="${policeStations}" itemValue="id"
+                                              itemLabel="name" />
+                            </form:select>
+                            <input id="policeStationJson" value="${police_stations_json}" type="hidden"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><appfuse:label styleClass="form-label"
+                                           key="crashForm.collisionType" /></td>
+                        <td>
+                            <form:select path="crash.collisionType.id" cssClass="form-control">
+                                <form:option value="">
+                                    <fmt:message key="crashAnalysis.any" />
+                                </form:option>
+                                <form:options items="${collisionTypes}" itemValue="id"
                                               itemLabel="name" />
                             </form:select>
                         </td>
                     </tr>
                     <tr>
                         <td><appfuse:label styleClass="form-label"
-                                           key="crashForm.mainCauseOfCrash" /></td>
+                                           key="crashForm.vehicleType" /></td>
                         <td>
-                            <form:select path="crash.crashCause.id" cssClass="form-control">
+                            <form:select path="vehicleType.id" cssClass="form-control">
                                 <form:option value="">
                                     <fmt:message key="crashAnalysis.any" />
                                 </form:option>
-                                <form:options items="${crashCauses}" itemValue="id"
+                                <form:options items="${vehicleTypes}" itemValue="id"
                                               itemLabel="name" />
                             </form:select>
                         </td>
@@ -163,5 +191,6 @@
        $('.year-month-range').change(function() {
            validateYearMonthRange(displayYearMonthRangeError);
        });
+       initDistrictSelectChange();
     });
 </script>

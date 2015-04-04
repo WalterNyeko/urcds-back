@@ -62,6 +62,7 @@
                                         <form:options items="${policeStations}" itemValue="id"
                                                       itemLabel="name" />
                                     </form:select>
+                                    <input id="policeStationJson" value="${police_stations_json}" type="hidden"/>
                                 </td>
                             </tr>
 							<tr>
@@ -427,7 +428,6 @@
 		</div>
 	</form:form>
 </div>
-<input id="policeStationJson" value="${police_stations_json}" type="hidden"/>
 <div id="warning-modal" class="modal fade" tabindex="-1" style="display: none; margin-top: 40px; color: #000;" aria-hidden="true">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>

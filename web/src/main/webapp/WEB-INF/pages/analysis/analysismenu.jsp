@@ -1,4 +1,5 @@
 <%@ include file="/common/taglibs.jsp"%>
+<script type="text/javascript" src="/scripts/crash-validator.js"></script>
 <div id="actions" class="btn=group" style="padding-bottom: 2px;">
     <a href="" onclick="return loadSelectCrash({url: '/analysiscrashselect'});">
         <%--<img src="/images/simple-search.jpg" title="<fmt:message key="crashAnalysis.Select" />" height="20"/>--%>
