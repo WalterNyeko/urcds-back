@@ -51,7 +51,7 @@ public class District extends BaseModel implements Comparable<District>, Queryab
 
 	@Override
 	public String toString() {
-		return String.format("District: {%s}", name);
+		return String.format("District {%s}", name);
 	}
 
 	@Override

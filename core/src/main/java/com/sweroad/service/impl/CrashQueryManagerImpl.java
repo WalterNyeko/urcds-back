@@ -45,6 +45,10 @@ public class CrashQueryManagerImpl implements CrashQueryManager {
     @Autowired
     private GenericManager<JunctionType, Long> junctionTypeManager;
     @Autowired
+    private GenericManager<PoliceStation, Long> policeStationManager;
+    @Autowired
+    private GenericManager<District, Long> districtManager;
+    @Autowired
     private GenericManager<VehicleType, Long> vehicleTypeManager;
     @Autowired
     private GenericManager<CasualtyClass, Long> casualtyClassManager;
@@ -70,6 +74,8 @@ public class CrashQueryManagerImpl implements CrashQueryManager {
         crashSearch.setSurfaceTypes(GenericManagerHelper.filterForCrashSearch(crashSearch.getSurfaceTypes(), surfaceTypeManager));
         crashSearch.setRoadwayCharacters(GenericManagerHelper.filterForCrashSearch(crashSearch.getRoadwayCharacters(), roadwayCharacterManager));
         crashSearch.setJunctionTypes(GenericManagerHelper.filterForCrashSearch(crashSearch.getJunctionTypes(), junctionTypeManager));
+        crashSearch.setPoliceStations(GenericManagerHelper.filterForCrashSearch(crashSearch.getPoliceStations(), policeStationManager));
+        crashSearch.setDistricts(GenericManagerHelper.filterForCrashSearch(crashSearch.getDistricts(), districtManager));
         crashSearch.setVehicleTypes(GenericManagerHelper.filterForCrashSearch(crashSearch.getVehicleTypes(), vehicleTypeManager));
         crashSearch.setDriverLicenseTypes(lookupManager.getFilteredLicenseTypes(crashSearch.getDriverLicenseTypes()));
         crashSearch.setDriverGenders(lookupManager.getFilteredGenders(crashSearch.getDriverGenders()));

@@ -76,7 +76,7 @@ public class PoliceStation extends BaseModel implements Comparable<PoliceStation
 
 	@Override
 	public String toString() {
-		return String.format("Police Station: {%s}", name);
+		return String.format("Police Station {%s}", name);
 	}
 
 	@Override

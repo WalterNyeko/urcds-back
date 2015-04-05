@@ -7,6 +7,7 @@ import com.sweroad.query.service.CustomQueryableService;
 import com.sweroad.query.service.GenderQueryableService;
 import com.sweroad.service.LookupManager;
 import com.sweroad.service.impl.LookupManagerImpl;
+import org.apache.avro.generic.GenericData;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,6 +43,8 @@ public class CrashSearch {
     private List<LabelValue> casualtyGenders = new ArrayList<LabelValue>();
     private List<LabelValue> casualtyAgeRanges = new ArrayList<LabelValue>();
     private List<LabelValue> casualtyBeltUsedOptions = new ArrayList<LabelValue>();
+    private List<District> districts = new ArrayList<District>();
+    private List<PoliceStation> policeStations = new ArrayList<PoliceStation>();
 
     public CrashSearch() {
         this.lookupManager = new LookupManagerImpl();
@@ -229,6 +232,22 @@ public class CrashSearch {
 
     public void setCasualtyBeltUsedOptions(List<LabelValue> casualtyBeltUsedOptions) {
         this.casualtyBeltUsedOptions = casualtyBeltUsedOptions;
+    }
+
+    public List<District> getDistricts() {
+        return districts;
+    }
+
+    public void setDistricts(List<District> districts) {
+        this.districts = districts;
+    }
+
+    public List<PoliceStation> getPoliceStations() {
+        return policeStations;
+    }
+
+    public void setPoliceStations(List<PoliceStation> policeStations) {
+        this.policeStations = policeStations;
     }
 
     public CrashQuery toQuery() {

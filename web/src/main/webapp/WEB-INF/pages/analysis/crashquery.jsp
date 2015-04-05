@@ -21,9 +21,67 @@
         <fmt:message key="crashQuery.subHeading" />
 		<div class="col-sm-15">
 			<table cellpadding="4" width="100%">
+                <tr>
+                    <td>
+                        <table width="100%" class="crashform-gray">
+                            <tr>
+                                <td width="50%" class="blue-header"><appfuse:label styleClass="control-label"
+                                                                key="crashForm.district" /></td>
+                                <td width="50%" class="blue-header"><appfuse:label styleClass="control-label"
+                                                               key="crashForm.policeStation" /></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="height-130">
+                                        <table class="crashform-blue" style="width: 100%; border-width: 0px !important;">
+                                            <c:forEach var="district" items="${districts}" varStatus="status">
+                                                <tr>
+                                                    <c:if test="${status.index eq 0}">
+                                                        <c:set var="borderWidth" value="border-top-width: 0px !important;" />
+                                                    </c:if>
+                                                    <c:if test="${status.last}">
+                                                        <c:set var="borderWidth" value="border-bottom-width: 0px !important;" />
+                                                    </c:if>
+                                                    <td style="${borderWidth} border-left-width: 0px !important; border-right-width: 0px !important;">
+                                                        <form:checkbox path="districts[${status.index}].id"
+                                                                       value="${district.id}" />&nbsp;&nbsp;${district.name}
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
+                                        </table>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="height-130">
+                                        <table class="crashform-blue" style="width: 100%; border-width: 0px !important;">
+                                            <c:forEach var="policeStation" items="${policeStations}" varStatus="status">
+                                                <tr>
+                                                    <c:if test="${status.index eq 0}">
+                                                        <c:set var="borderWidth" value="border-top-width: 0px !important;" />
+                                                    </c:if>
+                                                    <c:if test="${status.last}">
+                                                        <c:set var="borderWidth" value="border-bottom-width: 0px !important;" />
+                                                    </c:if>
+                                                    <td style="${borderWidth} border-left-width: 0px !important; border-right-width: 0px !important;">
+                                                        <form:checkbox path="policeStations[${status.index}].id"
+                                                                       value="${policeStation.id}" />&nbsp;&nbsp;${policeStation.name}
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
 				<tr>
 					<td width="40%">
-						<table width="95%" class="crashform-blue">
+						<table width="100%" class="crashform-blue">
 							<tr>
 								<th width="100%"><appfuse:label styleClass="control-label"
 										key="crashForm.crashSeverity" /></th>
@@ -419,7 +477,7 @@
                 </tr>
 				<tr>
 					<td>
-						<a class="btn btn-default" href="<c:url value='/analysis'/>" onclick="BootstrapDialog.alert('I want banana!'); return false;">
+						<a class="btn btn-default" href="<c:url value='/analysis'/>">
 							<i class="icon-ok"></i>
 							<fmt:message key="button.cancel" />
 						</a>

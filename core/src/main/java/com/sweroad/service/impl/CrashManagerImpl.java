@@ -279,10 +279,10 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
         List<RoadwayCharacter> roadwayCharacters = roadwayCharacterManager
                 .getAllDistinct();
         List<JunctionType> junctionTypes = junctionTypeManager.getAllDistinct();
-        List<PoliceStation> policeStations = policeStationManager
-                .findByNamedQuery(PoliceStation.FIND_POLICE_STATIONS_ORDER_BY_NAME, null);
-        List<District> districts = districtManager
-                .findByNamedQuery(District.FIND_DISTRICTS_ORDER_BY_NAME, null);
+        List<PoliceStation> policeStations = policeStationManager.getAllDistinct();
+        Collections.sort(policeStations);
+        List<District> districts = districtManager.getAllDistinct();
+        Collections.sort(districts);
         List<VehicleType> vehicleTypes = vehicleTypeManager.getAllDistinct();
         List<CasualtyType> casualtyTypes = casualtyTypeManager.getAllDistinct();
         List<CasualtyClass> casualtyClasses = casualtyClassManager

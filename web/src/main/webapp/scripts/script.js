@@ -522,7 +522,7 @@ function initDistrictSelectChange() {
         var selectedDistrict = $(this).val();
         var policeStationSelect = $(".police-station-select");
         policeStationSelect.find("option:not(:first)").remove();
-        policeStations.each(function() {
+        policeStations.map(function() {
             if(this.district.id == selectedDistrict) {
                 policeStationSelect.append("<option value=\"" + this.id + "\">" + this.name + "</option>");
             }

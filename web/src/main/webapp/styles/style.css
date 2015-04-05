@@ -518,3 +518,7 @@ table.crosstab-orange th {
 table.crosstab-orange tr:hover {
     background-color: #F5F1F1 !important;
 }
+.height-130 {
+    max-height: 130px;
+    overflow-y: auto;
+}
