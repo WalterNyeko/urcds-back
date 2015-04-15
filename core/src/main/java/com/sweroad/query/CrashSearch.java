@@ -313,7 +313,9 @@ public class CrashSearch {
                     .addQueryable(junctionTypes)
                     .addQueryable(vehicleTypes)
                     .addQueryable(casualtyClasses)
-                    .addQueryable(casualtyTypes);
+                    .addQueryable(casualtyTypes)
+                    .addQueryable(policeStations)
+                    .addQueryable(districts);
         }
 
         private void addCustomQueryables(CrashQuery.CrashQueryBuilder crashQueryBuilder) {

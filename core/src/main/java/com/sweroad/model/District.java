@@ -83,6 +83,7 @@ public class District extends BaseModel implements Comparable<District>, Queryab
 
     @Override
     public String getEntityName() {
+
         return this.getClass().getSimpleName();
     }
 
@@ -93,7 +94,7 @@ public class District extends BaseModel implements Comparable<District>, Queryab
      */
     @Override
     public String getNameForQuery() {
-        return Crash.CRASH_ALIAS_DOT
+        return Crash.CRASH_ALIAS_DOT.concat("policeStation.")
                 .concat(CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, getEntityName()));
     }
 }
