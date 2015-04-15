@@ -3,10 +3,14 @@
 <head>
     <title><fmt:message key="crashQuery.heading" /></title>
     <meta name="menu" content="AnalysisMenu" />
+    <script type="text/javascript" src="/scripts/crash-validator.js"></script>
     <script type="text/javascript">
         $( document ).ready(function() {
             $(".submit").click(function(){
                 return validateFields();
+            });
+            $('.year-month-range').change(function() {
+                validateYearMonthRange(displayYearMonthRangeError);
             });
         });
     </script>
@@ -44,7 +48,8 @@
                                                     </c:if>
                                                     <td style="${borderWidth} border-left-width: 0px !important; border-right-width: 0px !important;">
                                                         <form:checkbox path="districts[${status.index}].id"
-                                                                       value="${district.id}" />&nbsp;&nbsp;${district.name}
+                                                                       value="${district.id}" id="district${district.id}" />&nbsp;
+                                                        <label for="district${district.id}" class="form-label">${district.name}</label>
                                                     </td>
                                                 </tr>
                                             </c:forEach>
@@ -64,7 +69,8 @@
                                                     </c:if>
                                                     <td style="${borderWidth} border-left-width: 0px !important; border-right-width: 0px !important;">
                                                         <form:checkbox path="policeStations[${status.index}].id"
-                                                                       value="${policeStation.id}" />&nbsp;&nbsp;${policeStation.name}
+                                                                       value="${policeStation.id}" id="policeStation${policeStation.id}" />&nbsp;
+                                                        <label for="policeStation${policeStation.id}" class="form-label">${policeStation.name}</label>
                                                     </td>
                                                 </tr>
                                             </c:forEach>
@@ -75,8 +81,114 @@
 
                         </table>
                     </td>
-                    <td>
+                    <td valign="top">
+                        <table width="100%" cellpadding="0" cellspacing="0" style="border: 1px solid #000; background-color: #ffffff">
+                            <tr>
+                                <td colspan="2" class="blue-header" style="border-bottom:  1px solid #000;">
+                                    <appfuse:label styleClass="control-label"
+                                                   key="crashAnalysis.timeDimension" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="50%">
+                                    <table width="100%">
+                                        <tr>
+                                            <td width="20%" style="border-bottom:  1px solid #000; padding: 4px;">
+                                                <appfuse:label styleClass="form-label"
+                                                               key="rcds.from" />
+                                            </td>
+                                            <td width="80%" valign="top" style="border-bottom:  1px solid #000; border-right:  1px solid #000; padding: 4px;">
+                                                <table width="100%">
+                                                    <tr>
+                                                        <td width="50%">
+                                                            <form:select path="startYear"
+                                                                         cssClass="form-control year-month-range" id="startYear">
+                                                                <form:option value="" selected="selected">
+                                                                    <fmt:message key="rcds.year" />
+                                                                </form:option>
+                                                                <form:options items="${years}" itemValue="value"
+                                                                              itemLabel="label" />
+                                                            </form:select>
+                                                        </td>
+                                                        <td width="50%">
+                                                            <form:select path="startMonth"
+                                                                         cssClass="form-control year-month-range" id="startMonth">
+                                                                <form:option value="" selected="selected">
+                                                                    <fmt:message key="rcds.month" />
+                                                                </form:option>
+                                                                <form:options items="${months}" itemValue="value"
+                                                                              itemLabel="label" />
+                                                            </form:select>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 4px;">
+                                                <appfuse:label styleClass="form-label"
+                                                               key="crashAnalysis.startDate" />
+                                            </td>
+                                            <td style="border-right:  1px solid #000; padding: 4px;">
+                                                <input type="text" id="startDateString" name="startDateString" class="form-control dtpicker right-al"
+                                                       readonly="readonly" style="background-color: #FFFFFF; cursor: pointer;"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td width="50%">
+                                    <table width="100%">
+                                        <tr>
+                                            <td width="20%" style="border-bottom:  1px solid #000; padding: 4px;">
+                                                <appfuse:label styleClass="form-label"
+                                                               key="rcds.to" />
+                                            </td>
+                                            <td width="80%" style="border-bottom:  1px solid #000; padding: 4px;">
+                                                <table width="100%">
+                                                    <tr>
+                                                        <td width="50%">
+                                                            <form:select path="endYear"
+                                                                         cssClass="form-control year-month-range" id="endYear">
+                                                                <form:option value="" selected="selected">
+                                                                    <fmt:message key="rcds.year" />
+                                                                </form:option>
+                                                                <form:options items="${years}" itemValue="value"
+                                                                              itemLabel="label" />
+                                                            </form:select>
+                                                        </td>
+                                                        <td width="50%">
+                                                            <form:select path="endMonth"
+                                                                         cssClass="form-control year-month-range" id="endMonth">
+                                                                <form:option value="" selected="selected">
+                                                                    <fmt:message key="rcds.month" />
+                                                                </form:option>
+                                                                <form:options items="${months}" itemValue="value"
+                                                                              itemLabel="label" />
+                                                            </form:select>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr id="year-month-range-error" style="display: none; color: red; font-style: italic;">
+                                            <td colspan="2">
 
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 4px;">
+                                                <appfuse:label styleClass="form-label"
+                                                               key="crashAnalysis.endDate" />
+                                            </td>
+                                            <td style="padding: 4px;">
+                                                <input type="text" id="endDateString" name="endDateString" class="form-control dtpicker right-al"
+                                                       readonly="readonly" style="background-color: #FFFFFF; cursor: pointer;"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
                     </td>
                 </tr>
 				<tr>
@@ -89,7 +201,8 @@
 							<c:forEach var="crashSeverity" items="${crashSeverities}" varStatus="status">
 								<tr>
 									<td><form:checkbox path="crashSeverities[${status.index}].id"
-											value="${crashSeverity.id}" />&nbsp;&nbsp;${crashSeverity.name}
+											value="${crashSeverity.id}" id="crashSeverity${crashSeverity.id}" />&nbsp;
+                                        <label for="crashSeverity${crashSeverity.id}" class="form-label">${crashSeverity.name}</label>
 									</td>
 								</tr>
 							</c:forEach>
@@ -109,7 +222,8 @@
 							<tr>
 								</c:if>
 								<td width="50%"><form:checkbox path="collisionTypes[${status.index}].id"
-										value="${collisionType.id}" />&nbsp;&nbsp;${collisionType.name}
+										value="${collisionType.id}" id="collisionType${collisionType.id}" />&nbsp;
+                                    <label for="collisionType${collisionType.id}" class="form-label">${collisionType.name}</label>
 								</td>
 								</c:forEach>
 							</tr>
@@ -132,7 +246,8 @@
 							<tr>
 								</c:if>
 								<td width="33.3%"><form:checkbox
-										path="crashCauses[${status.index}].id" value="${crashCause.id}" />&nbsp;&nbsp;${crashCause.name}
+										path="crashCauses[${status.index}].id" value="${crashCause.id}" id="crashCause${crashCause.id}" />&nbsp;
+                                    <label for="crashCause${crashCause.id}" class="form-label">${crashCause.name}</label>
 								</td>
 								</c:forEach>
 							</tr>
@@ -155,7 +270,8 @@
 							<tr>
 								</c:if>
 								<td width="33.3%"><form:checkbox
-										path="vehicleFailureTypes[${status.index}].id" value="${vehicleFailureType.id}" />&nbsp;&nbsp;${vehicleFailureType.name}
+										path="vehicleFailureTypes[${status.index}].id" value="${vehicleFailureType.id}" id="vehicleFailureType${vehicleFailureType.id}" />&nbsp;
+                                    <label for="vehicleFailureType${vehicleFailureType.id}" class="form-label">${vehicleFailureType.name}</label>
 								</td>
 								</c:forEach>
 							</tr>
@@ -186,7 +302,8 @@
 											<tr>
 												<td
 													style="border-right: none; border-left: none; border-bottom: none;">
-													<form:checkbox path="weathers[${status.index}].id" value="${weather.id}" />&nbsp;&nbsp;${weather.name}
+													<form:checkbox path="weathers[${status.index}].id" value="${weather.id}" id="weather${weather.id}" />&nbsp;
+                                                    <label for="weather${weather.id}" class="form-label">${weather.name}</label>
 												</td>
 											</tr>
 										</c:forEach>
@@ -208,7 +325,8 @@
 												<td
 													style="border-right: none; border-left: none; border-bottom: none;">
 													<form:checkbox path="surfaceConditions[${status.index}].id"
-														value="${surfaceCondition.id}" />&nbsp;&nbsp;${surfaceCondition.name}
+														value="${surfaceCondition.id}" id="surfaceCondition${surfaceCondition.id}" />&nbsp;
+                                                    <label for="surfaceCondition${surfaceCondition.id}" class="form-label">${surfaceCondition.name}</label>
 												</td>
 											</tr>
 										</c:forEach>
@@ -228,7 +346,8 @@
 										<c:forEach var="roadSurface" items="${roadSurfaces}" varStatus="status">
 											<tr>
 												<td style="border-right: none; border-left: none;"><form:checkbox
-														path="roadSurfaces[${status.index}].id" value="${roadSurface.id}" />&nbsp;&nbsp;${roadSurface.name}
+														path="roadSurfaces[${status.index}].id" value="${roadSurface.id}" id="roadSurface${roadSurface.id}" />&nbsp;
+                                                    <label for="roadSurface${roadSurface.id}" class="form-label">${roadSurface.name}</label>
 												</td>
 											</tr>
 										</c:forEach>
@@ -250,7 +369,8 @@
 												<td
 													style="border-right: none; border-left: none; border-bottom: none;">
 													<form:checkbox path="surfaceTypes[${status.index}].id"
-														value="${surfaceType.id}" />&nbsp;&nbsp;${surfaceType.name}
+														value="${surfaceType.id}" id="surfaceType${surfaceType.id}" />&nbsp;
+                                                    <label for="surfaceType${surfaceType.id}" class="form-label">${surfaceType.name}</label>
 												</td>
 											</tr>
 										</c:forEach>
@@ -279,7 +399,8 @@
 											</c:if>
 											<td width="50%"
 												style="border-left: none; border-bottom: none"><form:checkbox
-													path="roadwayCharacters[${status.index}].id" value="${roadwayCharacter.id}" />&nbsp;&nbsp;${roadwayCharacter.name}
+													path="roadwayCharacters[${status.index}].id" value="${roadwayCharacter.id}" id="roadwayCharacter${roadwayCharacter.id}" />&nbsp;
+                                                <label for="roadwayCharacter${roadwayCharacter.id}" class="form-label">${roadwayCharacter.name}</label>
 											</td>
 											</c:forEach>
 										</tr>
@@ -303,7 +424,8 @@
 											</c:if>
 											<td width="33.3%"
 												style="border-right: none; border-bottom: none"><form:checkbox
-													path="junctionTypes[${status.index}].id" value="${junctionType.id}" />&nbsp;&nbsp;${junctionType.name}
+													path="junctionTypes[${status.index}].id" value="${junctionType.id}" id="junctionType${junctionType.id}" />&nbsp;
+                                                <label for="junctionType${junctionType.id}" class="form-label">${junctionType.name}</label>
 											</td>
 											</c:forEach>
 										</tr>
@@ -346,8 +468,8 @@
                                                     </c:otherwise>
                                                 </c:choose>
                                                 <td width="50%" style="border-left: none; border-bottom: none;${vehicleTypeRightBorderStyle} text-align: left;">
-                                                    <form:checkbox path="vehicleTypes[${status.index}].id" value="${vehicleType.id}" />&nbsp;&nbsp;
-                                                    ${vehicleType.name}
+                                                    <form:checkbox path="vehicleTypes[${status.index}].id" value="${vehicleType.id}" id="vehicleType${vehicleType.id}" />&nbsp;
+                                                    <label for="vehicleType${vehicleType.id}" class="form-label">${vehicleType.name}</label>
                                                 </td>
                                             </c:forEach>
                                         </tr>
@@ -380,33 +502,42 @@
                                         </tr>
                                         <tr>
                                             <td style="border-top: none; border-left: none;">
-                                                <c:forEach var="licenseType" items="${booleanTypes}" varStatus="status">
+                                                <c:forEach var="licenseType" items="${licenseTypes}" varStatus="status">
                                                     <form:checkbox
-                                                            path="driverLicenseTypes[${status.index}].value" value="${licenseType.value}" />&nbsp;&nbsp;${licenseType.label} <br/>
+                                                            path="driverLicenseTypes[${status.index}].value" value="${licenseType.value}" id="licenseType${licenseType.value}" />&nbsp;
+                                                    <label for="licenseType${licenseType.value}" class="form-label">${licenseType.label}</label>
+                                                    <br/>
                                                 </c:forEach>
                                             </td>
                                             <td style="border-top: none; border-left: none;">
                                                 <c:forEach var="driverGender" items="${genders}" varStatus="status">
                                                     <form:checkbox
-                                                            path="driverGenders[${status.index}].value" value="${driverGender.value}" />&nbsp;&nbsp;${driverGender.label} <br/>
+                                                            path="driverGenders[${status.index}].value" value="${driverGender.value}" id="driverGender${driverGender.value}" />&nbsp;
+                                                    <label for="driverGender${driverGender.value}" class="form-label">${driverGender.label}</label><br/>
                                                 </c:forEach>
                                             </td>
                                             <td style="border-top: none; border-left: none;">
                                                 <c:forEach var="driverAgeRange" items="${ageRanges}" varStatus="status">
                                                     <form:checkbox
-                                                            path="driverAgeRanges[${status.index}].value" value="${driverAgeRange.value}" />&nbsp;&nbsp;${driverAgeRange.label} <br/>
+                                                            path="driverAgeRanges[${status.index}].value" value="${driverAgeRange.value}" id="driverAgeRange${driverAgeRange.value}" />&nbsp;
+                                                    <label for="driverAgeRange${driverAgeRange.value}" class="form-label">${driverAgeRange.label}</label>
+                                                    <br/>
                                                 </c:forEach>
                                             </td>
                                             <td style="border-top: none; border-left: none;">
                                                 <c:forEach var="driverBeltUsed" items="${beltUseds}" varStatus="status">
                                                     <form:checkbox
-                                                            path="driverBeltUsedOptions[${status.index}].value" value="${driverBeltUsed.value}" />&nbsp;&nbsp;${driverBeltUsed.label} <br/>
+                                                            path="driverBeltUsedOptions[${status.index}].value" value="${driverBeltUsed.value}" id="driverBeltUsed${driverBeltUsed.value}" />&nbsp;
+                                                    <label for="driverBeltUsed${driverBeltUsed.value}" class="form-label">${driverBeltUsed.label}</label>
+                                                    <br/>
                                                 </c:forEach>
                                             </td>
                                             <td style="border-top: none; border-left: none; border-right: none;">
                                                 <c:forEach var="driverCasualtyType" items="${casualtyTypes}" varStatus="status">
                                                     <form:checkbox
-                                                            path="driverCasualtyTypes[${status.index}].id" value="${driverCasualtyType.id}" />&nbsp;&nbsp;${driverCasualtyType.name} <br/>
+                                                            path="driverCasualtyTypes[${status.index}].id" value="${driverCasualtyType.id}" id="driverCasualtyType${driverCasualtyType.id}" />&nbsp;
+                                                    <label for="driverCasualtyType${driverCasualtyType.id}" class="form-label">${driverCasualtyType.name}</label>
+                                                    <br/>
                                                 </c:forEach>
                                             </td>
                                         </tr>
@@ -444,31 +575,41 @@
                                 <td class="padd2" style="border-top: none; border-left: none;">
                                     <c:forEach var="casualtyClass" items="${casualtyClasses}" varStatus="status">
                                         <form:checkbox
-                                                path="casualtyClasses[${status.index}].id" value="${casualtyClass.id}" />&nbsp;&nbsp;${casualtyClass.name} <br/>
+                                                path="casualtyClasses[${status.index}].id" value="${casualtyClass.id}" id="casualtyClass${casualtyClass.id}" />&nbsp;
+                                        <label for="casualtyClass${casualtyClass.id}" class="form-label">${casualtyClass.name}</label>
+                                        <br/>
                                     </c:forEach>
                                 </td>
                                 <td class="padd2" style="border-top: none; border-left: none;">
                                     <c:forEach var="casualtyType" items="${casualtyTypes}" varStatus="status">
                                         <form:checkbox
-                                                path="casualtyTypes[${status.index}].id" value="${casualtyType.id}" />&nbsp;&nbsp;${casualtyType.name} <br/>
+                                                path="casualtyTypes[${status.index}].id" value="${casualtyType.id}" id="casualtyType${casualtyType.id}" />&nbsp;
+                                        <label for="casualtyType${casualtyType.id}" class="form-label">${casualtyType.name}</label>
+                                        <br/>
                                     </c:forEach>
                                 </td>
                                 <td class="padd2" style="border-top: none; border-left: none;">
                                     <c:forEach var="casualtyGender" items="${genders}" varStatus="status">
                                         <form:checkbox
-                                                path="casualtyGenders[${status.index}].value" value="${casualtyGender.value}" />&nbsp;&nbsp;${casualtyGender.label} <br/>
+                                                path="casualtyGenders[${status.index}].value" value="${casualtyGender.value}" id="casualtyGender${casualtyGender.value}" />&nbsp;
+                                        <label for="casualtyGender${casualtyGender.value}" class="form-label">${casualtyGender.label}</label>
+                                        <br/>
                                     </c:forEach>
                                 </td>
                                 <td class="padd2" style="border-top: none; border-left: none;">
                                     <c:forEach var="casualtyAgeRange" items="${ageRanges}" varStatus="status">
                                         <form:checkbox
-                                                path="casualtyAgeRanges[${status.index}].value" value="${casualtyAgeRange.value}" />&nbsp;&nbsp;${casualtyAgeRange.label} <br/>
+                                                path="casualtyAgeRanges[${status.index}].value" value="${casualtyAgeRange.value}" id="casualtyAgeRange${casualtyAgeRange.value}" />&nbsp;
+                                        <label for="casualtyAgeRange${casualtyAgeRange.value}" class="form-label">${casualtyAgeRange.label}</label>
+                                        <br/>
                                     </c:forEach>
                                 </td>
                                 <td class="padd2" style="border-top: none; border-left: none;">
                                     <c:forEach var="casualtyBeltUsed" items="${beltUseds}" varStatus="status">
                                         <form:checkbox
-                                                path="casualtyBeltUsedOptions[${status.index}].value" value="${casualtyBeltUsed.value}" />&nbsp;&nbsp;${casualtyBeltUsed.label} <br/>
+                                                path="casualtyBeltUsedOptions[${status.index}].value" value="${casualtyBeltUsed.value}" id="casualtyBeltUsed${casualtyBeltUsed.value}" />&nbsp;
+                                        <label for="casualtyBeltUsed${casualtyBeltUsed.value}" class="form-label">${casualtyBeltUsed.label}</label>
+                                        <br/>
                                     </c:forEach>
                                 </td>
                             </tr>

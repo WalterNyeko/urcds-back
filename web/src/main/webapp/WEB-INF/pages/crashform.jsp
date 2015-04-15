@@ -190,7 +190,8 @@
 							<c:forEach var="crashSeverity" items="${crashSeverities}">
 								<tr>
 									<td><form:radiobutton path="crashSeverity.id"
-											value="${crashSeverity.id}" />&nbsp;&nbsp;${crashSeverity.name}
+											value="${crashSeverity.id}" />&nbsp;
+                                        <label for="crashSeverity.id${crashSeverity.id}" class="form-label">${crashSeverity.name}</label>
 									</td>
 								</tr>
 							</c:forEach>
@@ -210,7 +211,8 @@
 							<tr>
 								</c:if>
 								<td width="50%"><form:radiobutton path="collisionType.id"
-										value="${collisionType.id}" />&nbsp;&nbsp;${collisionType.name}
+										value="${collisionType.id}" />&nbsp;
+                                    <label for="collisionType.id${collisionType.id}" class="form-label">${collisionType.name}</label>
 								</td>
 								</c:forEach>
 							</tr>
@@ -233,7 +235,8 @@
 							<tr>
 								</c:if>
 								<td width="33.3%"><form:radiobutton
-										path="crashCause.id" value="${crashCause.id}" />&nbsp;&nbsp;${crashCause.name}
+										path="crashCause.id" value="${crashCause.id}" />&nbsp;
+                                    <label for="crashCause.id${crashCause.id}" class="form-label">${crashCause.name}</label>
 								</td>
 								</c:forEach>
 							</tr>
@@ -256,7 +259,8 @@
 							<tr>
 								</c:if>
 								<td width="33.3%"><form:radiobutton
-										path="vehicleFailureType.id" value="${vehicleFailureType.id}" />&nbsp;&nbsp;${vehicleFailureType.name}
+										path="vehicleFailureType.id" value="${vehicleFailureType.id}" />&nbsp;
+                                    <label for="vehicleFailureType.id${vehicleFailureType.id}" class="form-label">${vehicleFailureType.name}</label>
 								</td>
 								</c:forEach>
 							</tr>
@@ -287,7 +291,8 @@
 											<tr>
 												<td
 													style="border-right: none; border-left: none; border-bottom: none;">
-													<form:radiobutton path="weather.id" value="${weather.id}" />&nbsp;&nbsp;${weather.name}
+													<form:radiobutton path="weather.id" value="${weather.id}" />&nbsp;
+                                                    <label for="weather.id${weather.id}" class="form-label">${weather.name}</label>
 												</td>
 											</tr>
 										</c:forEach>
@@ -309,7 +314,8 @@
 												<td
 													style="border-right: none; border-left: none; border-bottom: none;">
 													<form:radiobutton path="surfaceCondition.id"
-														value="${surfaceCondition.id}" />&nbsp;&nbsp;${surfaceCondition.name}
+														value="${surfaceCondition.id}" />&nbsp;
+                                                    <label for="surfaceCondition.id${surfaceCondition.id}" class="form-label">${surfaceCondition.name}</label>
 												</td>
 											</tr>
 										</c:forEach>
@@ -329,7 +335,8 @@
 										<c:forEach var="roadSurface" items="${roadSurfaces}">
 											<tr>
 												<td style="border-right: none; border-left: none;"><form:radiobutton
-														path="roadSurface.id" value="${roadSurface.id}" />&nbsp;&nbsp;${roadSurface.name}
+														path="roadSurface.id" value="${roadSurface.id}" />&nbsp;
+                                                    <label for="roadSurface.id${roadSurface.id}" class="form-label">${roadSurface.name}</label>
 												</td>
 											</tr>
 										</c:forEach>
@@ -351,7 +358,8 @@
 												<td
 													style="border-right: none; border-left: none; border-bottom: none;">
 													<form:radiobutton path="surfaceType.id"
-														value="${surfaceType.id}" />&nbsp;&nbsp;${surfaceType.name}
+														value="${surfaceType.id}" />&nbsp;
+                                                    <label for="surfaceType.id${surfaceType.id}" class="form-label">${surfaceType.name}</label>
 												</td>
 											</tr>
 										</c:forEach>
@@ -380,7 +388,8 @@
 											</c:if>
 											<td width="50%"
 												style="border-left: none; border-bottom: none"><form:radiobutton
-													path="roadwayCharacter.id" value="${roadwayCharacter.id}" />&nbsp;&nbsp;${roadwayCharacter.name}
+													path="roadwayCharacter.id" value="${roadwayCharacter.id}" />&nbsp;
+                                                <label for="roadwayCharacter.id${roadwayCharacter.id}" class="form-label">${roadwayCharacter.name}</label>
 											</td>
 											</c:forEach>
 										</tr>
@@ -404,7 +413,8 @@
 											</c:if>
 											<td width="33.3%"
 												style="border-right: none; border-bottom: none"><form:radiobutton
-													path="junctionType.id" value="${junctionType.id}" />&nbsp;&nbsp;${junctionType.name}
+													path="junctionType.id" value="${junctionType.id}" />&nbsp;
+                                                <label for="junctionType.id${junctionType.id}" class="form-label">${junctionType.name}</label>
 											</td>
 											</c:forEach>
 										</tr>

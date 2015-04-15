@@ -2,10 +2,12 @@ package com.sweroad.webapp.controller;
 
 import com.sweroad.model.Crash;
 import com.sweroad.model.CrashSeverity;
+import com.sweroad.model.PoliceStation;
 import com.sweroad.query.CrashSearch;
 import com.sweroad.service.CrashManager;
 import com.sweroad.service.CrashQueryManager;
 import com.sweroad.service.LookupManager;
+import com.sweroad.webapp.util.CrashAnalysisHelper;
 import com.sweroad.webapp.util.JsonHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,10 +31,13 @@ public class CrashQueryController extends  BaseFormController {
     private CrashQueryManager crashQueryManager;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView showForm() {
+    public ModelAndView showForm(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("analysis/crashquery");
         mav.addObject(new CrashSearch());
         mav.addAllObjects(crashQueryManager.getCrashQueryReferenceData());
+        mav.addObject("years", CrashAnalysisHelper.getYearsForSearch());
+        mav.addObject("months", CrashAnalysisHelper.getMonthsForSearch(request));
+        JsonHelper.policeStationsToJsonAndSetInAttribute(request, (List<PoliceStation>) mav.getModelMap().get("policeStations"));
         return mav;
     }
 

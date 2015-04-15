@@ -22,6 +22,10 @@ public class CrashSearch {
     private List<CustomQueryableService> customQueryableServices;
     private Date startDate;
     private Date endDate;
+    private Integer startYear;
+    private Integer startMonth;
+    private Integer endYear;
+    private Integer endMonth;
     private List<CrashSeverity> crashSeverities = new ArrayList<CrashSeverity>();
     private List<CollisionType> collisionTypes = new ArrayList<CollisionType>();
     private List<CrashCause> crashCauses = new ArrayList<CrashCause>();
@@ -64,6 +68,38 @@ public class CrashSearch {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public Integer getStartYear() {
+        return startYear;
+    }
+
+    public void setStartYear(Integer startYear) {
+        this.startYear = startYear;
+    }
+
+    public Integer getStartMonth() {
+        return startMonth;
+    }
+
+    public void setStartMonth(Integer startMonth) {
+        this.startMonth = startMonth;
+    }
+
+    public Integer getEndYear() {
+        return endYear;
+    }
+
+    public void setEndYear(Integer endYear) {
+        this.endYear = endYear;
+    }
+
+    public Integer getEndMonth() {
+        return endMonth;
+    }
+
+    public void setEndMonth(Integer endMonth) {
+        this.endMonth = endMonth;
     }
 
     public List<CrashSeverity> getCrashSeverities() {
