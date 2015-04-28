@@ -94,10 +94,13 @@ public class CrashFormController extends BaseFormController {
     protected ModelAndView showForm2(Crash crash, BindingResult errors,
                                      HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-
         ModelAndView mav = new ModelAndView("crashform2");
         mergeWithSession(crash, request);
         request.getSession().setAttribute("crash", crash);
+        if (!StringUtils.isBlank(request.getParameter("shouldSave"))) {
+            onSubmit(request, response);
+            return null;
+        }
         mav.addObject("crash", crash);
         mav.addAllObjects(crashManager.getReferenceData());
         return mav;
@@ -141,7 +144,7 @@ public class CrashFormController extends BaseFormController {
         Crash crash = (Crash) request.getSession().getAttribute("crash");
         if (crash != null && crash.getCrashDateTimeString() != null
                 && !"".equals(crash.getCrashDateTimeString())) {
-            crash.setCrashDateTime(DateUtil.parseDate("dd/MM/yyyy hh:mm", crash
+            crash.setCrashDateTime(DateUtil.parseDate("yyyy-MM-dd hh:mm", crash
                     .getCrashDateTimeString()));
         }
         try {

@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -25,7 +26,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/crashquery*")
-public class CrashQueryController extends  BaseFormController {
+public class CrashQueryController extends BaseFormController {
 
     @Autowired
     private CrashQueryManager crashQueryManager;
@@ -44,9 +45,15 @@ public class CrashQueryController extends  BaseFormController {
     @RequestMapping(value = "/crashqueryrun", method = RequestMethod.POST)
     public ModelAndView runQuery(CrashSearch crashSearch, BindingResult errors, HttpServletRequest request,
                                  HttpServletResponse response) throws Exception {
-        crashQueryManager.processCrashSearch(crashSearch);
-        List<Crash> crashes = crashQueryManager.getCrashesByQuery(crashSearch.toQuery());
-        JsonHelper.crashesToJsonAndSetInSession(request, crashes);
+        try {
+            crashQueryManager.processCrashSearch(crashSearch);
+            List<Crash> crashes = crashQueryManager.getCrashesByQuery(crashSearch.toQuery());
+            JsonHelper.crashesToJsonAndSetInSession(request, crashes);
+        } catch (ParseException e) {
+            logException(request, e, "Date provided was in wrong format.");
+        } catch (Exception e) {
+            logException(request, e, "Your query did not run successfully. Please contact your System Administrator.");
+        }
         return new CrashAnalysisController().showCrashes(request);
     }
 }

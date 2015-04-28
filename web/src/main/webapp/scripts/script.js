@@ -531,3 +531,31 @@ function initDistrictSelectChange() {
     $(".district-select").trigger("change");
     $(".police-station-select").val(selectedPoliceStation);
 }
+
+function crashQueryFilterPoliceStations() {
+    if ($('.district:checked').length) {
+        $('.district').each(function(){
+            var districtId = $(this).attr('data-id');
+            var selected = this.checked;
+            $('.policeStation[data-district-id=' + districtId + ']').each(function() {
+                if (selected)
+                    $(this).closest('tr').show('slow');
+                else
+                    $(this).closest('tr').hide('slow');
+            })
+        });
+    } else {
+        $('.policeStation').closest('tr').show('slow');
+    }
+}
+
+function showHideDateControls() {
+    var selected = $('.year-month-range option:selected').filter(function(){
+        return $(this).val().length > 0;
+    });
+    if (selected.length) {
+        $('.dtpicker').closest('tr').hide('slow');
+    } else {
+        $('.dtpicker').closest('tr').show('slow');
+    }
+}

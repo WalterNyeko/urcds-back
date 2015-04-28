@@ -62,17 +62,17 @@ var getCrashDate = function() {
     if (!dateString.length) {
         return null;
     }
-    var dataSplit = dateString.split('/');
+    var dataSplit = dateString.split('-');
     var dateConverted;
 
     if (dataSplit[2].split(" ").length > 1) {
 
         var hora = dataSplit[2].split(" ")[1].split(':');
         dataSplit[2] = dataSplit[2].split(" ")[0];
-        dateConverted = new Date(dataSplit[2], dataSplit[1] - 1, dataSplit[0], hora[0], hora[1]);
+        dateConverted = new Date(dataSplit[0], dataSplit[1] - 1, dataSplit[2], hora[0], hora[1]);
 
     } else {
-        dateConverted = new Date(dataSplit[2], dataSplit[1] - 1, dataSplit[0]);
+        dateConverted = new Date(dataSplit[0], dataSplit[1] - 1, dataSplit[2]);
     }
     return dateConverted;
 }
@@ -84,7 +84,7 @@ var checkGpsCoordinateLimits = function() {
         if(latitude <= -2 || latitude >= 3) {
             validationWarningMessage.push("The <b><i>GPS latitude</i></b> value provided seems to be outside the country.");
         }
-        if(longitude < 30 || longitude > 33) {
+        if(longitude < 29.5 || longitude > 34.8) {
             validationWarningMessage.push("The <b><i>GPS longitude</i></b> value provided seems to be outside the country.");
         }
     }

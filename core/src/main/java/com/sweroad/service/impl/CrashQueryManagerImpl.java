@@ -1,5 +1,6 @@
 package com.sweroad.service.impl;
 
+import com.mysql.jdbc.StringUtils;
 import com.sweroad.dao.CrashDao;
 import com.sweroad.model.*;
 import com.sweroad.query.CrashQuery;
@@ -8,10 +9,12 @@ import com.sweroad.service.CrashManager;
 import com.sweroad.service.CrashQueryManager;
 import com.sweroad.service.GenericManager;
 import com.sweroad.service.LookupManager;
+import com.sweroad.util.DateUtil;
 import com.sweroad.util.GenericManagerHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -63,7 +66,7 @@ public class CrashQueryManagerImpl implements CrashQueryManager {
     }
 
     @Override
-    public void processCrashSearch(CrashSearch crashSearch) {
+    public void processCrashSearch(CrashSearch crashSearch) throws ParseException {
         crashSearch.setCrashSeverities(GenericManagerHelper.filterForCrashSearch(crashSearch.getCrashSeverities(), crashSeverityManager));
         crashSearch.setCollisionTypes(GenericManagerHelper.filterForCrashSearch(crashSearch.getCollisionTypes(), collisionTypeManager));
         crashSearch.setCrashCauses(GenericManagerHelper.filterForCrashSearch(crashSearch.getCrashCauses(), crashCauseManager));
@@ -87,6 +90,7 @@ public class CrashQueryManagerImpl implements CrashQueryManager {
         crashSearch.setCasualtyGenders(lookupManager.getFilteredGenders(crashSearch.getCasualtyGenders()));
         crashSearch.setCasualtyAgeRanges(lookupManager.getFilteredAgeRanges(crashSearch.getCasualtyAgeRanges()));
         crashSearch.setCasualtyBeltUsedOptions(lookupManager.getFilteredBeltUsedOptions(crashSearch.getCasualtyBeltUsedOptions()));
+        processDates(crashSearch);
     }
 
     @Override
@@ -97,5 +101,14 @@ public class CrashQueryManagerImpl implements CrashQueryManager {
         queryCrashReferenceData.put("beltUseds", lookupManager.getAllBeltUsedOptions());
         queryCrashReferenceData.put("ageRanges", lookupManager.getAllAgeRanges());
         return queryCrashReferenceData;
+    }
+
+    private void processDates(CrashSearch crashSearch) throws ParseException {
+        if (!StringUtils.isNullOrEmpty(crashSearch.getStartDateString())) {
+            crashSearch.setStartDate(DateUtil.convertStringToDate(crashSearch.getStartDateString()));
+        }
+        if (!StringUtils.isNullOrEmpty(crashSearch.getEndDateString())) {
+            crashSearch.setEndDate(DateUtil.convertStringToDate(crashSearch.getEndDateString()));
+        }
     }
 }

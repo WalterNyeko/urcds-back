@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.text.ParseException;
 import java.util.List;
 
 @Controller
@@ -105,18 +106,20 @@ public class CrashAnalysisController extends BaseFormController {
             List<Crash> crashes = searchCriteriaManager.getCrashesByCriteria(criteria);
             JsonHelper.crashesToJsonAndSetInSession(request, crashes);
             JsonHelper.crashAttributesToJsonAndSetInSession(request, crashManager.getOrderedRefData());
+        } catch(ParseException e) {
+            logException(request, e, "Date provided was in wrong format.");
         } catch (Exception e) {
-            log.error("Select crashes failed: " + e.getLocalizedMessage());
+            logException(request, e, "Select crashes failed. Please contact your System Administrator.");
         }
         return showCrashes(request);
     }
 
-    private void processCriteria(SearchCriteria criteria) {
+    private void processCriteria(SearchCriteria criteria) throws ParseException {
         if (!StringUtils.isNullOrEmpty(criteria.getStartDateString())) {
-            criteria.setStartDate(DateUtil.parseDate("dd/MM/yyyy", criteria.getStartDateString()));
+            criteria.setStartDate(DateUtil.convertStringToDate(criteria.getStartDateString()));
         }
         if (!StringUtils.isNullOrEmpty(criteria.getEndDateString())) {
-            criteria.setEndDate(DateUtil.parseDate("dd/MM/yyyy", criteria.getEndDateString()));
+            criteria.setEndDate(DateUtil.convertStringToDate(criteria.getEndDateString()));
         }
     }
 
@@ -127,7 +130,7 @@ public class CrashAnalysisController extends BaseFormController {
             crashManager.generateCrashDataExcel(getCrashes(request), excelFile);
             downloadFile(response, excelFile);
         } catch (Exception e) {
-            log.error("Error on export to excel: " + e.getLocalizedMessage());
+            logException(request, e, "Data export to Excel failed. Please contact your System Administrator.");
         }
     }
 

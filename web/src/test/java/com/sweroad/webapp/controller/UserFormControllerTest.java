@@ -109,20 +109,6 @@ public class UserFormControllerTest extends BaseControllerTestCase {
         assertNotNull(request.getSession().getAttribute("successMessages"));
     }
 
-    //I'll have to look more closely at this test
-//  @Test
-//  public void testAddWithMissingFields() throws Exception {
-//      request = newPost("/userform.html");
-//      user = new User();
-//      user.setFirstName("Jack");
-//      request.setRemoteUser("user");
-//
-//      BindingResult errors = new DataBinder(user).getBindingResult();
-//      c.onSubmit(user, errors, request, new MockHttpServletResponse());
-//      
-//      assertEquals(4, errors.getAllErrors().size());
-//  }
-
     @Test
     public void testRemove() throws Exception {
         request = newPost("/userform.html");

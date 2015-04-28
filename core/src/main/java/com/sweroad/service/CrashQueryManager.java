@@ -4,6 +4,7 @@ import com.sweroad.model.Crash;
 import com.sweroad.query.CrashQuery;
 import com.sweroad.query.CrashSearch;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +26,7 @@ public interface CrashQueryManager {
      *
      * @param crashSearch
      */
-    void processCrashSearch(CrashSearch crashSearch);
+    void processCrashSearch(CrashSearch crashSearch) throws ParseException;
 
     Map<String, List> getCrashQueryReferenceData();
 }

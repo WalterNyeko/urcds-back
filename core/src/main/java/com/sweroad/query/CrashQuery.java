@@ -3,6 +3,7 @@ package com.sweroad.query;
 import com.google.common.base.CaseFormat;
 import com.sweroad.model.BaseModel;
 import com.sweroad.model.Crash;
+import com.sweroad.model.DateRangable;
 
 import java.util.*;
 
@@ -16,9 +17,6 @@ public class CrashQuery extends BaseModel {
     private Map<String, Object> parameters;
     private Map<String, Map<String, Object>> customQueryables;
     private List<LiteralQueryable> literalQueryables;
-    private boolean useTime;
-    private boolean useMonth;
-    private boolean useYear;
     private boolean joinCasualties;
     private boolean joinVehicles;
 
@@ -27,8 +25,6 @@ public class CrashQuery extends BaseModel {
         this.parameters = builder.parameters;
         this.customQueryables = builder.customQueryables;
         this.literalQueryables = builder.literalQueryables;
-        this.useMonth = builder.useMonth;
-        this.useYear = builder.useYear;
         this.joinCasualties = builder.joinCasualties;
         this.joinVehicles = builder.joinVehicles;
     }
@@ -88,8 +84,6 @@ public class CrashQuery extends BaseModel {
         private final Map<String, Object> parameters;
         private Map<String, Map<String, Object>> customQueryables;
         private List<LiteralQueryable> literalQueryables;
-        private boolean useMonth;
-        private boolean useYear;
         private boolean joinCasualties;
         private boolean joinVehicles;
 
@@ -119,14 +113,28 @@ public class CrashQuery extends BaseModel {
             return this;
         }
 
+        public CrashQueryBuilder addStartMonth(int startMonth) {
+            parameters.put("startMonth", startMonth);
+            return this;
+        }
+
+        public CrashQueryBuilder addEndMonth(int endMonth) {
+            parameters.put("endMonth", endMonth);
+            return this;
+        }
+
         public CrashQueryBuilder addStartDate(Date startDate) {
-            parameters.put("startDate", startDate);
+            if (startDate != null) {
+                parameters.put("startDate", startDate);
+            }
             return this;
         }
 
         public CrashQueryBuilder addEndDate(Date endDate) {
-            endDate = maximizeEndDate(endDate);
-            parameters.put("endDate", endDate);
+            if (endDate != null) {
+                endDate = maximizeEndDate(endDate);
+                parameters.put("endDate", endDate);
+            }
             return this;
         }
 
@@ -140,7 +148,7 @@ public class CrashQuery extends BaseModel {
         }
 
         public CrashQueryBuilder addLiteralQueryable(LiteralQueryable literalQueryable) {
-            if(literalQueryable.getJoinType().equals(CrashJoinType.CASUALTY)) {
+            if (literalQueryable.getJoinType().equals(CrashJoinType.CASUALTY)) {
                 this.joinCasualties(true);
             } else if (literalQueryable.getJoinType().equals(CrashJoinType.VEHICLE)) {
                 this.joinVehicles(true);
@@ -166,7 +174,7 @@ public class CrashQuery extends BaseModel {
         }
 
         private void appendNullValueInclusion(CustomQueryable customQueryable, StringBuilder comparisonClause) {
-            if(customQueryable.shouldIncludeNulls()) {
+            if (customQueryable.shouldIncludeNulls()) {
                 comparisonClause.append(" or ").append(customQueryable.getProperty()).append(" is NULL");
             }
         }
@@ -202,16 +210,6 @@ public class CrashQuery extends BaseModel {
             comparisonClause.append(customQueryable.getProperty()).append(customQueryable.getComparison().getSymbol());
         }
 
-        public CrashQueryBuilder setUseMonth(boolean useMonth) {
-            this.useMonth = useMonth;
-            return this;
-        }
-
-        public CrashQueryBuilder setUseYear(boolean useYear) {
-            this.useYear = useYear;
-            return this;
-        }
-
         public CrashQueryBuilder joinCasualties(boolean joinCasualties) {
             this.joinCasualties = joinCasualties;
             return this;
@@ -238,6 +236,7 @@ public class CrashQuery extends BaseModel {
             appendParameters(query);
             addCustomQueryables(query);
             addLiteralQueryables(query);
+            excludeRemovedCrashes(query);
             return query.toString().trim();
         }
 
@@ -302,6 +301,17 @@ public class CrashQuery extends BaseModel {
             }
         }
 
+        private void excludeRemovedCrashes(StringBuilder query) {
+            String hql = query.toString().trim();
+            if (hql.equals(hqlStart)) {
+                appendJoins(query);
+                query.append(" where ");
+            } else {
+                query.append(" and ");
+            }
+            query.append("c.isRemoved is false");
+        }
+
         private void appendParameters(StringBuilder query) {
             String hql = query.toString().trim();
             if (parameters.size() > 0) {
@@ -311,72 +321,70 @@ public class CrashQuery extends BaseModel {
                 } else {
                     query.append(" and ");
                 }
-                if (parameters.containsKey("startDate") && parameters.containsKey("endDate")) {
-                    appendDateRange(query);
-                } else if (parameters.containsKey("startDate")) {
-                    appendStartDate(query);
-                } else if (parameters.containsKey("endDate")) {
-                    appendEndDate(query);
+                if (startDateDefined() || endDateDefined()) {
+                    appendDateRanges(query);
+                } else if (startMonthDefined() || endMonthDefined()) {
+                    appendMonthRanges(query);
                 }
-                if (parameters.containsKey("startHour") && parameters.containsKey("endHour")) {
-                    appendHourRange(query);
-                } else if (parameters.containsKey("startHour")) {
-                    appendStartHour(query);
-                } else if (parameters.containsKey("endHour")) {
-                    appendEndHour(query);
+                if (startHourDefined() || endHourDefined()) {
+                    appendTimeRanges(query);
                 }
                 stripLastAnd(query);
+            }
+        }
+
+        private void appendMonthRanges(StringBuilder query) {
+            if (startMonthDefined() && endMonthDefined()) {
+                appendMonthRange(query);
+            } else if (startMonthDefined()) {
+                appendStartMonth(query);
+            } else if (endMonthDefined()) {
+                appendEndMonth(query);
+            }
+        }
+
+        private void appendDateRanges(StringBuilder query) {
+            if (startDateDefined() && endDateDefined()) {
+                appendDateRange(query);
+            } else if (startDateDefined()) {
+                appendStartDate(query);
+            } else if (endDateDefined()) {
+                appendEndDate(query);
+            }
+        }
+
+        private void appendTimeRanges(StringBuilder query) {
+            if (startHourDefined() && endHourDefined()) {
+                appendHourRange(query);
+            } else if (startHourDefined()) {
+                appendStartHour(query);
+            } else if (endHourDefined()) {
+                appendEndHour(query);
             }
         }
 
         private void appendDateRange(StringBuilder query) {
-            if (!useMonth && !useYear) {
-                query.append("c.crashDateTime between :startDate and :endDate and ");
-                return;
-            } else if (useYear) {
-                query.append("year(c.crashDateTime) between year(:startDate) and year(:endDate) and ");
-                return;
-            } else if (useMonth) {
-                query.append("(");
-                appendStartDate(query);
-                stripLastAnd(query);
-                query.append(") and (");
-                appendEndDate(query);
-                stripLastAnd(query);
-                query.append(") and ");
-            }
+            query.append("c.crashDateTime between :startDate and :endDate and ");
         }
 
         private void appendStartDate(StringBuilder query) {
-            if (!useMonth && !useYear) {
-                query.append("c.crashDateTime >= :startDate and ");
-                return;
-            }
-            if (useMonth) {
-                query.append("((month(c.crashDateTime) >= month(:startDate) and ")
-                        .append("year(c.crashDateTime) = year(:startDate)) or ")
-                        .append("year(c.crashDateTime) > year(:startDate)) and ");
-                return;
-            }
-            if (useYear) {
-                query.append("year(c.crashDateTime) >= year(:startDate) and ");
-            }
+            query.append("c.crashDateTime >= :startDate and ");
         }
 
         private void appendEndDate(StringBuilder query) {
-            if (!useMonth && !useYear) {
-                query.append("c.crashDateTime <= :endDate and ");
-                return;
-            }
-            if (useMonth) {
-                query.append("((month(c.crashDateTime) <= month(:endDate) and ")
-                        .append("year(c.crashDateTime) = year(:endDate)) or ")
-                        .append("year(c.crashDateTime) < year(:endDate)) and ");
-                return;
-            }
-            if (useYear) {
-                query.append("year(c.crashDateTime) <= year(:endDate) and ");
-            }
+            query.append("c.crashDateTime <= :endDate and ");
+        }
+
+        private void appendMonthRange(StringBuilder query) {
+            query.append("(month(c.crashDateTime) between :startMonth and :endMonth) and ");
+        }
+
+        private void appendStartMonth(StringBuilder query) {
+            query.append("month(c.crashDateTime) >= :startMonth and ");
+        }
+
+        private void appendEndMonth(StringBuilder query) {
+            query.append("month(c.crashDateTime) <= :endMonth and ");
         }
 
         private void appendHourRange(StringBuilder query) {
@@ -393,6 +401,30 @@ public class CrashQuery extends BaseModel {
 
         private void stripLastAnd(StringBuilder query) {
             query.delete(query.length() - 5, query.length());
+        }
+
+        private boolean startDateDefined() {
+            return parameters.containsKey("startDate");
+        }
+
+        private boolean endDateDefined() {
+            return parameters.containsKey("endDate");
+        }
+
+        private boolean startHourDefined() {
+            return parameters.containsKey("startHour");
+        }
+
+        private boolean endHourDefined() {
+            return parameters.containsKey("endHour");
+        }
+
+        private boolean startMonthDefined() {
+            return parameters.containsKey("startMonth");
+        }
+
+        private boolean endMonthDefined() {
+            return parameters.containsKey("endMonth");
         }
     }
 }

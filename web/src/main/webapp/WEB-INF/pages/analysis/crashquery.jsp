@@ -11,7 +11,9 @@
             });
             $('.year-month-range').change(function() {
                 validateYearMonthRange(displayYearMonthRangeError);
+                showHideDateControls();
             });
+            $('.district').click(crashQueryFilterPoliceStations);
         });
     </script>
 </head>
@@ -47,8 +49,8 @@
                                                         <c:set var="borderWidth" value="border-bottom-width: 0px !important;" />
                                                     </c:if>
                                                     <td style="${borderWidth} border-left-width: 0px !important; border-right-width: 0px !important;">
-                                                        <form:checkbox path="districts[${status.index}].id"
-                                                                       value="${district.id}" id="district${district.id}" />&nbsp;
+                                                        <form:checkbox path="districts[${status.index}].id" cssClass="district"
+                                                                       value="${district.id}" id="district${district.id}" data-id="${district.id}" />&nbsp;
                                                         <label for="district${district.id}" class="form-label">${district.name}</label>
                                                     </td>
                                                 </tr>
@@ -68,8 +70,8 @@
                                                         <c:set var="borderWidth" value="border-bottom-width: 0px !important;" />
                                                     </c:if>
                                                     <td style="${borderWidth} border-left-width: 0px !important; border-right-width: 0px !important;">
-                                                        <form:checkbox path="policeStations[${status.index}].id"
-                                                                       value="${policeStation.id}" id="policeStation${policeStation.id}" />&nbsp;
+                                                        <form:checkbox path="policeStations[${status.index}].id" cssClass="policeStation"
+                                                                       value="${policeStation.id}" id="policeStation${policeStation.id}" data-district-id="${policeStation.district.id}" />&nbsp;
                                                         <label for="policeStation${policeStation.id}" class="form-label">${policeStation.name}</label>
                                                     </td>
                                                 </tr>

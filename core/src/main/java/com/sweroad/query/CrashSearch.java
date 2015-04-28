@@ -5,7 +5,9 @@ import com.sweroad.query.service.AgeQueryableService;
 import com.sweroad.query.service.BooleanTypeQueryableService;
 import com.sweroad.query.service.CustomQueryableService;
 import com.sweroad.query.service.GenderQueryableService;
+import com.sweroad.service.DateRangeManager;
 import com.sweroad.service.LookupManager;
+import com.sweroad.service.impl.DateRangeManagerImpl;
 import com.sweroad.service.impl.LookupManagerImpl;
 import org.apache.avro.generic.GenericData;
 
@@ -16,8 +18,9 @@ import java.util.List;
 /**
  * Created by Frank on 12/19/14.
  */
-public class CrashSearch {
+public class CrashSearch implements DateRangable {
 
+    private DateRangeManager dateRangeManager;
     private LookupManager lookupManager;
     private List<CustomQueryableService> customQueryableServices;
     private Date startDate;
@@ -26,6 +29,10 @@ public class CrashSearch {
     private Integer startMonth;
     private Integer endYear;
     private Integer endMonth;
+    private Integer startHour;
+    private Integer endHour;
+    private String startDateString;
+    private String endDateString;
     private List<CrashSeverity> crashSeverities = new ArrayList<CrashSeverity>();
     private List<CollisionType> collisionTypes = new ArrayList<CollisionType>();
     private List<CrashCause> crashCauses = new ArrayList<CrashCause>();
@@ -51,6 +58,7 @@ public class CrashSearch {
     private List<PoliceStation> policeStations = new ArrayList<PoliceStation>();
 
     public CrashSearch() {
+        this.dateRangeManager = new DateRangeManagerImpl();
         this.lookupManager = new LookupManagerImpl();
     }
 
@@ -98,8 +106,42 @@ public class CrashSearch {
         return endMonth;
     }
 
+    @Override
+    public Integer getStartHour() {
+        return startHour;
+    }
+
+    public void setStartHour(Integer startHour) {
+        this.startHour = startHour;
+    }
+
+    @Override
+    public Integer getEndHour() {
+        return endHour;
+    }
+
+    public void setEndHour(Integer endHour) {
+        this.endHour = endHour;
+    }
+
     public void setEndMonth(Integer endMonth) {
         this.endMonth = endMonth;
+    }
+
+    public String getStartDateString() {
+        return startDateString;
+    }
+
+    public void setStartDateString(String startDateString) {
+        this.startDateString = startDateString;
+    }
+
+    public String getEndDateString() {
+        return endDateString;
+    }
+
+    public void setEndDateString(String endDateString) {
+        this.endDateString = endDateString;
     }
 
     public List<CrashSeverity> getCrashSeverities() {
@@ -294,6 +336,8 @@ public class CrashSearch {
         private CrashQuery generateQuery() {
             CrashQuery.CrashQueryBuilder crashQueryBuilder = new CrashQuery.CrashQueryBuilder();
             addQueryables(crashQueryBuilder);
+            addDateRange(crashQueryBuilder);
+            addTimeRange(crashQueryBuilder);
             addCustomQueryables(crashQueryBuilder);
             addLiteralQueryables(crashQueryBuilder);
             addJoins(crashQueryBuilder);
@@ -316,6 +360,33 @@ public class CrashSearch {
                     .addQueryable(casualtyTypes)
                     .addQueryable(policeStations)
                     .addQueryable(districts);
+        }
+
+        private void addDateRange(CrashQuery.CrashQueryBuilder crashQueryBuilder) {
+            if (dateRangeManager.bothMonthProvidedButNoYears(CrashSearch.this)) {
+                crashQueryBuilder.addStartMonth(CrashSearch.this.getStartMonth())
+                        .addEndMonth(CrashSearch.this.getEndMonth());
+            } else if (dateRangeManager.onlyStartMonthProvided(CrashSearch.this)) {
+                crashQueryBuilder.addStartMonth(CrashSearch.this.getStartMonth());
+            } else if (dateRangeManager.onlyEndMonthProvided(CrashSearch.this)) {
+                crashQueryBuilder.addEndMonth(CrashSearch.this.getEndMonth());
+            } else if (dateRangeManager.atLeastOneYearMonthProvided(CrashSearch.this)) {
+                dateRangeManager.setDatesBasedOnYearMonthCriteria(CrashSearch.this);
+                crashQueryBuilder.addStartDate(CrashSearch.this.getStartDate())
+                        .addEndDate(CrashSearch.this.getEndDate());
+            } else {
+                crashQueryBuilder.addStartDate(CrashSearch.this.getStartDate());
+                crashQueryBuilder.addEndDate(CrashSearch.this.getEndDate());
+            }
+        }
+
+        private void addTimeRange(CrashQuery.CrashQueryBuilder crashQueryBuilder) {
+            if (CrashSearch.this.getStartHour() != null) {
+                crashQueryBuilder.addStartHour(CrashSearch.this.getStartHour());
+            }
+            if (CrashSearch.this.getEndHour() != null) {
+                crashQueryBuilder.addEndHour(CrashSearch.this.getEndHour());
+            }
         }
 
         private void addCustomQueryables(CrashQuery.CrashQueryBuilder crashQueryBuilder) {

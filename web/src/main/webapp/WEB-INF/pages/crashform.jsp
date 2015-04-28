@@ -431,8 +431,13 @@
 							<fmt:message key="button.cancel" />
 						</a>
 					</td>
-					<td align="right"><input type="button" class="btn btn-primary submit"
-						value="<fmt:message key='button.next'/>" onclick="bCancel=false; return onSubmit();"></td>
+					<td align="right">
+                        <input type="button" class="btn btn-primary submit" value="<fmt:message key='button.next'/>" onclick="bCancel=false; return goNext();">
+                        <c:if test="${crash.id gt 0}">
+                            &nbsp;
+                            <input type="button" class="btn btn-primary submit" value="<fmt:message key="button.updateCrashData" />" onclick="bCancel=false; return saveCrash();">
+                        </c:if>
+                    </td>
 				</tr>
 			</table>
 		</div>
@@ -464,5 +469,16 @@
     function submitForm() {
         unbindBeforeUnload();
         document.getElementById('crashForm').submit();
+    }
+    function saveCrash() {
+        if(!$('#crashForm').find('#shouldSave').length) {
+            var shouldSave = $('<input type="hidden" id="shouldSave" name="shouldSave" value="true" />');
+            $('#crashForm').append(shouldSave);
+        }
+        return onSubmit();
+    }
+    function goNext() {
+        $('#crashForm').find('#shouldSave').remove();
+        return onSubmit();
     }
 </script>

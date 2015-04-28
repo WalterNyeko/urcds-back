@@ -190,6 +190,7 @@
     $(document).ready(function() {
        $('.year-month-range').change(function() {
            validateYearMonthRange(displayYearMonthRangeError);
+           showHideDateControls();
        });
        initDistrictSelectChange();
     });

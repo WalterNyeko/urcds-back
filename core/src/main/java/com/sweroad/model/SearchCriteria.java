@@ -11,7 +11,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "search_criteria")
-public class SearchCriteria extends BaseModel {
+public class SearchCriteria extends BaseModel implements DateRangable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,10 +28,6 @@ public class SearchCriteria extends BaseModel {
     private Date endDate;
     @Transient
     private String endDateString;
-    @Column(name = "start_time")
-    private String startTime;
-    @Column(name = "end_time")
-    private String endTime;
     @Column(columnDefinition = "text")
     private String criteria;
     @ManyToOne
@@ -48,6 +44,8 @@ public class SearchCriteria extends BaseModel {
     private Integer startMonth;
     private Integer endYear;
     private Integer endMonth;
+    private Integer startHour;
+    private Integer endHour;
 
     public Long getId() {
         return id;
@@ -103,22 +101,6 @@ public class SearchCriteria extends BaseModel {
 
     public void setEndDateString(String endDateString) {
         this.endDateString = endDateString;
-    }
-
-    public String getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
-    }
-
-    public String getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
     }
 
     public String getCriteria() {
@@ -191,6 +173,24 @@ public class SearchCriteria extends BaseModel {
 
     public void setEndMonth(Integer endMonth) {
         this.endMonth = endMonth;
+    }
+
+    @Override
+    public Integer getStartHour() {
+        return startHour;
+    }
+
+    public void setStartHour(Integer startHour) {
+        this.startHour = startHour;
+    }
+
+    @Override
+    public Integer getEndHour() {
+        return endHour;
+    }
+
+    public void setEndHour(Integer endHour) {
+        this.endHour = endHour;
     }
 
     @Override

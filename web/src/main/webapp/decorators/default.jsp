@@ -14,16 +14,20 @@
         systemWideInit();
         $(function() {
             $('.dtpicker').datepicker({
-                dateFormat: "dd/mm/yy",
+                dateFormat: "yy-mm-dd",
                 autoSize: true,
                 inline: true,
                 showOtherMonths: true,
+                changeYear: true,
+                changeMonth : true,
+                yearRange: 'c-20:c',
                 dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
                 showAnim: "fold",
                 onSelect: function() {
                     defineCrashTime();
                 }
             });
+            $('.dtpicker').focus(function(){this.value = '';})
         });
     </script>
 </head>

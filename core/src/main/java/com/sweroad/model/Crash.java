@@ -597,7 +597,7 @@ public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertib
 
     public String getCrashDisplayDate() {
         if (crashDateTime != null) {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             return sdf.format(crashDateTime);
         }
         return "";
@@ -605,7 +605,7 @@ public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertib
 
     public String getCrashDisplayDateTime() {
         if (crashDateTime != null) {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             return sdf.format(crashDateTime);
         }
         return "";
