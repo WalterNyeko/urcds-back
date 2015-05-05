@@ -461,7 +461,7 @@
 </div>
 <script type="text/javascript">
     function onSubmit() {
-        if(validateFields() && validateGpsCoordinates()) {
+        if(validateFields() && validateCrashData() && validateGpsCoordinates()) {
             submitForm();
         }
         return false;
