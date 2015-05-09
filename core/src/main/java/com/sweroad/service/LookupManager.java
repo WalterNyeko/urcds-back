@@ -1,7 +1,10 @@
 package com.sweroad.service;
 
+import com.sweroad.model.AgeRange;
 import com.sweroad.model.LabelValue;
+import com.sweroad.model.TimeRange;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,4 +35,10 @@ public interface LookupManager {
     List<LabelValue> getAllAgeRanges();
 
     List<LabelValue> getFilteredAgeRanges(List<LabelValue> selectedValues);
+
+    AgeRange getAgeRangeByAge(int age);
+
+    List<LabelValue> getAllTimeRanges();
+
+    TimeRange getTimeRangeByTime(Date dateTime);
 }

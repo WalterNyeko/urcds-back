@@ -122,4 +122,6 @@ public final class Constants {
      * Not Injured id for casualty type stored in db
      */
     public static final long NOT_INJURED_ID = 4L;
+
+    public static final int HOURS_IN_DAY = 24;
 }

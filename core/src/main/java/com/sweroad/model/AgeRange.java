@@ -23,20 +23,24 @@ public class AgeRange extends LabelValue {
 
     @Override
     public String getLabel() {
-        if(minAge == 0 && maxAge != null) {
-            return "Below " + (maxAge + 1);
+        if (minAge == 0 && maxAge != null) {
+            return "00 - " + padZeroes(maxAge + 1);
         }
-        if(minAge != null && maxAge == null) {
-            return minAge + " and above";
+        if (minAge != null && maxAge == null) {
+            return "> " + (minAge - 1);
         }
-        if(minAge !=null && maxAge != null) {
-            return minAge + "-" + maxAge;
+        if (minAge != null && maxAge != null) {
+            return padZeroes(minAge) + " - " + padZeroes(maxAge);
         }
         return super.getLabel();
     }
 
+    private String padZeroes(int num) {
+        return num > 9 ? "" + num : "0" + num;
+    }
+
     @Override
     public int compareTo(Object o) {
-        return this.minAge.compareTo(((AgeRange)o).minAge);
+        return this.minAge.compareTo(((AgeRange) o).minAge);
     }
 }

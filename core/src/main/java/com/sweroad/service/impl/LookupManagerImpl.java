@@ -1,14 +1,20 @@
 package com.sweroad.service.impl;
 
+import com.sweroad.Constants;
 import com.sweroad.dao.LookupDao;
 import com.sweroad.model.AgeRange;
 import com.sweroad.model.LabelValue;
 import com.sweroad.model.Role;
+import com.sweroad.model.TimeRange;
+import com.sweroad.query.service.AgeQueryableService;
 import com.sweroad.service.LookupManager;
+import com.sweroad.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -105,14 +111,16 @@ public class LookupManagerImpl implements LookupManager {
     @Override
     public List<LabelValue> getAllAgeRanges() {
         List<LabelValue> ageRanges = new ArrayList<LabelValue>();
-        ageRanges.add(new AgeRange(1L, 0, 9));
-        ageRanges.add(new AgeRange(2L, 10, 19));
-        ageRanges.add(new AgeRange(3L, 20, 29));
-        ageRanges.add(new AgeRange(4L, 30, 39));
-        ageRanges.add(new AgeRange(5L, 40, 49));
-        ageRanges.add(new AgeRange(6L, 50, 59));
-        ageRanges.add(new AgeRange(7L, 60, 69));
-        ageRanges.add(new AgeRange(8L, 70, null));
+        ageRanges.add(new AgeRange(1L, 0, 4));
+        ageRanges.add(new AgeRange(2L, 5, 14));
+        ageRanges.add(new AgeRange(3L, 15, 17));
+        ageRanges.add(new AgeRange(4L, 18, 24));
+        ageRanges.add(new AgeRange(5L, 25, 34));
+        ageRanges.add(new AgeRange(6L, 35, 44));
+        ageRanges.add(new AgeRange(7L, 45, 54));
+        ageRanges.add(new AgeRange(8L, 55, 64));
+        ageRanges.add(new AgeRange(9L, 65, 74));
+        ageRanges.add(new AgeRange(10L, 75, null));
         return ageRanges;
     }
 
@@ -128,6 +136,38 @@ public class LookupManagerImpl implements LookupManager {
         }
         return filteredAgeRanges;
     }
+
+    @Override
+    public AgeRange getAgeRangeByAge(int age) {
+        for(LabelValue range : getAllAgeRanges()) {
+            AgeRange ageRange = (AgeRange)range;
+            if (ageRange.getMinAge() >= age && (ageRange.getMaxAge() == null || ageRange.getMaxAge() >= age)) {
+                return ageRange;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public List<LabelValue> getAllTimeRanges() {
+        List<LabelValue> timeRanges = new ArrayList<LabelValue>();
+        for(int i = 0; i < Constants.HOURS_IN_DAY; i++) {
+            timeRanges.add(new TimeRange(i));
+        }
+        return timeRanges;
+    }
+
+    @Override
+    public TimeRange getTimeRangeByTime(Date dateTime) {
+        int hour = DateUtil.getHourOfDay(dateTime);
+        for(LabelValue timeRange : getAllTimeRanges()) {
+            if (((TimeRange)timeRange).getHour() == hour) {
+                return (TimeRange)timeRange;
+            }
+        }
+        return new TimeRange(0);
+    }
+
 
     private void addLabelValueToList(String label, String value, List<LabelValue> labelValues) {
         LabelValue labelValue = new LabelValue();

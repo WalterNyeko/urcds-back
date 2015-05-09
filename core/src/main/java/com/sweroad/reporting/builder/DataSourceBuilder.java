@@ -11,13 +11,18 @@ import java.util.List;
 public interface DataSourceBuilder {
 
     JRDataSource buildWeatherDataSource(List<Crash> crashes);
+    JRDataSource buildDistrictDataSource(List<Crash> crashes);
+    JRDataSource buildTimeRangeDataSource(List<Crash> crashes);
     JRDataSource buildCrashCauseDataSource(List<Crash> crashes);
     JRDataSource buildRoadSurfaceDataSource(List<Crash> crashes);
     JRDataSource buildSurfaceTypeDataSource(List<Crash> crashes);
+    JRDataSource buildVehicleTypeDataSource(List<Crash> crashes);
     JRDataSource buildJunctionTypeDataSource(List<Crash> crashes);
+    JRDataSource buildPoliceStationDataSource(List<Crash> crashes);
     JRDataSource buildCollisionTypeDataSource(List<Crash> crashes);
     JRDataSource buildRoadwayCharacterDataSource(List<Crash> crashes);
     JRDataSource buildSurfaceConditionDataSource(List<Crash> crashes);
     JRDataSource buildVehicleFailureTypeDataSource(List<Crash> crashes);
+    JRDataSource buildCasualtyAgeGenderDataSource(List<Crash> crashes);
 
 }

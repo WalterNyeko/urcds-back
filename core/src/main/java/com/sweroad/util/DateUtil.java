@@ -217,4 +217,10 @@ public final class DateUtil {
         calendar.setTime(date);
         return calendar.get(Calendar.MONTH) + 1;
     }
+
+    public static int getHourOfDay(Date dateTime) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dateTime);
+        return calendar.get(Calendar.HOUR_OF_DAY);
+    }
 }

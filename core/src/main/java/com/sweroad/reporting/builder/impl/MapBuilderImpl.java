@@ -3,13 +3,11 @@ package com.sweroad.reporting.builder.impl;
 import com.sweroad.model.*;
 import com.sweroad.reporting.builder.MapBuilder;
 import com.sweroad.service.GenericManager;
+import com.sweroad.service.LookupManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Frank on 5/3/15.
@@ -26,6 +24,8 @@ public class MapBuilderImpl implements MapBuilder {
     @Autowired
     private GenericManager<VehicleFailureType, Long> vehicleFailureTypeManager;
     @Autowired
+    private GenericManager<VehicleType, Long> vehicleTypeManager;
+    @Autowired
     private GenericManager<Weather, Long> weatherManager;
     @Autowired
     private GenericManager<SurfaceCondition, Long> surfaceConditionManager;
@@ -37,6 +37,12 @@ public class MapBuilderImpl implements MapBuilder {
     private GenericManager<RoadwayCharacter, Long> roadwayCharacterManager;
     @Autowired
     private GenericManager<JunctionType, Long> junctionTypeManager;
+    @Autowired
+    private GenericManager<PoliceStation, Long> policeStationManager;
+    @Autowired
+    private GenericManager<District, Long> districtManager;
+    @Autowired
+    private LookupManager lookupManager;
 
     public Map<CollisionType, Map<CrashSeverity, Integer>> buildCollisionTypeMap(List<Crash> crashes) {
         Map<CollisionType, Map<CrashSeverity, Integer>> collisionTypeMap = new HashMap<CollisionType, Map<CrashSeverity, Integer>>();
@@ -58,6 +64,29 @@ public class MapBuilderImpl implements MapBuilder {
             }
         }
         return collisionTypeMap;
+    }
+
+    @Override
+    public Map<PoliceStation, Map<CrashSeverity, Integer>> buildPoliceStationMap(List<Crash> crashes) {
+        List<PoliceStation> policeStations = policeStationManager.getAllDistinct();
+        List<CrashSeverity> crashSeverities = crashSeverityManager.getAllDistinct();
+        Collections.sort(policeStations);
+        Collections.sort(crashSeverities);
+        Map<PoliceStation, Map<CrashSeverity, Integer>> policeStationMap = new HashMap<PoliceStation, Map<CrashSeverity, Integer>>();
+        for (PoliceStation policeStation : policeStations) {
+            policeStationMap.put(policeStation, new HashMap<CrashSeverity, Integer>());
+            for (CrashSeverity crashSeverity : crashSeverities) {
+                policeStationMap.get(policeStation).put(crashSeverity, 0);
+            }
+        }
+        for (Crash crash : crashes) {
+            if (crash.getPoliceStation() != null && crash.getCrashSeverity() != null) {
+                Map<CrashSeverity, Integer> crashSeverityMap = policeStationMap.get(crash.getPoliceStation());
+                Integer count = crashSeverityMap.get(crash.getCrashSeverity()) + 1;
+                crashSeverityMap.put(crash.getCrashSeverity(), count);
+            }
+        }
+        return policeStationMap;
     }
 
     public Map<CrashCause, Map<CrashSeverity, Integer>> buildCrashCauseMap(List<Crash> crashes) {
@@ -102,6 +131,119 @@ public class MapBuilderImpl implements MapBuilder {
             }
         }
         return vehicleFailureTypeMap;
+    }
+
+    @Override
+    public Map<VehicleType, Map<CrashSeverity, Integer>> buildVehicleTypeMap(List<Crash> crashes) {
+        Map<VehicleType, Map<CrashSeverity, Integer>> vehicleTypeMap = new HashMap<VehicleType, Map<CrashSeverity, Integer>>();
+        List<CrashSeverity> crashSeverities = crashSeverityManager.getAllDistinct();
+        List<VehicleType> vehicleTypes = vehicleTypeManager.getAllDistinct();
+        Collections.sort(crashSeverities);
+        Collections.sort(vehicleTypes);
+        for (VehicleType vehicleType : vehicleTypes) {
+            vehicleTypeMap.put(vehicleType, new HashMap<CrashSeverity, Integer>());
+            for (CrashSeverity crashSeverity : crashSeverities) {
+                vehicleTypeMap.get(vehicleType).put(crashSeverity, 0);
+            }
+        }
+        for (Crash crash : crashes) {
+            if (crash.getVehicles() != null && crash.getCrashSeverity() != null) {
+                for (Vehicle vehicle : crash.getVehicles()) {
+                    if (vehicle.getVehicleType() != null) {
+                        Map<CrashSeverity, Integer> crashSeverityMap = vehicleTypeMap.get(vehicle.getVehicleType());
+                        Integer count = crashSeverityMap.get(crash.getCrashSeverity()) + 1;
+                        crashSeverityMap.put(crash.getCrashSeverity(), count);
+                    }
+                }
+            }
+        }
+        return vehicleTypeMap;
+    }
+
+    @Override
+    public Map<String, Map<CrashSeverity, Integer>> buildTimeRangeMap(List<Crash> crashes) {
+        Map<String, Map<CrashSeverity, Integer>> timeRangeMap = new HashMap<String, Map<CrashSeverity, Integer>>();
+        List<LabelValue> timeRanges = lookupManager.getAllTimeRanges();
+        List<CrashSeverity> crashSeverities = crashSeverityManager.getAllDistinct();
+        Collections.sort(timeRanges);
+        Collections.sort(crashSeverities);
+        for (LabelValue timeRange : timeRanges) {
+            timeRangeMap.put(timeRange.getLabel(), new HashMap<CrashSeverity, Integer>());
+            for (CrashSeverity crashSeverity : crashSeverities) {
+                timeRangeMap.get(timeRange.getLabel()).put(crashSeverity, 0);
+            }
+        }
+        for (Crash crash : crashes) {
+            if (crash.getCrashDateTime() != null && crash.getCrashSeverity() != null) {
+                TimeRange timeRange = lookupManager.getTimeRangeByTime(crash.getCrashDateTime());
+                Map<CrashSeverity, Integer> crashSeverityMap = timeRangeMap.get(timeRange.getLabel());
+                Integer count = crashSeverityMap.get(crash.getCrashSeverity()) + 1;
+                crashSeverityMap.put(crash.getCrashSeverity(), count);
+            }
+        }
+        return timeRangeMap;
+    }
+
+    @Override
+    public Map<District, Map<CrashSeverity, Integer>> buildDistrictMap(List<Crash> crashes) {
+        List<District> districts = districtManager.getAllDistinct();
+        List<CrashSeverity> crashSeverities = crashSeverityManager.getAllDistinct();
+        Collections.sort(districts);
+        Collections.sort(crashSeverities);
+        Map<District, Map<CrashSeverity, Integer>> districtMap = new HashMap<District, Map<CrashSeverity, Integer>>();
+        for (District district : districts) {
+            districtMap.put(district, new HashMap<CrashSeverity, Integer>());
+            for (CrashSeverity crashSeverity : crashSeverities) {
+                districtMap.get(district).put(crashSeverity, 0);
+            }
+        }
+        for (Crash crash : crashes) {
+            if (crash.getPoliceStation() != null && crash.getPoliceStation().getDistrict() != null && crash.getCrashSeverity() != null) {
+                Map<CrashSeverity, Integer> crashSeverityMap = districtMap.get(crash.getPoliceStation().getDistrict());
+                Integer count = crashSeverityMap.get(crash.getCrashSeverity()) + 1;
+                crashSeverityMap.put(crash.getCrashSeverity(), count);
+            }
+        }
+        return districtMap;
+    }
+
+    @Override
+    public Map<String, Map<CrashSeverity, int[]>> buildCasualtyAgeGenderMap(List<Crash> crashes) {
+        Map<String, Map<CrashSeverity, int[]>> casualtyAgeGenderMap = new HashMap<String, Map<CrashSeverity, int[]>>();
+        List<LabelValue> ageRanges = lookupManager.getAllAgeRanges();
+        List<CrashSeverity> crashSeverities = crashSeverityManager.getAllDistinct();
+        Collections.sort(crashSeverities);
+        for (LabelValue ageRange : ageRanges) {
+            casualtyAgeGenderMap.put(ageRange.getLabel(), new HashMap<CrashSeverity, int[]>());
+            for (CrashSeverity crashSeverity : crashSeverities) {
+                casualtyAgeGenderMap.get(ageRange.getLabel()).put(crashSeverity, new int[]{0, 0, 0});
+            }
+        }
+        for (Crash crash : crashes) {
+            if (crash.getCasualties() != null && crash.getCrashSeverity() != null) {
+                for (Casualty casualty : crash.getCasualties()) {
+                    if (casualty.getAge() != null) {
+                        AgeRange ageRange = lookupManager.getAgeRangeByAge(casualty.getAge());
+                        if (ageRange == null) {
+                            continue;
+                        }
+                        Map<CrashSeverity, int[]> crashSeverityMap = casualtyAgeGenderMap.get(ageRange.getLabel());
+                        incrementGenderCounts(casualty, crashSeverityMap.get(crash.getCrashSeverity()));
+                    }
+                }
+            }
+        }
+        return casualtyAgeGenderMap;
+    }
+
+    private void incrementGenderCounts(Casualty casualty, int[] counts) {
+        if (casualty.getGender() != null && casualty.getGender().trim().equals("M")) {
+            counts[0]++;
+        } else if (casualty.getGender() != null && casualty.getGender().trim().equals("F")) {
+            counts[1]++;
+        } else {
+            counts[2]++;
+        }
     }
 
     public Map<Weather, Map<CrashSeverity, Integer>> buildWeatherMap(List<Crash> crashes) {
