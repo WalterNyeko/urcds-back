@@ -12,7 +12,7 @@
 	</h2>
 	<div id="actions" class="btn=group">
 		<security:authorize url="/app/crashform*">
-		  <a href="/crashform"> <fmt:message
+		  <a href="<c:url value='/crashform' />"> <fmt:message
 				key="button.addCrash" />
 		</a>
 		</security:authorize>

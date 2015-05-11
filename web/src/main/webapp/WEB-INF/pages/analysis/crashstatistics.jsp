@@ -2,11 +2,11 @@
 <head>
     <title><fmt:message key="rcds.crashStatistics" /></title>
     <meta name="menu" content="AnalysisMenu" />
-    <script src="/scripts/highcharts.js"></script>
-    <script src="/scripts/themes/grid.js"></script>
-    <script src="/scripts/modules/exporting.js"></script>
-    <script type="text/javascript" src="/scripts/analysis/tabulation.js"></script>
-    <script type="text/javascript" src="/scripts/analysis/charting.js"></script>
+    <script src="<c:url value='/scripts/highcharts.js'/>"></script>
+    <script src="<c:url value='/scripts/themes/grid.js'/>"></script>
+    <script src="<c:url value='/scripts/modules/exporting.js'/>"></script>
+    <script type="text/javascript" src="<c:url value='/scripts/analysis/tabulation.js'/>"></script>
+    <script type="text/javascript" src="<c:url value='/scripts/analysis/charting.js'/>"></script>
 </head>
 <div class="col-sm-15">
 	<h2>
@@ -18,11 +18,7 @@
                 <c:import url="analysismenu.jsp" />
             </td>
             <td width="40%">
-                <%--<ul class="nav nav-tabs" style="float: right;">--%>
-                    <%--<li class="active"><a href=""  class="non-click"><fmt:message key="crashList.crashes" /></a></li>--%>
-                    <%--<li><a href="/analysisvehicles"><fmt:message key="crashAnalysis.vehicles" /></a></li>--%>
-                    <%--<li><a href="/analysiscasualties"><fmt:message key="crashAnalysis.casualties"/></a></li>--%>
-                <%--</ul>--%>
+                &nbsp;
             </td>
         </tr>
     </table>

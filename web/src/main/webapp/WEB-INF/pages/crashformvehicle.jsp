@@ -3,8 +3,9 @@
 <fmt:message key="crashForm.driverCasualtyLabel" var="driverCasualtyTypeLabel" />
 <fmt:message key="crashForm.enterLicenseNumber" var="enterLicenseNumber" />
 <fmt:message key="crashForm.enterDriverAge" var="enterDriverAge" />
+<c:url value="/crashformvehicle" var="formUrl" />
 <form:form commandName="vehicle" method="post"
-    action="/crashformvehicle" id="vehicleform" autocomplete="off">
+    action="${formUrl}" id="vehicleform" autocomplete="off">
     <form:hidden path="id" />
     <form:hidden path="dateCreated"/>
     <form:hidden path="number" />

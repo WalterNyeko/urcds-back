@@ -186,47 +186,47 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
     }
 
     private void setCrashParams(Crash crash) {
-        if (crash.getCollisionType() != null) {
+        if (crash.getCollisionType() != null && crash.getCollisionType().getId() != null) {
             crash.setCollisionType(collisionTypeManager.get(crash
                     .getCollisionType().getId()));
         }
-        if (crash.getCrashSeverity() != null) {
+        if (crash.getCrashSeverity() != null && crash.getCrashSeverity().getId() != null) {
             crash.setCrashSeverity(crashSeverityManager.get(crash
                     .getCrashSeverity().getId()));
         }
-        if (crash.getJunctionType() != null) {
+        if (crash.getJunctionType() != null && crash.getJunctionType().getId() != null) {
             crash.setJunctionType(junctionTypeManager.get(crash
                     .getJunctionType().getId()));
         }
-        if (crash.getCrashCause() != null) {
+        if (crash.getCrashCause() != null && crash.getCrashCause().getId() != null) {
             crash.setCrashCause(crashCauseManager.get(crash
                     .getCrashCause().getId()));
         }
-        if (crash.getPoliceStation() != null) {
+        if (crash.getPoliceStation() != null && crash.getPoliceStation().getId() != null) {
             crash.setPoliceStation(policeStationManager.get(crash
                     .getPoliceStation().getId()));
         }
-        if (crash.getRoadSurface() != null) {
+        if (crash.getRoadSurface() != null && crash.getRoadSurface().getId() != null) {
             crash.setRoadSurface(roadSurfaceManager.get(crash.getRoadSurface()
                     .getId()));
         }
-        if (crash.getRoadwayCharacter() != null) {
+        if (crash.getRoadwayCharacter() != null && crash.getRoadwayCharacter().getId() != null) {
             crash.setRoadwayCharacter(roadwayCharacterManager.get(crash
                     .getRoadwayCharacter().getId()));
         }
-        if (crash.getSurfaceCondition() != null) {
+        if (crash.getSurfaceCondition() != null && crash.getSurfaceCondition().getId() != null) {
             crash.setSurfaceCondition(surfaceConditionManager.get(crash
                     .getSurfaceCondition().getId()));
         }
-        if (crash.getSurfaceType() != null) {
+        if (crash.getSurfaceType() != null && crash.getSurfaceType().getId() != null) {
             crash.setSurfaceType(surfaceTypeManager.get(crash.getSurfaceType()
                     .getId()));
         }
-        if (crash.getVehicleFailureType() != null) {
+        if (crash.getVehicleFailureType() != null && crash.getVehicleFailureType().getId() != null) {
             crash.setVehicleFailureType(vehicleFailureTypeManager.get(crash
                     .getVehicleFailureType().getId()));
         }
-        if (crash.getWeather() != null) {
+        if (crash.getWeather() != null && crash.getWeather().getId() != null) {
             crash.setWeather(weatherManager.get(crash.getWeather().getId()));
         }
         setGpsCoordinates(crash);

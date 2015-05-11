@@ -1,18 +1,14 @@
 package com.sweroad.webapp.decorator;
 
-import com.sweroad.model.Crash;
 import com.sweroad.model.Vehicle;
-import com.sweroad.service.CrashManager;
 import com.sweroad.webapp.util.CrashHtmlHelper;
 import org.displaytag.decorator.TableDecorator;
-import org.springframework.beans.factory.annotation.Autowired;
 
 public class VehicleAnalysisDecorator extends TableDecorator {
-
     public String getCrashCode() {
         Vehicle vehicle = getVehicle();
         long crashId = vehicle.getCrash().getId();
-        return CrashHtmlHelper.createCrashCodeLink(crashId, vehicle.getCrash().getUniqueCode());
+        return CrashHtmlHelper.createCrashCodeLink(crashId, vehicle.getCrash().getUniqueCode(), getPageContext().getServletContext().getContextPath());
     }
 
     public String getDriverLicense() {

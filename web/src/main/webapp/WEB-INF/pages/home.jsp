@@ -3,9 +3,9 @@
 <head>
 <title><fmt:message key="home.title" /></title>
 <meta name="menu" content="Home" />
-<script src="/scripts/script.js"></script>
-<script src="/scripts/highcharts.js"></script>
-<%--<script src="/scripts/themes/grid-light.js"></script>--%>
+<script src="<c:url value='/scripts/script.js' />"></script>
+<script src="<c:url value='/scripts/highcharts.js'/>"></script>
+<%--<script src="<c:url value='/scripts/themes/grid-light.js'/>"></script>--%>
 </head>
 <body class="home">
 

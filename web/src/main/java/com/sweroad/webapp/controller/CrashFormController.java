@@ -155,7 +155,7 @@ public class CrashFormController extends BaseFormController {
             logException(request, e, "FAILURE: Crash " + crash.getTarNo() + " failed to save. Please contact your System Administrator.");
         }
         request.getSession().removeAttribute("crash");
-        response.sendRedirect("/crashes");
+        response.sendRedirect(request.getContextPath() + "/crashes");
     }
 
     private String getCrashSaveMessage(Crash crash) {

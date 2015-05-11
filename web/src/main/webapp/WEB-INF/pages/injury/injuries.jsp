@@ -9,7 +9,7 @@
 	</h2>
     <div id="actions" class="btn=group">
     <security:authorize url="/app/crashform*">
-        <a href="/injuryform" onclick="return false;">
+        <a href="<c:url value='/injuryform'/>" onclick="return false;">
             <fmt:message key="button.addInjury" />
         </a>
     </security:authorize>

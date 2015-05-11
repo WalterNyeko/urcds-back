@@ -6,7 +6,7 @@
 <meta http-equiv="Pragma" content="no-cache" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" href="<c:url value="/images/favicon.ico"/>" />
+<link rel="icon" href="<c:url value='/images/favicon.ico'/>" />
 <title><decorator:title /> | <fmt:message key="webapp.name" /></title>
 <t:assets />
 <decorator:head />
@@ -82,8 +82,8 @@
             | <fmt:message key="user.status" /> ${pageContext.request.remoteUser}
             </c:if> </span>
         <span class="col-sm-6 text-right">
-            <img src="/images/ugandan.png" height="30" title="Proudly Ugandan" />
-            <img src="/images/proudly_ugandan.png" height="20" title="Proudly Ugandan" />
+            <img src="<c:url value='/images/ugandan.png'/>" height="30" title="Proudly Ugandan" />
+            <img src="<c:url value='/images/proudly_ugandan.png'/>" height="20" title="Proudly Ugandan" />
 		</span>
 	</div>
 	<%= (request.getAttribute("scripts") != null) ?  request.getAttribute("scripts") : "" %>

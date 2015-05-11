@@ -1,7 +1,6 @@
 package com.sweroad.webapp.decorator;
 
 import com.sweroad.model.Casualty;
-import com.sweroad.model.Vehicle;
 import com.sweroad.webapp.util.CrashHtmlHelper;
 import org.displaytag.decorator.TableDecorator;
 
@@ -13,7 +12,7 @@ public class CasualtyAnalysisDecorator extends TableDecorator {
             return "";
         }
         long crashId = casualty.getCrash().getId();
-        return CrashHtmlHelper.createCrashCodeLink(crashId, casualty.getCrash().getUniqueCode());
+        return CrashHtmlHelper.createCrashCodeLink(crashId, casualty.getCrash().getUniqueCode(), getPageContext().getServletContext().getContextPath());
     }
 
     public String getCasualtyVehicle() {

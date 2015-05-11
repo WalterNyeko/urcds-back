@@ -2,8 +2,9 @@
 <fmt:message key="crashForm.pedestrianOrPassengerCasualty" var="casualtyTypeLabel" />
 <fmt:message key="crashForm.pedestrianOrPassengerClass" var="casualtyClassLabel" />
 <fmt:message key="crashForm.enterDriverAge" var="enterDriverAge" />
+<c:url value="/crashformcasualty" var="formUrl" />
 <form:form commandName="casualty" method="post"
-    action="/crashformcasualty" id="casualtyform" autocomplete="off">
+    action="${formUrl}" id="casualtyform" autocomplete="off">
     <table cellpadding="4" width="100%">
         <tr>
             <td>

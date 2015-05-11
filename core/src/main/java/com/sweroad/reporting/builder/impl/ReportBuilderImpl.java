@@ -197,7 +197,9 @@ public class ReportBuilderImpl implements ReportBuilder {
                     .setTemplate(DRTemplate.reportTemplate)
                     .title(DRTemplate.createTitleComponent(reportDefinition.getRowGroupTitle() + " by Crash Severity"))
                     .summary(crosstab)
+                    .pageFooter(DRTemplate.footerComponent)
                     .setDataSource(reportDefinition.getDataSource())
+                    .summaryWithPageHeaderAndFooter()
                     .toPdf(outputStream);
         } catch (DRException e) {
             e.printStackTrace();

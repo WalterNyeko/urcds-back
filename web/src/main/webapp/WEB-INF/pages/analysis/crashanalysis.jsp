@@ -16,8 +16,8 @@
             <td width="40%">
                 <ul class="nav nav-tabs" style="float: right;">
                     <li class="active"><a href=""  class="non-click"><fmt:message key="crashList.crashes" /></a></li>
-                    <li><a href="/analysisvehicles"><fmt:message key="crashAnalysis.vehicles" /></a></li>
-                    <li><a href="/analysiscasualties"><fmt:message key="crashAnalysis.casualties"/></a></li>
+                    <li><a href="<c:url value='/analysisvehicles'/>"><fmt:message key="crashAnalysis.vehicles" /></a></li>
+                    <li><a href="<c:url value='/analysiscasualties'/>"><fmt:message key="crashAnalysis.casualties"/></a></li>
                 </ul>
             </td>
         </tr>

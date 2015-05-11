@@ -2,10 +2,10 @@
 <head>
     <title><fmt:message key="rcds.CrossTabulations" /></title>
     <meta name="menu" content="AnalysisMenu" />
-    <script src="/scripts/highcharts.js"></script>
-    <script src="/scripts/modules/exporting.js"></script>
-    <script type="text/javascript" src="/scripts/analysis/crosstab.js"></script>
-    <script type="text/javascript" src="/scripts/analysis/charting.js"></script>
+    <script src="<c:url value='/scripts/highcharts.js'/>"></script>
+    <script src="<c:url value='/scripts/modules/exporting.js'/>"></script>
+    <script type="text/javascript" src="<c:url value='/scripts/analysis/crosstab.js'/>"></script>
+    <script type="text/javascript" src="<c:url value='/scripts/analysis/charting.js'/>"></script>
 </head>
 <div class="col-sm-15">
 	<h2>

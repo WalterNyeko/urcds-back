@@ -123,8 +123,10 @@ function createOptions(divId, chartTitle) {
 }
 
 function loadCrashSeverityChart() {
+    var basePath = window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/') + 1);
+    var chartUrl = basePath + 'crashchartseverity';
     $.ajax({
-        url: "/crashchartseverity",
+        url: chartUrl,
         success: function (result) {
             var options = createOptions("container-severity",
                 "Crash Severity");
@@ -137,8 +139,10 @@ function loadCrashSeverityChart() {
 }
 
 function loadCrashCauseChart() {
+    var basePath = window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/') + 1);
+    var chartUrl = basePath + 'crashchartcause';
     $.ajax({
-        url: "/crashchartcause",
+        url: chartUrl,
         success: function (result) {
             var options = createOptions("container-cause",
                 "Main Cause of Crash");

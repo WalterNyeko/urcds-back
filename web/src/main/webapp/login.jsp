@@ -7,7 +7,7 @@
 <body id="login">
 	<table width="100%" cellpadding="0" cellspacing="0">
 		<tr>
-			<td width="20%" valign="top"><img src="/images/ug-coa.jpg" /><br />
+			<td width="20%" valign="top"><img src="<c:url value='/images/ug-coa.jpg'/>" /><br />
 				- <fmt:message key="rcds.ministryOfWorks" /><br /> - <fmt:message
 					key="rcds.ministryOfHealth" /></td>
 			<td width="60%" valign="top" align="center">
@@ -16,7 +16,6 @@
                     <fmt:message key="webapp.country" />&nbsp;
                     <fmt:message key="rcds.fullName" />
                 </h2>
-                <%--<img src="/images/logo.jpg" width="480">--%>
                 <br />
                 <form method="post" id="loginForm"
                     action="<c:url value='/j_security_check'/>"
@@ -64,7 +63,7 @@
                     <fmt:message key="updatePassword.requestRecoveryTokenLink" />
                 </p>
 			</td>
-			<td width="20%" valign="top"><img src="/images/upf_logo.png" />
+			<td width="20%" valign="top"><img src="<c:url value='/images/upf_logo.png'/>" />
 			</td>
 		</tr>
 	</table>

@@ -5,7 +5,7 @@
     <title><fmt:message key="crashForm.title" /></title>
     <meta name="menu" content="CrashMenu" />
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdGBHIqR--XabhAy6UddDj4toKlEyJzAA"></script>
-    <script type="text/javascript" src="/scripts/crash-validator.js"></script>
+    <script type="text/javascript" src="<c:url value='/scripts/crash-validator.js' />"></script>
     <script type="text/javascript">
         $( document ).ready(function() {
             loadGpsCoordinates();
@@ -17,8 +17,9 @@
     </script>
 </head>
 <div class="col-sm-15">
+    <c:url value="/crashform2" var="formUrl" />
 	<form:errors path="*" cssClass="alert alert-danger alert-dismissable" element="div"/>
-	<form:form commandName="crash" method="post" action="/crashform2"
+	<form:form commandName="crash" method="post" action="${formUrl}"
 		id="crashForm" autocomplete="off" cssClass="well">
         <h3>
             <fmt:message key="crashForm.heading" />
@@ -121,7 +122,7 @@
 								<td width="50%"><appfuse:label styleClass="form-label"
 										key="crashForm.gpsCoordinates.longitude" />
                                     &nbsp;
-                                    <img id="gMaps" src="/images/gglMap.png" alt="<fmt:message key='maps.viewInGoogleMaps'/>" title="<fmt:message key='maps.viewInGoogleMaps'/>" width="20"
+                                    <img id="gMaps" src="<c:url value='/images/gglMap.png'/>" alt="<fmt:message key='maps.viewInGoogleMaps'/>" title="<fmt:message key='maps.viewInGoogleMaps'/>" width="20"
                                              style="cursor: pointer;" onclick="javascript:loadInGoogleMaps();"/>
                                 </td>
 							</tr>

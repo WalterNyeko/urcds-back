@@ -2,7 +2,7 @@
 <head>
     <title><fmt:message key="crashForm.title" /></title>
     <meta name="menu" content="CrashMenu" />
-    <script type="text/javascript" src="/scripts/crash-validator.js"></script>
+    <script type="text/javascript" src="<c:url value='/scripts/crash-validator.js'/>"></script>
     <script type="text/javascript">
         $( document ).ready(function() {
             initVehicleAndCasualtyValidation();
@@ -10,7 +10,8 @@
     </script>
 </head>
 <div class="col-sm-15">
-	<form:form commandName="crash" method="post" action="/crashformsubmit"
+<c:url value="/crashformsubmit" var="formUrl" />
+	<form:form commandName="crash" method="post" action="${formUrl}"
 		id="crashform" autocomplete="off" cssClass="well">
         <h3>
             <fmt:message key="crashForm.heading" />
@@ -127,12 +128,12 @@
                                             </c:if>
                                         </td>
                                         <td class="padd2" align="center">
-                                            <a href="" onclick="unbindBeforeUnload(); return loadVehicleForm({url: '/crashformvehicle?id=${vehicle.id}'});">
+                                            <a href="" onclick="unbindBeforeUnload(); return loadVehicleForm({url: '<c:url value="/crashformvehicle?id=${vehicle.id}"/>'});">
                                                 <i class="icon-edit"></i>
                                                 <fmt:message key="button.edit" />
                                             </a>
                                             |
-                                            <a href="/crashformvehicledelete?id=${vehicle.id}"
+                                            <a href="<c:url value='/crashformvehicledelete?id=${vehicle.id}'/>"
                                                onclick="return confirmDialog({message : '<fmt:message key="rcds.confirmRemove" />', aLink : this});">
                                                 <i class="icon-delete"></i>
                                                 <fmt:message key="button.remove" />
@@ -146,7 +147,7 @@
 				</c:if>
 				<tr>
 					<td>
-                        <a href="" onclick="unbindBeforeUnload(); return loadVehicleForm({url: '/crashformvehicle'});">
+                        <a href="" onclick="unbindBeforeUnload(); return loadVehicleForm({url: '<c:url value="/crashformvehicle"/>'});">
                             <i class="icon-ok"></i>
                             <fmt:message key="button.addVehicle" />
 					    </a>
@@ -207,11 +208,11 @@
                                                     </c:otherwise>
                                                 </c:choose></td>
                                             <td class="padd2" align="center">
-                                                <a href="" onclick="unbindBeforeUnload(); return loadCasualtyForm({url: '/crashformcasualty?id=${casualty.id}'});">
+                                                <a href="" onclick="unbindBeforeUnload(); return loadCasualtyForm({url: '<c:url value="/crashformcasualty?id=${casualty.id}"/>'});">
                                                     <i class="icon-edit"></i>
                                                     <fmt:message key="button.edit" />
                                                 </a> |
-                                                <a href="/crashformcasualtydelete?id=${casualty.id}"
+                                                <a href="<c:url value='/crashformcasualtydelete?id=${casualty.id}'/>"
                                                 onclick="return confirmDialog({message : '<fmt:message key="rcds.confirmRemove" />', aLink : this});">
                                                     <i class="icon-delete"></i> <fmt:message
                                                         key="button.remove" />
@@ -224,7 +225,7 @@
 				</c:if>
 				<tr>
 					<td>
-                        <a href="" onclick="unbindBeforeUnload(); return loadCasualtyForm({url: '/crashformcasualty'});">
+                        <a href="" onclick="unbindBeforeUnload(); return loadCasualtyForm({url: '<c:url value="/crashformcasualty"/>'});">
                             <i class="icon-ok"></i>
 							<fmt:message key="button.addCasualty" />
 					    </a>
@@ -235,7 +236,7 @@
                         <table width="100%">
                             <tr>
                                 <td width="50%">
-                                    <a class="btn btn-default" href="/crashform?id=${crash.id}&back=true" onclick="unbindBeforeUnload()">
+                                    <a class="btn btn-default" href="<c:url value='/crashform?id=${crash.id}&back=true' />" onclick="unbindBeforeUnload()">
                                         <i class="icon-ok"></i>
                                         <fmt:message key="button.back" />
                                     </a>
@@ -286,6 +287,6 @@
     }
     function submitForm() {
         unbindBeforeUnload();
-        window.location.href = '/crashformsubmit';
+        window.location.href = '<c:url value="/crashformsubmit" />';
     }
 </script>

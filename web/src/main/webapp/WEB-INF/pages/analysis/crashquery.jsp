@@ -3,7 +3,7 @@
 <head>
     <title><fmt:message key="crashQuery.heading" /></title>
     <meta name="menu" content="AnalysisMenu" />
-    <script type="text/javascript" src="/scripts/crash-validator.js"></script>
+    <script type="text/javascript" src="<c:url value='/scripts/crash-validator.js'/>"></script>
     <script type="text/javascript">
         $( document ).ready(function() {
             $(".submit").click(function(){
@@ -18,8 +18,9 @@
     </script>
 </head>
 <div class="col-sm-15">
+    <c:url value="/crashqueryrun" var="formUrl" />
 	<form:errors path="*" cssClass="alert alert-danger alert-dismissable" element="div"/>
-	<form:form commandName="crashSearch" method="post" action="/crashqueryrun"
+	<form:form commandName="crashSearch" method="post" action="${formUrl}"
 		id="crashForm" autocomplete="off" cssClass="well">
         <h3>
             <fmt:message key="crashQuery.heading" />

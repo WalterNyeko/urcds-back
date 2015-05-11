@@ -6,7 +6,7 @@
     <script type="text/javascript"
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdGBHIqR--XabhAy6UddDj4toKlEyJzAA">
     </script>
-    <script type="text/javascript" src="/scripts/StyledMarker.js"></script>
+    <script type="text/javascript" src="<c:url value='/scripts/StyledMarker.js'/>"></script>
 </head>
 <div class="col-sm-15 height-100">
     <table width="100%" cellpadding="0" cellspacing="0" class="height-100">
