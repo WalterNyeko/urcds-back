@@ -173,7 +173,7 @@ function showCrashesInGoogleMaps() {
     var crashesJSON = JSON.parse(localStorage.crashesJSON);
     var crashes = crashesJSON ? crashesJSON.crashes : undefined;
     var markers = getCrashMarkers(crashes);
-    var center = markers.length > 0 ? markers[0].getPosition() : getDefaultPosition();
+    var center = markers.length ? markers[0].getPosition() : getDefaultPosition();
     var map = initGoogleMap(center, 8);
     $(markers).each(function () {
         this.setMap(map);
@@ -190,12 +190,12 @@ function getDefaultPosition() {
 function getCrashMarkers(crashes) {
     var markers = [];
     if (crashes) {
-        $(crashes).each(function () {
-            if (this.latitudeNumeric != null && this.longitudeNumeric != null) {
-                var coordinates = new google.maps.LatLng(parseFloat(this.latitudeNumeric), parseFloat(this.longitudeNumeric));
-                var marker = getCrashStyledMarker(this, coordinates);
+        crashes.map(function (crash) {
+            if (crash.latitudeNumeric && crash.longitudeNumeric) {
+                var coordinates = new google.maps.LatLng(parseFloat(crashv.latitudeNumeric), parseFloat(crash.longitudeNumeric));
+                var marker = getCrashStyledMarker(crash, coordinates);
                 marker.infoWindow = new google.maps.InfoWindow({
-                    content: getCrashInfoContent(this)
+                    content: getCrashInfoContent(crash)
                 });
                 markers.push(marker);
             }

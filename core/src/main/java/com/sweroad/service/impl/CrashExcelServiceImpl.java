@@ -379,9 +379,9 @@ public class CrashExcelServiceImpl implements CrashExcelService {
     }
 
     private XSSFCellStyle getCenterAlignStyle() {
-        XSSFCellStyle styleRightAlign = (XSSFCellStyle) workbook
+        XSSFCellStyle styleCenterAlign = (XSSFCellStyle) workbook
                 .createCellStyle();
-        styleRightAlign.setAlignment(CellStyle.ALIGN_CENTER);
-        return styleRightAlign;
+        styleCenterAlign.setAlignment(CellStyle.ALIGN_CENTER);
+        return styleCenterAlign;
     }
 }
