@@ -192,7 +192,7 @@ function getCrashMarkers(crashes) {
     if (crashes) {
         crashes.map(function (crash) {
             if (crash.latitudeNumeric && crash.longitudeNumeric) {
-                var coordinates = new google.maps.LatLng(parseFloat(crashv.latitudeNumeric), parseFloat(crash.longitudeNumeric));
+                var coordinates = new google.maps.LatLng(parseFloat(crash.latitudeNumeric), parseFloat(crash.longitudeNumeric));
                 var marker = getCrashStyledMarker(crash, coordinates);
                 marker.infoWindow = new google.maps.InfoWindow({
                     content: getCrashInfoContent(crash)
