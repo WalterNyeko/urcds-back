@@ -330,6 +330,8 @@ function loadCrashTime() {
 }
 
 function getCrashInfoContent(crash) {
+    var basePath = window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/') + 1);
+    var crashViewUrl = basePath + 'crashview';
     var content = "<table class='infoWindow'><tr><th colspan='2'>";
     content = content.concat(generateCrashCode(crash))
         .concat("</th></tr><tr><td class='boldText'>Tar No.</td><td>").concat(crash.tarNo)
@@ -342,7 +344,7 @@ function getCrashInfoContent(crash) {
         .concat("</td></tr><tr><td class='boldText'>Longitude</td><td>").concat(displayCoordinate(crash.longitude))
         .concat("</td></tr><tr><td class='boldText'>Vehicles</td><td>").concat(crash.vehicles ? crash.vehicles.length : "")
         .concat("</td></tr><tr><td class='boldText'>Casualties</td><td>").concat(crash.casualties ? crash.casualties.length : "")
-        .concat("</td></tr><tr><td><a href='/crashview?id=").concat(crash.id).concat("'>View Crash</a>")
+        .concat("</td></tr><tr><td><a href='").concat(crashViewUrl).concat("?id=").concat(crash.id).concat("'>View Crash</a>")
         .concat("</td></tr></table>");
     return content;
 }

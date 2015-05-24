@@ -6,6 +6,7 @@
     <script type="text/javascript"
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdGBHIqR--XabhAy6UddDj4toKlEyJzAA">
     </script>
+    <script type="text/javascript" src="<c:url value='/scripts/marker-colors.js'/>"></script>
     <script type="text/javascript" src="<c:url value='/scripts/mapping.js'/>"></script>
     <script type="text/javascript" src="<c:url value='/scripts/StyledMarker.js'/>"></script>
 </head>
@@ -16,16 +17,32 @@
                 <div id="map-canvas" class="height-100 border-solid"></div>
             </td>
             <td width="20%" valign="top" style="padding: 5px 0px 0px 3px;">
-                <table>
+                <p>
+                    <select id="crashAttribute">
+                        <option value="collisionType">Collision Type</option>
+                        <option value="crashCause">Crash Cause</option>
+                        <option selected value="crashSeverity">Crash Severity</option>
+                        <option value="district" data-prefix="policeStation">District</option>
+                        <option value="junctionType">Junction Type</option>
+                        <option value="policeStation">Police Station</option>
+                        <option value="roadSurface">Road Surface</option>
+                        <option value="roadwayCharacter">Roadway Character</option>
+                        <option value="surfaceCondition">Surface Condition</option>
+                        <option value="surfaceType">Surface Type</option>
+                        <option value="vehicleFailureType">Vehicle Failure Type</option>
+                        <option value="weather">Weather</option>
+                    </select>
+                </p>
+                <table id="marker-legend">
                     <c:forEach var="severity" items="${crashSeverities}">
                         <tr>
-                            <td width="30" style="border: Solid #000 1px; color: #000;" align="center" bgcolor="${appfuse:getCrashSeverityColor(severity.id)}">
+                            <td width="30" style="border: Solid #000 1px; color: #000; font-weight: bold;" align="center" bgcolor="${appfuse:getCrashSeverityColor(severity.id)}">
                                     ${fn:substring(severity.name, 0, 1)}
                             </td>
                             <td>- ${severity.name}</td>
                         </tr>
                     </c:forEach>
-                    <tr>
+                    <tr class="not-spec">
                         <td style="border: Solid #000 1px; color: #000;" bgcolor="#E0FFFF">&nbsp;</td>
                         <td>- <fmt:message key="rcds.notSpecified"/></td>
                     </tr>
@@ -34,8 +51,23 @@
         </tr>
     </table>
 </div>
+
+<input id='crashesJSON' type='hidden' value='${crashesJSON}' />
+<input id='crashAttributesJSON' type='hidden' value='${crashAttributesJSON}' />
 <script type="text/javascript">
     $(document).ready(function() {
+        localStorage.setItem("crashesJSON", null);
+        localStorage.setItem("crashAttributesJSON", null);
+        var crashJsonText = $.trim($("#crashesJSON").val());
+        var attributesJsonText = $.trim($("#crashAttributesJSON").val());
+        if(crashJsonText.length > 0) {
+            var crashJson = '{"crashes" : ' + crashJsonText + '}';
+            localStorage.setItem("crashesJSON", crashJson);
+            localStorage.setItem("crashAttributesJSON", attributesJsonText);
+        }
+        $('#crashAttribute').change(function() {
+            showCrashesInGoogleMaps();
+        })
         initMappingSurface();
         showCrashesInGoogleMaps();
     });

@@ -2,6 +2,7 @@
  * Created by Frank on 11/16/14.
  */
 /** Contains GIS specific functions ...*/
+var markers = [];
 function loadInGoogleMaps() {
     loadDialog({message: "Loading map...", dialogTitle: "Crash Location - Google Maps" });
     initializeSingleCrashMap();
@@ -172,23 +173,25 @@ function ConvertDMSToDD(params) {
 function showCrashesInGoogleMaps() {
     var crashesJSON = JSON.parse(localStorage.crashesJSON);
     var crashes = crashesJSON ? crashesJSON.crashes : undefined;
-    var markers = getCrashMarkers(crashes);
+    defineCrashMarkers(crashes);
     var center = markers.length ? markers[0].getPosition() : getDefaultPosition();
     var map = initGoogleMap(center, 8);
     $(markers).each(function () {
         this.setMap(map);
         google.maps.event.addListener(this, 'click', function () {
+            markers.map(function(x) {x.infoWindow.close() });
             this.infoWindow.open(map, this);
         });
     });
+    generateLegend();
 }
 
 function getDefaultPosition() {
     return new google.maps.LatLng(0.317416, 32.5943618);
 }
 
-function getCrashMarkers(crashes) {
-    var markers = [];
+function defineCrashMarkers(crashes) {
+    markers = [];
     if (crashes) {
         crashes.map(function (crash) {
             if (crash.latitudeNumeric && crash.longitudeNumeric) {
@@ -201,7 +204,6 @@ function getCrashMarkers(crashes) {
             }
         });
     }
-    return markers;
 }
 
 function getCrashStyledMarker(crash, coordinates) {
@@ -215,27 +217,36 @@ function getCrashStyledMarker(crash, coordinates) {
 function getCrashStyledIcon(crash) {
     var color = "E0FFFF";
     var text = "";
-    if (crash.crashSeverity) {
-        switch (crash.crashSeverity.id) {
-            case 1:
-                color = "FF0000";
-                text = "F";
-                break;
-            case 2:
-                color = "FFA500";
-                text = "S";
-                break;
-            case 3:
-                color = "FFFF00";
-                text = "S";
-                break;
-            case 4:
-                color = "00FF00";
-                text = "D";
-                break;
+    var crashAttribute = $('#crashAttribute').val();
+    var attributes = crashAttributes[crashAttribute];
+    if (crash[crashAttribute]) {
+        var attribute = attributes.filter(function(x) { return x.id == crash[crashAttribute]['id']})[0];
+        if (attribute) {
+            color = markerColors[attribute.id - 1];
+            text = attribute.name.charAt(0);
         }
     }
     return new StyledIcon(StyledIconTypes.MARKER, {color: color, text: text});
+}
+
+function generateLegend() {
+    var crashAttribute = $('#crashAttribute').val();
+    var attributes = crashAttributes[crashAttribute];
+    var markerLegend = $('#marker-legend');
+    markerLegend.find('td').css('color', '#000');
+    markerLegend.find('tr:not(.not-spec)').remove();
+    attributes.map(function(attribute) {
+        var row = $('<tr><td></td><td></td></tr>');
+        row.find('td:first').attr('width', 30)
+            .attr('align', 'center')
+            .css('font-weight', 'bold')
+            .text(attribute.name.charAt(0))
+            .css('border', 'Solid #000 1px')
+            .attr('bgcolor', markerColors[attribute.id - 1]);
+        row.find('td:last').text('- '.concat(attribute.name));
+        markerLegend.append(row);
+    });
+    markerLegend.find('tr:last').after(markerLegend.find('tr.not-spec'));
 }
 
 function quickMapView(crashTitle, latitude, longitude) {

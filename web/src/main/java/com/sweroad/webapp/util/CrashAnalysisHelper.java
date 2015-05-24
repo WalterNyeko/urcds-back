@@ -2,7 +2,6 @@ package com.sweroad.webapp.util;
 
 import com.sweroad.Constants;
 import com.sweroad.model.LabelValue;
-import org.springframework.context.MessageSource;
 import org.springframework.web.servlet.support.RequestContext;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,17 +31,16 @@ public class CrashAnalysisHelper {
     public static List<LabelValue> getMonthsForSearch(HttpServletRequest request) {
         List<LabelValue> months = new ArrayList<LabelValue>();
         LabelValue month;
-        MessageSource messageSource = getMessageSource(request);
         for (Integer i = 1; i <= 12; i++) {
             month = new LabelValue();
-            month.setLabel(messageSource.getMessage(Constants.MONTHS_OF_YEAR_KEYS[i - 1], null, request.getLocale()));
+            month.setLabel(getMessage(request, Constants.MONTHS_OF_YEAR_KEYS[i - 1]));
             month.setValue(i.toString());
             months.add(month);
         }
         return months;
     }
 
-    private static MessageSource getMessageSource(HttpServletRequest request) {
-        return new RequestContext(request).getMessageSource();
+    private static String getMessage(HttpServletRequest request, String code) {
+        return new RequestContext(request).getMessage(code);
     }
 }
