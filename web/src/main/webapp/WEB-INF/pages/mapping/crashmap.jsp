@@ -4,9 +4,9 @@
     <title><fmt:message key="crashMapping.heading" /></title>
     <meta name="menu" content="MappingMenu" />
     <script type="text/javascript"
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdGBHIqR--XabhAy6UddDj4toKlEyJzAA">
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdGBHIqR--XabhAy6UddDj4toKlEyJzAA&v=3.exp&libraries=drawing">
     </script>
-    <script type="text/javascript" src="<c:url value='/scripts/marker-colors.js'/>"></script>
+    <script type="text/javascript" src="<c:url value='/scripts/marker-constants.js'/>"></script>
     <script type="text/javascript" src="<c:url value='/scripts/mapping.js'/>"></script>
     <script type="text/javascript" src="<c:url value='/scripts/StyledMarker.js'/>"></script>
 </head>
@@ -22,7 +22,7 @@
                         <option value="collisionType">Collision Type</option>
                         <option value="crashCause">Crash Cause</option>
                         <option selected value="crashSeverity">Crash Severity</option>
-                        <option value="district" data-prefix="policeStation">District</option>
+                        <%--<option value="district" data-prefix="policeStation">District</option>--%>
                         <option value="junctionType">Junction Type</option>
                         <option value="policeStation">Police Station</option>
                         <option value="roadSurface">Road Surface</option>
@@ -47,6 +47,45 @@
                         <td>- <fmt:message key="rcds.notSpecified"/></td>
                     </tr>
                 </table>
+                <hr/>
+                <table>
+                    <tr>
+                        <th>Show selected layers</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input class="kml-layer" type="checkbox" id="police-regions" />
+                            <label for="police-regions" class="form-label">Police Regions</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input class="kml-layer" type="checkbox" id="unra-a" />
+                            <label for="unra-a" class="form-label">UNRA Class A Roads</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input class="kml-layer" type="checkbox" id="unra-b" />
+                            <label for="unra-b" class="form-label">UNRA Class B Roads</label>
+                        </td>
+                    </tr>
+                    <%--<tr>--%>
+                        <%--<td>--%>
+                            <%--<input class="kml-layer" type="checkbox" id="unra-c" />--%>
+                            <%--<label for="unra-c">UNRA Class C Roads</label>--%>
+                        <%--</td>--%>
+                    <%--</tr>--%>
+                </table>
+                <hr/>
+                <table>
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="draw-enable" />
+                            <label for="draw-enable" class="form-label">Enable drawing</label>
+                        </td>
+                    </tr>
+                </table>
             </td>
         </tr>
     </table>
@@ -65,9 +104,12 @@
             localStorage.setItem("crashesJSON", crashJson);
             localStorage.setItem("crashAttributesJSON", attributesJsonText);
         }
-        $('#crashAttribute').change(function() {
-            showCrashesInGoogleMaps();
-        })
+        $('.kml-layer').click(showCrashesInGoogleMaps);
+        $('#crashAttribute').change(showCrashesInGoogleMaps);
+        $('#draw-enable').change(function() {
+            showDrawingManager(this.checked);
+        });
+
         initMappingSurface();
         showCrashesInGoogleMaps();
     });

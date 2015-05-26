@@ -1,7 +1,7 @@
 <%@ include file="/common/taglibs.jsp"%>
 <fmt:message key="crashForm.policeStation" var="policeStationLabel" />
-
-<form:form commandName="criteria" method="post" action="/analysiscrashselect"
+<c:url value="/analysiscrashselect" var="formUrl" />
+<form:form commandName="criteria" method="post" action="${formUrl}"
     id="selectCrashForm" autocomplete="off">
     <table cellpadding="4" width="100%">
         <tr>

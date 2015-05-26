@@ -2,7 +2,6 @@
  * Created by Frank on 11/16/14.
  */
 /** Contains GIS specific functions ...*/
-var markers = [];
 function loadInGoogleMaps() {
     loadDialog({message: "Loading map...", dialogTitle: "Crash Location - Google Maps" });
     initializeSingleCrashMap();
@@ -183,7 +182,9 @@ function showCrashesInGoogleMaps() {
             this.infoWindow.open(map, this);
         });
     });
+    addKmlLayers(map);
     generateLegend();
+    window.map = map;
 }
 
 function getDefaultPosition() {
@@ -249,6 +250,34 @@ function generateLegend() {
     markerLegend.find('tr:last').after(markerLegend.find('tr.not-spec'));
 }
 
+function addKmlLayers(map) {
+    clearKmlLayers();
+    $('.kml-layer').each(function() {
+        var id = $(this).attr('id');
+        showKmlLayer(id, this.checked, map);
+    });
+}
+
+function showKmlLayer(id, show, map) {
+    switch(id) {
+        case 'police-regions':
+            show && policeRegions.setMap(map);
+            break;
+        case 'unra-a':
+            show && unraARoads.setMap(map);
+            break;
+        case 'unra-b':
+            show && unraBRoads.setMap(map);
+            break;
+    }
+}
+
+function clearKmlLayers() {
+    policeRegions.setMap(null);
+    unraARoads.setMap(null);
+    unraBRoads.setMap(null);
+}
+
 function quickMapView(crashTitle, latitude, longitude) {
     loadDialog({message: "Loading map...", dialogTitle: "Crash Location - Google Maps" });
     var coordinates = new google.maps.LatLng(latitude, longitude);
@@ -271,4 +300,9 @@ function addPolygon(map) {
         fillOpacity: 0.2
     });
     mpigiPolygon.setMap(map);
+}
+
+function showDrawingManager(show) {
+    drawingManager.setMap(null);
+    show && drawingManager.setMap(map);
 }
