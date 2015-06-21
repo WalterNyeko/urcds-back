@@ -10,28 +10,60 @@ var Tabulation = (function() {
         this.attributeCounts = [];
     }
 
-    Tabulation.prototype.countCrashes = function(attribute, crashProp) {
-        var ctx = this;
-        this.attributeCounts.length = 0;
+    Tabulation.prototype.countCrashes = function(element) {
+        this.attributeCounts = [];
+        var attribute = element.val();
+        var selected = element.find('option:selected');
+        var crashProp = selected.attr('data-prefix');
+        var timeDimension = selected.attr('data-time');
         var attributes = this.crashAttributes[attribute];
-        attributes.forEach(function(attr) {
-            ctx.attributeCounts.push({
-                name : attr.name,
-                count : ctx.crashes.filter(function(c) {
-                var crashAttr = crashProp ? c[crashProp][attribute] : c[attribute];
-                return crashAttr && crashAttr['id'] === attr.id
-            }).length});
-        });
+        if (timeDimension)
+            this.countTimeAttributes(attributes, timeDimension);
+        else
+            this.countAttributes(attributes, attribute, crashProp);
         var notSpec = this.crashes.length - this.attributeCounts.reduce(function(total, b) {
             return total + b.count;
         }, 0);
         if (notSpec) {
            this.attributeCounts.push({"name" : "Not specified", "count" : notSpec});
         }
-        this.tabulateCounts();
+        this.tabulateCounts(!timeDimension);
     }
 
-    Tabulation.prototype.tabulateCounts = function() {
+    Tabulation.prototype.countAttributes = function(attributes, attribute, crashProp) {
+        attributes.map(function(attr) {
+            this.attributeCounts.push({
+                name : attr.name,
+                count : this.crashes.filter(function(c) {
+                    var crashAttr = crashProp ? c[crashProp][attribute] : c[attribute];
+                    return crashAttr && crashAttr['id'] === attr.id
+                }).length});
+        }, this);
+    }
+
+    Tabulation.prototype.countTimeAttributes = function(attributes, timeDimension) {
+        if (timeDimension == 'month') {
+            attributes.map(function(month, index) {
+                this.attributeCounts.push({
+                    name : month,
+                    count : this.crashes.filter(function(c) {
+                        var crashDate = c.crashDateTime ? new Date(c.crashDateTime) : null;
+                        return crashDate && crashDate.getMonth() == index;
+                    }).length });
+            }, this);
+        } else {
+            attributes.map(function(year) {
+                this.attributeCounts.push({
+                    name : year,
+                    count : this.crashes.filter(function(c) {
+                        var crashDate = c.crashDateTime ? new Date(c.crashDateTime) : null;
+                        return crashDate && crashDate.getFullYear() == year;
+                    }).length });
+            }, this);
+        }
+    }
+
+    Tabulation.prototype.tabulateCounts = function(slice) {
         $('#stats').html('');
         var attrName = $('#crashAttribute option:selected').text();
         var table = $('<table class="table table-condensed table-striped table-hover">');
@@ -58,7 +90,8 @@ var Tabulation = (function() {
         tfoot.append(footerRow.append(footerCell1).append(footerCell2));
         table.append(thead).append(tbody).append(tfoot);
         $('#stats').append(table);
-        charting.createPieChart(this, attrName, 'stat-chart');
+        charting.createPieChart(this, attrName, 'stat-chart', slice);
+        charting.createColumnChart(this, attrName, 'stat-column');
     }
     return Tabulation;
 })();

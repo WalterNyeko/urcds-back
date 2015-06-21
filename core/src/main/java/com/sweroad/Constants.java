@@ -116,8 +116,11 @@ public final class Constants {
     public static final String[] DAYS_OF_WEEK = new String[]{"", "Sunday", "Monday", "Tuesday", "Wednesday",
             "Thursday", "Friday", "Saturday"};
 
-    public static final String[] MONTHS_OF_YEAR_KEYS = new String[]{"rcds.jan", "rcds.feb", "rcds.mar", "rcds.apr", "rcds.may",
-            "rcds.jun", "rcds.jul", "rcds.aug", "rcds.sep", "rcds.oct", "rcds.nov", "rcds.dec"};
+    public static final String[] MONTHS_OF_YEAR_KEYS = new String[] { "rcds.jan", "rcds.feb", "rcds.mar", "rcds.apr", "rcds.may",
+            "rcds.jun", "rcds.jul", "rcds.aug", "rcds.sep", "rcds.oct", "rcds.nov", "rcds.dec" };
+
+    public static final String[] MONTHS_OF_YEAR = new String[] { "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December" };
     /**
      * Not Injured id for casualty type stored in db
      */

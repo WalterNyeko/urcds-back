@@ -49,18 +49,18 @@ public class CrashAnalysisController extends BaseFormController {
     @RequestMapping(value = "/analysisvehicles", method = RequestMethod.GET)
     public ModelAndView showVehicles(HttpServletRequest request) throws Exception {
         ModelAndView mav = new ModelAndView("analysis/vehicleanalysis");
-        mav.addObject(getVehicles(request));
+        mav.addObject("vehicles", getVehicles(request));
         return mav;
     }
 
     @RequestMapping(value = "/analysiscasualties", method = RequestMethod.GET)
     public ModelAndView showCasualties(HttpServletRequest request) throws Exception {
         ModelAndView mav = new ModelAndView("analysis/casualtyanalysis");
-        mav.addObject(getCasualties(request));
+        mav.addObject("casualties", getCasualties(request));
         return mav;
     }
 
-    private List<Crash> getCrashes(HttpServletRequest request) {
+    private List<Crash> getCrashes(HttpServletRequest request) throws Exception {
         List<Crash> crashes = (List<Crash>) request.getSession().getAttribute("crashes");
         if (crashes != null) {
             return crashes;
@@ -72,12 +72,12 @@ public class CrashAnalysisController extends BaseFormController {
         }
     }
 
-    private List<Vehicle> getVehicles(HttpServletRequest request) {
+    private List<Vehicle> getVehicles(HttpServletRequest request) throws Exception {
         List<Crash> crashes = getCrashes(request);
         return vehicleManager.extractVehiclesFromCrashList(crashes);
     }
 
-    private List<Casualty> getCasualties(HttpServletRequest request) {
+    private List<Casualty> getCasualties(HttpServletRequest request) throws Exception {
         List<Crash> crashes = getCrashes(request);
         return casualtyManager.extractCasualtiesFromCrashList(crashes);
     }

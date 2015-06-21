@@ -5,59 +5,124 @@
     <script type="text/javascript"
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdGBHIqR--XabhAy6UddDj4toKlEyJzAA">
     </script>
+    <link class="theme ice" rel="stylesheet" href="<c:url value='/styles/tablesorter/theme.ice.css'/>">
+    <link class="theme ice" rel="stylesheet" href="<c:url value='/styles/tablesorter/addons/pager/jquery.tablesorter.pager.css'/>">
+    <script src="<c:url value='/scripts/tablesorter/jquery.tablesorter.min.js'/>"></script>
+    <script src="<c:url value='/scripts/tablesorter/jquery.tablesorter.widgets.min.js'/>"></script>
+    <script src="<c:url value='/scripts/tablesorter/addons/pager/jquery.tablesorter.pager.min.js'/>"></script>
+    <script src="<c:url value='/scripts/crash-validator.js'/>"></script>
 </head>
 <div class="col-sm-15">
 	<h2>
 		<fmt:message key="crashList.heading" />
 	</h2>
-	<div id="actions" class="btn=group">
-		<security:authorize url="/app/crashform*">
-		  <a href="<c:url value='/crashform' />"> <fmt:message
-				key="button.addCrash" />
-		</a>
-		</security:authorize>
-	</div>
-    <div class="content-wrapper">
-        <display:table name="crashList"
-            class="table table-condensed table-striped table-hover" requestURI=""
-            id="crashList" export="false" pagesize="50" decorator="com.sweroad.webapp.decorator.CrashDecorator">
-            <%-- <display:column property="id" sortable="true" href="crashform"
-                media="html" paramId="id" paramProperty="id" titleKey="crash.id" /> --%>
-            <display:column property="uniqueCode" sortable="true"
-                titleKey="crash.crashNo" />
-            <display:column property="townOrVillage" sortable="true"
-                titleKey="crash.townOrVillage" />
-            <display:column property="road" sortable="true" titleKey="crash.road" />
-            <display:column property="crashSeverity.name" sortable="true" titleKey="crash.severity" />
-            <display:column property="vehicleCount" sortable="true"
-                style="text-align: center;" titleKey="crash.vehicles" />
-            <display:column property="casualtyCount" sortable="true"
-                style="text-align: center;" titleKey="crash.casualties" />
-            <display:column property="crashDisplayDate" sortable="true" titleKey="crash.date" />
-            <display:column property="policeStation.name" sortable="true"
-                titleKey="crash.policeStation" />
-            <display:column property="policeStation.district.name" sortable="true"
-                titleKey="crash.district" />
-            <display:column property="actions" sortable="true" titleKey="rcds.actions" />
-            <display:setProperty name="paging.banner.item_name">
-                <fmt:message key="crashList.crash" />
-            </display:setProperty>
-            <display:setProperty name="paging.banner.items_name">
-                <fmt:message key="crashList.crashes" />
-            </display:setProperty>
-            <display:setProperty name="export.excel.filename">
-                <fmt:message key="crashList.title" />.xls</display:setProperty>
-            <display:setProperty name="export.csv.filename">
-                <fmt:message key="crashList.title" />.csv</display:setProperty>
-            <display:setProperty name="export.pdf.filename">
-                <fmt:message key="crashList.title" />.pdf</display:setProperty>
-        </display:table>
+    <div class="pager tablesorter-pager" style="text-align: left !important;">
+        <img src="<c:url value='/styles/tablesorter/addons/pager/icons/first.png'/>" class="first disabled" alt="First" title="First page" tabindex="0" aria-disabled="true">
+        <img src="<c:url value='/styles/tablesorter/addons/pager/icons/prev.png'/>" class="prev disabled" alt="Prev" title="Previous page" tabindex="0" aria-disabled="true">
+        <img src="<c:url value='/styles/tablesorter/addons/pager/icons/next.png'/>" class="next disabled" alt="Next" title="Next page" tabindex="0" aria-disabled="true">
+        <img src="<c:url value='/styles/tablesorter/addons/pager/icons/last.png'/>" class="last disabled" alt="Last" title="Last page" tabindex="0" aria-disabled="true">
+        <select class="pagesize" aria-disabled="false">
+            <option value="15">15</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+        </select>
+        &nbsp;&nbsp;
+        <security:authorize url="/app/crashform*">
+            <a href="<c:url value='/crashform' />" id="addCrash"> <fmt:message
+                    key="button.addCrash" />
+            </a>
+        </security:authorize>
     </div>
-    <p>&nbsp;</p>
+    <div class="content-wrapper">
+        <div class="tablesorter-wrapper">
+            <table class="tablesorter tablesorter-ice" width="100%" id="crashList">
+                <thead>
+                <tr>
+                    <th><fmt:message key="crash.crashNo"/></th>
+                    <th><fmt:message key="crash.townOrVillage"/></th>
+                    <th><fmt:message key="crash.road"/></th>
+                    <th><fmt:message key="crash.severity"/></th>
+                    <th><fmt:message key="crash.vehicles"/></th>
+                    <th><fmt:message key="crash.casualties"/></th>
+                    <th><fmt:message key="crash.date"/></th>
+                    <th><fmt:message key="crash.policeStation"/></th>
+                    <th><fmt:message key="crash.district"/></th>
+                    <th data-filter="false" data-sorter="false"><fmt:message key="rcds.actions"/></th>
+                </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="crash" items="${crashes}" varStatus="status">
+                        <tr>
+                            <td>${crash.uniqueCode}</td>
+                            <td>${crash.townOrVillage}</td>
+                            <td>${crash.road}</td>
+                            <td>${crash.crashSeverity.name}</td>
+                            <td>${crash.vehicleCount}</td>
+                            <td>${crash.casualtyCount}</td>
+                            <td>${crash.crashDisplayDate}</td>
+                            <td>${crash.policeStation.name}</td>
+                            <td>${crash.policeStation.district.name}</td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${crash.removed eq true}">
+                                        <a href="<c:url value='/crashrestore'/>?id=${crash.id}" alt="Restore crash" onclick="setAccessedObject(this); return confirmDialog({message : 'Restore crash?', aLink : this});">
+                                            <img src="<c:url value='/images/bt_Restore.gif'/>" alt="Restore" title="Restore" hspace="4">
+                                        </a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a href="<c:url value='/crashview'/>?id=${crash.id}" alt="View crash" onclick="setAccessedObject(this)" data-crashes-id="${crash.id}">
+                                            <img src="<c:url value='/images/bt_View.gif'/>" alt="View" title="View" hspace="4">
+                                        </a>
+                                        <c:if test="${crash.editable}">
+                                            <a href="<c:url value='/crashform'/>?id=${crash.id}" alt="Edit crash" onclick="setAccessedObject(this)">
+                                                <img src="<c:url value='/images/bt_Edit.gif'/>" alt="Edit" title="Edit" hspace="4">
+                                            </a>
+                                        </c:if>
+                                        <c:if test="${crash.removable}">
+                                            <a href="<c:url value='/crashremove'/>?id=${crash.id}" alt="Remove crash" onclick="setAccessedObject(this); return confirmDialog({message : 'Remove crash?', aLink : this});">
+                                                <img src="<c:url value='/images/bt_Remove.gif'/>" alt="Remove" title="Remove" hspace="4">
+                                            </a>
+                                        </c:if>
+                                        <c:if test="${crash.latitudeNumeric ne null and crash.longitudeNumeric ne null}">
+                                            <a href="" alt="View on Map" onclick="setAccessedObject(this); return quickMapView('${crash.uniqueCode}', ${crash.latitudeNumeric}, ${crash.longitudeNumeric});">
+                                                <img src="<c:url value='/images/gglMap.png'/>" alt="View on Map" title="View on Map" hspace="4" height="18">
+                                            </a>
+                                        </c:if>
+                                    </c:otherwise>
+                                </c:choose>
+
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="pager number_of_resutls">
+        <span class="pagedisplay"></span> <!-- this can be any element, including an input -->
+    </div>
+    <div class="pager bottom_pager" style="text-align: left;">
+        <img src="<c:url value='/styles/tablesorter/addons/pager/icons/first.png'/>" class="first disabled" alt="First" title="First page" tabindex="0" aria-disabled="true">
+        <img src="<c:url value='/styles/tablesorter/addons/pager/icons/prev.png'/>" class="prev disabled" alt="Prev" title="Previous page" tabindex="0" aria-disabled="true">
+        <img src="<c:url value='/styles/tablesorter/addons/pager/icons/next.png'/>" class="next disabled" alt="Next" title="Next page" tabindex="0" aria-disabled="true">
+        <img src="<c:url value='/styles/tablesorter/addons/pager/icons/last.png'/>" class="last disabled" alt="Last" title="Last page" tabindex="0" aria-disabled="true">
+        <select class="pagesize">
+            <option value="15">15</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+        </select>
+    </div>
 </div>
 <script type="text/javascript">
-    jQuery(window).load(function(){
+
+    $(window).load(function(){
         highlightLastAccessedObject();
+        $('.tablesorter-wrapper').height($(window).height() - 320);
+    });
+    $(document).ready(function() {
+        initTableSorter('#crashList', 'crashes');
     });
 </script>
 <input id="accessAttributeName" type="hidden" value="data-crashes-id">

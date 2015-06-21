@@ -3,16 +3,18 @@
  */
 var charting = (function() {
     var charting = Object.create(null);
-    charting.createPieChart = function(tabulation, name, divId) {
+    charting.createPieChart = function(tabulation, name, divId, slice) {
         var chart = {};
         chart.type = 'pie';
         chart.name = name;
+        chart.subtitle = 'based on ' + tabulation.crashes.length + ' crashes';
         chart.data = [];
         tabulation.attributeCounts.forEach(function (attr) {
             var attribute = [attr.name, attr.count];
             chart.data.push(attribute);
         });
-        charting.reorderAndSlice(chart);
+        if (slice)
+            charting.reorderAndSlice(chart);
         new Highcharts.Chart(charting.createPieChartOptions(chart, divId));
     }
     charting.reorderAndSlice = function(chart) {
@@ -39,6 +41,9 @@ var charting = (function() {
             },
             title: {
                 text: chart.name
+            },
+            subtitle: {
+                text: chart.subtitle
             },
             tooltip: {
                 formatter: function () {
@@ -132,6 +137,146 @@ var charting = (function() {
                     pointPadding: 0.2,
                     borderWidth: 0
                 }
+            },
+            series: chart.series
+        };
+        return options;
+    }
+    charting.createColumnChart = function(tabulation, title, divId) {
+        var chart = {};
+        chart.type = 'column';
+        chart.title = title;
+        chart.subtitle = 'based on ' + tabulation.crashes.length + ' crashes';
+        chart.series = [];
+        chart.data = [];
+        tabulation.attributeCounts.forEach(function (attr) {
+            chart.data.push([attr.name, attr.count]);
+        });
+        chart.dataLabels = {
+            enabled: true,
+            rotation: -90,
+            color: '#FFFFFF',
+            align: 'right',
+            format: '{point.y:.0f}', // no decimal
+            y: 10, // 10 pixels down from the top
+            style: {
+            fontSize: '13px',
+            fontFamily: 'Verdana, sans-serif'
+            }
+        };
+        chart.series.push({
+            name: 'Crashes',
+            data: chart.data,
+            dataLabels: chart.dataLabels
+        });
+        new Highcharts.Chart(charting.createColumnChartOptions(chart, divId));
+    }
+    charting.createColumnChartOptions = function(chart, divId) {
+        var options = {
+            chart: {
+                type: chart.type,
+                renderTo: divId,
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text : chart.title
+            },
+            subtitle: {
+                text: chart.subtitle
+            },
+            xAxis : {
+                type: 'category',
+                labels: {
+                    rotation: -45,
+                    style: {
+                        fontSize: '13px',
+                        fontFamily: 'Verdana, san-serif'
+                    }
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'No. of Crashes'
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y}</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            series: chart.series
+        };
+        return options;
+    }
+    charting.createTrendLineGraph = function(crashTrend, categories, title, divId) {
+        var chart = {};
+        chart.title = title;
+        chart.subtitle = 'based on ' + crashTrend.crashes.length + ' crashes';
+        chart.categories = categories;
+        chart.series = [];
+        crashTrend.attributeCounts.forEach(function(xAttr) {
+            xAttr.yAttributeCounts.forEach(function(yAttr) {
+                var y = chart.series.filter(function(s) {return s.name === yAttr.yName})[0];
+                if (y) {
+                    y.data.push(yAttr.count);
+                } else {
+                    chart.series.push({ name: yAttr.yName, data: [yAttr.count]});
+                }
+            });
+        });
+        new Highcharts.Chart(charting.createLineGraphOptions(chart, divId));
+    }
+    charting.createLineGraphOptions = function(chart, divId) {
+        var options = {
+            chart: {
+                renderTo: divId,
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text : chart.title,
+                x: -20
+            },
+            subtitle: {
+                text: chart.subtitle,
+                x: -20
+            },
+            xAxis : {
+                categories: chart.categories
+            },
+            yAxis: {
+                title: {
+                    text: 'No. of Crashes'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y}</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
             },
             series: chart.series
         };

@@ -20,3 +20,25 @@ function initSearchButton() {
         }
     });
 }
+
+function initTableSorter(tableSelector, itemsName) {
+    var pagerOptions = {
+        container: $(".pager"),
+        output: '{filteredRows} ' + itemsName +  ' found, displaying {startRow} to {endRow}.',
+        fixedHeight: true,
+        removeRows: true,
+        size: 50,
+        cssGoto: '.gotoPage'
+    };
+    $(tableSelector).tablesorter({
+        showProcessing: true,
+        headerTemplate : '{content} {icon}',
+        widthFixed : true,
+        widgets: ['zebra', 'stickyHeaders', 'filter', 'saveSort', 'resizable'],
+        widgetOptions: {
+            stickyHeaders_attachTo : '.tablesorter-wrapper',
+            saveSort : true,
+            resizable: true
+        }
+    }).tablesorterPager(pagerOptions);
+}

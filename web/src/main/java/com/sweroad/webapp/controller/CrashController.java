@@ -35,7 +35,7 @@ public class CrashController extends BaseFormController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView showCrashes() throws Exception {
-        return new ModelAndView("crashes").addObject(crashManager.getCrashes());
+        return new ModelAndView("crashes").addObject("crashes", crashManager.getCrashes());
     }
 
     @RequestMapping(value = "/crashview", method = RequestMethod.GET)

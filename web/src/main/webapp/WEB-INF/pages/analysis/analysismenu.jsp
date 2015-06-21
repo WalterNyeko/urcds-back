@@ -13,6 +13,9 @@
     <a href="<c:url value='/crosstabs'/>">
         <fmt:message key="rcds.CrossTabulations" />
     </a>|
+    <a href="<c:url value='/crashtrends'/>">
+        <fmt:message key="rcds.CrashTrends" />
+    </a>|
     <a href="<c:url value='/analysisdownloadexcel'/>">
         <fmt:message key="button.exportToExcel" />
     </a>|

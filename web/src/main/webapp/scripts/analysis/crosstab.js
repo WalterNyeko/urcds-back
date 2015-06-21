@@ -28,12 +28,6 @@ var CrossTabulation = (function () {
             });
             ctx.attributeCounts.push(xAttributeCount);
         });
-//        var notSpec = this.crashes.length - this.attributeCounts.reduce(function (total, b) {
-//            return total + b.count;
-//        }, 0);
-//        if (notSpec) {
-//            this.attributeCounts.push({"name": "Not specified", "count": notSpec});
-//        }
         this.tabulateCounts(yAttributes);
     }
 
@@ -67,10 +61,6 @@ var CrossTabulation = (function () {
             tbody.append(row);
             //total += attr.count;
         });
-//        var footerRow = $('<tr>');
-//        var footerCell1 = $('<td>').append('Total');
-//        var footerCell2 = $('<td align="right">').append(this.crashes.length);
-//        tfoot.append(footerRow.append(footerCell1).append(footerCell2));
         table.append(thead).append(tbody);//.append(tfoot);
         $('#crosstabs').append(table);
         charting.createBarChart(this, xAttrName + ' by ' + yAttrName, 'crosstab-chart');

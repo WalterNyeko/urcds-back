@@ -1,34 +1,39 @@
 <%@ include file="/common/taglibs.jsp"%>
 <head>
-    <title><fmt:message key="rcds.crashStatistics" /></title>
+    <title><fmt:message key="rcds.CrashTrends" /></title>
     <meta name="menu" content="AnalysisMenu" />
     <script src="<c:url value='/scripts/highcharts.js'/>"></script>
-    <script src="<c:url value='/scripts/themes/grid.js'/>"></script>
     <script src="<c:url value='/scripts/modules/exporting.js'/>"></script>
-    <script type="text/javascript" src="<c:url value='/scripts/analysis/tabulation.js'/>"></script>
+    <script type="text/javascript" src="<c:url value='/scripts/analysis/crashtrends.js'/>"></script>
     <script type="text/javascript" src="<c:url value='/scripts/analysis/charting.js'/>"></script>
 </head>
 <div class="col-sm-15">
 	<h2>
-		<fmt:message key="rcds.crashStatistics" />
+		<fmt:message key="rcds.CrashTrends" />
 	</h2>
     <table width="100%" cellpadding="0" cellspacing="0">
         <tr>
-            <td width="60%">
+            <td width="100%">
                 <c:import url="analysismenu.jsp" />
-            </td>
-            <td width="40%">
-                &nbsp;
+                <br/>
+
             </td>
         </tr>
     </table>
-    <select id="crashAttribute">
+    <appfuse:label styleClass="control-label" key="rcds.rows" />:&nbsp;
+    <select id="xCrashAttribute">
+        <option value="dayOfWeek">Day of Week</option>
+        <option selected value="monthOfYear">Month</option>
+        <option value="crashYear">Year</option>
+    </select>
+    &nbsp;
+    <appfuse:label styleClass="control-label" key="rcds.columns" />:&nbsp;
+    <select id="yCrashAttribute">
         <option value="collisionType">Collision Type</option>
         <option value="crashCause">Crash Cause</option>
         <option selected value="crashSeverity">Crash Severity</option>
         <option value="district" data-prefix="policeStation">District</option>
         <option value="junctionType">Junction Type</option>
-        <option value="month" data-time="month">Month</option>
         <option value="policeStation">Police Station</option>
         <option value="roadSurface">Road Surface</option>
         <option value="roadwayCharacter">Roadway Character</option>
@@ -36,23 +41,17 @@
         <option value="surfaceType">Surface Type</option>
         <option value="vehicleFailureType">Vehicle Failure Type</option>
         <option value="weather">Weather</option>
-        <option value="year" data-time="year">Year</option>
     </select>
+    &nbsp;
+    <appfuse:label styleClass="control-label" key="rcds.units" />:&nbsp;
+    <fmt:message key="menu.crashes"/>
     <div class="content-wrapper">
-        <table cellpadding="3" width="100%" class="stats-tab">
+        <p>&nbsp;</p>
+        <table cellpadding="3" width="100%">
             <tr>
-                <td width="40%" id="stats" style="padding-right: 30px;">
-
-                </td>
-                <td width="60%">
-                    <div id="stat-chart" style="width:100%">
-
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2" align="center">
-                    <div id="stat-column" style="width:100%">
+                <td width="100%">
+                    <br/>
+                    <div id="crashtrend-chart" style="width:100%">
 
                     </div>
                 </td>
@@ -63,9 +62,11 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function() {
-        var tabulation = new Tabulation();
-        $('#crashAttribute').change(function() {
-            tabulation.countCrashes($(this));
-        }).trigger('change');
+        new CrashTrend();
+        crashTend.countCrashes('monthOfYear', 'crashSeverity');
+        $('#xCrashAttribute, #yCrashAttribute').change(function() {
+            var ySelectedOption = $('#yCrashAttribute').find('option:selected');
+            crashTend.countCrashes($('#xCrashAttribute').val(), $('#yCrashAttribute').val(), ySelectedOption.attr('data-prefix'));
+        })
     });
 </script>
