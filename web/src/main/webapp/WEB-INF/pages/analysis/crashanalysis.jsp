@@ -56,7 +56,7 @@
                         <td>${crash.policeStation.name}</td>
                         <td>${crash.policeStation.district.name}</td>
                         <td>
-                            <a href="<c:url value='/crashview'/>?id=${crash.id}" alt="View crash" onclick="setAccessedObject(this)" data-crashes-id="${crash.id}">
+                            <a href="<c:url value='/crashview'/>?id=${crash.id}" alt="View crash" onclick="setAccessedObject(this)" data-crashanalysis-id="${crash.id}">
                                 <img src="<c:url value='/images/bt_View.gif'/>" alt="View" title="View" hspace="4">
                             </a>
                         </td>

@@ -83,3 +83,12 @@ var drawingManager = drawingManager = new google.maps.drawing.DrawingManager({
         zIndex: 1
     }
 });
+google.maps.event.addListener(drawingManager, 'circlecomplete', function(circle) {
+    alert('Complete');
+    google.maps.event.addListener(circle, 'center_changed', function() {
+        alert('Circle Moved');
+    });
+    google.maps.event.addListener(circle, 'radius_changed', function() {
+        alert('Radius Changed');
+    });
+});

@@ -44,7 +44,7 @@
                 <c:forEach var="casualty" items="${casualties}" varStatus="status">
                     <tr>
                         <td>
-                            <a href="<c:url value='/crashview?id='/>${casualty.crash.id}">
+                            <a href="<c:url value='/crashview?id='/>${casualty.crash.id}" data-casualty-id="${casualty.id}">
                                 ${casualty.crash.uniqueCode}
                             </a>
                         </td>
@@ -104,32 +104,9 @@
             <option value="100">100</option>
         </select>
     </div>
-        <display:table name="casualtyList"
-                       class="table table-condensed table-striped table-hover" requestURI=""
-                       id="casualtyList" export="false" pagesize="50" decorator="com.sweroad.webapp.decorator.CasualtyAnalysisDecorator">
-            <display:column property="crashCode" sortable="true"
-                            titleKey="crash.crashNo" />
-            <display:column property="casualtyClass.name" sortable="true"
-                            titleKey="crashAnalysis.casualtyClass" />
-            <display:column property="casualtyType.name" sortable="true" titleKey="crashAnalysis.casualtyType" />
-            <display:column property="gender" sortable="true"
-                            style="text-align: center;" titleKey="crashAnalysis.casualtySex" />
-            <display:column property="age" sortable="true"
-                            style="text-align: center;" titleKey="crashAnalysis.casualtyAge" />
-            <display:column property="casualtyVehicle" sortable="true" titleKey="crashAnalysis.fromVehicle" />
-            <display:column property="casualtyBeltUsed" sortable="true" titleKey="crashForm.driverBeltUsed" />
-            <display:setProperty name="paging.banner.item_name">
-                <fmt:message key="crash.casualty" />
-            </display:setProperty>
-            <display:setProperty name="paging.banner.items_name">
-                <fmt:message key="crashAnalysis.casualties" />
-            </display:setProperty>
-        </display:table>
-    </div>
-    <p>&nbsp;</p>
 </div>
 <input id='crashesJSON' type='hidden' value='${crashesJSON}' />
-<input id="accessAttributeName" type="hidden" value="data-vehicle-id">
+<input id="accessAttributeName" type="hidden" value="data-casualty-id">
 <script type="text/javascript">
     $(document).ready(function() {
         initTableSorter('#casualtyList', 'casualties');

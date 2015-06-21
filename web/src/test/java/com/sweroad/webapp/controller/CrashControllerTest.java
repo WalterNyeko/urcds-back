@@ -16,6 +16,6 @@ public class CrashControllerTest extends BaseControllerTestCase {
 	public void testThatHandleRequestWorksFine() throws Exception {
 		ModelAndView mav = controller.showCrashes();
 		ModelMap mp = mav.getModelMap();
-		assertNotNull(mp.get("crashList"));
+		assertNotNull(mp.get("crashes"));
 	}
 }

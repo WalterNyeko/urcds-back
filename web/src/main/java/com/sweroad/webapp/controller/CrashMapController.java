@@ -30,9 +30,9 @@ public class CrashMapController extends BaseFormController {
         List<Crash> crashes = (List<Crash>) request.getSession().getAttribute("crashes");
         if (crashes == null) {
             crashes = crashManager.getAvailableCrashes();
+            JsonHelper.crashesToJsonAndSetInSession(request, crashes);
+            JsonHelper.crashAttributesToJsonAndSetInSession(request, crashManager.getOrderedRefData());
         }
-        JsonHelper.crashesToJsonAndSetInSession(request, crashes);
-        JsonHelper.crashAttributesToJsonAndSetInSession(request, crashManager.getOrderedRefData());
         return mav;
     }
 }

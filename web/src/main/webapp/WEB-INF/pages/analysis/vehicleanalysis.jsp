@@ -45,7 +45,7 @@
                 <c:forEach var="vehicle" items="${vehicles}" varStatus="status">
                     <tr>
                         <td>
-                            <a href="<c:url value='/crashview?id='/>${vehicle.crash.id}">
+                            <a href="<c:url value='/crashview?id='/>${vehicle.crash.id}" data-vehicle-id="${vehicle.id}">
                                 ${vehicle.crash.uniqueCode}
                             </a>
                         </td>

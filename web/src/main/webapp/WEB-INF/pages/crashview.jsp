@@ -20,17 +20,17 @@
 			<td width="40%" align="right">
                 <c:if test="${crash.editable and !crash.removed}">
                     <a href="<c:url value='/crashform?id=${crash.id}'/>">
-                        <img src="<c:url value='/images/bt_edit.gif' />" hspace="4" title="Edit Crash" />
+                        <img src="<c:url value='/images/bt_Edit.gif' />" hspace="4" title="Edit Crash" />
                     </a>
                 </c:if>
                 <c:if test="${crash.removable and !crash.removed}">
                     <a href="<c:url value='/crashremove?id=${crash.id}'/>" onclick="return confirm('Remove crash?');">
-                        <img src="<c:url value='/images/bt_remove.gif' />" hspace="4" title="Remove Crash" />
+                        <img src="<c:url value='/images/bt_Remove.gif' />" hspace="4" title="Remove Crash" />
                     </a>
                 </c:if>
                 <c:if test="${crash.removable and crash.removed}">
                     <a href="<c:url value='/crashrestore?id=${crash.id}'/>" onclick="return confirm('Restore crash?');">
-                        <img src="<c:url value='/images/bt_restore.gif' />" hspace="4" title="Restore Crash" />
+                        <img src="<c:url value='/images/bt_Restore.gif' />" hspace="4" title="Restore Crash" />
                     </a>
                 </c:if>
 				<a href="<c:url value='/crashes'/>"> <fmt:message
