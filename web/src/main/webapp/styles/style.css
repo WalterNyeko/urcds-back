@@ -1,5 +1,5 @@
 body {
-	padding-top: 80px;
+	padding-top: 60px;
     font-size: 12px;
 }
 
@@ -521,4 +521,34 @@ table.crosstab-orange tr:hover {
 .height-130 {
     height: 130px;
     overflow-y: auto;
+}
+.query-label {
+    float: left;
+    color: #151B8D;
+    font-size: 10px;
+    font-weight: bold;
+    padding-right: 5px;
+}
+.query-value {
+    font-size: 10px;
+    padding-right: 5px;
+}
+#query-summary {
+    float: right;
+    overflow-y: auto;
+    min-width: 800px;
+    max-height: 100px;
+    margin-bottom: 5px;
+    box-shadow: 2px 2px;
+}
+#query-summary td {
+    vertical-align: top;
+}
+#query-summary h6 {
+    color: #151B8D;
+    font-weight: bold;
+    text-align: center;
+}
+#query-summary table {
+    width: 100%;
 }

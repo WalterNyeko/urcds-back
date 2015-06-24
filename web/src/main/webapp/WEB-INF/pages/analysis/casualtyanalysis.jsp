@@ -7,11 +7,17 @@
     <script src="<c:url value='/scripts/tablesorter/jquery.tablesorter.min.js'/>"></script>
     <script src="<c:url value='/scripts/tablesorter/jquery.tablesorter.widgets.min.js'/>"></script>
     <script src="<c:url value='/scripts/tablesorter/addons/pager/jquery.tablesorter.pager.min.js'/>"></script>
+    <script type="text/javascript" src="<c:url value='/scripts/analysis/crashquery.js'/>"></script>
 </head>
 <div class="col-sm-15">
-    <h2>
-        <fmt:message key="crashAnalysis.heading" />
-    </h2>
+    <div style="float: left">
+        <h2>
+            <fmt:message key="crashAnalysis.heading" />
+        </h2>
+    </div>
+    <div id="query-summary" style="float: right">
+
+    </div>
     <table width="100%" cellpadding="0" cellspacing="0">
         <tr>
             <td width="60%">
@@ -109,15 +115,7 @@
 <input id="accessAttributeName" type="hidden" value="data-casualty-id">
 <script type="text/javascript">
     $(document).ready(function() {
-        initTableSorter('#casualtyList', 'casualties');
-        localStorage.setItem("crashesJSON", null);
-        $("#gMaps").hide();
-        var jsonText = $.trim($("#crashesJSON").val());
-        if(jsonText.length > 0) {
-            var crashJson = '{"crashes" : ' + jsonText + '}';
-            localStorage.setItem("crashesJSON", crashJson);
-            $("#gMaps").show();
-        }
+        initCrashAnalysis();
     });
     jQuery(window).load(function(){
         highlightLastAccessedObject();

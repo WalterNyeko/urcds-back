@@ -4,10 +4,13 @@
     <title><fmt:message key="crashQuery.heading" /></title>
     <meta name="menu" content="AnalysisMenu" />
     <script type="text/javascript" src="<c:url value='/scripts/crash-validator.js'/>"></script>
+    <script type="text/javascript" src="<c:url value='/scripts/analysis/crashquery.js'/>"></script>
     <script type="text/javascript">
         $( document ).ready(function() {
-            $(".submit").click(function(){
-                return validateFields();
+            $('form').submit(function() {
+                var query = new CrashQuery();
+                localStorage.setItem('crashQuery', JSON.stringify(query));
+                return true;
             });
             $('.year-month-range').change(function() {
                 validateYearMonthRange(displayYearMonthRangeError);
@@ -40,7 +43,7 @@
                             <tr>
                                 <td>
                                     <div class="height-130">
-                                        <table class="crashform-blue" style="width: 100%; border-width: 0px !important;">
+                                        <table id="district" class="crashform-blue" style="width: 100%; border-width: 0px !important;">
                                             <c:forEach var="district" items="${districts}" varStatus="status">
                                                 <tr>
                                                     <c:if test="${status.index eq 0}">
@@ -61,7 +64,7 @@
                                 </td>
                                 <td>
                                     <div class="height-130">
-                                        <table class="crashform-blue" style="width: 100%; border-width: 0px !important;">
+                                        <table id="policeStation" class="crashform-blue" style="width: 100%; border-width: 0px !important;">
                                             <c:forEach var="policeStation" items="${policeStations}" varStatus="status">
                                                 <tr>
                                                     <c:if test="${status.index eq 0}">
@@ -196,7 +199,7 @@
                 </tr>
 				<tr>
 					<td width="40%">
-						<table width="100%" class="crashform-blue">
+						<table id="crashSeverity" width="100%" class="crashform-blue">
 							<tr>
 								<th width="100%"><appfuse:label styleClass="control-label"
 										key="crashForm.crashSeverity" /></th>
@@ -212,7 +215,7 @@
 						</table>
 					</td>
 					<td width="60%">
-						<table width="100%" class="crashform-blue">
+						<table id="collisionType" width="100%" class="crashform-blue">
 							<tr>
 								<th width="100%" colspan="2"><appfuse:label
 										styleClass="control-label" key="crashForm.collisionType" /></th>
@@ -235,7 +238,7 @@
 				</tr>
 				<tr>
 					<td colspan="2">
-						<table width="100%" class="crashform-blue">
+						<table id="crashCause" width="100%" class="crashform-blue">
 							<tr>
 								<th width="100%" colspan="3"><appfuse:label
 										styleClass="control-label" key="crashForm.mainCauseOfCrash" />
@@ -259,7 +262,7 @@
 				</tr>
 				<tr>
 					<td colspan="2">
-						<table width="100%" class="crashform-blue">
+						<table id="vehicleFailureType" width="100%" class="crashform-blue">
 							<tr>
 								<th width="100%" colspan="3"><appfuse:label
 										styleClass="control-label" key="crashForm.vehicleFailureType" />
@@ -292,7 +295,7 @@
 							</tr>
 							<tr>
 								<td width="22%">
-									<table width="100%" class="crashform-blue"
+									<table id="weather" width="100%" class="crashform-blue"
 										style="border: none;">
 										<tr>
 											<th
@@ -314,7 +317,7 @@
 								</td>
 								<td width="4%">&nbsp;</td>
 								<td width="22%" colspan="2">
-									<table width="100%" class="crashform-blue"
+									<table id="surfaceCondition" width="100%" class="crashform-blue"
 										style="border: none;">
 										<tr>
 											<th
@@ -337,7 +340,7 @@
 								</td>
 								<td width="4%">&nbsp;</td>
 								<td width="22%">
-									<table width="100%" class="crashform-blue"
+									<table id="roadSurface" width="100%" class="crashform-blue"
 										style="border-top: none; border-right: none; border-left: none;">
 										<tr>
 											<th
@@ -358,7 +361,7 @@
 								</td>
 								<td width="4%">&nbsp;</td>
 								<td width="22%">
-									<table width="100%" class="crashform-blue"
+									<table id="surfaceType" width="100%" class="crashform-blue"
 										style="border: none;">
 										<tr>
 											<th
@@ -385,7 +388,7 @@
 							</tr>
 							<tr>
 								<td colspan="3" style="border-right: none;">
-									<table width="100%" class="crashform-blue"
+									<table id="roadwayCharacter" width="100%" class="crashform-blue"
 										style="border-top: none; border-left: none; border-bottom: none;">
 										<tr>
 											<th colspan="2" style="border-top: none; border-left: none;">
@@ -410,7 +413,7 @@
 									</table>
 								</td>
 								<td colspan="6" align="right" style="border-left: none; padding-left: 2px">
-									<table width="96%" class="crashform-blue"
+									<table id="junctionType" width="96%" class="crashform-blue"
 										style="border-top: none; border-right: none; border-bottom: none;">
 										<tr>
 											<th colspan="3" style="border-top: none; border-right: none;">
@@ -449,7 +452,7 @@
                             </tr>
                             <tr>
                                 <td width="40%">
-                                    <table width="100%" class="crashform-blue"
+                                    <table id="vehicleType" width="100%" class="crashform-blue"
                                            style="border: none;">
                                         <tr>
                                             <th colspan="2" style="border-top: none; border-left: none; border-right: none;">
@@ -478,7 +481,7 @@
                                         </tr>
                                     </table>
                                 </td>
-                                <td width="100%">
+                                <td width="60%">
                                     <table width="100%" class="crashform-blue"
                                            style="border: none;">
                                         <tr>
@@ -504,7 +507,7 @@
                                             </th>
                                         </tr>
                                         <tr>
-                                            <td style="border-top: none; border-left: none;">
+                                            <td id="licenseType" style="border-top: none; border-left: none;">
                                                 <c:forEach var="licenseType" items="${licenseTypes}" varStatus="status">
                                                     <form:checkbox
                                                             path="driverLicenseTypes[${status.index}].value" value="${licenseType.value}" id="licenseType${licenseType.value}" />&nbsp;
@@ -512,14 +515,14 @@
                                                     <br/>
                                                 </c:forEach>
                                             </td>
-                                            <td style="border-top: none; border-left: none;">
+                                            <td id="driverGender" style="border-top: none; border-left: none;">
                                                 <c:forEach var="driverGender" items="${genders}" varStatus="status">
                                                     <form:checkbox
                                                             path="driverGenders[${status.index}].value" value="${driverGender.value}" id="driverGender${driverGender.value}" />&nbsp;
                                                     <label for="driverGender${driverGender.value}" class="form-label">${driverGender.label}</label><br/>
                                                 </c:forEach>
                                             </td>
-                                            <td style="border-top: none; border-left: none;">
+                                            <td id="driverAgeRange" style="border-top: none; border-left: none;">
                                                 <c:forEach var="driverAgeRange" items="${ageRanges}" varStatus="status">
                                                     <form:checkbox
                                                             path="driverAgeRanges[${status.index}].value" value="${driverAgeRange.value}" id="driverAgeRange${driverAgeRange.value}" />&nbsp;
@@ -527,7 +530,7 @@
                                                     <br/>
                                                 </c:forEach>
                                             </td>
-                                            <td style="border-top: none; border-left: none;">
+                                            <td id="driverBeltUsed" style="border-top: none; border-left: none;">
                                                 <c:forEach var="driverBeltUsed" items="${beltUseds}" varStatus="status">
                                                     <form:checkbox
                                                             path="driverBeltUsedOptions[${status.index}].value" value="${driverBeltUsed.value}" id="driverBeltUsed${driverBeltUsed.value}" />&nbsp;
@@ -535,7 +538,7 @@
                                                     <br/>
                                                 </c:forEach>
                                             </td>
-                                            <td style="border-top: none; border-left: none; border-right: none;">
+                                            <td id="driverCasualtyType" style="border-top: none; border-left: none; border-right: none;">
                                                 <c:forEach var="driverCasualtyType" items="${casualtyTypes}" varStatus="status">
                                                     <form:checkbox
                                                             path="driverCasualtyTypes[${status.index}].id" value="${driverCasualtyType.id}" id="driverCasualtyType${driverCasualtyType.id}" />&nbsp;
@@ -575,7 +578,7 @@
                                         styleClass="control-label" key="crashForm.passengerBeltUsed" /></td>
                             </tr>
                             <tr>
-                                <td class="padd2" style="border-top: none; border-left: none;">
+                                <td id="casualtyClass" class="padd2" style="border-top: none; border-left: none;">
                                     <c:forEach var="casualtyClass" items="${casualtyClasses}" varStatus="status">
                                         <form:checkbox
                                                 path="casualtyClasses[${status.index}].id" value="${casualtyClass.id}" id="casualtyClass${casualtyClass.id}" />&nbsp;
@@ -583,7 +586,7 @@
                                         <br/>
                                     </c:forEach>
                                 </td>
-                                <td class="padd2" style="border-top: none; border-left: none;">
+                                <td id="casualtyType" class="padd2" style="border-top: none; border-left: none;">
                                     <c:forEach var="casualtyType" items="${casualtyTypes}" varStatus="status">
                                         <form:checkbox
                                                 path="casualtyTypes[${status.index}].id" value="${casualtyType.id}" id="casualtyType${casualtyType.id}" />&nbsp;
@@ -591,7 +594,7 @@
                                         <br/>
                                     </c:forEach>
                                 </td>
-                                <td class="padd2" style="border-top: none; border-left: none;">
+                                <td id="casualtyGender" class="padd2" style="border-top: none; border-left: none;">
                                     <c:forEach var="casualtyGender" items="${genders}" varStatus="status">
                                         <form:checkbox
                                                 path="casualtyGenders[${status.index}].value" value="${casualtyGender.value}" id="casualtyGender${casualtyGender.value}" />&nbsp;
@@ -599,7 +602,7 @@
                                         <br/>
                                     </c:forEach>
                                 </td>
-                                <td class="padd2" style="border-top: none; border-left: none;">
+                                <td id="casualtyAgeRange" class="padd2" style="border-top: none; border-left: none;">
                                     <c:forEach var="casualtyAgeRange" items="${ageRanges}" varStatus="status">
                                         <form:checkbox
                                                 path="casualtyAgeRanges[${status.index}].value" value="${casualtyAgeRange.value}" id="casualtyAgeRange${casualtyAgeRange.value}" />&nbsp;
@@ -607,7 +610,7 @@
                                         <br/>
                                     </c:forEach>
                                 </td>
-                                <td class="padd2" style="border-top: none; border-left: none;">
+                                <td id="casualtyBeltUsed" class="padd2" style="border-top: none; border-left: none;">
                                     <c:forEach var="casualtyBeltUsed" items="${beltUseds}" varStatus="status">
                                         <form:checkbox
                                                 path="casualtyBeltUsedOptions[${status.index}].value" value="${casualtyBeltUsed.value}" id="casualtyBeltUsed${casualtyBeltUsed.value}" />&nbsp;
@@ -627,7 +630,7 @@
 						</a>
 					</td>
 					<td align="right"><input type="submit" class="btn btn-primary submit"
-						value="<fmt:message key='crashQuery.runQuery'/>" onclick="bCancel=false;"></td>
+						value="<fmt:message key='crashQuery.runQuery'/>"></td>
 				</tr>
 			</table>
 		</div>

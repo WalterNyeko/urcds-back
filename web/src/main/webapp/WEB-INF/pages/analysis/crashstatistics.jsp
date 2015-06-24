@@ -7,11 +7,17 @@
     <script src="<c:url value='/scripts/modules/exporting.js'/>"></script>
     <script type="text/javascript" src="<c:url value='/scripts/analysis/tabulation.js'/>"></script>
     <script type="text/javascript" src="<c:url value='/scripts/analysis/charting.js'/>"></script>
+    <script type="text/javascript" src="<c:url value='/scripts/analysis/crashquery.js'/>"></script>
 </head>
 <div class="col-sm-15">
-	<h2>
-		<fmt:message key="rcds.crashStatistics" />
-	</h2>
+    <div style="float: left">
+        <h2>
+            <fmt:message key="rcds.crashStatistics" />
+        </h2>
+    </div>
+    <div id="query-summary" style="float: right">
+
+    </div>
     <table width="100%" cellpadding="0" cellspacing="0">
         <tr>
             <td width="60%">
@@ -67,5 +73,6 @@
         $('#crashAttribute').change(function() {
             tabulation.countCrashes($(this));
         }).trigger('change');
+        renderQuerySummary();
     });
 </script>

@@ -42,3 +42,30 @@ function initTableSorter(tableSelector, itemsName) {
         }
     }).tablesorterPager(pagerOptions);
 }
+
+function initCrashAnalysis() {
+    initTableSorter('#crashList', 'crashes');
+    localStorage.setItem("crashesJSON", null);
+    localStorage.setItem("crashAttributesJSON", null);
+    $("#gMaps").hide();
+    var crashJsonText = $.trim($("#crashesJSON").val());
+    var attributesJsonText = $.trim($("#crashAttributesJSON").val());
+    if(crashJsonText.length > 0) {
+        var crashJson = '{"crashes" : ' + crashJsonText + '}';
+        localStorage.setItem("crashesJSON", crashJson);
+        localStorage.setItem("crashAttributesJSON", attributesJsonText);
+        $("#gMaps").show();
+    }
+    renderQuerySummary();
+}
+
+var util = (function() {
+    var util = Object.create(null);
+    util.nameValuePair = function(name) {
+        return { name : name, value :  null};
+    }
+    util.nameListPair = function(name) {
+        return { name: name, list: [] };
+    }
+    return util;
+})();

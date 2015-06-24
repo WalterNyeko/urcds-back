@@ -6,11 +6,17 @@
     <script src="<c:url value='/scripts/modules/exporting.js'/>"></script>
     <script type="text/javascript" src="<c:url value='/scripts/analysis/crashtrends.js'/>"></script>
     <script type="text/javascript" src="<c:url value='/scripts/analysis/charting.js'/>"></script>
+    <script type="text/javascript" src="<c:url value='/scripts/analysis/crashquery.js'/>"></script>
 </head>
 <div class="col-sm-15">
-	<h2>
-		<fmt:message key="rcds.CrashTrends" />
-	</h2>
+    <div style="float: left">
+        <h2>
+            <fmt:message key="rcds.CrashTrends" />
+        </h2>
+    </div>
+    <div id="query-summary">
+
+    </div>
     <table width="100%" cellpadding="0" cellspacing="0">
         <tr>
             <td width="100%">
@@ -67,6 +73,7 @@
         $('#xCrashAttribute, #yCrashAttribute').change(function() {
             var ySelectedOption = $('#yCrashAttribute').find('option:selected');
             crashTend.countCrashes($('#xCrashAttribute').val(), $('#yCrashAttribute').val(), ySelectedOption.attr('data-prefix'));
-        })
+        });
+        renderQuerySummary();
     });
 </script>

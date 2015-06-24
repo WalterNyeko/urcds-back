@@ -565,3 +565,10 @@ function showHideDateControls() {
         $('.dtpicker').closest('tr').show('slow');
     }
 }
+
+function renderQuerySummary() {
+    if (localStorage.getItem('crashQuery')) {
+        var query = new CrashQuery(localStorage.getItem('crashQuery'));
+        query.render();
+    }
+}
