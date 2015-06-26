@@ -5,34 +5,34 @@ var CrashQuery = (function() {
     return function CrashQuery(queryJson) {
         var query = queryJson ? JSON.parse(queryJson) : Object.create(null);
         if (!queryJson) {
-            query.weather = util.nameListPair('Weather');
+            query.startYear = util.nameValuePair('StartYear');
+            query.startMonth = util.nameValuePair('Start Month');
+            query.startDate = util.nameValuePair('Start Date');
             query.endYear = util.nameValuePair('End Year');
+            query.endMonth = util.nameValuePair('End Month');
             query.endDate = util.nameValuePair('End Date');
             query.district = util.nameListPair('District');
-            query.endMonth = util.nameValuePair('End Month');
-            query.startYear = util.nameValuePair('StartYear');
-            query.startDate = util.nameValuePair('Start Date');
+            query.policeStation = util.nameListPair('Police Station');
+            query.crashSeverity = util.nameListPair('Crash Severity');
+            query.collisionType = util.nameListPair('Collision Type');
             query.crashCause = util.nameListPair('Crash Cause');
-            query.startMonth = util.nameValuePair('Start Month');
-            query.driverGender = util.nameListPair('Driver Sex');
+            query.vehicleFailureType = util.nameListPair('Vehicle Failure Type');
+            query.weather = util.nameListPair('Weather');
+            query.surfaceCondition = util.nameListPair('Surface Condition');
             query.roadSurface = util.nameListPair('Road Surface');
             query.surfaceType = util.nameListPair('Surface Type');
+            query.roadwayCharacter = util.nameListPair('Character of Roadway');
+            query.junctionType = util.nameListPair('Junction Type');
             query.vehicleType = util.nameListPair('Vehicle Type');
             query.licenseType = util.nameListPair('License Type');
-            query.junctionType = util.nameListPair('Junction Type');
+            query.driverGender = util.nameListPair('Driver Sex');
+            query.driverAgeRange = util.nameListPair('Driver Age Range');
+            query.driverBeltUsed = util.nameListPair('Driver Used Belt/Helmet');
+            query.driverCasualtyType = util.nameListPair('Driver Casualty');
+            query.casualtyClass = util.nameListPair('Casualty Class');
             query.casualtyType = util.nameListPair('Casualty Type');
             query.casualtyGender = util.nameListPair('Casualty Sex');
-            query.policeStation = util.nameListPair('Police Station');
-            query.collisionType = util.nameListPair('Collision Type');
-            query.crashSeverity = util.nameListPair('Crash Severity');
-            query.casualtyClass = util.nameListPair('Casualty Class');
-            query.driverAgeRange = util.nameListPair('Driver Age Range');
-            query.surfaceCondition = util.nameListPair('Surface Condition');
-            query.driverCasualtyType = util.nameListPair('Driver Casualty');
             query.casualtyAgeRange = util.nameListPair('Casualty Age Range');
-            query.roadwayCharacter = util.nameListPair('Character of Roadway');
-            query.driverBeltUsed = util.nameListPair('Driver Used Belt/Helmet');
-            query.vehicleFailureType = util.nameListPair('Vehicle Failure Type');
             query.casualtyBeltUsed = util.nameListPair('Casualty Used Belt/Helmet');
         }
 
@@ -137,18 +137,18 @@ var CrashQuery = (function() {
         }
 
         query.setTimeDimension = function() {
-            if ($('#endDateString').val())
-                this.endDate = $('#endDateString').val();
+            if ($('#startYear').val())
+                this.startYear = $('#startYear option:selected').text();
+            if ($('#startMonth').val())
+                this.startMonth = $('#startMonth option:selected').text();
             if ($('#startDateString').val())
                 this.startDate = $('#startDateString').val();
             if ($('#endYear').val())
                 this.endYear = $('#endYear option:selected').text();
             if ($('#endMonth').val())
                 this.endMonth = $('#endMonth option:selected').text();
-            if ($('#startYear').val())
-                this.startYear = $('#startYear option:selected').text();
-            if ($('#startMonth').val())
-                this.startMonth = $('#startMonth option:selected').text();
+            if ($('#endDateString').val())
+                this.endDate = $('#endDateString').val();
         }
 
         query.getTimeDimensionText = function(prop) {
@@ -181,7 +181,7 @@ var CrashQuery = (function() {
                     if (property.list && Array.isArray(property.list) && property.list.length) {
                         cell.find('div:first').text(property.name + ':');
                         cell.find('div:last').text(property.list.toString().replace(/,/g, ', '));
-                    } else if (property.toString()) {
+                    } else if (typeof property === 'string') {
                         var text = this.getTimeDimensionText(prop);
                         if (!text)
                             continue;
