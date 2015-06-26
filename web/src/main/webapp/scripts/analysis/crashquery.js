@@ -151,17 +151,46 @@ var CrashQuery = (function() {
                 this.startMonth = $('#startMonth option:selected').text();
         }
 
+        query.getTimeDimensionText = function(prop) {
+            switch(prop) {
+                case 'startYear':
+                    return 'Start Year';
+                case 'startMonth':
+                    return 'Start Month';
+                case 'startDate':
+                    return 'Start Date';
+                case 'endYear':
+                    return 'End Year';
+                case 'endMonth':
+                    return 'End Month';
+                case 'endDate':
+                    return 'End Date';
+                default:
+                    return null;
+            }
+        }
+
         query.render = function() {
             var summaryTable = $('<table>');
             var count = 0;
             var row = $('<tr>');
             for (var prop in this) {
                 var property = this[prop];
-                if (property && property.list && Array.isArray(property.list) && property.list.length) {
-                    count++;
+                if (property) {
                     var cell = $('<td width="33%"><div class="query-label"></div><div class="query-value"></div></td>');
-                    cell.find('div:first').text(property.name + ':');
-                    cell.find('div:last').text(property.list.toString().replace(/,/g, ', '));
+                    if (property.list && Array.isArray(property.list) && property.list.length) {
+                        cell.find('div:first').text(property.name + ':');
+                        cell.find('div:last').text(property.list.toString().replace(/,/g, ', '));
+                    } else if (property.toString()) {
+                        var text = this.getTimeDimensionText(prop);
+                        if (!text)
+                            continue;
+                        cell.find('div:last').text(property);
+                        cell.find('div:first').text(text + ':');
+                    } else {
+                        continue;
+                    }
+                    count++;
                     row.append(cell);
                     if (count % 3 == 0) {
                         summaryTable.append(row);
@@ -180,31 +209,30 @@ var CrashQuery = (function() {
         }
 
         query.build = function() {
-            this.setWeathers();
+            this.setTimeDimension();
             this.setDistricts();
+            this.setPoliceStations();
+            this.setCrashSeverities();
+            this.setCollisionTypes();
             this.setCrashCauses();
+            this.setVehicleFailureTypes();
+            this.setWeathers();
+            this.setSurfaceConditions();
+            this.setRoadSurfaces();
             this.setSurfaceType();
+            this.setRoadwayCharacters();
+            this.setJunctionTypes();
             this.setVehicleType();
             this.setLicenseTypes();
-            this.setRoadSurfaces();
-            this.setJunctionTypes();
             this.setDriverGenders();
-            this.setCasualtyTypes();
-            this.setTimeDimension();
-            this.setPoliceStations();
-            this.setCollisionTypes();
-            this.setCrashSeverities();
-            this.setDriverBeltUseds();
-            this.setCasualtyClasses();
-            this.setCasualtyGenders();
             this.setDriverAgeRanges();
-            this.setCasualtyBeltUseds();
-            this.setCasualtyAgeRanges();
-            this.setSurfaceConditions();
-            this.setRoadwayCharacters();
-            this.setVehicleFailureTypes();
+            this.setDriverBeltUseds();
             this.setDriverCasualtyTypes();
-
+            this.setCasualtyClasses();
+            this.setCasualtyTypes();
+            this.setCasualtyGenders();
+            this.setCasualtyAgeRanges();
+            this.setCasualtyBeltUseds();
             return this;
         }
 
