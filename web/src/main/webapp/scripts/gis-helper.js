@@ -306,3 +306,41 @@ function showDrawingManager(show) {
     drawingManager.setMap(null);
     show && drawingManager.setMap(map);
 }
+
+function clearDrawings() {
+    if (window.circle)
+        window.circle.setMap(null);
+    if (window.polygon)
+        window.polygon.setMap(null);
+    if (window.polyline)
+        window.polyline.setMap(null);
+    if (window.rectangle)
+        window.rectangle.setMap(null);
+}
+
+function showMarkersInCircle(circle) {
+    markers.map(function(marker) {
+        if ((google.maps.geometry.spherical.computeDistanceBetween(marker.position, circle.getCenter()) <= circle.getRadius()))
+            marker.setMap(window.map);
+        else
+            marker.setMap(null);
+    });
+}
+
+function showMarkersInPolygon(polygon) {
+    markers.map(function(marker) {
+        if (google.maps.geometry.poly.containsLocation(marker.position, polygon))
+            marker.setMap(window.map);
+        else
+            marker.setMap(null);
+    });
+}
+
+function showMarkersInRectangel(rectangle) {
+    markers.map(function(marker) {
+        if (rectangle.getBounds().contains(marker.position))
+            marker.setMap(window.map);
+        else
+            marker.setMap(null);
+    });
+}

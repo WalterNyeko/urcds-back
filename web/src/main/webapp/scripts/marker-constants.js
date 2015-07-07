@@ -48,7 +48,6 @@ var drawingManager = drawingManager = new google.maps.drawing.DrawingManager({
     drawingControlOptions: {
         position: google.maps.ControlPosition.TOP_CENTER,
         drawingModes: [
-            google.maps.drawing.OverlayType.MARKER,
             google.maps.drawing.OverlayType.CIRCLE,
             google.maps.drawing.OverlayType.POLYGON,
             google.maps.drawing.OverlayType.POLYLINE,
@@ -60,7 +59,7 @@ var drawingManager = drawingManager = new google.maps.drawing.DrawingManager({
         fillOpacity: 0.2,
         strokeWeight: 2,
         strokeOpacity: 0.8,
-        clickable: true,
+        draggable: true,
         editable: true,
         zIndex: 1
     },
@@ -69,8 +68,8 @@ var drawingManager = drawingManager = new google.maps.drawing.DrawingManager({
         fillOpacity: 0.2,
         strokeWeight: 2,
         strokeOpacity: 0.8,
-        clickable: true,
         editable: true,
+        draggable: true,
         zIndex: 1
     },
     rectangleOptions: {
@@ -78,17 +77,58 @@ var drawingManager = drawingManager = new google.maps.drawing.DrawingManager({
         fillOpacity: 0.2,
         strokeWeight: 2,
         strokeOpacity: 0.8,
-        clickable: true,
+        draggable: true,
         editable: true,
         zIndex: 1
+    },
+    polylineOptions: {
+        draggable: true
     }
 });
 google.maps.event.addListener(drawingManager, 'circlecomplete', function(circle) {
-    alert('Complete');
+    clearDrawings();
+    window.circle = circle;
+    showMarkersInCircle(circle);
     google.maps.event.addListener(circle, 'center_changed', function() {
-        alert('Circle Moved');
+        showMarkersInCircle(circle);
     });
     google.maps.event.addListener(circle, 'radius_changed', function() {
-        alert('Radius Changed');
+        showMarkersInCircle(circle);
+    });
+});
+
+google.maps.event.addListener(drawingManager, 'polygoncomplete', function(polygon) {
+    clearDrawings();
+    window.polygon = polygon;
+    showMarkersInPolygon(polygon);
+    google.maps.event.addListener(polygon, 'dragend', function() {
+        showMarkersInPolygon(polygon);
+    });
+    google.maps.event.addListener(polygon, 'mouseup', function() {
+        showMarkersInPolygon(polygon);
+    });
+});
+
+google.maps.event.addListener(drawingManager, 'polylinecomplete', function(polyline) {
+    clearDrawings();
+    window.polyline = polyline;
+    showMarkersInPolygon(polyline);
+    google.maps.event.addListener(polyline, 'dragend', function() {
+        showMarkersInPolygon(polyline);
+    });
+    google.maps.event.addListener(polyline, 'mouseup', function() {
+        showMarkersInPolygon(polyline);
+    });
+});
+
+google.maps.event.addListener(drawingManager, 'rectanglecomplete', function(rectangle) {
+    clearDrawings();
+    window.rectangle = rectangle;
+    showMarkersInRectangel(rectangle);
+    google.maps.event.addListener(rectangle, 'dragend', function() {
+        showMarkersInRectangel(rectangle);
+    });
+    google.maps.event.addListener(rectangle, 'bounds_changed', function() {
+        showMarkersInRectangel(rectangle);
     });
 });
