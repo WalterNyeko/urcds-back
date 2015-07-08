@@ -247,6 +247,7 @@ function confirmDialog(params){
                     var isChecked = $(params.checkbox).is(':checked');
                     $(params.checkbox).attr("checked", !isChecked);
                 }
+                params.callback && params.callback();
             },
             'No': function() {
                 $("#confirmDialog").remove();

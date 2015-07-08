@@ -184,6 +184,8 @@ function showCrashesInGoogleMaps() {
     });
     addKmlLayers(map);
     generateLegend();
+    showDrawingManager(false);
+    $('#draw-enable').attr('checked', false);
     window.map = map;
 }
 
@@ -198,6 +200,7 @@ function defineCrashMarkers(crashes) {
             if (crash.latitudeNumeric && crash.longitudeNumeric) {
                 var coordinates = new google.maps.LatLng(parseFloat(crash.latitudeNumeric), parseFloat(crash.longitudeNumeric));
                 var marker = getCrashStyledMarker(crash, coordinates);
+                marker.crashId = crash.id;
                 marker.infoWindow = new google.maps.InfoWindow({
                     content: getCrashInfoContent(crash)
                 });
@@ -285,29 +288,22 @@ function quickMapView(crashTitle, latitude, longitude) {
     return false;
 }
 
-function addPolygon(map) {
-    var busega = new google.maps.LatLng(0.3122877, 32.5209336);
-    var mityana = new google.maps.LatLng(0.391336, 32.120147);
-    var buwama = new google.maps.LatLng(0.1194276, 32.2561031);
-    var polygon = [busega, mityana, buwama];
-
-    var mpigiPolygon = new google.maps.Polygon({
-        path: polygon,
-        strokeColor: "#0000FF",
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillColor: "#0000FF",
-        fillOpacity: 0.2
-    });
-    mpigiPolygon.setMap(map);
+function showDrawingManager(show, evt) {
+    if(show) {
+        drawingManager.setMap(map);
+    } else {
+        if (evt && $(evt.target).is('#draw-enable') && shapesExist()) {
+            clearDrawings(function() {
+                drawingManager.setMap(null);
+                $('.drawing-actions').hide();
+            });
+        } else {
+            drawingManager.setMap(null);
+        }
+    }
 }
 
-function showDrawingManager(show) {
-    drawingManager.setMap(null);
-    show && drawingManager.setMap(map);
-}
-
-function clearDrawings() {
+function clearShapes() {
     if (window.circle)
         window.circle.setMap(null);
     if (window.polygon)
@@ -316,6 +312,10 @@ function clearDrawings() {
         window.polyline.setMap(null);
     if (window.rectangle)
         window.rectangle.setMap(null);
+}
+
+function shapesExist() {
+    return window.circle || window.polygon || window.polyline || window.rectangle;
 }
 
 function showMarkersInCircle(circle) {
@@ -336,11 +336,35 @@ function showMarkersInPolygon(polygon) {
     });
 }
 
-function showMarkersInRectangel(rectangle) {
+function showMarkersInRectangle(rectangle) {
     markers.map(function(marker) {
         if (rectangle.getBounds().contains(marker.position))
             marker.setMap(window.map);
         else
             marker.setMap(null);
     });
+}
+
+function clearDrawings(callback) {
+    return confirmDialog({
+        message: 'Are you sure you want to clear drawings?',
+        callback: function() {
+            clearShapes();
+            markers.map(function(marker) { marker.setMap(window.map); callback && callback() });
+            $('.drawing-actions').hide();
+        }
+    })
+}
+
+function analyzeFiltered() {
+    var filteredCrashIds = [];
+    markers.map(function(marker) { (marker.getMap() != null) && filteredCrashIds.push(marker.crashId) });
+    if (filteredCrashIds.length) {
+		var basePath = window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/') + 1);
+		var url = basePath + 'analysisgisselect?crashIds=' + filteredCrashIds.toString();
+		window.location.href = url;
+    } else {
+        alertDialog({ message: 'No crashes were selected.'});
+    }
+    return false;
 }

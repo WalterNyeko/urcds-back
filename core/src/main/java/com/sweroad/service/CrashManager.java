@@ -19,6 +19,13 @@ public interface CrashManager extends GenericManager<Crash, Long> {
 	List<Crash> getCrashes();
 
     /**
+     * Gets crashes whose ids are in the passed list
+     * @param ids
+     * @return
+     */
+    List<Crash> getCrashes(List<Long> ids);
+
+    /**
      * Gets only available crashes (non-removed).
      * @return
      */

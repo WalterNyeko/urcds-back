@@ -552,3 +552,6 @@ table.crosstab-orange tr:hover {
 #query-summary table {
     width: 100%;
 }
+.drawing-actions td {
+    padding-left: 20px;
+}

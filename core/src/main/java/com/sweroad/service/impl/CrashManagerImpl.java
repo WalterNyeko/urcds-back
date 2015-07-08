@@ -99,6 +99,17 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
         return super.findByNamedQuery(Crash.FIND_CRASHES_ORDER_BY_DATE_DESC, null);
     }
 
+    @Override
+    public List<Crash> getCrashes(List<Long> ids) {
+        List<Crash> crashes = new ArrayList<Crash>();
+        for(Crash crash : this.getAllDistinct()) {
+            if (ids.contains(crash.getId())) {
+                crashes.add(crash);
+            }
+        }
+        return crashes;
+    }
+
     public List<Crash> getAvailableCrashes() {
         return super.findByNamedQuery(Crash.FIND_AVAILABLE_CRASHES_ORDER_BY_DATE_DESC, null);
     }

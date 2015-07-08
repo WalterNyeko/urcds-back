@@ -23,6 +23,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -60,16 +61,31 @@ public class CrashAnalysisController extends BaseFormController {
         return mav;
     }
 
+    @RequestMapping(value="/analysisgisselect", method = RequestMethod.GET)
+    public ModelAndView showGisSelectedCrashes(HttpServletRequest request) throws Exception {
+        String crashIds = request.getParameter("crashIds");
+        List<Long> ids = new ArrayList<Long>();
+        for(String crashId : crashIds.split(",")) {
+            ids.add(Long.parseLong(crashId));
+        }
+        setCrashesInSession(request, crashManager.getCrashes(ids));
+        return showCrashes(request);
+    }
+
     private List<Crash> getCrashes(HttpServletRequest request) throws Exception {
         List<Crash> crashes = (List<Crash>) request.getSession().getAttribute("crashes");
         if (crashes != null) {
             return crashes;
         } else {
             crashes = crashManager.getAvailableCrashes();
-            JsonHelper.crashesToJsonAndSetInSession(request, crashes);
-            JsonHelper.crashAttributesToJsonAndSetInSession(request, crashManager.getOrderedRefData());
+            setCrashesInSession(request, crashes);
             return crashes;
         }
+    }
+
+    private void setCrashesInSession(HttpServletRequest request, List<Crash> crashes) throws ParseException {
+        JsonHelper.crashesToJsonAndSetInSession(request, crashes);
+        JsonHelper.crashAttributesToJsonAndSetInSession(request, crashManager.getOrderedRefData());
     }
 
     private List<Vehicle> getVehicles(HttpServletRequest request) throws Exception {
@@ -104,8 +120,7 @@ public class CrashAnalysisController extends BaseFormController {
         try {
             processCriteria(criteria);
             List<Crash> crashes = searchCriteriaManager.getCrashesByCriteria(criteria);
-            JsonHelper.crashesToJsonAndSetInSession(request, crashes);
-            JsonHelper.crashAttributesToJsonAndSetInSession(request, crashManager.getOrderedRefData());
+            setCrashesInSession(request, crashes);
         } catch(ParseException e) {
             logException(request, e, "Date provided was in wrong format.");
         } catch (Exception e) {

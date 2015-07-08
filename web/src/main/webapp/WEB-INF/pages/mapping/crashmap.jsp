@@ -85,6 +85,20 @@
                             <label for="draw-enable" class="form-label">Enable drawing</label>
                         </td>
                     </tr>
+                    <tr class="drawing-actions">
+                        <td>
+                            <a href="" class="non-click" onclick="clearDrawings()">Clear drawings</a>
+                        </td>
+                    </tr>
+                    <tr class="drawing-actions">
+                        <td>
+                            <a href="" onclick="return analyzeFiltered()">Show in Analysis</a>
+                            <c:url value="/analysisgisselect" var="formUrl" />
+                            <form method="post" action="${formUrl}" id="selection-form" style="visibility: hidden">
+                                <input type="hidden" id="crashIds"/>
+                            </form>
+                        </td>
+                    </tr>
                 </table>
             </td>
         </tr>
@@ -106,10 +120,9 @@
         }
         $('.kml-layer').click(showCrashesInGoogleMaps);
         $('#crashAttribute').change(showCrashesInGoogleMaps);
-        $('#draw-enable').change(function() {
-            showDrawingManager(this.checked);
+        $('#draw-enable').change(function(evt) {
+            showDrawingManager(this.checked, evt);
         });
-
         initMappingSurface();
         showCrashesInGoogleMaps();
     });
