@@ -69,3 +69,9 @@ var util = (function() {
     }
     return util;
 })();
+
+var ui = (function() {
+    var ui = Object.create(null);
+
+    return ui;
+})();

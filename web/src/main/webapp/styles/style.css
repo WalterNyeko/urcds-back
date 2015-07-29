@@ -535,6 +535,7 @@ table.crosstab-orange tr:hover {
 }
 #query-summary {
     float: right;
+    padding: 4px;
     overflow-y: auto;
     min-width: 800px;
     max-height: 100px;

@@ -95,7 +95,7 @@
                             <a href="" onclick="return analyzeFiltered()">Show in Analysis</a>
                             <c:url value="/analysisgisselect" var="formUrl" />
                             <form method="post" action="${formUrl}" id="selection-form" style="visibility: hidden">
-                                <input type="hidden" id="crashIds"/>
+                                <input type="hidden" id="crashIds" name="crashIds"/>
                             </form>
                         </td>
                     </tr>

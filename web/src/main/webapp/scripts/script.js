@@ -377,7 +377,6 @@ function setAccessedObject(element) {
     var tr = getElementRow(element);
     var dataElement = $(tr).find("a["+attrName+"]");
     var idValue = $(dataElement).attr(attrName);
-    var newHtml = "";
     setIdByAttributeName(attrName, idValue);
     clearHighlight();
     $(tr).find('td').each(function(){
@@ -569,7 +568,7 @@ function showHideDateControls() {
 
 function renderQuerySummary() {
     if (localStorage.getItem('crashQuery')) {
-        var query = new CrashQuery(localStorage.getItem('crashQuery'));
-        query.render();
+        window.query = new CrashQuery(localStorage.getItem('crashQuery'));
+        window.query.render();
     }
 }

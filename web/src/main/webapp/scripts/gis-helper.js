@@ -360,9 +360,8 @@ function analyzeFiltered() {
     var filteredCrashIds = [];
     markers.map(function(marker) { (marker.getMap() != null) && filteredCrashIds.push(marker.crashId) });
     if (filteredCrashIds.length) {
-		var basePath = window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/') + 1);
-		var url = basePath + 'analysisgisselect?crashIds=' + filteredCrashIds.toString();
-		window.location.href = url;
+        $('#selection-form').find('#crashIds').val(filteredCrashIds.toString());
+        $('#selection-form').submit();
     } else {
         alertDialog({ message: 'No crashes were selected.'});
     }

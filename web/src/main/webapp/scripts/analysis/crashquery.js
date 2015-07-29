@@ -3,8 +3,10 @@
  */
 var CrashQuery = (function() {
     return function CrashQuery(queryJson) {
-        var query = queryJson ? JSON.parse(queryJson) : Object.create(null);
-        if (!queryJson) {
+        var query = Object.create(null);
+        if (queryJson)
+            query = JSON.parse(queryJson);
+        else {
             query.startYear = util.nameValuePair('StartYear');
             query.startMonth = util.nameValuePair('Start Month');
             query.startDate = util.nameValuePair('Start Date');
@@ -203,6 +205,7 @@ var CrashQuery = (function() {
             if (count) {
                 $('#query-summary').html('<h6>Query Summary</h6>').append(summaryTable);
                 $('#query-summary').css('border', 'solid 1px #8C8615');
+                $('#query-summary').append($('<div class="save-query"><input id="searchButton" type="button" value="Search">'))
             }
             else
                 $('#query-summary').css('border', 'none');

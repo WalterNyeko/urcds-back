@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -61,9 +62,8 @@ public class CrashAnalysisController extends BaseFormController {
         return mav;
     }
 
-    @RequestMapping(value="/analysisgisselect", method = RequestMethod.GET)
-    public ModelAndView showGisSelectedCrashes(HttpServletRequest request) throws Exception {
-        String crashIds = request.getParameter("crashIds");
+    @RequestMapping(value="/analysisgisselect", method = RequestMethod.POST)
+    public ModelAndView showGisSelectedCrashes(HttpServletRequest request, @RequestParam("crashIds") String crashIds) throws Exception {
         List<Long> ids = new ArrayList<Long>();
         for(String crashId : crashIds.split(",")) {
             ids.add(Long.parseLong(crashId));
