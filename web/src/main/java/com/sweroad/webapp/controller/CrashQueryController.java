@@ -1,12 +1,10 @@
 package com.sweroad.webapp.controller;
 
 import com.sweroad.model.Crash;
-import com.sweroad.model.CrashSeverity;
 import com.sweroad.model.PoliceStation;
+import com.sweroad.model.Query;
 import com.sweroad.query.CrashSearch;
-import com.sweroad.service.CrashManager;
 import com.sweroad.service.CrashQueryManager;
-import com.sweroad.service.LookupManager;
 import com.sweroad.webapp.util.CrashAnalysisHelper;
 import com.sweroad.webapp.util.JsonHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +31,13 @@ public class CrashQueryController extends BaseFormController {
     private CrashQueryManager crashQueryManager;
 
     @RequestMapping(method = RequestMethod.GET)
+    public ModelAndView showQueries() {
+        ModelAndView mav = new ModelAndView("analysis/queries");
+        mav.addObject("queries", crashQueryManager.getCurrentUserQueries());
+        return mav;
+    }
+
+    @RequestMapping(value = "/crashqueryform", method = RequestMethod.GET)
     public ModelAndView showForm(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("analysis/crashquery");
         mav.addObject(new CrashSearch());
@@ -55,5 +61,11 @@ public class CrashQueryController extends BaseFormController {
             logException(request, e, "Your query did not run successfully. Please contact your System Administrator.");
         }
         return new CrashAnalysisController().showCrashes(request);
+    }
+
+    @RequestMapping(value="/crashquerysave", method = RequestMethod.POST)
+    public ModelAndView saveQuery(Query query) throws Exception {
+        crashQueryManager.saveQuery(query);
+        return showQueries();
     }
 }

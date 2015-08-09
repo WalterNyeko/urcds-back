@@ -1,6 +1,7 @@
 package com.sweroad.service;
 
 import com.sweroad.model.Crash;
+import com.sweroad.model.Query;
 import com.sweroad.query.CrashQuery;
 import com.sweroad.query.CrashSearch;
 
@@ -29,4 +30,10 @@ public interface CrashQueryManager {
     void processCrashSearch(CrashSearch crashSearch) throws ParseException;
 
     Map<String, List> getCrashQueryReferenceData();
+
+    List<Query> getCurrentUserQueries();
+
+    void saveQuery(Query query);
+
+    Query getQueryById(Long queryId);
 }

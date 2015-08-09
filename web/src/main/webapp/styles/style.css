@@ -556,3 +556,20 @@ table.crosstab-orange tr:hover {
 .drawing-actions td {
     padding-left: 20px;
 }
+.save-query {
+    width: auto;
+    float: right;
+}
+.query-form, .query-form table {
+    width: 100%;
+}
+.query-form td {
+    padding: 6px;
+    vertical-align: top;
+}
+.query-form .query-label, .query-form .query-value {
+    font-size: 12px;
+}
+.ui-dialog-content {
+    background-color: #ffffff !important;
+}

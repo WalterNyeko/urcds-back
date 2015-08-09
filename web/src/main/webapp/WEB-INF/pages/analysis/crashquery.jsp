@@ -24,7 +24,7 @@
     <c:url value="/crashqueryrun" var="formUrl" />
 	<form:errors path="*" cssClass="alert alert-danger alert-dismissable" element="div"/>
 	<form:form commandName="crashSearch" method="post" action="${formUrl}"
-		id="crashForm" autocomplete="off" cssClass="well">
+		id="crashQuery" autocomplete="off" cssClass="well">
         <h3>
             <fmt:message key="crashQuery.heading" />
         </h3>
@@ -624,7 +624,7 @@
                 </tr>
 				<tr>
 					<td>
-						<a class="btn btn-default" href="<c:url value='/analysis'/>">
+						<a class="btn btn-default" href="<c:url value='/crashquery'/>">
 							<i class="icon-ok"></i>
 							<fmt:message key="button.cancel" />
 						</a>

@@ -38,11 +38,12 @@ var CrashQuery = (function() {
             query.casualtyBeltUsed = util.nameListPair('Casualty Used Belt/Helmet');
         }
 
-        query.addCheckedToList = function(id, list) {
-            $('#' + id).find('input:checked').each(function() {
+        query.addCheckedToList = function(tableId, list) {
+            $('#' + tableId).find('input:checked').each(function() {
+                var id = $(this).val();
                 var label = $('label[for=' + $(this).attr('id') + ']');
                 if (label.length)
-                    list.push(label.text());
+                    list.push({ id: id, name: label.text()});
             });
         }
 
@@ -182,7 +183,7 @@ var CrashQuery = (function() {
                     var cell = $('<td width="33%"><div class="query-label"></div><div class="query-value"></div></td>');
                     if (property.list && Array.isArray(property.list) && property.list.length) {
                         cell.find('div:first').text(property.name + ':');
-                        cell.find('div:last').text(property.list.toString().replace(/,/g, ', '));
+                        cell.find('div:last').text(util.propertyListToString(property.list));
                     } else if (typeof property === 'string') {
                         var text = this.getTimeDimensionText(prop);
                         if (!text)
@@ -205,7 +206,19 @@ var CrashQuery = (function() {
             if (count) {
                 $('#query-summary').html('<h6>Query Summary</h6>').append(summaryTable);
                 $('#query-summary').css('border', 'solid 1px #8C8615');
-                $('#query-summary').append($('<div class="save-query"><input id="searchButton" type="button" value="Search">'))
+                $('#query-summary').append($('<div class="save-query"><input id="saveQuery" type="button" value="Save Query">'));
+                $('#saveQuery').click(function() {
+                    loadDialog({
+                        width: 'auto',
+                        height: 'auto',
+                        message: "Loading form...",
+                        dialogTitle: "Save Crash Query",
+                        dialogButtons: ui.queryFormButtons()
+                    });
+                    var queryForm = ui.createQueryForm();
+                    queryForm.find('table tr:last td').append(summaryTable.clone());
+                    $('#map-canvas').html(queryForm);
+                });
             }
             else
                 $('#query-summary').css('border', 'none');

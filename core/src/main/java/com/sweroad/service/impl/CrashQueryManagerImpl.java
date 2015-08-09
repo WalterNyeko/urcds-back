@@ -5,16 +5,15 @@ import com.sweroad.dao.CrashDao;
 import com.sweroad.model.*;
 import com.sweroad.query.CrashQuery;
 import com.sweroad.query.CrashSearch;
-import com.sweroad.service.CrashManager;
-import com.sweroad.service.CrashQueryManager;
-import com.sweroad.service.GenericManager;
-import com.sweroad.service.LookupManager;
+import com.sweroad.service.*;
 import com.sweroad.util.DateUtil;
 import com.sweroad.util.GenericManagerHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -59,6 +58,10 @@ public class CrashQueryManagerImpl implements CrashQueryManager {
     private GenericManager<CasualtyType, Long> casualtyTypeManager;
     @Autowired
     private LookupManager lookupManager;
+    @Autowired
+    private GenericManager<Query, Long> queryManager;
+    @Autowired
+    private UserManager userManager;
 
     @Override
     public List<Crash> getCrashesByQuery(CrashQuery crashQuery) {
@@ -101,6 +104,34 @@ public class CrashQueryManagerImpl implements CrashQueryManager {
         queryCrashReferenceData.put("beltUseds", lookupManager.getAllBeltUsedOptions());
         queryCrashReferenceData.put("ageRanges", lookupManager.getAllAgeRanges());
         return queryCrashReferenceData;
+    }
+
+    @Override
+    public List<Query> getCurrentUserQueries() {
+        User currentUser = userManager.getCurrentUser();
+        List<Query> queries = new ArrayList<Query>();
+        for(Query query : queryManager.getAllDistinct()) {
+            if (query.getOwner().equals(currentUser)) {
+                queries.add(query);
+            }
+        }
+        return queries;
+    }
+
+    @Override
+    public void saveQuery(Query query) {
+        if (query.getDateCreated() == null) {
+            query.setDateCreated(new Date());
+        } else {
+            query.setDateUpdated(new Date());
+        }
+        query.setOwner(userManager.getCurrentUser());
+        queryManager.save(query);
+    }
+
+    @Override
+    public Query getQueryById(Long queryId) {
+        return queryManager.get(queryId);
     }
 
     private void processDates(CrashSearch crashSearch) throws ParseException {

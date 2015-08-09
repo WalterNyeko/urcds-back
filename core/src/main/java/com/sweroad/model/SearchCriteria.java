@@ -9,43 +9,24 @@ import java.util.Date;
 /**
  * Created by Frank on 11/15/14.
  */
-@Entity
-@Table(name = "search_criteria")
 public class SearchCriteria extends BaseModel implements DateRangable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(nullable = false)
-    private String name;
-    @Column(columnDefinition = "text")
-    private String description;
-    @Column(name = "start_date")
-    private Date startDate;
-    @Transient
-    private String startDateString;
-    @Column(name = "end_date")
-    private Date endDate;
-    @Transient
-    private String endDateString;
-    @Column(columnDefinition = "text")
-    private String criteria;
-    @ManyToOne
-    @JoinColumn
-    private User owner;
-    @ManyToOne
-    @JoinColumn
-    private District district;
-    @Transient
     private Crash crash;
-    @Transient
+    private String name;
+    private Date endDate;
+    private Date startDate;
+    private District district;
+    private String description;
     private VehicleType vehicleType;
-    private Integer startYear;
-    private Integer startMonth;
     private Integer endYear;
+    private Integer endHour;
     private Integer endMonth;
     private Integer startHour;
-    private Integer endHour;
+    private Integer startYear;
+    private Integer startMonth;
+    private String endDateString;
+    private String startDateString;
 
     public Long getId() {
         return id;
@@ -91,32 +72,8 @@ public class SearchCriteria extends BaseModel implements DateRangable {
         return startDateString;
     }
 
-    public void setStartDateString(String startDateString) {
-        this.startDateString = startDateString;
-    }
-
     public String getEndDateString() {
         return endDateString;
-    }
-
-    public void setEndDateString(String endDateString) {
-        this.endDateString = endDateString;
-    }
-
-    public String getCriteria() {
-        return criteria;
-    }
-
-    public void setCriteria(String criteria) {
-        this.criteria = criteria;
-    }
-
-    public User getOwner() {
-        return owner;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
     }
 
     public Crash getCrash() {
@@ -147,32 +104,16 @@ public class SearchCriteria extends BaseModel implements DateRangable {
         return startYear;
     }
 
-    public void setStartYear(Integer startYear) {
-        this.startYear = startYear;
-    }
-
     public Integer getStartMonth() {
         return startMonth;
-    }
-
-    public void setStartMonth(Integer startMonth) {
-        this.startMonth = startMonth;
     }
 
     public Integer getEndYear() {
         return endYear;
     }
 
-    public void setEndYear(Integer endYear) {
-        this.endYear = endYear;
-    }
-
     public Integer getEndMonth() {
         return endMonth;
-    }
-
-    public void setEndMonth(Integer endMonth) {
-        this.endMonth = endMonth;
     }
 
     @Override
@@ -180,17 +121,9 @@ public class SearchCriteria extends BaseModel implements DateRangable {
         return startHour;
     }
 
-    public void setStartHour(Integer startHour) {
-        this.startHour = startHour;
-    }
-
     @Override
     public Integer getEndHour() {
         return endHour;
-    }
-
-    public void setEndHour(Integer endHour) {
-        this.endHour = endHour;
     }
 
     @Override

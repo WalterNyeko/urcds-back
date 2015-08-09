@@ -3,7 +3,12 @@
  */
 /** Contains GIS specific functions ...*/
 function loadInGoogleMaps() {
-    loadDialog({message: "Loading map...", dialogTitle: "Crash Location - Google Maps" });
+    loadDialog({
+        width: 850,
+        height: 600,
+        message: "Loading map...",
+        dialogTitle: "Crash Location - Google Maps"
+    });
     initializeSingleCrashMap();
 }
 
@@ -282,7 +287,12 @@ function clearKmlLayers() {
 }
 
 function quickMapView(crashTitle, latitude, longitude) {
-    loadDialog({message: "Loading map...", dialogTitle: "Crash Location - Google Maps" });
+    loadDialog({
+        width: 850,
+        height: 600,
+        message: "Loading map...",
+        dialogTitle: "Crash Location - Google Maps"
+    });
     var coordinates = new google.maps.LatLng(latitude, longitude);
     initMap(coordinates, crashTitle);
     return false;

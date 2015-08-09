@@ -123,8 +123,7 @@ function createOptions(divId, chartTitle) {
 }
 
 function loadCrashSeverityChart() {
-    var basePath = window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/') + 1);
-    var chartUrl = basePath + 'crashchartseverity';
+    var chartUrl = util.basePath() + 'crashchartseverity';
     $.ajax({
         url: chartUrl,
         success: function (result) {
@@ -139,8 +138,7 @@ function loadCrashSeverityChart() {
 }
 
 function loadCrashCauseChart() {
-    var basePath = window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/') + 1);
-    var chartUrl = basePath + 'crashchartcause';
+    var chartUrl = util.basePath() + 'crashchartcause';
     $.ajax({
         url: chartUrl,
         success: function (result) {
@@ -157,30 +155,22 @@ function loadDialog(params) {
         "<div style='clear: both; margin-top: 2%; text-align: justify'>" +
         params.message +
         "</div></div>").appendTo("body");
-
-    $("#map-canvas").dialog({
-        autoOpen: true,
-        closeOnEscape: false,
+    var dialogButtons = params.dialogButtons ? params.dialogButtons : { 'Close': function () { $('#map-canvas').remove() } };
+    $('#map-canvas').dialog({
         modal: true,
-        height: 600,
-        width: 850,
-        buttons: {
-            'Close': function () {
-                $("#map-canvas").remove();
-            }
-        },
-
-        open: function (event, ui) {
-
+        autoOpen: true,
+        width: params.width,
+        closeOnEscape: false,
+        height: params.height,
+        buttons: dialogButtons,
+        open: function () {
             openDialog({
-                dialogDiv: this,
-                cancelButtonValue: "Close"
+                dialogDiv: this
             });
         }
     });
     return false;
 }
-
 
 function alertDialog(params) {
 
@@ -207,9 +197,7 @@ function alertDialog(params) {
                 }
             }
         },
-
-        open: function (event, ui) {
-
+        open: function () {
             openDialog({
                 dialogDiv: this
             });
@@ -253,9 +241,7 @@ function confirmDialog(params){
                 $("#confirmDialog").remove();
             }
         },
-
-        open: function(event, ui) {
-
+        open: function() {
             openDialog({
                 dialogDiv: this
             });
@@ -331,8 +317,7 @@ function loadCrashTime() {
 }
 
 function getCrashInfoContent(crash) {
-    var basePath = window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/') + 1);
-    var crashViewUrl = basePath + 'crashview';
+    var crashViewUrl = util.basePath() + 'crashview';
     var content = "<table class='infoWindow'><tr><th colspan='2'>";
     content = content.concat(generateCrashCode(crash))
         .concat("</th></tr><tr><td class='boldText'>Tar No.</td><td>").concat(crash.tarNo)
