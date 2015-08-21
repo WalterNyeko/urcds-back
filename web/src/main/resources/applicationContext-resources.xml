@@ -26,9 +26,9 @@
 		<property name="url" value="${jdbc.url}" />
 		<property name="username" value="${jdbc.username}" />
 		<property name="password" value="${jdbc.password}" />
-		<!--<property name="url" value="jdbc:mysql://127.7.246.130:3306/rcds" />-->
-		<!--<property name="username" value="adminuHpZVHT" />-->
-		<!--<property name="password" value="7AcLl4CpSXib" />-->
+		<!--<property name="url" value="jdbc:mysql://127.7.45.130:3306/rcds" />-->
+		<!--<property name="username" value="adminDJXWaBQ" />-->
+		<!--<property name="password" value="LezklM2S8K-I" />-->
 		<property name="maxActive" value="100" />
 		<property name="maxWait" value="1000" />
 		<property name="poolPreparedStatements" value="true" />
