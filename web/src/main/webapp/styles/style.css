@@ -538,7 +538,7 @@ table.crosstab-orange tr:hover {
     padding: 4px;
     overflow-y: auto;
     min-width: 800px;
-    max-height: 100px;
+    max-height: 200px;
     margin-bottom: 5px;
     box-shadow: 2px 2px;
 }

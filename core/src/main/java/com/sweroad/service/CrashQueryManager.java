@@ -36,4 +36,6 @@ public interface CrashQueryManager {
     void saveQuery(Query query);
 
     Query getQueryById(Long queryId);
+
+    void removeQueryById(Long queryId);
 }

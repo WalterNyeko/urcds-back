@@ -134,6 +134,11 @@ public class CrashQueryManagerImpl implements CrashQueryManager {
         return queryManager.get(queryId);
     }
 
+    @Override
+    public void removeQueryById(Long queryId) {
+        queryManager.remove(queryId);
+    }
+
     private void processDates(CrashSearch crashSearch) throws ParseException {
         if (!StringUtils.isNullOrEmpty(crashSearch.getStartDateString())) {
             crashSearch.setStartDate(DateUtil.convertStringToDate(crashSearch.getStartDateString()));

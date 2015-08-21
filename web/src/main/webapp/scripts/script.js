@@ -419,25 +419,12 @@ function clearHighlight(withRowSpan) {
 function highlightLastAccessedObject(rowHighlightType) {
 
     var attrName = $("#accessAttributeName").val();
-    if(attrName){
-
+    if(attrName) {
         var dataElement = $("a[" + attrName + "='" + getIdByAttributeName(attrName) + "']");
         if(dataElement && $(dataElement).is("a")) {
             setAccessedObject(dataElement);
         }
     }
-}
-
-function getLastAccessedId(){
-
-    var attrName = $("#accessAttributeName").val();
-    return getIdByAttributeName(attrName);
-}
-
-function setLastAccessedId(id){
-
-    var attrName = $("#accessAttributeName").val();
-    setIdByAttributeName(attrName, id);
 }
 
 function getIdByAttributeName(attrName) {
@@ -454,6 +441,7 @@ function setIdByAttributeName(attrName, idValue) {
 
 function clearLastAccessedObjects(){
     localStorage.removeItem("data-crashes-id");
+    localStorage.removeItem("data-queries-id");
     localStorage.removeItem("data-crashanalysis-id");
 }
 

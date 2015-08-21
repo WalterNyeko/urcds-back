@@ -38,13 +38,47 @@ var CrashQuery = (function() {
             query.casualtyBeltUsed = util.nameListPair('Casualty Used Belt/Helmet');
         }
 
-        query.addCheckedToList = function(tableId, list) {
-            $('#' + tableId).find('input:checked').each(function() {
-                var id = $(this).val();
-                var label = $('label[for=' + $(this).attr('id') + ']');
-                if (label.length)
-                    list.push({ id: id, name: label.text()});
-            });
+        query.build = function() {
+            this.setId();
+            this.setName();
+            this.setDescription();
+            this.setTimeDimension();
+            this.setDistricts();
+            this.setPoliceStations();
+            this.setCrashSeverities();
+            this.setCollisionTypes();
+            this.setCrashCauses();
+            this.setVehicleFailureTypes();
+            this.setWeathers();
+            this.setSurfaceConditions();
+            this.setRoadSurfaces();
+            this.setSurfaceType();
+            this.setRoadwayCharacters();
+            this.setJunctionTypes();
+            this.setVehicleType();
+            this.setLicenseTypes();
+            this.setDriverGenders();
+            this.setDriverAgeRanges();
+            this.setDriverBeltUseds();
+            this.setDriverCasualtyTypes();
+            this.setCasualtyClasses();
+            this.setCasualtyTypes();
+            this.setCasualtyGenders();
+            this.setCasualtyAgeRanges();
+            this.setCasualtyBeltUseds();
+            return this;
+        }
+
+        query.setId = function() {
+            this.id = $('#queryId').val();
+        }
+
+        query.setName = function() {
+            this.id = $('#queryName').val();
+        }
+
+        query.setDescription = function() {
+            this.id = $('#queryDescription').val();
         }
 
         query.setWeathers = function() {
@@ -139,6 +173,15 @@ var CrashQuery = (function() {
             this.addCheckedToList('driverCasualtyType', this.driverCasualtyType.list);
         }
 
+        query.addCheckedToList = function(tableId, list) {
+            $('#' + tableId).find('input:checked').each(function() {
+                var id = $(this).val();
+                var label = $('label[for=' + $(this).attr('id') + ']');
+                if (label.length)
+                    list.push({ id: id, name: label.text()});
+            });
+        }
+
         query.setTimeDimension = function() {
             if ($('#startYear').val())
                 this.startYear = $('#startYear option:selected').text();
@@ -174,9 +217,11 @@ var CrashQuery = (function() {
         }
 
         query.render = function() {
-            var summaryTable = $('<table>');
             var count = 0;
+            var ctx = this;
             var row = $('<tr>');
+            var summaryTable = $('<table>');
+            ui.appendQueryHeader(this, summaryTable);
             for (var prop in this) {
                 var property = this[prop];
                 if (property) {
@@ -204,9 +249,10 @@ var CrashQuery = (function() {
             if (count % 3 != 0)
                 summaryTable.append(row);
             if (count) {
+                var buttonCaption = this.dirty ? 'Update Query' : 'Save Query';
                 $('#query-summary').html('<h6>Query Summary</h6>').append(summaryTable);
                 $('#query-summary').css('border', 'solid 1px #8C8615');
-                $('#query-summary').append($('<div class="save-query"><input id="saveQuery" type="button" value="Save Query">'));
+                $('#query-summary').append($('<div class="save-query"><input id="saveQuery" type="button" value="' + buttonCaption + '">'));
                 $('#saveQuery').click(function() {
                     loadDialog({
                         width: 'auto',
@@ -215,7 +261,7 @@ var CrashQuery = (function() {
                         dialogTitle: "Save Crash Query",
                         dialogButtons: ui.queryFormButtons()
                     });
-                    var queryForm = ui.createQueryForm();
+                    var queryForm = ui.createQueryForm(ctx);
                     queryForm.find('table tr:last td').append(summaryTable.clone());
                     $('#map-canvas').html(queryForm);
                 });
@@ -224,32 +270,145 @@ var CrashQuery = (function() {
                 $('#query-summary').css('border', 'none');
         }
 
-        query.build = function() {
-            this.setTimeDimension();
-            this.setDistricts();
-            this.setPoliceStations();
-            this.setCrashSeverities();
-            this.setCollisionTypes();
-            this.setCrashCauses();
-            this.setVehicleFailureTypes();
-            this.setWeathers();
-            this.setSurfaceConditions();
-            this.setRoadSurfaces();
-            this.setSurfaceType();
-            this.setRoadwayCharacters();
-            this.setJunctionTypes();
-            this.setVehicleType();
-            this.setLicenseTypes();
-            this.setDriverGenders();
-            this.setDriverAgeRanges();
-            this.setDriverBeltUseds();
-            this.setDriverCasualtyTypes();
-            this.setCasualtyClasses();
-            this.setCasualtyTypes();
-            this.setCasualtyGenders();
-            this.setCasualtyAgeRanges();
-            this.setCasualtyBeltUseds();
-            return this;
+        query.loadForm = function() {
+            this.loadTimeDimension();
+            this.loadDistricts();
+            this.loadPoliceStations();
+            this.loadCrashSeverities();
+            this.loadCollisionTypes();
+            this.loadCrashCauses();
+            this.loadVehicleFailureTypes();
+            this.loadWeathers();
+            this.loadSurfaceConditions();
+            this.loadRoadSurfaces();
+            this.loadSurfaceType();
+            this.loadRoadwayCharacters();
+            this.loadJunctionTypes();
+            this.loadVehicleType();
+            this.loadLicenseTypes();
+            this.loadDriverGenders();
+            this.loadDriverAgeRanges();
+            this.loadDriverBeltUseds();
+            this.loadDriverCasualtyTypes();
+            this.loadCasualtyClasses();
+            this.loadCasualtyTypes();
+            this.loadCasualtyGenders();
+            this.loadCasualtyAgeRanges();
+            this.loadCasualtyBeltUseds();
+            crashQueryFilterPoliceStations();
+        }
+
+        query.loadTimeDimension = function() {
+            if (this.startYear)
+                $('#startYear option:contains("' + this.startYear + '")').prop('selected', true);
+            if (this.startMonth)
+                $('#startMonth option:contains("' + this.startMonth + '")').prop('selected', true);
+            if (this.startDate)
+                $('#startDateString option:contains("' + this.startDate + '")').prop('selected', true);
+            if (this.endYear)
+                $('#endYear option:contains("' + this.endYear + '")').prop('selected', true);
+            if (this.endMonth)
+                $('#endMonth option:contains("' + this.endMonth + '")').prop('selected', true);
+            if (this.endDate)
+                $('#endDateString option:contains("' + this.endDate + '")').prop('selected', true);
+        }
+
+        query.checkListed = function(tableId, list) {
+            list.map(function(item) {
+                $('#' + tableId).find('input[type=checkbox][value=' + item.id + ']').prop('checked', true);
+            });
+        }
+
+        query.loadWeathers = function() {
+            this.checkListed('weather', this.weather.list);
+        }
+
+        query.loadDistricts = function() {
+            this.checkListed('district', this.district.list);
+        }
+
+        query.loadCrashCauses = function() {
+            this.checkListed('crashCause', this.crashCause.list);
+        }
+
+        query.loadRoadSurfaces = function() {
+            this.checkListed('roadSurface', this.roadSurface.list);
+        }
+
+        query.loadSurfaceType = function() {
+            this.checkListed('surfaceType', this.surfaceType.list);
+        }
+
+        query.loadVehicleType = function() {
+            this.checkListed('vehicleType', this.vehicleType.list);
+        }
+
+        query.loadLicenseTypes = function() {
+            this.checkListed('licenseType', this.licenseType.list);
+        }
+
+        query.loadJunctionTypes = function() {
+            this.checkListed('junctionType', this.junctionType.list);
+        }
+
+        query.loadDriverGenders = function() {
+            this.checkListed('driverGender', this.driverGender.list);
+        }
+
+        query.loadCasualtyTypes = function() {
+            this.checkListed('casualtyType', this.casualtyType.list);
+        }
+
+        query.loadPoliceStations = function() {
+            this.checkListed('policeStation', this.policeStation.list);
+        }
+
+        query.loadCollisionTypes = function() {
+            this.checkListed('collisionType', this.collisionType.list);
+        }
+
+        query.loadCrashSeverities = function() {
+            this.checkListed('crashSeverity', this.crashSeverity.list);
+        }
+
+        query.loadDriverBeltUseds = function() {
+            this.checkListed('driverBeltUsed', this.driverBeltUsed.list);
+        }
+
+        query.loadCasualtyClasses = function() {
+            this.checkListed('casualtyClass', this.casualtyClass.list);
+        }
+
+        query.loadCasualtyGenders = function() {
+            this.checkListed('casualtyGender', this.casualtyGender.list);
+        }
+
+        query.loadDriverAgeRanges = function() {
+            this.checkListed('driverAgeRange', this.driverAgeRange.list);
+        }
+
+        query.loadCasualtyBeltUseds = function() {
+            this.checkListed('casualtyBeltUsed', this.casualtyBeltUsed.list);
+        }
+
+        query.loadCasualtyAgeRanges = function() {
+            this.checkListed('casualtyAgeRange', this.casualtyAgeRange.list);
+        }
+
+        query.loadSurfaceConditions = function() {
+            this.checkListed('surfaceCondition', this.surfaceCondition.list);
+        }
+
+        query.loadRoadwayCharacters = function() {
+            this.checkListed('roadwayCharacter', this.roadwayCharacter.list);
+        }
+
+        query.loadVehicleFailureTypes = function() {
+            this.checkListed('vehicleFailureType', this.vehicleFailureType.list);
+        }
+
+        query.loadDriverCasualtyTypes = function() {
+            this.checkListed('driverCasualtyType', this.driverCasualtyType.list);
         }
 
         return queryJson ? query : query.build();

@@ -107,6 +107,11 @@ function loadCasualtyForm(params) {
     return false;
 }
 
+function loadQueryForm(params) {
+    sendRequest(params);
+    return false;
+}
+
 function sendRequest(params) {
     $.ajax({
         url: params.url,
@@ -118,11 +123,13 @@ function sendRequest(params) {
                     $(params.responseDiv).html("");
                     $(params.responseDiv).append(rootElement);
                 }
+                if (params.callback) {
+                    params.callback();
+                }
             }
-            console.log(result);
         },
         complete: function() {
-            if(params.dialogDiv) {
+            if (params.dialogDiv) {
                 params.dialogDiv.dialog("option", "position", { my: "center", at: "center", of: window });
             }
         }

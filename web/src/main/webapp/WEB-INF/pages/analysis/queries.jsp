@@ -51,14 +51,14 @@
                                 </c:if>
                             </td>
                             <td>
-                                <a href="#" alt="Run query">
+                                <a href="#" alt="Run query" onclick="util.runQuery(${query.id}); setAccessedObject(this);"data-queries-id="${query.id}" >
                                     <img src="<c:url value='/images/run.png'/>" alt="Run query" title="Run query" hspace="4" width="15">
                                 </a>
-                                <a href="#" alt="Edit query">
+                                <a href="<c:url value='/crashqueryform'/>?id=${query.id}" alt="Edit query" onclick="setAccessedObject(this)">
                                     <img src="<c:url value='/images/bt_Edit.gif'/>" alt="Edit query" title="Edit query" hspace="4" width="25">
                                 </a>
-                                <a href="#" alt="Remove query">
-                                    <img src="<c:url value='/images/bt_Remove.gif'/>" alt="Remove query" title="Remove query" hspace="4" width="25">
+                                <a href="<c:url value='/crashquerydelete'/>?id=${query.id}" alt="Delete query" onclick="setAccessedObject(this); return confirmDialog({message : 'Delete query?', aLink : this});">
+                                    <img src="<c:url value='/images/bt_Remove.gif'/>" alt="Delete query" title="Delete query" hspace="4" width="25">
                                 </a>
                             </td>
                         </tr>
@@ -84,8 +84,14 @@
     </div>
 </div>
 <script type="text/javascript">
+    $(window).load(function(){
+        highlightLastAccessedObject();
+        $('.tablesorter-wrapper').height($(window).height() - 320);
+    });
     $(document).ready(function() {
         initTableSorter('#queryList', 'queries');
         $('.tablesorter-wrapper').height($(window).height() - 320);
     });
 </script>
+<input id="accessAttributeName" type="hidden" value="data-queries-id">
+<div id="form-container" style="visibility: hidden"></div>

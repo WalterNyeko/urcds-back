@@ -1,22 +1,36 @@
 <%@ include file="/common/taglibs.jsp"%>
 <fmt:message key="crashForm.policeStation" var="policeStationLabel" />
+<c:choose>
+    <c:when test="${query ne null}">
+        <c:set var="pageHeader" value="${query.name}" />
+        <c:set var="subHeader" value="${query.description}" />
+    </c:when>
+    <c:otherwise>
+        <c:set var="pageHeader">
+            <fmt:message key="crashQuery.heading" />
+        </c:set>
+        <c:set var="subHeader">
+            <fmt:message key="crashQuery.subHeading" />
+        </c:set>
+    </c:otherwise>
+</c:choose>
+
 <head>
-    <title><fmt:message key="crashQuery.heading" /></title>
+    <title>${pageHeader}</title>
     <meta name="menu" content="AnalysisMenu" />
     <script type="text/javascript" src="<c:url value='/scripts/crash-validator.js'/>"></script>
     <script type="text/javascript" src="<c:url value='/scripts/analysis/crashquery.js'/>"></script>
     <script type="text/javascript">
         $( document ).ready(function() {
             $('form').submit(function() {
-                var query = new CrashQuery();
-                localStorage.setItem('crashQuery', JSON.stringify(query));
-                return true;
+                util.persistQuery();
             });
             $('.year-month-range').change(function() {
                 validateYearMonthRange(displayYearMonthRangeError);
                 showHideDateControls();
             });
             $('.district').click(crashQueryFilterPoliceStations);
+            util.loadQueryForm();
         });
     </script>
 </head>
@@ -25,10 +39,8 @@
 	<form:errors path="*" cssClass="alert alert-danger alert-dismissable" element="div"/>
 	<form:form commandName="crashSearch" method="post" action="${formUrl}"
 		id="crashQuery" autocomplete="off" cssClass="well">
-        <h3>
-            <fmt:message key="crashQuery.heading" />
-        </h3>
-        <fmt:message key="crashQuery.subHeading" />
+        <h3>${pageHeader}</h3>
+        ${subHeader}
 		<div class="col-sm-15">
 			<table cellpadding="4" width="100%">
                 <tr>
@@ -633,6 +645,11 @@
 						value="<fmt:message key='crashQuery.runQuery'/>"></td>
 				</tr>
 			</table>
+            <input id="queryId" type="hidden" value="${query.id}" />
+            <input id="queryName" type="hidden" value="${query.name}" />
+            <input id="queryDescription" type="hidden" value="${query.description}" />
+            <input id="queryData" type="hidden" value="${query.queryData}" />
+            <input id="dirty" type="hidden"/>
 		</div>
 	</form:form>
 </div>

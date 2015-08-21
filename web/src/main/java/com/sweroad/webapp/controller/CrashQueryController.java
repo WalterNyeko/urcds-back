@@ -7,6 +7,7 @@ import com.sweroad.query.CrashSearch;
 import com.sweroad.service.CrashQueryManager;
 import com.sweroad.webapp.util.CrashAnalysisHelper;
 import com.sweroad.webapp.util.JsonHelper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -41,6 +42,11 @@ public class CrashQueryController extends BaseFormController {
     public ModelAndView showForm(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("analysis/crashquery");
         mav.addObject(new CrashSearch());
+        String id = request.getParameter("id");
+        if (!StringUtils.isBlank(id)) {
+            Long queryId = new Long(id);
+            mav.addObject("query", crashQueryManager.getQueryById(queryId));
+        }
         mav.addAllObjects(crashQueryManager.getCrashQueryReferenceData());
         mav.addObject("years", CrashAnalysisHelper.getYearsForSearch());
         mav.addObject("months", CrashAnalysisHelper.getMonthsForSearch(request));
@@ -66,6 +72,18 @@ public class CrashQueryController extends BaseFormController {
     @RequestMapping(value="/crashquerysave", method = RequestMethod.POST)
     public ModelAndView saveQuery(Query query) throws Exception {
         crashQueryManager.saveQuery(query);
+        return showQueries();
+    }
+
+    @RequestMapping(value = "/crashquerydelete", method = RequestMethod.GET)
+    public ModelAndView deleteQuery(HttpServletRequest request) throws Exception {
+        try {
+            String id = request.getParameter("id");
+            crashQueryManager.removeQueryById(new Long(id));
+            saveMessage(request, "Query was deleted successfully");
+        } catch (Exception e) {
+            logException(request, e, "Delete query failed");
+        }
         return showQueries();
     }
 }

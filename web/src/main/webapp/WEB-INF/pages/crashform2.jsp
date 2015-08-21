@@ -147,7 +147,7 @@
 				</c:if>
 				<tr>
 					<td>
-                        <a href="" onclick="unbindBeforeUnload(); return loadVehicleForm({url: '<c:url value="/crashformvehicle"/>'});">
+                        <a href="" onclick="util.unbindBeforeUnload(); return loadVehicleForm({url: '<c:url value="/crashformvehicle"/>'});">
                             <i class="icon-ok"></i>
                             <fmt:message key="button.addVehicle" />
 					    </a>
@@ -208,7 +208,7 @@
                                                     </c:otherwise>
                                                 </c:choose></td>
                                             <td class="padd2" align="center">
-                                                <a href="" onclick="unbindBeforeUnload(); return loadCasualtyForm({url: '<c:url value="/crashformcasualty?id=${casualty.id}"/>'});">
+                                                <a href="" onclick="util.unbindBeforeUnload(); return loadCasualtyForm({url: '<c:url value="/crashformcasualty?id=${casualty.id}"/>'});">
                                                     <i class="icon-edit"></i>
                                                     <fmt:message key="button.edit" />
                                                 </a> |
@@ -225,7 +225,7 @@
 				</c:if>
 				<tr>
 					<td>
-                        <a href="" onclick="unbindBeforeUnload(); return loadCasualtyForm({url: '<c:url value="/crashformcasualty"/>'});">
+                        <a href="" onclick="util.unbindBeforeUnload(); return loadCasualtyForm({url: '<c:url value="/crashformcasualty"/>'});">
                             <i class="icon-ok"></i>
 							<fmt:message key="button.addCasualty" />
 					    </a>
@@ -286,7 +286,7 @@
         return false;
     }
     function submitForm() {
-        unbindBeforeUnload();
+        util.unbindBeforeUnload();
         window.location.href = '<c:url value="/crashformsubmit" />';
     }
 </script>

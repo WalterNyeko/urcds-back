@@ -2,6 +2,7 @@ function systemWideInit() {
     $(window).load(function(){
         initNoneClickAnchor();
         initSearchButton();
+        $('a[title=Logout]').click(clearLastAccessedObjects);
     });
 }
 
@@ -13,10 +14,9 @@ function initNoneClickAnchor() {
 
 function initSearchButton() {
     $('#searchButton').click(function() {
-        var basePath = window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/') + 1);
         var searchTerm = $.trim($('#searchTerm').val());
         if(searchTerm) {
-            window.location.href = basePath + 'crashsearch?tarNo=' + searchTerm;
+            window.location.href = util.basePath() + 'crashsearch?tarNo=' + searchTerm;
         }
     });
 }
@@ -78,18 +78,104 @@ var util = (function() {
     util.basePath = function() {
         return window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/') + 1);
     }
+    util.loadQueryForm = function() {
+        var queryData = $('#queryData').val().trim();
+        if (queryData) {
+            var query = new CrashQuery(queryData);
+            query.loadForm();
+        }
+    }
+    util.runQuery = function(queryId) {
+        return loadQueryForm({
+            url: this.basePath() + 'crashqueryform?id=' + queryId,
+            responseDiv: $('#form-container'),
+            rootElementId: 'crashQuery',
+            callback: function() {
+                util.loadQueryForm();
+                util.persistQuery();
+                $('#crashQuery').submit();
+            }
+        });
+    }
+    util.persistQuery = function() {
+        localStorage.setItem('crashQuery', JSON.stringify(new CrashQuery()));
+    }
+    util.initFormChangeDetection = function(formName) {
+        var form = $(formName);
+        form.find(':text').each(function() {
+            this.oldValue = this.value;
+        });
+        form.find('select').each(function() {
+            this.oldValue = this.value;
+        });
+        form.find(':text').on('blur focusout paste', function() {
+            util.detectTextChange(this);
+        });
+        form.find('select').change(function() {
+            util.detectTextChange(this);
+        });
+        form.find(':radio').change(function() {
+            util.editForm();
+            util.bindBeforeUnload();
+        });
+        form.find(':checkbox').change(function() {
+            util.editForm();
+            util.bindBeforeUnload();
+        });
+        if(util.formEdited()) {
+            util.bindBeforeUnload();
+        }
+    }
+
+    util.detectTextChange = function(element) {
+        if(element.oldValue !== element.value) {
+            util.editForm();
+            util.bindBeforeUnload();
+        }
+    }
+
+    util.formEdited = function() {
+        return $('#dirty').val() === 'true';
+    }
+
+    util.editForm = function() {
+        $('#dirty').val('true');
+    }
+
+    util.bindBeforeUnload = function() {
+        $(window).on('beforeunload', function() {
+            return 'You have unsaved changes. They will be lost if you go ahead and leave this page without saving.';
+        });
+    }
+
+    util.unbindBeforeUnload = function() {
+        $(window).off('beforeunload');
+    }
     return util;
 })();
 
 var ui = (function() {
     var ui = Object.create(null);
 
-    ui.createQueryForm = function() {
+    ui.appendQueryHeader = function(query, table) {
+        if (query.name && query.description) {
+            var row = $('<tr><td></td><td colspan="2"></td></tr>');
+            row.find('td:first').append('<div class="query-label">Query Name</div>');
+            row.find('td:first').append('<div class="query-value">' + query.name + '</div>');
+            row.find('td:last').append('<div class="query-label">Description</div>');
+            row.find('td:last').append('<div class="query-value">' + query.description + '</div>');
+            table.append(row);
+        }
+    }
+    ui.createQueryForm = function(query) {
         var action = util.basePath() + 'crashquerysave';
         var form = $('<form id="query-form" method="post" action="' + action + '">');
         var table = $('<table class="query-form">');
         table.append('<tr><td>Query Name:</td><td><input id="name" name="name"><input type="hidden" id="id" name="id" /></td></tr>');
+        table.find('tr:last td:last input#id').val(query.id || '');
+        table.find('tr:last td:last input#name').val(query.name || '');
         table.append('<tr><td>Description:</td><td><textarea id="description" name="description"></textarea></td></tr>');
+        table.find('textarea').text(query.description);
         table.append('<tr><td colspan="2"></td></tr>');
         return form.append(table);
     }

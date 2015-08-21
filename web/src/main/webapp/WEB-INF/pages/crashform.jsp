@@ -468,7 +468,7 @@
         return false;
     }
     function submitForm() {
-        unbindBeforeUnload();
+        util.unbindBeforeUnload();
         document.getElementById('crashForm').submit();
     }
     function saveCrash() {
