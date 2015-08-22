@@ -47,7 +47,7 @@
                             <td><fmt:formatDate value="${query.dateCreated}" type="both" dateStyle="medium" timeStyle="short" /></td>
                             <td>
                                 <c:if test="${query.dateUpdated ne null}">
-                                    <fmt:formatDate value="${query.dateCreated}" type="both" dateStyle="medium" timeStyle="short" />
+                                    <fmt:formatDate value="${query.dateUpdated}" type="both" dateStyle="medium" timeStyle="short" />
                                 </c:if>
                             </td>
                             <td>

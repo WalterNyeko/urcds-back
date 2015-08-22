@@ -120,7 +120,7 @@ public class CrashQueryManagerImpl implements CrashQueryManager {
 
     @Override
     public void saveQuery(Query query) {
-        if (query.getDateCreated() == null) {
+        if (query.getId() == null) {
             query.setDateCreated(new Date());
         } else {
             query.setDateUpdated(new Date());

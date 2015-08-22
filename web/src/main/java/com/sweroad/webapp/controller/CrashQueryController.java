@@ -45,7 +45,9 @@ public class CrashQueryController extends BaseFormController {
         String id = request.getParameter("id");
         if (!StringUtils.isBlank(id)) {
             Long queryId = new Long(id);
-            mav.addObject("query", crashQueryManager.getQueryById(queryId));
+            Query query = crashQueryManager.getQueryById(queryId);
+            request.getSession().setAttribute("query", query);
+            mav.addObject("query", query);
         }
         mav.addAllObjects(crashQueryManager.getCrashQueryReferenceData());
         mav.addObject("years", CrashAnalysisHelper.getYearsForSearch());
@@ -70,8 +72,16 @@ public class CrashQueryController extends BaseFormController {
     }
 
     @RequestMapping(value="/crashquerysave", method = RequestMethod.POST)
-    public ModelAndView saveQuery(Query query) throws Exception {
+    public ModelAndView saveQuery(HttpServletRequest request, Query query) throws Exception {
+        if (request.getSession().getAttribute("query") != null) {
+            Query sessionQuery = (Query) request.getSession().getAttribute("query");
+            query.setId(sessionQuery.getId());
+            query.setDateCreated(sessionQuery.getDateCreated());
+        }
         crashQueryManager.saveQuery(query);
+        if (request.getSession().getAttribute("query") != null) {
+            request.getSession().removeAttribute("query");
+        }
         return showQueries();
     }
 

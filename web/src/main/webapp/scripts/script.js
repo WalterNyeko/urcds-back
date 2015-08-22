@@ -227,7 +227,7 @@ function confirmDialog(params){
                 $("#confirmDialog").remove();
                 if(params.aLink){
                     var href = $(params.aLink).attr('href');
-                    unbindBeforeUnload();
+                    util.unbindBeforeUnload();
                     window.location.href = href;
                 } else if (params.redirectLink){
                     window.location.href = params.redirectLink;

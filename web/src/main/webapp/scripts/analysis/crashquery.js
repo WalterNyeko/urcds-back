@@ -74,11 +74,11 @@ var CrashQuery = (function() {
         }
 
         query.setName = function() {
-            this.id = $('#queryName').val();
+            this.name = $('#queryName').val();
         }
 
         query.setDescription = function() {
-            this.id = $('#queryDescription').val();
+            this.description = $('#queryDescription').val();
         }
 
         query.setWeathers = function() {
