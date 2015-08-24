@@ -16,8 +16,8 @@
         </h2>
     </div>
     <div id="query-summary" style="float: right">
-
     </div>
+    <br/>
     <table width="100%" cellpadding="0" cellspacing="0">
         <tr>
             <td width="60%">
