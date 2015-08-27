@@ -15,7 +15,7 @@
             <fmt:message key="crashAnalysis.heading" />
         </h2>
     </div>
-    <div id="query-summary" style="float: right">
+    <div id="query-summary">
     </div>
     <br/>
     <table width="100%" cellpadding="0" cellspacing="0">

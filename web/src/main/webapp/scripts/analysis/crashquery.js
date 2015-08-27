@@ -221,6 +221,7 @@ var CrashQuery = (function() {
             var ctx = this;
             var row = $('<tr>');
             var summaryTable = $('<table>');
+            var querySummary = $('#query-summary');
             ui.appendQueryHeader(this, summaryTable);
             for (var prop in this) {
                 var property = this[prop];
@@ -249,10 +250,10 @@ var CrashQuery = (function() {
             if (count % 3 != 0)
                 summaryTable.append(row);
             if (count) {
-                var buttonCaption = this.dirty ? 'Update Query' : 'Save Query';
-                $('#query-summary').html('<h6>Query Summary</h6>').append(summaryTable);
-                $('#query-summary').css('border', 'solid 1px #8C8615');
-                $('#query-summary').append($('<div class="save-query"><input id="saveQuery" type="button" value="' + buttonCaption + '">'));
+                var buttonCaption = this.dirty && this.id ? 'Update Query' : 'Save Query';
+                querySummary.html('<h6>Query Summary</h6>').append(summaryTable);
+                if (this.dirty || !this.id)
+                    querySummary.append($('<div class="save-query"><input id="saveQuery" type="button" value="' + buttonCaption + '">'));
                 $('#saveQuery').click(function() {
                     loadDialog({
                         width: 'auto',
@@ -263,11 +264,13 @@ var CrashQuery = (function() {
                     });
                     var queryForm = ui.createQueryForm(ctx);
                     queryForm.find('table tr:last td').append(summaryTable.clone());
-                    $('#map-canvas').html(queryForm);
+                    ui.dialogContent().html(queryForm);
+                    ui.centerDialog();
                 });
+                querySummary.show();
             }
             else
-                $('#query-summary').css('border', 'none');
+                querySummary.hide();
         }
 
         query.loadForm = function() {

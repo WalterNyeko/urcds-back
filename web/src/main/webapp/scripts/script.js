@@ -59,16 +59,23 @@ function validateFields() {
     $(".req-val").each(function () {
         var val = $(this).val();
         if (val == "") {
-            valMessages += "- " + $(this).attr("data-labelName") + " is required.<br>";
+            valMessages += "- <b><i>" + $(this).attr("data-labelName") + "</i></b> is required.<br>";
         }
     });
     $(".rb-helper").each(function () {
         rbName = $(this).val();
         var selected = $("input[name='" + rbName + "']:checked").val();
         if (!selected) {
-            valMessages += "- " + $(this).attr("data-labelName") + " is required.<br>";
+            valMessages += "- <b><i>" + $(this).attr("data-labelName") + "</i></b> is required.<br>";
         }
     });
+    var crashDate = getCrashDate();
+    if (crashDate != null) {
+        var today = new Date();
+        if (crashDate > today) {
+            valMessages += "- <b><i>Crash date</i></b> cannot be a future date.<br/>";
+        }
+    }
     if (valMessages != "") {
         alertDialog({message: valMessages});
         return false;

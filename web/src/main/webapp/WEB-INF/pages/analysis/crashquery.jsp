@@ -23,6 +23,7 @@
     <script type="text/javascript">
         $( document ).ready(function() {
             $('form').submit(function() {
+                util.unbindBeforeUnload();
                 util.persistQuery();
             });
             $('.year-month-range').change(function() {
@@ -31,6 +32,7 @@
             });
             $('.district').click(crashQueryFilterPoliceStations);
             util.loadQueryForm();
+            util.initFormChangeDetection('#crashQuery');
         });
     </script>
 </head>

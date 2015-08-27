@@ -40,6 +40,7 @@ public class CrashQueryController extends BaseFormController {
 
     @RequestMapping(value = "/crashqueryform", method = RequestMethod.GET)
     public ModelAndView showForm(HttpServletRequest request) {
+        clearSession(request);
         ModelAndView mav = new ModelAndView("analysis/crashquery");
         mav.addObject(new CrashSearch());
         String id = request.getParameter("id");
@@ -79,9 +80,7 @@ public class CrashQueryController extends BaseFormController {
             query.setDateCreated(sessionQuery.getDateCreated());
         }
         crashQueryManager.saveQuery(query);
-        if (request.getSession().getAttribute("query") != null) {
-            request.getSession().removeAttribute("query");
-        }
+        clearSession(request);
         return showQueries();
     }
 
@@ -95,5 +94,11 @@ public class CrashQueryController extends BaseFormController {
             logException(request, e, "Delete query failed");
         }
         return showQueries();
+    }
+
+    private void clearSession(HttpServletRequest request) {
+        if (request.getSession().getAttribute("query") != null) {
+            request.getSession().removeAttribute("query");
+        }
     }
 }

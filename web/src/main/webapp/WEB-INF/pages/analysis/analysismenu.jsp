@@ -7,6 +7,9 @@
     <a href="<c:url value='/crashquery'/>">
         <fmt:message key="crashAnalysis.AdvancedSelect" />
     </a>|
+    <a href="<c:url value='/analysis'/>">
+        <fmt:message key="menu.crashes" />
+    </a>|
     <a href="<c:url value='/crashstats'/>">
         <fmt:message key="rcds.crashStatistics" />
     </a>|

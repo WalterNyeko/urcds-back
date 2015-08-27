@@ -128,7 +128,7 @@
                                             </c:if>
                                         </td>
                                         <td class="padd2" align="center">
-                                            <a href="" onclick="unbindBeforeUnload(); return loadVehicleForm({url: '<c:url value="/crashformvehicle?id=${vehicle.id}"/>'});">
+                                            <a href="" onclick="util.unbindBeforeUnload(); return loadVehicleForm({url: '<c:url value="/crashformvehicle?id=${vehicle.id}"/>'});">
                                                 <i class="icon-edit"></i>
                                                 <fmt:message key="button.edit" />
                                             </a>
@@ -236,7 +236,7 @@
                         <table width="100%">
                             <tr>
                                 <td width="50%">
-                                    <a class="btn btn-default" href="<c:url value='/crashform?id=${crash.id}&back=true' />" onclick="unbindBeforeUnload()">
+                                    <a class="btn btn-default" href="<c:url value='/crashform?id=${crash.id}&back=true' />" onclick="util.unbindBeforeUnload()">
                                         <i class="icon-ok"></i>
                                         <fmt:message key="button.back" />
                                     </a>

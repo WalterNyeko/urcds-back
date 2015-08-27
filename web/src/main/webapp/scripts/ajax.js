@@ -129,9 +129,7 @@ function sendRequest(params) {
             }
         },
         complete: function() {
-            if (params.dialogDiv) {
-                params.dialogDiv.dialog("option", "position", { my: "center", at: "center", of: window });
-            }
+            ui.centerDialog();
         }
     });
 }

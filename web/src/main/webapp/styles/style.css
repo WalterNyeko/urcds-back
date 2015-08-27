@@ -536,11 +536,13 @@ table.crosstab-orange tr:hover {
 #query-summary {
     float: right;
     padding: 4px;
+    display: none;
     overflow-y: auto;
     min-width: 800px;
     max-height: 200px;
     margin-bottom: 5px;
     box-shadow: 2px 2px;
+    border: solid 1px #8C8615;
 }
 #query-summary td {
     vertical-align: top;

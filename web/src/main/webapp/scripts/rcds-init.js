@@ -98,7 +98,9 @@ var util = (function() {
         });
     }
     util.persistQuery = function() {
-        localStorage.setItem('crashQuery', JSON.stringify(new CrashQuery()));
+        var query = new CrashQuery();
+        query.dirty = util.formEdited();
+        localStorage.setItem('crashQuery', JSON.stringify(query));
     }
     util.initFormChangeDetection = function(formName) {
         var form = $(formName);
@@ -189,12 +191,20 @@ var ui = (function() {
         var queryName = $('#name').val().trim();
         var description = $('#description').val().trim();
         if (queryName && description && window.query) {
+            window.query.dirty = false;
             var queryData = JSON.stringify(window.query);
+            localStorage.setItem('crashQuery', queryData);
             $('#query-form').append($('<input type="hidden" id="queryData" name="queryData">').val(queryData));
             $('#query-form').submit();
         } else {
 
         }
+    }
+    ui.dialogContent = function() {
+        return $('.ui-dialog-content');
+    }
+    ui.centerDialog = function() {
+        ui.dialogContent().dialog("option", "position", { my: "center", at: "center", of: window });
     }
     return ui;
 })();

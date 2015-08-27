@@ -5,7 +5,6 @@
 var validationFunctions = [];
 var validationWarningMessage = [];
 function initCrashValidation() {
-    validationFunctions.push(checkDate);
     validationFunctions.push(checkGpsCoordinateLimits);
     validationFunctions.push(checkWeather);
     validationFunctions.push(checkRoadwayCharacter);
@@ -43,17 +42,6 @@ var clearWarningMessage = function(){
     var p = $("#warning-message");
     if(p.length) {
         p.remove();
-    }
-}
-
-var checkDate = function() {
-    var crashDate = getCrashDate();
-    if (crashDate == null) {
-        return;
-    }
-    var today = new Date();
-    if (crashDate > today) {
-        validationWarningMessage.push("The <b><i>crash date</i></b> specified is a future date.");
     }
 }
 
