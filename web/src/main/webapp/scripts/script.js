@@ -40,17 +40,10 @@ function createFormElement(element, type, name, id, value, parent) {
     parent.appendChild(e);
 }
 
-function confirmDelete(obj) {
-    var msg = "Are you sure you want to delete this " + obj + "?";
-    ans = confirm(msg);
-    return ans;
-}
-
 // 18n version of confirmDelete. Message must be already built.
 function confirmMessage(obj) {
     var msg = "" + obj;
-    ans = confirm(msg);
-    return ans;
+    return confirm(msg);
 }
 
 function validateFields() {
@@ -466,10 +459,6 @@ function isBrowserIE7OrLower(){
     return false;
 }
 
-/***
- End of Last accessed highlight functions
- ***/
-
 /**
  * detect IE
  * returns version of IE or false, if browser is not Internet Explorer
@@ -499,6 +488,10 @@ function browserIsIE() {
     // other browser
     return false;
 }
+
+/***
+ End of Last accessed highlight functions
+ ***/
 
 function initDistrictSelectChange() {
     var policeStationJson ='{"policeStations" : ' + $("#policeStationJson").val() + '}';
