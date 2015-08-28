@@ -175,30 +175,30 @@ function ConvertDMSToDD(params) {
 }
 
 function showCrashesInGoogleMaps() {
-    var crashesJSON = JSON.parse(localStorage.crashesJSON);
-    var crashes = crashesJSON ? crashesJSON.crashes : undefined;
-    defineCrashMarkers(crashes);
-    var center = markers.length ? markers[0].getPosition() : getDefaultPosition();
-    var map = initGoogleMap(center, 8);
-    $(markers).each(function () {
-        this.setMap(map);
-        google.maps.event.addListener(this, 'click', function () {
-            markers.map(function(x) {x.infoWindow.close() });
-            this.infoWindow.open(map, this);
+    if (crashes) {
+        defineCrashMarkers();
+        var center = markers.length ? markers[0].getPosition() : getDefaultPosition();
+        var map = initGoogleMap(center, 8);
+        $(markers).each(function () {
+            this.setMap(map);
+            google.maps.event.addListener(this, 'click', function () {
+                markers.map(function(x) {x.infoWindow.close() });
+                this.infoWindow.open(map, this);
+            });
         });
-    });
-    addKmlLayers(map);
-    generateLegend();
-    showDrawingManager(false);
-    $('#draw-enable').attr('checked', false);
-    window.map = map;
+        addKmlLayers(map);
+        generateLegend();
+        showDrawingManager(false);
+        $('#draw-enable').attr('checked', false);
+        window.map = map;
+    }
 }
 
 function getDefaultPosition() {
     return new google.maps.LatLng(0.317416, 32.5943618);
 }
 
-function defineCrashMarkers(crashes) {
+function defineCrashMarkers() {
     markers = [];
     if (crashes) {
         crashes.map(function (crash) {
@@ -227,7 +227,7 @@ function getCrashStyledIcon(crash) {
     var color = "E0FFFF";
     var text = "";
     var crashAttribute = $('#crashAttribute').val();
-    var attributes = crashAttributes[crashAttribute];
+    var attributes = window.crashAttributes[crashAttribute];
     if (crash[crashAttribute]) {
         var attribute = attributes.filter(function(x) { return x.id == crash[crashAttribute]['id']})[0];
         if (attribute) {
@@ -240,7 +240,7 @@ function getCrashStyledIcon(crash) {
 
 function generateLegend() {
     var crashAttribute = $('#crashAttribute').val();
-    var attributes = crashAttributes[crashAttribute];
+    var attributes = window.crashAttributes[crashAttribute];
     var markerLegend = $('#marker-legend');
     markerLegend.find('td').css('color', '#000');
     markerLegend.find('tr:not(.not-spec)').remove();

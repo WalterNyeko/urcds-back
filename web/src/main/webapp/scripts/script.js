@@ -416,7 +416,7 @@ function clearHighlight(withRowSpan) {
     }
 }
 
-function highlightLastAccessedObject(rowHighlightType) {
+function highlightLastAccessedObject() {
 
     var attrName = $("#accessAttributeName").val();
     if(attrName) {
@@ -429,20 +429,14 @@ function highlightLastAccessedObject(rowHighlightType) {
 
 function getIdByAttributeName(attrName) {
     if(!isBrowserIE7OrLower()){
-        return localStorage[attrName];
+        return sessionStorage[attrName];
     }
 }
 
 function setIdByAttributeName(attrName, idValue) {
     if(!isBrowserIE7OrLower()){
-        localStorage[attrName] = idValue;
+        sessionStorage[attrName] = idValue;
     }
-}
-
-function clearLastAccessedObjects(){
-    localStorage.removeItem("data-crashes-id");
-    localStorage.removeItem("data-queries-id");
-    localStorage.removeItem("data-crashanalysis-id");
 }
 
 function removeHighlightFromCellDescendants(td){
@@ -536,12 +530,5 @@ function showHideDateControls() {
         $('.dtpicker').closest('tr').hide('slow');
     } else {
         $('.dtpicker').closest('tr').show('slow');
-    }
-}
-
-function renderQuerySummary() {
-    if (localStorage.getItem('crashQuery')) {
-        window.query = new CrashQuery(localStorage.getItem('crashQuery'));
-        window.query.render();
     }
 }

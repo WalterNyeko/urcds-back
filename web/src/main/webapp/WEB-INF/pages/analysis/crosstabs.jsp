@@ -14,9 +14,9 @@
             <fmt:message key="rcds.CrossTabulations" />
         </h2>
     </div>
-    <div id="query-summary" style="float: right">
-
+    <div id="query-summary">
     </div>
+    <br/>
     <table width="100%" cellpadding="0" cellspacing="0">
         <tr>
             <td width="100%">
@@ -79,15 +79,3 @@
     </div>
     <p>&nbsp;</p>
 </div>
-<script type="text/javascript">
-    $(document).ready(function() {
-        new CrossTabulation();
-        crossTabulation.countCrashes('crashSeverity', 'collisionType');
-        $('#xCrashAttribute, #yCrashAttribute').change(function() {
-            var xSelectedOption = $('#xCrashAttribute').find('option:selected');
-            var ySelectedOption = $('#yCrashAttribute').find('option:selected');
-            crossTabulation.countCrashes($('#xCrashAttribute').val(), $('#yCrashAttribute').val(), xSelectedOption.attr('data-prefix'), ySelectedOption.attr('data-prefix'));
-        });
-        renderQuerySummary();
-    });
-</script>

@@ -122,7 +122,7 @@
         $('.tablesorter-wrapper').height($(window).height() - 320);
     });
     $(document).ready(function() {
-        initTableSorter('#crashList', 'crashes');
+        util.initTableSorter('#crashList', 'crashes');
     });
 </script>
 <input id="accessAttributeName" type="hidden" value="data-crashes-id">

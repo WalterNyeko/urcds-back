@@ -2,21 +2,16 @@
  * Created by Frank on 3/18/15.
  */
 
-var Tabulation = (function() {
-    function Tabulation() {
-        window.tabulation = this;
-        this.crashes = JSON.parse(localStorage.crashesJSON).crashes;
-        this.crashAttributes = JSON.parse(localStorage.crashAttributesJSON);
-        this.attributeCounts = [];
-    }
+(function() {
+    var statistics = Object.create(null);
 
-    Tabulation.prototype.countCrashes = function(element) {
+    statistics.countCrashes = function(element) {
         this.attributeCounts = [];
         var attribute = element.val();
         var selected = element.find('option:selected');
         var crashProp = selected.attr('data-prefix');
         var timeDimension = selected.attr('data-time');
-        var attributes = this.crashAttributes[attribute];
+        var attributes = crashAttributes[attribute];
         if (timeDimension)
             this.countTimeAttributes(attributes, timeDimension);
         else
@@ -30,7 +25,7 @@ var Tabulation = (function() {
         this.tabulateCounts(!timeDimension);
     }
 
-    Tabulation.prototype.countAttributes = function(attributes, attribute, crashProp) {
+    statistics.countAttributes = function(attributes, attribute, crashProp) {
         attributes.map(function(attr) {
             this.attributeCounts.push({
                 name : attr.name,
@@ -41,7 +36,7 @@ var Tabulation = (function() {
         }, this);
     }
 
-    Tabulation.prototype.countTimeAttributes = function(attributes, timeDimension) {
+    statistics.countTimeAttributes = function(attributes, timeDimension) {
         if (timeDimension == 'month') {
             attributes.map(function(month, index) {
                 this.attributeCounts.push({
@@ -63,7 +58,7 @@ var Tabulation = (function() {
         }
     }
 
-    Tabulation.prototype.tabulateCounts = function(slice) {
+    statistics.tabulateCounts = function(slice) {
         $('#stats').html('');
         var attrName = $('#crashAttribute option:selected').text();
         var table = $('<table class="table table-condensed table-striped table-hover">');
@@ -93,5 +88,17 @@ var Tabulation = (function() {
         charting.createPieChart(this, attrName, 'stat-chart', slice);
         charting.createColumnChart(this, attrName, 'stat-column');
     }
-    return Tabulation;
+    statistics.init = function() {
+        $(document).ready(function() {
+            util.initCrashData();
+            statistics.attributeCounts = [];
+            statistics.crashes = window.crashes
+            statistics.crashAttributes = window.crashAttributes;
+            $('#crashAttribute').change(function () {
+                statistics.countCrashes($(this));
+            }).trigger('change');
+            ui.renderQuerySummary();
+        });
+    }
+    statistics.init();
 })();

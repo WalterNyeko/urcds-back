@@ -19,7 +19,7 @@
                 <br />
                 <form method="post" id="loginForm"
                     action="<c:url value='/j_security_check'/>"
-                    onsubmit="saveUsername(this); localStorage.removeItem('crashQuery'); return validateForm(this)"
+                    onsubmit="sessionStorage.clear()"
                     class="form-signin" autocomplete="off">
                     <c:if test="${param.error != null}">
                         <div class="alert alert-danger alert-dismissable">

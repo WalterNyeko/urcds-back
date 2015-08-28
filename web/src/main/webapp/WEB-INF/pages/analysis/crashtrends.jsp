@@ -15,8 +15,8 @@
         </h2>
     </div>
     <div id="query-summary">
-
     </div>
+    <br/>
     <table width="100%" cellpadding="0" cellspacing="0">
         <tr>
             <td width="100%">
@@ -66,14 +66,3 @@
     </div>
     <p>&nbsp;</p>
 </div>
-<script type="text/javascript">
-    $(document).ready(function() {
-        new CrashTrend();
-        crashTend.countCrashes('monthOfYear', 'crashSeverity');
-        $('#xCrashAttribute, #yCrashAttribute').change(function() {
-            var ySelectedOption = $('#yCrashAttribute').find('option:selected');
-            crashTend.countCrashes($('#xCrashAttribute').val(), $('#yCrashAttribute').val(), ySelectedOption.attr('data-prefix'));
-        });
-        renderQuerySummary();
-    });
-</script>

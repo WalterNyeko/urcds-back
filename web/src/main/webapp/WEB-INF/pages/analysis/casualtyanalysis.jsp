@@ -111,14 +111,8 @@
         </select>
     </div>
 </div>
-<input id='crashesJSON' type='hidden' value='${crashesJSON}' />
 <input id="accessAttributeName" type="hidden" value="data-casualty-id">
 <script type="text/javascript">
-    $(document).ready(function() {
-        initCrashAnalysis();
-    });
-    jQuery(window).load(function(){
-        highlightLastAccessedObject();
-        $('.tablesorter-wrapper').height($(window).height() - 310);
-    });
+    util.initCrashAnalysis();
+    ui.initLastAccessedObject();
 </script>

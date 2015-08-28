@@ -89,7 +89,7 @@
         $('.tablesorter-wrapper').height($(window).height() - 320);
     });
     $(document).ready(function() {
-        initTableSorter('#queryList', 'queries');
+        util.initTableSorter('#queryList', 'queries');
         $('.tablesorter-wrapper').height($(window).height() - 320);
     });
 </script>

@@ -11,7 +11,6 @@ var unraARoads = new google.maps.KmlLayer({
 var unraBRoads = new google.maps.KmlLayer({
     url: 'https://sites.google.com/site/hagafrank/kml/UNRA_B_Road.kmz'
 });
-var crashAttributes = JSON.parse(localStorage.crashAttributesJSON);
 var markerColors = [];
 markerColors.push('FF0000');
 markerColors.push('FFA500');

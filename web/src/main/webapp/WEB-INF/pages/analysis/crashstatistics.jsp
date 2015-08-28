@@ -5,7 +5,7 @@
     <script src="<c:url value='/scripts/highcharts.js'/>"></script>
     <script src="<c:url value='/scripts/themes/grid.js'/>"></script>
     <script src="<c:url value='/scripts/modules/exporting.js'/>"></script>
-    <script type="text/javascript" src="<c:url value='/scripts/analysis/tabulation.js'/>"></script>
+    <script type="text/javascript" src="<c:url value='/scripts/analysis/statistics.js'/>"></script>
     <script type="text/javascript" src="<c:url value='/scripts/analysis/charting.js'/>"></script>
     <script type="text/javascript" src="<c:url value='/scripts/analysis/crashquery.js'/>"></script>
 </head>
@@ -15,9 +15,9 @@
             <fmt:message key="rcds.crashStatistics" />
         </h2>
     </div>
-    <div id="query-summary" style="float: right">
-
+    <div id="query-summary">
     </div>
+    <br/>
     <table width="100%" cellpadding="0" cellspacing="0">
         <tr>
             <td width="60%">
@@ -67,12 +67,3 @@
     </div>
     <p>&nbsp;</p>
 </div>
-<script type="text/javascript">
-    $(document).ready(function() {
-        var tabulation = new Tabulation();
-        $('#crashAttribute').change(function() {
-            tabulation.countCrashes($(this));
-        }).trigger('change');
-        renderQuerySummary();
-    });
-</script>

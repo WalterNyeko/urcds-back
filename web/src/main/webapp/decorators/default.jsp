@@ -10,29 +10,12 @@
         <title><decorator:title /> | <fmt:message key="webapp.name" /></title>
         <t:assets />
         <script type="text/javascript" src="<c:url value='/scripts/script.js'/>"></script>
-        <script type="text/javascript" src="<c:url value='/scripts/rcds-init.js'/>"></script>
+        <script type="text/javascript" src="<c:url value='/scripts/util.js'/>"></script>
         <script type="text/javascript" src="<c:url value='/scripts/gis-helper.js'/>"></script>
         <script type="text/javascript" src="<c:url value='/scripts/ajax.js'/>"></script>
         <decorator:head />
         <script type="text/javascript">
-            systemWideInit();
-            $(function() {
-                $('.dtpicker').datepicker({
-                    dateFormat: "yy-mm-dd",
-                    autoSize: true,
-                    inline: true,
-                    showOtherMonths: true,
-                    changeYear: true,
-                    changeMonth : true,
-                    yearRange: 'c-20:c',
-                    dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-                    showAnim: "fold",
-                    onSelect: function() {
-                        defineCrashTime();
-                    }
-                });
-                $('.dtpicker').focus(function(){this.value = '';})
-            });
+            ui.init();
         </script>
     </head>
     <body
@@ -76,6 +59,7 @@
                         </menu:useMenuDisplayer>
                     </div>
                 </c:if>
+                <%@ include file="/common/session.jsp"%>
             </div>
         </div>
 
@@ -90,6 +74,5 @@
                 <img src="<c:url value='/images/proudly_ugandan.png'/>" height="20" title="Proudly Ugandan" />
             </span>
         </div>
-        <%= (request.getAttribute("scripts") != null) ?  request.getAttribute("scripts") : "" %>
     </body>
 </html>

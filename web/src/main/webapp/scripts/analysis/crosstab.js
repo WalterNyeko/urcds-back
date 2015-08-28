@@ -1,15 +1,10 @@
 /**
  * Created by Frank on 3/26/15.
  */
-var CrossTabulation = (function () {
-    function CrossTabulation() {
-        window.crossTabulation = this;
-        this.crashes = JSON.parse(localStorage.crashesJSON).crashes;
-        this.crashAttributes = JSON.parse(localStorage.crashAttributesJSON);
-        this.attributeCounts = [];
-    }
+(function () {
+    var crossTabs = Object.create(null);
 
-    CrossTabulation.prototype.countCrashes = function (xAttribute, yAttribute, xCrashProp, yCrashProp) {
+    crossTabs.countCrashes = function (xAttribute, yAttribute, xCrashProp, yCrashProp) {
         var ctx = this;
         this.attributeCounts.length = 0;
         var xAttributes = this.crashAttributes[xAttribute];
@@ -31,7 +26,7 @@ var CrossTabulation = (function () {
         this.tabulateCounts(yAttributes);
     }
 
-    CrossTabulation.prototype.tabulateCounts = function (yAttributes) {
+    crossTabs.tabulateCounts = function (yAttributes) {
         $('#crosstabs').html('');
         var xAttrName = $('#xCrashAttribute option:selected').text();
         var yAttrName = $('#yCrashAttribute option:selected').text();
@@ -65,5 +60,20 @@ var CrossTabulation = (function () {
         $('#crosstabs').append(table);
         charting.createBarChart(this, xAttrName + ' by ' + yAttrName, 'crosstab-chart');
     }
-    return CrossTabulation;
+    crossTabs.init = function() {
+        $(document).ready(function() {
+            util.initCrashData();
+            crossTabs.attributeCounts = [];
+            crossTabs.crashes = window.crashes
+            crossTabs.crashAttributes = window.crashAttributes;
+            crossTabs.countCrashes('crashSeverity', 'collisionType');
+            $('#xCrashAttribute, #yCrashAttribute').change(function() {
+                var xSelectedOption = $('#xCrashAttribute').find('option:selected');
+                var ySelectedOption = $('#yCrashAttribute').find('option:selected');
+                crossTabs.countCrashes($('#xCrashAttribute').val(), $('#yCrashAttribute').val(), xSelectedOption.attr('data-prefix'), ySelectedOption.attr('data-prefix'));
+            });
+            ui.renderQuerySummary();
+        });
+    }
+    crossTabs.init();
 })();

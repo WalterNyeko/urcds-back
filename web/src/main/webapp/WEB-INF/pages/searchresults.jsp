@@ -99,7 +99,7 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function() {
-        initTableSorter('#crashList', 'crashes');
+        util.initTableSorter('#crashList', 'crashes');
         $('.tablesorter-wrapper').height($(window).height() - 320);
     });
 </script>

@@ -7,7 +7,6 @@
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdGBHIqR--XabhAy6UddDj4toKlEyJzAA&v=3.exp&libraries=drawing,geometry">
     </script>
     <script type="text/javascript" src="<c:url value='/scripts/marker-constants.js'/>"></script>
-    <script type="text/javascript" src="<c:url value='/scripts/mapping.js'/>"></script>
     <script type="text/javascript" src="<c:url value='/scripts/StyledMarker.js'/>"></script>
 </head>
 <div class="col-sm-15 height-100">
@@ -22,7 +21,6 @@
                         <option value="collisionType">Collision Type</option>
                         <option value="crashCause">Crash Cause</option>
                         <option selected value="crashSeverity">Crash Severity</option>
-                        <%--<option value="district" data-prefix="policeStation">District</option>--%>
                         <option value="junctionType">Junction Type</option>
                         <option value="policeStation">Police Station</option>
                         <option value="roadSurface">Road Surface</option>
@@ -70,12 +68,6 @@
                             <label for="unra-b" class="form-label">UNRA Class B Roads</label>
                         </td>
                     </tr>
-                    <%--<tr>--%>
-                        <%--<td>--%>
-                            <%--<input class="kml-layer" type="checkbox" id="unra-c" />--%>
-                            <%--<label for="unra-c">UNRA Class C Roads</label>--%>
-                        <%--</td>--%>
-                    <%--</tr>--%>
                 </table>
                 <hr/>
                 <table>
@@ -104,26 +96,15 @@
         </tr>
     </table>
 </div>
-
-<input id='crashesJSON' type='hidden' value='${crashesJSON}' />
-<input id='crashAttributesJSON' type='hidden' value='${crashAttributesJSON}' />
 <script type="text/javascript">
     $(document).ready(function() {
-        localStorage.setItem("crashesJSON", null);
-        localStorage.setItem("crashAttributesJSON", null);
-        var crashJsonText = $.trim($("#crashesJSON").val());
-        var attributesJsonText = $.trim($("#crashAttributesJSON").val());
-        if(crashJsonText.length > 0) {
-            var crashJson = '{"crashes" : ' + crashJsonText + '}';
-            localStorage.setItem("crashesJSON", crashJson);
-            localStorage.setItem("crashAttributesJSON", attributesJsonText);
-        }
+        util.initCrashData();
         $('.kml-layer').click(showCrashesInGoogleMaps);
         $('#crashAttribute').change(showCrashesInGoogleMaps);
         $('#draw-enable').change(function(evt) {
             showDrawingManager(this.checked, evt);
         });
-        initMappingSurface();
+        ui.initMappingSurface();
         showCrashesInGoogleMaps();
     });
 </script>

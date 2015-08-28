@@ -28,7 +28,6 @@
         <script type="text/javascript" src="${base}/resources/bootstrap-modal/js/bootstrap-modal.js"></script>
         <script type="text/javascript" src="${base}/resources/jquery-ui-1.11.1.custom/jquery-ui.min.js"></script>
         <script type="text/javascript" src="${base}/scripts/gis-helper.js"></script>
-        <script type="text/javascript" src="${base}/scripts/mapping.js"></script>
         <script type="text/javascript" src="${base}/scripts/ajax.js"></script>
 
 	</c:when>
