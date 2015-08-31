@@ -1,5 +1,7 @@
 package com.sweroad.model;
 
+import com.sweroad.util.ConvertUtil;
+
 /**
  * Created by Frank on 3/13/15.
  */
@@ -42,5 +44,14 @@ public class AgeRange extends LabelValue {
     @Override
     public int compareTo(Object o) {
         return this.minAge.compareTo(((AgeRange) o).minAge);
+    }
+
+    @Override
+    public String toJSON() {
+        StringBuilder json = new StringBuilder("{");
+        json.append(toJsonProperty(this.minAge, "minAge")).append(",");
+        json.append(toJsonProperty(this.maxAge, "maxAge")).append(",");
+        json.append(toJsonProperty(this.getLabel(), "label")).append("}");
+        return json.toString();
     }
 }

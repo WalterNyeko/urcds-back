@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "district")
 @NamedQueries({
         @NamedQuery(name = District.FIND_DISTRICTS_ORDER_BY_NAME, query = "from District d order by d.name")})
-public class District extends BaseModel implements Comparable<District>, Queryable {
+public class District extends NameIdModel implements Comparable<District>, Queryable {
 
 	/**
 	 * 

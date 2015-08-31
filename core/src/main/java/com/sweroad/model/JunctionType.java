@@ -10,7 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity(name="junction_type")
-public class JunctionType extends BaseModel implements Comparable<JunctionType>, Queryable {
+public class JunctionType extends NameIdModel implements Comparable<JunctionType>, Queryable {
 
 	/**
 	 * 

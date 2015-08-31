@@ -4,13 +4,14 @@ import com.google.common.base.CaseFormat;
 import com.sweroad.model.BaseModel;
 import com.sweroad.model.Crash;
 import com.sweroad.model.DateRangable;
+import com.sweroad.model.NameIdModel;
 
 import java.util.*;
 
 /**
  * Created by Frank on 12/9/14.
  */
-public class CrashQuery extends BaseModel {
+public class CrashQuery {
 
     private Long id;
     private Map<String, List<? extends Queryable>> queryables;

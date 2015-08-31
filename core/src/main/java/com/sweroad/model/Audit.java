@@ -150,4 +150,13 @@ public class Audit extends BaseModel implements Serializable {
                 + ", operation=" + operation + "]";
     }
 
+    @Override
+    public String toJSON() {
+        StringBuilder json = new StringBuilder("{");
+        json.append(toJsonProperty(this.id, "id")).append(",");
+        json.append(toJsonProperty(this.entityId, "entityId")).append(",");
+        json.append(toJsonProperty(this.operation, "operation")).append(",");
+        json.append(toJsonProperty(this.entityName, "entityName")).append("}");
+        return json.toString();
+    }
 }

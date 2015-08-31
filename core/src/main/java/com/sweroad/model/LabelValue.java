@@ -15,7 +15,7 @@ import java.util.Comparator;
  *
  * @see org.apache.struts.util.LabelValueBean
  */
-public class LabelValue implements Comparable<Object>, Serializable, Queryable {
+public class LabelValue extends BaseModel implements Comparable<Object>, Serializable, Queryable {
 
     /**
      * The property which supplies the option label visible to the end user.
@@ -139,6 +139,15 @@ public class LabelValue implements Comparable<Object>, Serializable, Queryable {
         sb.append(this.value);
         sb.append("]");
         return (sb.toString());
+    }
+
+    @Override
+    public String toJSON() {
+        StringBuilder json = new StringBuilder("{");
+        json.append(toJsonProperty(this.getId(), "id")).append(",");
+        json.append(toJsonProperty(this.label, "label")).append(",");
+        json.append(toJsonProperty(this.value, "value")).append("}");
+        return json.toString();
     }
 
     /**

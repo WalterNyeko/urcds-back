@@ -186,6 +186,17 @@ public class Vehicle extends BaseModel implements Comparable<Vehicle> {
 		return String.format("Vehicle {%s}", number);
 	}
 
+    @Override
+    public String toJSON() {
+        StringBuilder json = new StringBuilder("{");
+        json.append(toJsonProperty(this.id, "id")).append(",");
+        json.append(toJsonProperty(this.number, "number")).append(",");
+        json.append(toJsonProperty(this.driver, "driver")).append(",");
+        json.append(toJsonProperty(this.vehicleType, "vehicleType")).append(",");
+        json.append(toJsonProperty(this.companyName, "companyName")).append("}");
+        return json.toString();
+    }
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) {

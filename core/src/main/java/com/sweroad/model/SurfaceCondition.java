@@ -17,7 +17,7 @@ import javax.persistence.Id;
  *
  */
 @Entity(name = "surface_condition")
-public class SurfaceCondition extends BaseModel implements Comparable<SurfaceCondition>, Queryable {
+public class SurfaceCondition extends NameIdModel implements Comparable<SurfaceCondition>, Queryable {
 
 	/**
 	 * 

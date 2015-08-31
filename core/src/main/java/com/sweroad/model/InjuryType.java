@@ -7,7 +7,7 @@ import javax.persistence.*;
  * Created by Frank on 3/12/15.
  */
 @Entity(name = "injury_type")
-public class InjuryType extends BaseModel {
+public class InjuryType extends NameIdModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

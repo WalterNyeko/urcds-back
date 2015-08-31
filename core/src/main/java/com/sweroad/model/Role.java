@@ -31,7 +31,7 @@ import java.io.Serializable;
                 query = "select r from Role r where r.name = :name "
         )
 })
-public class Role extends BaseModel implements Serializable, GrantedAuthority {
+public class Role extends NameIdModel implements Serializable, GrantedAuthority {
     private static final long serialVersionUID = 3690197650654049848L;
     private Long id;
     private String name;

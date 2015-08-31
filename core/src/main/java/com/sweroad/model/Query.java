@@ -8,7 +8,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "query")
-public class Query extends BaseModel {
+public class Query extends NameIdModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -86,6 +86,14 @@ public class Query extends BaseModel {
     @Override
     public String toString() {
         return null;
+    }
+
+    @Override
+    public String toJSON() {
+        StringBuilder json = new StringBuilder(super.toJSON());
+        json.insert(json.lastIndexOf("}"), ",");
+        json.insert(json.lastIndexOf("}"), toJsonProperty(this.description, "description"));
+        return json.toString();
     }
 
     @Override

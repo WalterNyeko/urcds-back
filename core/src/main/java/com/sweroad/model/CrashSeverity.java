@@ -10,7 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity(name="crash_severity")
-public class CrashSeverity extends BaseModel implements Comparable<CrashSeverity>, Queryable {
+public class CrashSeverity extends NameIdModel implements Comparable<CrashSeverity>, Queryable {
 
 	/**
 	 * 

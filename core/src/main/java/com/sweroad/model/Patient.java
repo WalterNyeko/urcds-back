@@ -301,6 +301,27 @@ public class Patient extends BaseModel {
     }
 
     @Override
+    public String toJSON() {
+        StringBuilder json = new StringBuilder("{");
+        json.append(toJsonProperty(this.id, "id")).append(",");
+        json.append(toJsonProperty(this.age, "age")).append(",");
+        json.append(toJsonProperty(this.gender, "gender")).append(",");
+        json.append(toJsonProperty(this.hospitalOutpatientNo, "hospitalOutpatientNo")).append(",");
+        json.append(toJsonProperty(this.hospitalInpatientNo, "hospitalInpatientNo")).append(",");
+        json.append(toJsonProperty(this.hospital, "hospital")).append(",");
+        json.append(toJsonProperty(this.village, "village")).append(",");
+        json.append(toJsonProperty(this.district, "district")).append(",");
+        json.append(toJsonProperty(this.injuryDescription, "injuryDescription")).append(",");
+        json.append(toJsonProperty(this.injuryDateTime, "injuryDateTime")).append(",");
+        json.append(toJsonProperty(this.transportMode, "transportMode")).append(",");
+        json.append(toJsonProperty(this.roadUserType, "roadUserType")).append(",");
+        json.append(toJsonProperty(this.counterpartTransportMode, "counterpartTransportMode")).append(",");
+        json.append(toJsonProperty(this.transportMode, "transportMode")).append("}");
+        //Build on this list further when needed
+        return json.toString();
+    }
+
+    @Override
     public boolean equals(Object o) {
         return false;
     }

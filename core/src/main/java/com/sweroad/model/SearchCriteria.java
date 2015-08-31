@@ -1,5 +1,7 @@
 package com.sweroad.model;
 
+import com.sweroad.util.DateUtil;
+
 import javax.persistence.*;
 import javax.persistence.Transient;
 
@@ -129,6 +131,19 @@ public class SearchCriteria extends BaseModel implements DateRangable {
     @Override
     public String toString() {
         return null;
+    }
+
+    @Override
+    public String toJSON() {
+        StringBuilder json = new StringBuilder("{");
+        json.append(toJsonProperty(this.id, "id")).append(",");
+        json.append(toJsonProperty(this.name, "name")).append(",");
+        json.append(toJsonProperty(this.crash, "crash")).append(",");
+        json.append(toJsonProperty(this.district, "district")).append(",");
+        json.append(toJsonProperty(this.description, "description")).append(",");
+        json.append(toJsonProperty(DateUtil.convertDateToString(this.endDate), "endDate")).append(",");
+        json.append(toJsonProperty(DateUtil.convertDateToString(this.startDate), "startDate")).append("}");
+        return json.toString();
     }
 
     @Override

@@ -10,7 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity(name="roadway_character")
-public class RoadwayCharacter extends BaseModel implements Comparable<RoadwayCharacter>, Queryable {
+public class RoadwayCharacter extends NameIdModel implements Comparable<RoadwayCharacter>, Queryable {
 
 	/**
 	 * 

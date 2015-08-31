@@ -787,6 +787,35 @@ public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertib
         return String.format("Crash {%s}", tarNo);
     }
 
+    public String toJSON() {
+        StringBuilder json = new StringBuilder("{");
+        json.append(toJsonProperty(this.id, "id")).append(",");
+        json.append(toJsonProperty(this.road, "road")).append(",");
+        json.append(toJsonProperty(this.tarNo, "tarNo")).append(",");
+        json.append(toJsonProperty(this.weather, "weather")).append(",");
+        json.append(toJsonProperty(this.vehicles, "vehicles")).append(",");
+        json.append(toJsonProperty(this.latitude, "latitude")).append(",");
+        json.append(toJsonProperty(this.longitude, "longitude")).append(",");
+        json.append(toJsonProperty(this.casualties, "casualties")).append(",");
+        json.append(toJsonProperty(this.crashCause, "crashCause")).append(",");
+        json.append(toJsonProperty(this.roadNumber, "roadNumber")).append(",");
+        json.append(toJsonProperty(this.crashPlace, "crashPlace")).append(",");
+        json.append(toJsonProperty(this.roadSurface, "roadSurface")).append(",");
+        json.append(toJsonProperty(this.surfaceType, "surfaceType")).append(",");
+        json.append(toJsonProperty(this.junctionType, "junctionType")).append(",");
+        json.append(toJsonProperty(this.policeStation, "policeStation")).append(",");
+        json.append(toJsonProperty(this.townOrVillage, "townOrVillage")).append(",");
+        json.append(toJsonProperty(this.crashSeverity, "crashSeverity")).append(",");
+        json.append(toJsonProperty(this.collisionType, "collisionType")).append(",");
+        json.append(toJsonProperty(this.latitudeNumeric, "latitudeNumeric")).append(",");
+        json.append(toJsonProperty(this.longitudeNumeric, "longitudeNumeric")).append(",");
+        json.append(toJsonProperty(this.surfaceCondition, "surfaceCondition")).append(",");
+        json.append(toJsonProperty(this.roadwayCharacter, "roadwayCharacter")).append(",");
+        json.append(toJsonProperty(this.vehicleFailureType, "vehicleFailureType")).append(",");
+        json.append(toJsonProperty(this.crashDateTimeString, "crashDateTimeString")).append(",");
+        return json.toString();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

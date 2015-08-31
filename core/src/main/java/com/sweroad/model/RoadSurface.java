@@ -14,7 +14,7 @@ import javax.persistence.Id;
  *
  */
 @Entity(name = "road_surface")
-public class RoadSurface extends BaseModel implements Comparable<RoadSurface>, Queryable {
+public class RoadSurface extends NameIdModel implements Comparable<RoadSurface>, Queryable {
 
 	/**
 	 * 

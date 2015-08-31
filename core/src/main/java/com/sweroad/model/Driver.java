@@ -239,6 +239,18 @@ public class Driver extends BaseModel {
     }
 
     @Override
+    public String toJSON() {
+        StringBuilder json = new StringBuilder("{");
+        json.append(toJsonProperty(this.id, "id")).append(",");
+        json.append(toJsonProperty(this.age, "age")).append(",");
+        json.append(toJsonProperty(this.gender, "gender")).append(",");
+        json.append(toJsonProperty(this.licenseValid, "licenseValid")).append(",");
+        json.append(toJsonProperty(this.licenseNumber, "licenseNumber")).append(",");
+        json.append(toJsonProperty(this.casualtyType, "casualtyType")).append("}");
+        return json.toString();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

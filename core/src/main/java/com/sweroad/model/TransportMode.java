@@ -7,7 +7,7 @@ import javax.persistence.*;
  * Created by Frank on 3/12/15.
  */
 @Entity(name = "transport_mode")
-public class TransportMode extends BaseModel {
+public class TransportMode extends NameIdModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -16,7 +16,7 @@ import javax.persistence.*;
 @Table(name = "police_station")
 @NamedQueries({
         @NamedQuery(name = PoliceStation.FIND_POLICE_STATIONS_ORDER_BY_NAME, query = "from PoliceStation d order by d.name")})
-public class PoliceStation extends BaseModel implements Comparable<PoliceStation>, Queryable {
+public class PoliceStation extends NameIdModel implements Comparable<PoliceStation>, Queryable {
 
 	/**
 	 * 
@@ -78,6 +78,14 @@ public class PoliceStation extends BaseModel implements Comparable<PoliceStation
 	public String toString() {
 		return String.format("Police Station {%s}", name);
 	}
+
+    @Override
+    public String toJSON() {
+        StringBuilder json = new StringBuilder(super.toJSON());
+        json.insert(json.lastIndexOf("}"), ",");
+        json.insert(json.lastIndexOf("}"), toJsonProperty(this.district, "district"));
+        return json.toString();
+    }
 
 	@Override
 	public boolean equals(Object o) {

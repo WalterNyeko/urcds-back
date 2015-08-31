@@ -6,6 +6,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
+
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
@@ -51,7 +52,7 @@ public class Address extends BaseModel implements Serializable {
     }
 
     @Column(name = "postal_code", length = 15)
-    @Field(analyze= Analyze.NO)
+    @Field(analyze = Analyze.NO)
     public String getPostalCode() {
         return postalCode;
     }
@@ -122,5 +123,16 @@ public class Address extends BaseModel implements Serializable {
                 .append("province", this.province)
                 .append("postalCode", this.postalCode)
                 .append("city", this.city).toString();
+    }
+
+    @Override
+    public String toJSON() {
+        StringBuilder json = new StringBuilder("{");
+        json.append(toJsonProperty(this.city, "city")).append(",");
+        json.append(toJsonProperty(this.address, "address")).append(",");
+        json.append(toJsonProperty(this.country, "country")).append(",");
+        json.append(toJsonProperty(this.province, "province")).append(",");
+        json.append(toJsonProperty(this.postalCode, "postalCode")).append("}");
+        return json.toString();
     }
 }

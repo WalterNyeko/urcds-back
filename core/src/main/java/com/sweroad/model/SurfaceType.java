@@ -17,7 +17,7 @@ import javax.persistence.Id;
  *
  */
 @Entity(name = "surface_type")
-public class SurfaceType extends BaseModel implements Comparable<SurfaceType>, Queryable {
+public class SurfaceType extends NameIdModel implements Comparable<SurfaceType>, Queryable {
 
 
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)

@@ -222,7 +222,20 @@ public class Casualty extends BaseModel {
 		return String.format("Casualty {%s}", casualtyType.getName());
 	}
 
-	@Override
+    @Override
+    public String toJSON() {
+        StringBuilder json = new StringBuilder("{");
+        json.append(toJsonProperty(this.id, "id")).append(",");
+        json.append(toJsonProperty(this.age, "age")).append(",");
+        json.append(toJsonProperty(this.gender, "gender")).append(",");
+        json.append(toJsonProperty(this.beltOrHelmetUsed, "beltOrHelmetUsed")).append(",");
+        json.append(toJsonProperty(this.casualtyType, "casualtyType")).append(",");
+        json.append(toJsonProperty(this.casualtyClass, "casualtyClass")).append(",");
+        json.append(toJsonProperty(this.vehicle, "vehicle")).append("}");
+        return json.toString();
+    }
+
+    @Override
 	public boolean equals(Object o) {
 		if (this == o) {
 			return true;

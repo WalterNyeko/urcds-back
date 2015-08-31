@@ -47,6 +47,15 @@ public class Hospital extends BaseModel {
     }
 
     @Override
+    public String toJSON() {
+        StringBuilder json = new StringBuilder("{");
+        json.append(toJsonProperty(this.id, "id")).append(",");
+        json.append(toJsonProperty(this.name, "name")).append(",");
+        json.append(toJsonProperty(this.district, "district")).append("}");
+        return json.toString();
+    }
+
+    @Override
     public boolean equals(Object o) {
         return false;
     }

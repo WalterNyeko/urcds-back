@@ -17,7 +17,7 @@ import javax.persistence.Id;
  *
  */
 @Entity(name = "weather")
-public class Weather extends BaseModel implements Comparable<Weather>, Queryable {
+public class Weather extends NameIdModel implements Comparable<Weather>, Queryable {
 
 	/**
 	 * 

@@ -11,6 +11,7 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import com.sweroad.util.DateUtil;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -377,4 +378,16 @@ public class User extends BaseModel implements Serializable, UserDetails {
 		}
 		return sb.toString();
 	}
+
+    @Override
+    public String toJSON() {
+        StringBuilder json = new StringBuilder("{");
+        json.append(toJsonProperty(this.id, "id")).append(",");
+        json.append(toJsonProperty(this.email, "email")).append(",");
+        json.append(toJsonProperty(this.username, "username")).append(",");
+        json.append(toJsonProperty(this.lastName, "lastName")).append(",");
+        json.append(toJsonProperty(this.district, "district")).append(",");
+        json.append(toJsonProperty(this.firstName, "firstName")).append("}");
+        return json.toString();
+    }
 }
