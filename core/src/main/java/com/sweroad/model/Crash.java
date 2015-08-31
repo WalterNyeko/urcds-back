@@ -812,7 +812,7 @@ public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertib
         json.append(toJsonProperty(this.surfaceCondition, "surfaceCondition")).append(",");
         json.append(toJsonProperty(this.roadwayCharacter, "roadwayCharacter")).append(",");
         json.append(toJsonProperty(this.vehicleFailureType, "vehicleFailureType")).append(",");
-        json.append(toJsonProperty(this.crashDateTimeString, "crashDateTimeString")).append(",");
+        json.append(toJsonProperty(this.crashDateTimeString, "crashDateTimeString")).append("}");
         return json.toString();
     }
 

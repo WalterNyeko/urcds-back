@@ -49,6 +49,7 @@ public class AgeRange extends LabelValue {
     @Override
     public String toJSON() {
         StringBuilder json = new StringBuilder("{");
+        json.append(toJsonProperty(this.getId(), "id")).append(",");
         json.append(toJsonProperty(this.minAge, "minAge")).append(",");
         json.append(toJsonProperty(this.maxAge, "maxAge")).append(",");
         json.append(toJsonProperty(this.getLabel(), "label")).append("}");

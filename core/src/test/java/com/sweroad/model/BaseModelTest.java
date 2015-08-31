@@ -1,6 +1,7 @@
 package com.sweroad.model;
 
 import com.sweroad.service.BaseManagerTestCase;
+import com.sweroad.service.CrashManager;
 import com.sweroad.service.GenericManager;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import static org.junit.Assert.assertEquals;
  */
 public class BaseModelTest extends BaseManagerTestCase {
 
+    @Autowired
+    private CrashManager crashManager;
     @Autowired
     private GenericManager<Driver, Long> driverManager;
     @Autowired
@@ -63,5 +66,37 @@ public class BaseModelTest extends BaseManagerTestCase {
                 "\"casualtyType\":{\"id\":4,\"name\":\"Not injured\"}},\"vehicleType\":{\"id\":1,\"name\":\"Motor car\"}," +
                 "\"companyName\":\"\"}}";
         assertEquals(expected, casualty.toJSON());
+    }
+
+    @Test
+    public void testAgeRangeJSON() {
+        AgeRange ageRange = new AgeRange(1L, 19, 25);
+        String expected = "{\"id\":1,\"minAge\":19,\"maxAge\":25,\"label\":\"19 - 25\"}";
+        assertEquals(expected, ageRange.toJSON());
+    }
+
+    @Test
+    public void testCrashJSON() {
+        Crash crash = crashManager.get(1L);
+        String expected = "{\"id\":1,\"road\":\"Kampala-Jinja\",\"tarNo\":\"A1509/LGZ\",\"weather\":{\"id\":1,\"name\":\"Clear\"}," +
+                "\"vehicles\":[{\"id\":1,\"number\":1,\"driver\":{\"id\":1,\"age\":27,\"gender\":\"M\",\"licenseValid\":true," +
+                "\"licenseNumber\":\"123456\",\"casualtyType\":{\"id\":4,\"name\":\"Not injured\"}},\"vehicleType\":{\"id\":1," +
+                "\"name\":\"Motor car\"},\"companyName\":\"\"},{\"id\":2,\"number\":2,\"driver\":{\"id\":2,\"age\":53,\"gender\":\"M\"," +
+                "\"licenseValid\":false,\"licenseNumber\":\"123789\",\"casualtyType\":{\"id\":3,\"name\":\"Slight\"}}," +
+                "\"vehicleType\":{\"id\":7,\"name\":\"Medium Omnibus\"},\"companyName\":\"Total Uganda\"}],\"latitude\":\"N00 23.000\"," +
+                "\"longitude\":\"E032 55.270\",\"casualties\":[{\"id\":1,\"age\":25,\"gender\":\"F\",\"beltOrHelmetUsed\":true," +
+                "\"casualtyType\":{\"id\":3,\"name\":\"Slight\"},\"casualtyClass\":{\"id\":4,\"name\":\"Car passenger\"}," +
+                "\"vehicle\":{\"id\":1,\"number\":1,\"driver\":{\"id\":1,\"age\":27,\"gender\":\"M\",\"licenseValid\":true," +
+                "\"licenseNumber\":\"123456\",\"casualtyType\":{\"id\":4,\"name\":\"Not injured\"}},\"vehicleType\":{\"id\":1," +
+                "\"name\":\"Motor car\"},\"companyName\":\"\"}},{\"id\":2,\"age\":30,\"gender\":\"M\",\"beltOrHelmetUsed\":false," +
+                "\"casualtyType\":{\"id\":2,\"name\":\"Serious\"},\"casualtyClass\":{\"id\":1,\"name\":\"Pedestrian\"},\"vehicle\":null}]," +
+                "\"crashCause\":{\"id\":1,\"name\":\"Careless overtaking\"},\"roadNumber\":\"15\",\"crashPlace\":\"Kayanja\"," +
+                "\"roadSurface\":{\"id\":2,\"name\":\"Dry\"},\"surfaceType\":{\"id\":1,\"name\":\"Tar\"},\"junctionType\":{\"id\":1," +
+                "\"name\":\"Not in junction\"},\"policeStation\":{\"id\":1,\"name\":\"Lugazi Police Station\",\"district\":{\"id\":1," +
+                "\"name\":\"Lugazi\"}},\"townOrVillage\":\"Kayanja\",\"crashSeverity\":{\"id\":2,\"name\":\"Serious\"}," +
+                "\"collisionType\":{\"id\":6,\"name\":\"Angle\"},\"latitudeNumeric\":0.383333,\"longitudeNumeric\":32.921167," +
+                "\"surfaceCondition\":{\"id\":1,\"name\":\"Good\"},\"roadwayCharacter\":{\"id\":2,\"name\":\"Blind bend\"}," +
+                "\"vehicleFailureType\":{\"id\":1,\"name\":\"No mechanical defects\"},\"crashDateTimeString\":\"2014-06-03 16:21\"}";
+        assertEquals(expected, crash.toJSON());
     }
 }
