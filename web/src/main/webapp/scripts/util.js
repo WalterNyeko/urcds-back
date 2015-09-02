@@ -106,7 +106,6 @@ var util = (function () {
     util.initCrashAnalysis = function () {
         $(document).ready(function () {
             $("#gMaps").hide();
-            util.initCrashData();
             util.initTableSorter('table.tablesorter', 'crashes');
             if (window.crashes && window.crashes.length)
                 $("#gMaps").show();

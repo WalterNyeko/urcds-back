@@ -4,7 +4,7 @@ import com.sweroad.model.Crash;
 import com.sweroad.model.CrashSeverity;
 import com.sweroad.service.CrashManager;
 import com.sweroad.service.GenericManager;
-import com.sweroad.webapp.util.JsonHelper;
+import com.sweroad.webapp.util.SessionHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,8 +30,8 @@ public class CrashMapController extends BaseFormController {
         List<Crash> crashes = (List<Crash>) request.getSession().getAttribute("crashes");
         if (crashes == null) {
             crashes = crashManager.getAvailableCrashes();
-            JsonHelper.crashesToJsonAndSetInSession(request, crashes);
-            JsonHelper.crashAttributesToJsonAndSetInSession(request, crashManager.getOrderedRefData());
+            SessionHelper.crashesToJsonAndSetInSession(request, crashes);
+            SessionHelper.crashAttributesToJsonAndSetInSession(request, crashManager.getOrderedRefData());
         }
         return mav;
     }

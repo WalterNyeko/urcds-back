@@ -1,5 +1,7 @@
 package com.sweroad.model;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.MappedSuperclass;
@@ -57,17 +59,18 @@ public abstract class BaseModel implements Serializable {
         if (var == null) {
             jsonBuilder.append("null");
         } else if (var instanceof String) {
-            jsonBuilder.append("\"" + var + "\"");
+            jsonBuilder.append("\"" + StringEscapeUtils.escapeJava(var.toString()) + "\"");
         } else if (var instanceof BaseModel) {
             jsonBuilder.append(((BaseModel)var).toJSON());
         } else if (var instanceof List) {
+            jsonBuilder.append("[");
             if (((List)var).size() > 0 && ((List)var).get(0) instanceof BaseModel) {
-                jsonBuilder.append("[");
                 for(Object item : (List)var) {
                     jsonBuilder.append(((BaseModel)item).toJSON()).append(",");
                 }
-                jsonBuilder.replace(jsonBuilder.lastIndexOf(","), jsonBuilder.lastIndexOf(",") + 1, "]");
+                jsonBuilder.deleteCharAt(jsonBuilder.length() - 1);
             }
+            jsonBuilder.append("]");
         } else {
             jsonBuilder.append(var);
         }

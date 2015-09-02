@@ -1,7 +1,5 @@
 package com.sweroad.model;
 
-import com.sweroad.util.ConvertUtil;
-
 /**
  * Created by Frank on 3/13/15.
  */

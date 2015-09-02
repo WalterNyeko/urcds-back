@@ -1,6 +1,7 @@
 package com.sweroad.service.impl;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -10,15 +11,12 @@ import java.util.Map;
 
 import com.sweroad.model.*;
 import com.sweroad.query.CrashQuery;
-import com.sweroad.service.UserManager;
+import com.sweroad.service.*;
 import com.sweroad.util.GisHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sweroad.dao.CrashDao;
-import com.sweroad.service.CrashExcelService;
-import com.sweroad.service.CrashManager;
-import com.sweroad.service.GenericManager;
 import com.sweroad.util.ListUtil;
 
 @Service("crashManager")
@@ -29,43 +27,46 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
     @Autowired
     private UserManager userManager;
     @Autowired
-    private GenericManager<CrashSeverity, Long> crashSeverityManager;
+    private LookupManager lookupManager;
     @Autowired
-    private GenericManager<CollisionType, Long> collisionTypeManager;
-    @Autowired
-    private GenericManager<CrashCause, Long> crashCauseManager;
-    @Autowired
-    private GenericManager<VehicleFailureType, Long> vehicleFailureTypeManager;
-    @Autowired
-    private GenericManager<Weather, Long> weatherManager;
-    @Autowired
-    private GenericManager<SurfaceCondition, Long> surfaceConditionManager;
-    @Autowired
-    private GenericManager<RoadSurface, Long> roadSurfaceManager;
-    @Autowired
-    private GenericManager<SurfaceType, Long> surfaceTypeManager;
-    @Autowired
-    private GenericManager<RoadwayCharacter, Long> roadwayCharacterManager;
-    @Autowired
-    private GenericManager<JunctionType, Long> junctionTypeManager;
-    @Autowired
-    private GenericManager<VehicleType, Long> vehicleTypeManager;
-    @Autowired
-    private GenericManager<CasualtyClass, Long> casualtyClassManager;
-    @Autowired
-    private GenericManager<CasualtyType, Long> casualtyTypeManager;
-    @Autowired
-    private GenericManager<PoliceStation, Long> policeStationManager;
-    @Autowired
-    private GenericManager<District, Long> districtManager;
+    private CrashExcelService crashExcelService;
     @Autowired
     private GenericManager<Driver, Long> driverManager;
+    @Autowired
+    private GenericManager<Weather, Long> weatherManager;
     @Autowired
     private GenericManager<Vehicle, Long> vehicleManager;
     @Autowired
     private GenericManager<Casualty, Long> casualtyManager;
     @Autowired
-    private CrashExcelService crashExcelService;
+    private GenericManager<District, Long> districtManager;
+    @Autowired
+    private GenericManager<CrashCause, Long> crashCauseManager;
+    @Autowired
+    private GenericManager<VehicleType, Long> vehicleTypeManager;
+    @Autowired
+    private GenericManager<RoadSurface, Long> roadSurfaceManager;
+    @Autowired
+    private GenericManager<SurfaceType, Long> surfaceTypeManager;
+    @Autowired
+    private GenericManager<JunctionType, Long> junctionTypeManager;
+    @Autowired
+    private GenericManager<CasualtyType, Long> casualtyTypeManager;
+    @Autowired
+    private GenericManager<PoliceStation, Long> policeStationManager;
+    @Autowired
+    private GenericManager<CasualtyClass, Long> casualtyClassManager;
+    @Autowired
+    private GenericManager<CrashSeverity, Long> crashSeverityManager;
+    @Autowired
+    private GenericManager<CollisionType, Long> collisionTypeManager;
+    @Autowired
+    private GenericManager<SurfaceCondition, Long> surfaceConditionManager;
+    @Autowired
+    private GenericManager<RoadwayCharacter, Long> roadwayCharacterManager;
+    @Autowired
+    private GenericManager<VehicleFailureType, Long> vehicleFailureTypeManager;
+
     /**
      * Will be used instead of this so that we can intercept calls to save using
      * audit trail aop classes
@@ -131,8 +132,8 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
             crash.setRemovable(false);
             crash.setRemoved(false);
         } else {
-            crash.setDateUpdated(new Date());
-            crash.setUpdatedBy(user);
+//            crash.setDateUpdated(new Date());
+//            crash.setUpdatedBy(user);
             Crash dbCrash = super.get(crash.getId());
             deleteRemovedVehicles(dbCrash, crash);
             deleteRemovedCasualties(dbCrash, crash);
@@ -191,7 +192,7 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
                     casualty.setUpdatedBy(user);
                 }
                 setCasualtyParams(casualty);
-                casualty = casualtyManager.save(casualty);
+                casualtyManager.save(casualty);
             }
         }
     }
@@ -240,7 +241,23 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
         if (crash.getWeather() != null && crash.getWeather().getId() != null) {
             crash.setWeather(weatherManager.get(crash.getWeather().getId()));
         }
+        setCrashWeight(crash);
         setGpsCoordinates(crash);
+    }
+
+    private void setCrashWeight(Crash crash) {
+        BigDecimal weight = new BigDecimal(0);
+        if (crash.getCrashSeverity() != null) {
+            weight  = weight.add(crash.getCrashSeverity().getWeight());
+        }
+        if (crash.getCasualties() != null) {
+            for(Casualty casualty : crash.getCasualties()) {
+                if (casualty.getCasualtyType() != null) {
+                    weight = weight.add(casualty.getCasualtyType().getWeight());
+                }
+            }
+        }
+        crash.setWeight(weight);
     }
 
     private void setGpsCoordinates(Crash crash) {
@@ -274,45 +291,25 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
     @SuppressWarnings("rawtypes")
     public Map<String, List> getReferenceData() {
         Map<String, List> referenceData = new HashMap<String, List>();
-        // Add reference data to map for use in the UI
-        List<CrashSeverity> crashSeverities = crashSeverityManager
-                .getAllDistinct();
-        List<CollisionType> collisionTypes = collisionTypeManager
-                .getAllDistinct();
-        List<CrashCause> crashCauses = crashCauseManager.getAllDistinct();
-        List<VehicleFailureType> vehicleFailureTypes = vehicleFailureTypeManager
-                .getAllDistinct();
-        List<Weather> weathers = weatherManager.getAllDistinct();
-        List<SurfaceCondition> surfaceConditions = surfaceConditionManager
-                .getAllDistinct();
-        List<RoadSurface> roadSurfaces = roadSurfaceManager.getAllDistinct();
-        List<SurfaceType> surfaceTypes = surfaceTypeManager.getAllDistinct();
-        List<RoadwayCharacter> roadwayCharacters = roadwayCharacterManager
-                .getAllDistinct();
-        List<JunctionType> junctionTypes = junctionTypeManager.getAllDistinct();
-        List<PoliceStation> policeStations = policeStationManager.getAllDistinct();
-        Collections.sort(policeStations);
         List<District> districts = districtManager.getAllDistinct();
         Collections.sort(districts);
-        List<VehicleType> vehicleTypes = vehicleTypeManager.getAllDistinct();
-        List<CasualtyType> casualtyTypes = casualtyTypeManager.getAllDistinct();
-        List<CasualtyClass> casualtyClasses = casualtyClassManager
-                .getAllDistinct();
-        referenceData.put("crashSeverities", crashSeverities);
-        referenceData.put("collisionTypes", collisionTypes);
-        referenceData.put("crashCauses", crashCauses);
-        referenceData.put("vehicleFailureTypes", vehicleFailureTypes);
-        referenceData.put("weathers", weathers);
-        referenceData.put("surfaceConditions", surfaceConditions);
-        referenceData.put("roadSurfaces", roadSurfaces);
-        referenceData.put("surfaceTypes", surfaceTypes);
-        referenceData.put("roadwayCharacters", roadwayCharacters);
-        referenceData.put("junctionTypes", junctionTypes);
+        List<PoliceStation> policeStations = policeStationManager.getAllDistinct();
+        Collections.sort(policeStations);
         referenceData.put("districts", districts);
         referenceData.put("policeStations", policeStations);
-        referenceData.put("vehicleTypes", vehicleTypes);
-        referenceData.put("casualtyTypes", casualtyTypes);
-        referenceData.put("casualtyClasses", casualtyClasses);
+        referenceData.put("weathers", weatherManager.getAllDistinct());
+        referenceData.put("crashCauses", crashCauseManager.getAllDistinct());
+        referenceData.put("roadSurfaces", roadSurfaceManager.getAllDistinct());
+        referenceData.put("surfaceTypes", surfaceTypeManager.getAllDistinct());
+        referenceData.put("vehicleTypes", vehicleTypeManager.getAllDistinct());
+        referenceData.put("junctionTypes", junctionTypeManager.getAllDistinct());
+        referenceData.put("casualtyTypes", casualtyTypeManager.getAllDistinct());
+        referenceData.put("collisionTypes", collisionTypeManager.getAllDistinct());
+        referenceData.put("crashSeverities", crashSeverityManager.getAllDistinct());
+        referenceData.put("casualtyClasses", casualtyClassManager.getAllDistinct());
+        referenceData.put("surfaceConditions", surfaceConditionManager.getAllDistinct());
+        referenceData.put("roadwayCharacters", roadwayCharacterManager.getAllDistinct());
+        referenceData.put("vehicleFailureTypes", vehicleFailureTypeManager.getAllDistinct());
 
         return referenceData;
     }
@@ -323,6 +320,7 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
         for (List l : refData.values()) {
             Collections.sort(l);
         }
+        refData.put("crashWeightRanges", lookupManager.getAllWeightRanges());
         return refData;
     }
 

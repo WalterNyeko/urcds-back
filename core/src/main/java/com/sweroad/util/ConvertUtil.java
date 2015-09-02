@@ -1,5 +1,6 @@
 package com.sweroad.util;
 
+import com.sweroad.model.BaseModel;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -97,5 +98,16 @@ public final class ConvertUtil {
         }
 
         return obj;
+    }
+
+    public static String listToJSON(List<? extends BaseModel> list) {
+        StringBuilder json = new StringBuilder("[");
+        if (list.size() > 0) {
+            for (BaseModel item : list) {
+                json.append(item.toJSON()).append(",");
+            }
+            json.deleteCharAt(json.length()-1);
+        }
+        return json.append("]").toString();
     }
 }

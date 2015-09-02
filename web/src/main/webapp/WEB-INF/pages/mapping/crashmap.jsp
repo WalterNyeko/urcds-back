@@ -108,3 +108,4 @@
         showCrashesInGoogleMaps();
     });
 </script>
+<%@ include file="/common/session.jsp"%>

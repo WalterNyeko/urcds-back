@@ -66,3 +66,4 @@
     </div>
     <p>&nbsp;</p>
 </div>
+<%@ include file="/common/session.jsp"%>

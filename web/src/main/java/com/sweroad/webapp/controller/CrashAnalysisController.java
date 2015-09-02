@@ -8,7 +8,7 @@ import com.sweroad.service.SearchCriteriaManager;
 import com.sweroad.service.VehicleManager;
 import com.sweroad.util.DateUtil;
 import com.sweroad.webapp.util.CrashAnalysisHelper;
-import com.sweroad.webapp.util.JsonHelper;
+import com.sweroad.webapp.util.SessionHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
@@ -84,8 +84,8 @@ public class CrashAnalysisController extends BaseFormController {
     }
 
     private void setCrashesInSession(HttpServletRequest request, List<Crash> crashes) throws ParseException {
-        JsonHelper.crashesToJsonAndSetInSession(request, crashes);
-        JsonHelper.crashAttributesToJsonAndSetInSession(request, crashManager.getOrderedRefData());
+        SessionHelper.crashesToJsonAndSetInSession(request, crashes);
+        SessionHelper.crashAttributesToJsonAndSetInSession(request, crashManager.getOrderedRefData());
     }
 
     private List<Vehicle> getVehicles(HttpServletRequest request) throws Exception {
@@ -107,7 +107,7 @@ public class CrashAnalysisController extends BaseFormController {
             mav.addAllObjects(crashManager.getOrderedRefData());
             mav.addObject("years", CrashAnalysisHelper.getYearsForSearch());
             mav.addObject("months", CrashAnalysisHelper.getMonthsForSearch(request));
-            JsonHelper.policeStationsToJsonAndSetInAttribute(request, (List<PoliceStation>) mav.getModelMap().get("policeStations"));
+            SessionHelper.policeStationsToJsonAndSetInAttribute(request, (List<PoliceStation>) mav.getModelMap().get("policeStations"));
             return mav;
         } catch (Exception e) {
             log.error("Select crash failed: " + e.getLocalizedMessage());

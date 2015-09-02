@@ -59,7 +59,6 @@
                         </menu:useMenuDisplayer>
                     </div>
                 </c:if>
-                <%@ include file="/common/session.jsp"%>
             </div>
         </div>
 

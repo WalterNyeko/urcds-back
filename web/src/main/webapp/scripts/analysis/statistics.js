@@ -10,10 +10,10 @@
         var attribute = element.val();
         var selected = element.find('option:selected');
         var crashProp = selected.attr('data-prefix');
-        var timeDimension = selected.attr('data-time');
+        var rangeAttribute = selected.attr('data-range');
         var attributes = crashAttributes[attribute];
-        if (timeDimension)
-            this.countTimeAttributes(attributes, timeDimension);
+        if (rangeAttribute)
+            this.countRangeAttributes(attributes, rangeAttribute);
         else
             this.countAttributes(attributes, attribute, crashProp);
         var notSpec = this.crashes.length - this.attributeCounts.reduce(function(total, b) {
@@ -22,7 +22,7 @@
         if (notSpec) {
            this.attributeCounts.push({"name" : "Not specified", "count" : notSpec});
         }
-        this.tabulateCounts(!timeDimension);
+        this.tabulateCounts(!rangeAttribute);
     }
 
     statistics.countAttributes = function(attributes, attribute, crashProp) {
@@ -36,8 +36,8 @@
         }, this);
     }
 
-    statistics.countTimeAttributes = function(attributes, timeDimension) {
-        if (timeDimension == 'month') {
+    statistics.countRangeAttributes = function(attributes, rangeType) {
+        if (rangeType == 'month') {
             attributes.map(function(month, index) {
                 this.attributeCounts.push({
                     name : month,
@@ -46,13 +46,27 @@
                         return crashDate && crashDate.getMonth() == index;
                     }).length });
             }, this);
-        } else {
+        } else if (rangeType == 'year') {
             attributes.map(function(year) {
                 this.attributeCounts.push({
                     name : year,
                     count : this.crashes.filter(function(c) {
                         var crashDate = c.crashDateTime ? new Date(c.crashDateTime) : null;
                         return crashDate && crashDate.getFullYear() == year;
+                    }).length });
+            }, this);
+        } else if (rangeType == 'weight') {
+            attributes.map(function(weightRange) {
+                this.attributeCounts.push({
+                    name : weightRange.label,
+                    count : this.crashes.filter(function(c) {
+                        if (c.weight) {
+                            if (weightRange.maxWeight)
+                                return (c.weight >= weightRange.minWeight && c.weight <= weightRange.maxWeight);
+                            else
+                                return c.weight >= weightRange.minWeight;
+                        }
+                        return false;
                     }).length });
             }, this);
         }

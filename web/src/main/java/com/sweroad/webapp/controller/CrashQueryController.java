@@ -6,14 +6,13 @@ import com.sweroad.model.Query;
 import com.sweroad.query.CrashSearch;
 import com.sweroad.service.CrashQueryManager;
 import com.sweroad.webapp.util.CrashAnalysisHelper;
-import com.sweroad.webapp.util.JsonHelper;
+import com.sweroad.webapp.util.SessionHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -53,7 +52,7 @@ public class CrashQueryController extends BaseFormController {
         mav.addAllObjects(crashQueryManager.getCrashQueryReferenceData());
         mav.addObject("years", CrashAnalysisHelper.getYearsForSearch());
         mav.addObject("months", CrashAnalysisHelper.getMonthsForSearch(request));
-        JsonHelper.policeStationsToJsonAndSetInAttribute(request, (List<PoliceStation>) mav.getModelMap().get("policeStations"));
+        SessionHelper.policeStationsToJsonAndSetInAttribute(request, (List<PoliceStation>) mav.getModelMap().get("policeStations"));
         return mav;
     }
 
@@ -63,7 +62,7 @@ public class CrashQueryController extends BaseFormController {
         try {
             crashQueryManager.processCrashSearch(crashSearch);
             List<Crash> crashes = crashQueryManager.getCrashesByQuery(crashSearch.toQuery());
-            JsonHelper.crashesToJsonAndSetInSession(request, crashes);
+            SessionHelper.crashesToJsonAndSetInSession(request, crashes);
         } catch (ParseException e) {
             logException(request, e, "Date provided was in wrong format.");
         } catch (Exception e) {

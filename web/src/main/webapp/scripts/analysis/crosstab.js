@@ -7,23 +7,47 @@
     crossTabs.countCrashes = function (xAttribute, yAttribute, xCrashProp, yCrashProp) {
         var ctx = this;
         this.attributeCounts.length = 0;
-        var xAttributes = this.crashAttributes[xAttribute];
-        var yAttributes = this.crashAttributes[yAttribute];
+        var xAttributes = this.getAttributes(xAttribute);
+        var yAttributes = this.getAttributes(yAttribute);
+        var xWeight = $('#xCrashAttribute option:selected').attr('data-weight');
+        var yWeight = $('#yCrashAttribute option:selected').attr('data-weight');
         xAttributes.forEach(function (xAttr) {
             var xAttributeCount = { xName: xAttr.name, yAttributeCounts: [] };
             yAttributes.forEach(function (yAttr) {
                 xAttributeCount.yAttributeCounts.push({
                     yName: yAttr.name,
-                    "count": ctx.crashes.filter(function (c) {
+                    count: ctx.crashes.filter(function (c) {
+                        var xMatch = false;
+                        var yMatch = false;
                         var xCrashAttr = xCrashProp ? c[xCrashProp][xAttribute] : c[xAttribute];
                         var yCrashAttr = yCrashProp ? c[yCrashProp][yAttribute] : c[yAttribute];
-                        return xCrashAttr && xCrashAttr['id'] === xAttr.id &&
-                            yCrashAttr && yCrashAttr['id'] === yAttr.id
+                        if (xWeight) {
+                            if (xAttr.maxWeight)
+                                xMatch = (c.weight >= xAttr.minWeight && c.weight <= xAttr.maxWeight);
+                            else
+                                xMatch = c.weight >= xAttr.minWeight;
+                        } else
+                            xMatch = xCrashAttr && xCrashAttr['id'] === xAttr.id;
+                        if (yWeight) {
+                            if (yAttr.maxWeight)
+                                yMatch = (c.weight >= yAttr.minWeight && c.weight <= yAttr.maxWeight);
+                            else
+                                yMatch = c.weight >= yAttr.minWeight;
+                        } else
+                            yMatch = yCrashAttr && yCrashAttr['id'] === yAttr.id;
+                        return xMatch && yMatch;
                     }).length});
             });
             ctx.attributeCounts.push(xAttributeCount);
         });
         this.tabulateCounts(yAttributes);
+    }
+
+    crossTabs.getAttributes = function(attributeName) {
+        var attributes = this.crashAttributes[attributeName];
+        if (attributes.length && ! attributes[0].name && attributes[0].label)
+            attributes.map(function(attr) { attr.name = attr.label });
+        return attributes;
     }
 
     crossTabs.tabulateCounts = function (yAttributes) {

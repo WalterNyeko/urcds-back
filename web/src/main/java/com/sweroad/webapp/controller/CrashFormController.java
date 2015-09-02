@@ -1,9 +1,6 @@
 package com.sweroad.webapp.controller;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sweroad.model.*;
 import com.sweroad.util.DateUtil;
-import com.sweroad.webapp.util.JsonHelper;
+import com.sweroad.webapp.util.SessionHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -67,7 +64,7 @@ public class CrashFormController extends BaseFormController {
         }
         mav.addObject("crash", crash);
         mav.addAllObjects(crashManager.getReferenceData());
-        JsonHelper.policeStationsToJsonAndSetInAttribute(request, (List<PoliceStation>) mav.getModelMap().get("policeStations"));
+        SessionHelper.policeStationsToJsonAndSetInAttribute(request, (List<PoliceStation>) mav.getModelMap().get("policeStations"));
         return mav;
     }
 

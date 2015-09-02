@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.math.BigDecimal;
 
 @Entity(name = "casualty_type")
 public class CasualtyType extends NameIdModel implements Comparable<CasualtyType>, Queryable {
@@ -22,6 +23,8 @@ public class CasualtyType extends NameIdModel implements Comparable<CasualtyType
     private Long id;
     @Column(nullable = false)
     private String name;
+    @Column
+    private BigDecimal weight;
 
     /**
      * @return the id
@@ -49,6 +52,14 @@ public class CasualtyType extends NameIdModel implements Comparable<CasualtyType
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    public BigDecimal getWeight() {
+        return weight;
+    }
+
+    public void setWeight(BigDecimal weight) {
+        this.weight = weight;
     }
 
     @Override

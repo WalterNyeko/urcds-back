@@ -4,6 +4,7 @@
 package com.sweroad.model;
 
 import java.beans.Transient;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -12,6 +13,7 @@ import javax.persistence.*;
 import com.sweroad.audit.IAuditable;
 import com.sweroad.audit.IXMLConvertible;
 import com.sweroad.util.CrashHelper;
+import com.sweroad.util.DateUtil;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -131,6 +133,8 @@ public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertib
     private Double latitudeNumeric;
     @Column(name = "longitude_numeric")
     private Double longitudeNumeric;
+    @Column
+    private BigDecimal weight;
     private transient boolean dirty;
 
     /**
@@ -734,6 +738,14 @@ public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertib
         this.longitudeNumeric = longitudeNumeric;
     }
 
+    public BigDecimal getWeight() {
+        return weight;
+    }
+
+    public void setWeight(BigDecimal weight) {
+        this.weight = weight;
+    }
+
     public boolean isDirty() {
         return dirty;
     }
@@ -792,6 +804,7 @@ public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertib
         json.append(toJsonProperty(this.id, "id")).append(",");
         json.append(toJsonProperty(this.road, "road")).append(",");
         json.append(toJsonProperty(this.tarNo, "tarNo")).append(",");
+        json.append(toJsonProperty(this.weight, "weight")).append(",");
         json.append(toJsonProperty(this.weather, "weather")).append(",");
         json.append(toJsonProperty(this.vehicles, "vehicles")).append(",");
         json.append(toJsonProperty(this.latitude, "latitude")).append(",");
@@ -812,7 +825,8 @@ public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertib
         json.append(toJsonProperty(this.surfaceCondition, "surfaceCondition")).append(",");
         json.append(toJsonProperty(this.roadwayCharacter, "roadwayCharacter")).append(",");
         json.append(toJsonProperty(this.vehicleFailureType, "vehicleFailureType")).append(",");
-        json.append(toJsonProperty(this.crashDateTimeString, "crashDateTimeString")).append("}");
+        json.append(toJsonProperty(this.crashDateTimeString, "crashDateTimeString")).append(",");
+        json.append(toJsonProperty(DateUtil.convertDateToString(this.crashDateTime), "crashDateTime")).append("}");
         return json.toString();
     }
 

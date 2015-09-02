@@ -80,6 +80,13 @@
 									key="crashForm.crashPlace" /></td>
 							<td class="underlined">${crash.crashPlace}</td>
 						</tr>
+                        <tr>
+                            <td><appfuse:label styleClass="form-label boldText"
+                                               key="crashForm.crashWeight" /></td>
+                            <td class="underlined">
+                                <fmt:formatNumber type="number" maxFractionDigits="0" value="${crash.weight}" />
+                            </td>
+                        </tr>
 					</table>
 				</td>
 				<td width="60%" valign="top">

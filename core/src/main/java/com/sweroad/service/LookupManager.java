@@ -3,7 +3,9 @@ package com.sweroad.service;
 import com.sweroad.model.AgeRange;
 import com.sweroad.model.LabelValue;
 import com.sweroad.model.TimeRange;
+import com.sweroad.model.WeightRange;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -37,6 +39,12 @@ public interface LookupManager {
     List<LabelValue> getFilteredAgeRanges(List<LabelValue> selectedValues);
 
     AgeRange getAgeRangeByAge(int age);
+
+    List<LabelValue> getAllWeightRanges();
+
+    List<LabelValue> getFilteredWeightRanges(List<LabelValue> selectedValues);
+
+    WeightRange getWeightRangeByWeight(BigDecimal age);
 
     List<LabelValue> getAllTimeRanges();
 

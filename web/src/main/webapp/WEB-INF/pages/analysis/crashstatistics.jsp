@@ -32,9 +32,10 @@
         <option value="collisionType">Collision Type</option>
         <option value="crashCause">Crash Cause</option>
         <option selected value="crashSeverity">Crash Severity</option>
+        <option value="weightRange" data-range="weight">Crash Weight</option>
         <option value="district" data-prefix="policeStation">District</option>
         <option value="junctionType">Junction Type</option>
-        <option value="month" data-time="month">Month</option>
+        <option value="month" data-range="month">Month</option>
         <option value="policeStation">Police Station</option>
         <option value="roadSurface">Road Surface</option>
         <option value="roadwayCharacter">Roadway Character</option>
@@ -42,7 +43,7 @@
         <option value="surfaceType">Surface Type</option>
         <option value="vehicleFailureType">Vehicle Failure Type</option>
         <option value="weather">Weather</option>
-        <option value="year" data-time="year">Year</option>
+        <option value="year" data-range="year">Year</option>
     </select>
     <div class="content-wrapper">
         <table cellpadding="3" width="100%" class="stats-tab">
@@ -67,3 +68,4 @@
     </div>
     <p>&nbsp;</p>
 </div>
+<%@ include file="/common/session.jsp"%>

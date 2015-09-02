@@ -96,7 +96,8 @@ public class BaseModelTest extends BaseManagerTestCase {
                 "\"name\":\"Lugazi\"}},\"townOrVillage\":\"Kayanja\",\"crashSeverity\":{\"id\":2,\"name\":\"Serious\"}," +
                 "\"collisionType\":{\"id\":6,\"name\":\"Angle\"},\"latitudeNumeric\":0.383333,\"longitudeNumeric\":32.921167," +
                 "\"surfaceCondition\":{\"id\":1,\"name\":\"Good\"},\"roadwayCharacter\":{\"id\":2,\"name\":\"Blind bend\"}," +
-                "\"vehicleFailureType\":{\"id\":1,\"name\":\"No mechanical defects\"},\"crashDateTimeString\":\"2014-06-03 16:21\"}";
+                "\"vehicleFailureType\":{\"id\":1,\"name\":\"No mechanical defects\"},\"crashDateTimeString\":\"2014-06-03 16:21\"," +
+                "\"crashDateTime\":\"2014-06-03\"}";
         assertEquals(expected, crash.toJSON());
     }
 }

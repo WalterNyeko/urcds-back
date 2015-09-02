@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.sweroad.Constants;
 import com.sweroad.model.Crash;
 import com.sweroad.model.PoliceStation;
+import com.sweroad.util.ConvertUtil;
 import com.sweroad.util.DateUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +18,7 @@ import java.util.Map;
 /**
  * Created by Frank on 12/19/14.
  */
-public class JsonHelper {
+public class SessionHelper {
 
     /**
      * Takes list of crashes and converts them to JSON and then sets crashes and JSON String in session
@@ -26,9 +27,8 @@ public class JsonHelper {
      * @param crashes
      */
     public static void crashesToJsonAndSetInSession(HttpServletRequest request, List<Crash> crashes) {
-        String crashesJSON = new Gson().toJson(crashes);
         request.getSession().setAttribute("crashes", crashes);
-        request.getSession().setAttribute("crashesJSON", crashesJSON);
+        request.getSession().setAttribute("crashesJSON", ConvertUtil.listToJSON(crashes));
     }
 
     /**
@@ -38,8 +38,7 @@ public class JsonHelper {
      * @param policeStations
      */
     public static void policeStationsToJsonAndSetInAttribute(HttpServletRequest request, List<PoliceStation> policeStations) {
-        String policeStationJSON = new Gson().toJson(policeStations);
-        request.setAttribute("police_stations_json", policeStationJSON);
+        request.setAttribute("police_stations_json", ConvertUtil.listToJSON(policeStations));
     }
 
     public static void crashAttributesToJsonAndSetInSession(HttpServletRequest request, Map<String,
@@ -48,11 +47,11 @@ public class JsonHelper {
         Gson gson = new Gson();
         for (String key : crashAttributes.keySet()) {
             crashAttributeJSON.append("\"").append(generateAttributeName(crashAttributes.get(key).get(0)));
-            crashAttributeJSON.append("\": ").append(gson.toJson(crashAttributes.get(key)));
-            crashAttributeJSON.append(", ");
+            crashAttributeJSON.append("\":").append(ConvertUtil.listToJSON(crashAttributes.get(key)));
+            crashAttributeJSON.append(",");
         }
-        crashAttributeJSON.append("\"month\": ").append(gson.toJson(Constants.MONTHS_OF_YEAR)).append(", ");
-        crashAttributeJSON.append("\"year\": ").append(gson.toJson(yearsFrom2014())).append("}");
+        crashAttributeJSON.append("\"month\":").append(gson.toJson(Constants.MONTHS_OF_YEAR)).append(",");
+        crashAttributeJSON.append("\"year\":").append(gson.toJson(yearsFrom2014())).append("}");
         request.getSession().setAttribute("crashAttributesJSON", crashAttributeJSON.toString());
     }
 
