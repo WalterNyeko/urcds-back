@@ -132,8 +132,8 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
             crash.setRemovable(false);
             crash.setRemoved(false);
         } else {
-//            crash.setDateUpdated(new Date());
-//            crash.setUpdatedBy(user);
+            crash.setDateUpdated(new Date());
+            crash.setUpdatedBy(user);
             Crash dbCrash = super.get(crash.getId());
             deleteRemovedVehicles(dbCrash, crash);
             deleteRemovedCasualties(dbCrash, crash);
