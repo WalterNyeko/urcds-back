@@ -21,6 +21,7 @@
                         <option value="collisionType">Collision Type</option>
                         <option value="crashCause">Crash Cause</option>
                         <option selected value="crashSeverity">Crash Severity</option>
+                        <option value="weightRange" data-weight="weight">Crash Weight</option>
                         <option value="junctionType">Junction Type</option>
                         <option value="policeStation">Police Station</option>
                         <option value="roadSurface">Road Surface</option>

@@ -42,14 +42,12 @@
         });
         this.tabulateCounts(yAttributes);
     }
-
     crossTabs.getAttributes = function(attributeName) {
         var attributes = this.crashAttributes[attributeName];
         if (attributes.length && ! attributes[0].name && attributes[0].label)
             attributes.map(function(attr) { attr.name = attr.label });
         return attributes;
     }
-
     crossTabs.tabulateCounts = function (yAttributes) {
         $('#crosstabs').html('');
         var xAttrName = $('#xCrashAttribute option:selected').text();

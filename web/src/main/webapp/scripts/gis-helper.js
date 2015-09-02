@@ -228,11 +228,22 @@ function getCrashStyledIcon(crash) {
     var text = "";
     var crashAttribute = $('#crashAttribute').val();
     var attributes = window.crashAttributes[crashAttribute];
-    if (crash[crashAttribute]) {
-        var attribute = attributes.filter(function(x) { return x.id == crash[crashAttribute]['id']})[0];
+    var crashWeight = crashAttribute == 'weightRange';
+    if (crash[crashAttribute] || crashWeight) {
+        var attribute = attributes.filter(function(x) {
+            var match = false;
+            if (crashWeight) {
+                if (x.maxWeight)
+                    match = (crash.weight >= x.minWeight && crash.weight <= x.maxWeight);
+                else
+                    match = crash.weight >= x.minWeight;
+            } else
+                match = x.id == crash[crashAttribute]['id'];
+            return match;
+        })[0];
         if (attribute) {
             color = markerColors[attribute.id - 1];
-            text = attribute.name.charAt(0);
+            text = attribute.name ? attribute.name.charAt(0) : attribute.id + '';
         }
     }
     return new StyledIcon(StyledIconTypes.MARKER, {color: color, text: text});
@@ -249,10 +260,10 @@ function generateLegend() {
         row.find('td:first').attr('width', 30)
             .attr('align', 'center')
             .css('font-weight', 'bold')
-            .text(attribute.name.charAt(0))
+            .text(attribute.name ? attribute.name.charAt(0) : attribute.id)
             .css('border', 'Solid #000 1px')
             .attr('bgcolor', markerColors[attribute.id - 1]);
-        row.find('td:last').text('- '.concat(attribute.name));
+        row.find('td:last').text('- '.concat(attribute.name ? attribute.name : attribute.label));
         markerLegend.append(row);
     });
     markerLegend.find('tr:last').after(markerLegend.find('tr.not-spec'));

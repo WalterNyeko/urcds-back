@@ -1,21 +1,8 @@
 package com.sweroad.webapp.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import com.mysql.jdbc.StringUtils;
-import com.sweroad.service.GenericManager;
-import com.sweroad.util.GisHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -29,9 +16,6 @@ public class CrashController extends BaseFormController {
 
     @Autowired
     private CrashManager crashManager;
-
-    @Autowired
-    private GenericManager<Crash, Long> genericCrashManager;
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView showCrashes() throws Exception {
