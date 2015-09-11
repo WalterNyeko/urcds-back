@@ -42,10 +42,6 @@ public interface LookupManager {
 
     List<LabelValue> getAllWeightRanges();
 
-    List<LabelValue> getFilteredWeightRanges(List<LabelValue> selectedValues);
-
-    WeightRange getWeightRangeByWeight(BigDecimal age);
-
     List<LabelValue> getAllTimeRanges();
 
     TimeRange getTimeRangeByTime(Date dateTime);

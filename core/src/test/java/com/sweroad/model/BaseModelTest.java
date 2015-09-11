@@ -43,7 +43,7 @@ public class BaseModelTest extends BaseManagerTestCase {
     @Test
     public void testDriverJSON() {
         Driver driver = driverManager.get(1L);
-        String expected = "{\"id\":1,\"age\":27,\"gender\":\"M\",\"licenseValid\":true," +
+        String expected = "{\"id\":1,\"age\":27,\"gender\":\"M\",\"licenseValid\":true,\"beltOrHelmetUsed\":false," +
                 "\"licenseNumber\":\"123456\",\"casualtyType\":{\"id\":4,\"name\":\"Not injured\"}}";
         assertEquals(expected, driver.toJSON());
     }
@@ -52,7 +52,7 @@ public class BaseModelTest extends BaseManagerTestCase {
     public void testVehicleJSON() {
         Vehicle vehicle = vehicleManager.get(1L);
         String expected = "{\"id\":1,\"number\":1,\"driver\":{\"id\":1,\"age\":27,\"gender\":\"M\",\"licenseValid\":true," +
-                "\"licenseNumber\":\"123456\",\"casualtyType\":{\"id\":4,\"name\":\"Not injured\"}}," +
+                "\"beltOrHelmetUsed\":false,\"licenseNumber\":\"123456\",\"casualtyType\":{\"id\":4,\"name\":\"Not injured\"}}," +
                 "\"vehicleType\":{\"id\":1,\"name\":\"Motor car\"},\"companyName\":\"\"}";
         assertEquals(expected, vehicle.toJSON());
     }
@@ -62,7 +62,7 @@ public class BaseModelTest extends BaseManagerTestCase {
         Casualty casualty = casualtyManager.get(1L);
         String expected = "{\"id\":1,\"age\":25,\"gender\":\"F\",\"beltOrHelmetUsed\":true,\"casualtyType\":{\"id\":3,\"name\":\"Slight\"}," +
                 "\"casualtyClass\":{\"id\":4,\"name\":\"Car passenger\"},\"vehicle\":{\"id\":1,\"number\":1," +
-                "\"driver\":{\"id\":1,\"age\":27,\"gender\":\"M\",\"licenseValid\":true,\"licenseNumber\":\"123456\"," +
+                "\"driver\":{\"id\":1,\"age\":27,\"gender\":\"M\",\"licenseValid\":true,\"beltOrHelmetUsed\":false,\"licenseNumber\":\"123456\"," +
                 "\"casualtyType\":{\"id\":4,\"name\":\"Not injured\"}},\"vehicleType\":{\"id\":1,\"name\":\"Motor car\"}," +
                 "\"companyName\":\"\"}}";
         assertEquals(expected, casualty.toJSON());
@@ -78,15 +78,15 @@ public class BaseModelTest extends BaseManagerTestCase {
     @Test
     public void testCrashJSON() {
         Crash crash = crashManager.get(1L);
-        String expected = "{\"id\":1,\"road\":\"Kampala-Jinja\",\"tarNo\":\"A1509/LGZ\",\"weather\":{\"id\":1,\"name\":\"Clear\"}," +
-                "\"vehicles\":[{\"id\":1,\"number\":1,\"driver\":{\"id\":1,\"age\":27,\"gender\":\"M\",\"licenseValid\":true," +
+        String expected = "{\"id\":1,\"road\":\"Kampala-Jinja\",\"tarNo\":\"A1509/LGZ\",\"weight\":null,\"weather\":{\"id\":1,\"name\":\"Clear\"}," +
+                "\"vehicles\":[{\"id\":1,\"number\":1,\"driver\":{\"id\":1,\"age\":27,\"gender\":\"M\",\"licenseValid\":true,\"beltOrHelmetUsed\":false," +
                 "\"licenseNumber\":\"123456\",\"casualtyType\":{\"id\":4,\"name\":\"Not injured\"}},\"vehicleType\":{\"id\":1," +
                 "\"name\":\"Motor car\"},\"companyName\":\"\"},{\"id\":2,\"number\":2,\"driver\":{\"id\":2,\"age\":53,\"gender\":\"M\"," +
-                "\"licenseValid\":false,\"licenseNumber\":\"123789\",\"casualtyType\":{\"id\":3,\"name\":\"Slight\"}}," +
+                "\"licenseValid\":false,\"beltOrHelmetUsed\":true,\"licenseNumber\":\"123789\",\"casualtyType\":{\"id\":3,\"name\":\"Slight\"}}," +
                 "\"vehicleType\":{\"id\":7,\"name\":\"Medium Omnibus\"},\"companyName\":\"Total Uganda\"}],\"latitude\":\"N00 23.000\"," +
                 "\"longitude\":\"E032 55.270\",\"casualties\":[{\"id\":1,\"age\":25,\"gender\":\"F\",\"beltOrHelmetUsed\":true," +
                 "\"casualtyType\":{\"id\":3,\"name\":\"Slight\"},\"casualtyClass\":{\"id\":4,\"name\":\"Car passenger\"}," +
-                "\"vehicle\":{\"id\":1,\"number\":1,\"driver\":{\"id\":1,\"age\":27,\"gender\":\"M\",\"licenseValid\":true," +
+                "\"vehicle\":{\"id\":1,\"number\":1,\"driver\":{\"id\":1,\"age\":27,\"gender\":\"M\",\"licenseValid\":true,\"beltOrHelmetUsed\":false," +
                 "\"licenseNumber\":\"123456\",\"casualtyType\":{\"id\":4,\"name\":\"Not injured\"}},\"vehicleType\":{\"id\":1," +
                 "\"name\":\"Motor car\"},\"companyName\":\"\"}},{\"id\":2,\"age\":30,\"gender\":\"M\",\"beltOrHelmetUsed\":false," +
                 "\"casualtyType\":{\"id\":2,\"name\":\"Serious\"},\"casualtyClass\":{\"id\":1,\"name\":\"Pedestrian\"},\"vehicle\":null}]," +

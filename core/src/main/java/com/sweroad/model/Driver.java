@@ -245,6 +245,7 @@ public class Driver extends BaseModel {
         json.append(toJsonProperty(this.age, "age")).append(",");
         json.append(toJsonProperty(this.gender, "gender")).append(",");
         json.append(toJsonProperty(this.licenseValid, "licenseValid")).append(",");
+        json.append(toJsonProperty(this.beltUsed, "beltOrHelmetUsed")).append(",");
         json.append(toJsonProperty(this.licenseNumber, "licenseNumber")).append(",");
         json.append(toJsonProperty(this.casualtyType, "casualtyType")).append("}");
         return json.toString();

@@ -8,6 +8,8 @@ public class TimeRange extends LabelValue {
 
     public TimeRange(Integer hour) {
         this.hour = hour;
+        this.setLabel(this.getLabel());
+        this.setValue(hour.toString());
     }
 
     public Integer getHour() {

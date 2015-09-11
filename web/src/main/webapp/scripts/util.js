@@ -100,8 +100,10 @@ var util = (function () {
     util.initCrashData = function () {
         if ($('#crashesJSON').length)
             window.crashes = JSON.parse($.trim($("#crashesJSON").val()));
-        if ($('#crashAttributesJSON').length)
+        if ($('#crashAttributesJSON').length) {
             window.crashAttributes = JSON.parse($.trim($("#crashAttributesJSON").val()));
+            window.crashAttributes.casualtyClass.unshift({ id: 0, name: 'Driver' });
+        }
     }
     util.initCrashAnalysis = function () {
         $(document).ready(function () {
@@ -132,6 +134,31 @@ var util = (function () {
                 resizable: true
             }
         }).tablesorterPager(pagerOptions);
+    }
+    util.capitalizeFirst = function(text) {
+        return text.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+    }
+    util.injuredCasualty = function(casualtyType) {
+        return casualtyType && casualtyType.id < 4;
+    }
+    util.pushArray = function() {
+        var array = arguments[0];
+        for(var i = 1; i < arguments.length; i++)
+            array.push(arguments[i]);
+        return array;
+    }
+    util.driverToCasualty = function(vehicle) {
+        var driver = vehicle.driver;
+        if (!driver || !this.injuredCasualty(driver.casualtyType))
+            return null;
+        var casualty = Object.create(null);
+        casualty.casualtyClass = { id: 0, name: 'Driver'};
+        casualty.age = driver.age;
+        casualty.gender = driver.gender;
+        casualty.vehicle = vehicle;
+        casualty.beltOrHelmetUsed = driver.beltOrHelmetUsed;
+        casualty.casualtyType = driver.casualtyType;
+        return casualty;
     }
     return util;
 })();

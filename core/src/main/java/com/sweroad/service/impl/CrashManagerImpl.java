@@ -320,7 +320,14 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
         for (List l : refData.values()) {
             Collections.sort(l);
         }
+        refData.put("genders", lookupManager.getAllGenders());
+        refData.put("ageRanges", lookupManager.getAllAgeRanges());
+        refData.put("timeRanges", lookupManager.getAllTimeRanges());
+        refData.put("licenseTypes", lookupManager.getAllLicenseTypes());
+        refData.put("casualtyTypes", casualtyTypeManager.getAllDistinct());
+        refData.put("casualtyClass", casualtyClassManager.getAllDistinct());
         refData.put("crashWeightRanges", lookupManager.getAllWeightRanges());
+        refData.put("beltUsedOptions", lookupManager.getAllBeltUsedOptions());
         return refData;
     }
 

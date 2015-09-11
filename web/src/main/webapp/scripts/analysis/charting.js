@@ -3,33 +3,17 @@
  */
 var charting = (function() {
     var charting = Object.create(null);
-    charting.createPieChart = function(tabulation, name, divId, slice) {
+    charting.createPieChart = function(tabulation, name, divId) {
         var chart = {};
         chart.type = 'pie';
         chart.name = name;
-        chart.subtitle = 'based on ' + tabulation.crashes.length + ' crashes';
+        chart.subtitle = 'based on ' + tabulation.totalUnits() + ' ' + tabulation.units();
         chart.data = [];
         tabulation.attributeCounts.forEach(function (attr) {
             var attribute = [attr.name, attr.count];
             chart.data.push(attribute);
         });
-        if (slice)
-            charting.reorderAndSlice(chart);
         new Highcharts.Chart(charting.createPieChartOptions(chart, divId));
-    }
-    charting.reorderAndSlice = function(chart) {
-        var second = chart.data[1];
-        var third = chart.data[2];
-        if(second && third) {
-            var newSecond = {
-                name : second[0],
-                y : second[1],
-                sliced : true,
-                selected : true
-            };
-            chart.data[1] = third;
-            chart.data[2] = newSecond;
-        }
     }
     charting.createPieChartOptions = function(chart, divId) {
         var options = {
@@ -146,7 +130,7 @@ var charting = (function() {
         var chart = {};
         chart.type = 'column';
         chart.title = title;
-        chart.subtitle = 'based on ' + tabulation.crashes.length + ' crashes';
+        chart.subtitle = 'based on ' + tabulation.totalUnits() + ' ' + tabulation.units();
         chart.series = [];
         chart.data = [];
         tabulation.attributeCounts.forEach(function (attr) {
@@ -165,7 +149,7 @@ var charting = (function() {
             }
         };
         chart.series.push({
-            name: 'Crashes',
+            name: util.capitalizeFirst(tabulation.units()),
             data: chart.data,
             dataLabels: chart.dataLabels
         });
@@ -199,7 +183,7 @@ var charting = (function() {
             yAxis: {
                 min: 0,
                 title: {
-                    text: 'No. of Crashes'
+                    text: 'No. of ' + chart.series[0].name
                 }
             },
             legend: {

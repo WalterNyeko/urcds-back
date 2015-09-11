@@ -16,14 +16,6 @@ public class WeightRange extends LabelValue {
         super.setValue(id.toString());
     }
 
-    public BigDecimal getMinWeight() {
-        return minWeight;
-    }
-
-    public BigDecimal getMaxWeight() {
-        return maxWeight;
-    }
-
     @Override
     public String getLabel() {
         DecimalFormat decimalFormat = new DecimalFormat("#,###,###");

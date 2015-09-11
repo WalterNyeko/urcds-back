@@ -197,25 +197,31 @@
 	<table name="casualty_type">
 		<column>id</column>
 		<column>name</column>
+        <column>weight</column>
 		<row>
 			<value description="id">1</value>
 			<value description="name">Fatal</value>
+            <value description="weight">10000</value>
 		</row>
 		<row>
 			<value description="id">2</value>
 			<value description="name">Serious</value>
+            <value description="weight">8000</value>
 		</row>
 		<row>
 			<value description="id">3</value>
 			<value description="name">Slight</value>
+            <value description="weight">6000</value>
 		</row>
 		<row>
 			<value description="id">4</value>
 			<value description="name">Not injured</value>
+            <value description="weight">0</value>
 		</row>
         <row>
             <value description="id">5</value>
             <value description="name">Unknown</value>
+            <value description="weight">0</value>
         </row>
 	</table>
 	<table name="collision_type">
@@ -341,25 +347,31 @@
 	<table name="crash_severity">
 		<column>id</column>
 		<column>name</column>
+        <column>weight</column>
 		<row>
 			<value description="id">1</value>
 			<value description="name">Fatal</value>
+            <value description="weight">100000</value>
 		</row>
 		<row>
 			<value description="id">2</value>
 			<value description="name">Serious</value>
+            <value description="weight">8000</value>
 		</row>
 		<row>
 			<value description="id">3</value>
 			<value description="name">Slight</value>
+            <value description="weight">6000</value>
 		</row>
 		<row>
 			<value description="id">4</value>
 			<value description="name">Damage Only</value>
+            <value description="weight">4000</value>
 		</row>
         <row>
             <value description="id">5</value>
             <value description="name">Unknown</value>
+            <value description="weight">0</value>
         </row>
 	</table>
 	<table name="junction_type">

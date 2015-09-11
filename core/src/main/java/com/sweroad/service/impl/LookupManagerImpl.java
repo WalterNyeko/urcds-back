@@ -43,9 +43,9 @@ public class LookupManagerImpl implements LookupManager {
     @Override
     public List<LabelValue> getAllLicenseTypes() {
         List<LabelValue> licenseTypes = new ArrayList<LabelValue>();
-        addLabelValueToList("Valid License", "1", licenseTypes);
-        addLabelValueToList("No Valid License", "0", licenseTypes);
-        addLabelValueToList("Unknown", "-1", licenseTypes);
+        licenseTypes.add(new LicenseType("Valid License", "1"));
+        licenseTypes.add(new LicenseType("No Valid License", "0"));
+        licenseTypes.add(new LicenseType("Unknown", "-1"));
         return licenseTypes;
     }
 
@@ -65,9 +65,9 @@ public class LookupManagerImpl implements LookupManager {
     @Override
     public List<LabelValue> getAllGenders() {
         List<LabelValue> genders = new ArrayList<LabelValue>();
-        addLabelValueToList("Male", "M", genders);
-        addLabelValueToList("Female", "F", genders);
-        addLabelValueToList("Unknown", "-1", genders);
+        genders.add(new Gender("Male", "M"));
+        genders.add(new Gender("Female", "F"));
+        genders.add(new Gender("Unknown", "-1"));
         return genders;
     }
 
@@ -87,9 +87,9 @@ public class LookupManagerImpl implements LookupManager {
     @Override
     public List<LabelValue> getAllBeltUsedOptions() {
         List<LabelValue> beltusedOptions = new ArrayList<LabelValue>();
-        addLabelValueToList("Yes", "1", beltusedOptions);
-        addLabelValueToList("No", "0", beltusedOptions);
-        addLabelValueToList("Unknown", "-1", beltusedOptions);
+        beltusedOptions.add(new BeltUsedOption("Yes", "1"));
+        beltusedOptions.add(new BeltUsedOption("No", "0"));
+        beltusedOptions.add(new BeltUsedOption("Unknown", "-1"));
         return beltusedOptions;
     }
 
@@ -164,30 +164,6 @@ public class LookupManagerImpl implements LookupManager {
     }
 
     @Override
-    public List<LabelValue> getFilteredWeightRanges(List<LabelValue> selectedValues) {
-        List<LabelValue> filteredWeightRanges = new ArrayList<LabelValue>();
-        for(LabelValue labelValue : getAllWeightRanges()) {
-            for(LabelValue selectedValue : selectedValues) {
-                if(selectedValue.getValue() != null && selectedValue.getValue().equals(labelValue.getValue())) {
-                    filteredWeightRanges.add(labelValue);
-                }
-            }
-        }
-        return filteredWeightRanges;
-    }
-
-    @Override
-    public WeightRange getWeightRangeByWeight(BigDecimal age) {
-        for(LabelValue range : getAllWeightRanges()) {
-            WeightRange weightRange = (WeightRange)range;
-            if (weightRange.getMinWeight().compareTo(age) >= 0 && (weightRange.getMaxWeight() == null || weightRange.getMaxWeight().compareTo(age) >= 0)) {
-                return weightRange;
-            }
-        }
-        return null;
-    }
-
-    @Override
     public List<LabelValue> getAllTimeRanges() {
         List<LabelValue> timeRanges = new ArrayList<LabelValue>();
         for(int i = 0; i < Constants.HOURS_IN_DAY; i++) {
@@ -205,13 +181,5 @@ public class LookupManagerImpl implements LookupManager {
             }
         }
         return new TimeRange(0);
-    }
-
-
-    private void addLabelValueToList(String label, String value, List<LabelValue> labelValues) {
-        LabelValue labelValue = new LabelValue();
-        labelValue.setLabel(label);
-        labelValue.setValue(value);
-        labelValues.add(labelValue);
     }
 }
