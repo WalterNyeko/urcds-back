@@ -5,6 +5,7 @@
     <script src="<c:url value='/scripts/highcharts.js'/>"></script>
     <script src="<c:url value='/scripts/themes/grid.js'/>"></script>
     <script src="<c:url value='/scripts/modules/exporting.js'/>"></script>
+    <script type="text/javascript" src="<c:url value='/scripts/analysis/crashfilter.js'/>"></script>
     <script type="text/javascript" src="<c:url value='/scripts/analysis/statistics.js'/>"></script>
     <script type="text/javascript" src="<c:url value='/scripts/analysis/charting.js'/>"></script>
     <script type="text/javascript" src="<c:url value='/scripts/analysis/crashquery.js'/>"></script>
@@ -35,6 +36,7 @@
         <option value="crashCause" data-attr-type="crash">Crash Cause</option>
         <option selected value="crashSeverity" data-attr-type="crash">Crash Severity</option>
         <option value="weightRange" data-range="weight" data-attr-type="crash">Crash Weight</option>
+        <option value="day" data-range="day" data-attr-type="crash">Day of Week</option>
         <option value="district" data-prefix="policeStation" data-attr-type="crash">District</option>
         <option value="junctionType" data-attr-type="crash">Junction Type</option>
         <option value="month" data-range="month" data-attr-type="crash">Month</option>
@@ -51,21 +53,21 @@
         <option value="ageRange" data-attr-type="vehicle">Driver Age</option>
         <option value="gender" data-attr-type="vehicle">Driver Sex</option>
         <option value="licenseType" data-attr-type="vehicle">License Type</option>
-        <option value="beltUsedOption" data-attr-type="vehicle">Belt/Helmet Used</option>
+        <option value="beltUsedOption" data-attr-type="vehicle">Belt/Helmet Used (Driver)</option>
         <option value="casualtyType" data-attr-type="vehicle">Driver Casualty</option>
         <option value="" data-default="casualtyType">==== Casualty Attributes ====</option>
         <option value="casualtyType" data-attr-type="casualty">Casualty Type</option>
         <option value="casualtyClass" data-attr-type="casualty">Casualty Class</option>
         <option value="ageRange" data-attr-type="casualty">Casualty Age</option>
         <option value="gender" data-attr-type="casualty">Casualty Sex</option>
-        <option value="beltUsedOption" data-attr-type="casualty">Belt/Helmet Used</option>
+        <option value="beltUsedOption" data-attr-type="casualty">Belt/Helmet Used (Casualty)</option>
     </select>
     &nbsp;
     <appfuse:label styleClass="control-label" key="rcds.units" />:&nbsp;
     <select id="unit">
-        <option value="casualties"><fmt:message key="crashAnalysis.casualties"/></option>
-        <option selected value="crashes"><fmt:message key="crashList.crashes"/></option>
-        <option value="vehicles"><fmt:message key="crashAnalysis.vehicles"/></option>
+        <option value="casualty"><fmt:message key="crashAnalysis.casualties"/></option>
+        <option selected value="crash"><fmt:message key="crashList.crashes"/></option>
+        <option value="vehicle"><fmt:message key="crashAnalysis.vehicles"/></option>
     </select>
     <br>
     <div class="content-wrapper">

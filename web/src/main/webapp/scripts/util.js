@@ -103,6 +103,7 @@ var util = (function () {
         if ($('#crashAttributesJSON').length) {
             window.crashAttributes = JSON.parse($.trim($("#crashAttributesJSON").val()));
             window.crashAttributes.casualtyClass.unshift({ id: 0, name: 'Driver' });
+            window.crashAttributes.day = constants.dayList;
         }
     }
     util.initCrashAnalysis = function () {
@@ -159,6 +160,24 @@ var util = (function () {
         casualty.beltOrHelmetUsed = driver.beltOrHelmetUsed;
         casualty.casualtyType = driver.casualtyType;
         return casualty;
+    }
+    util.isCasualtyAttribute = function(selector) {
+        return $(selector).find('option:selected').attr('data-attr-type') == 'casualty';
+    }
+    util.isCrashAttribute = function(selector) {
+        return $(selector).find('option:selected').attr('data-attr-type') == 'crash';
+    }
+    util.isVehicleAttribute = function(selector) {
+        return $(selector).find('option:selected').attr('data-attr-type') == 'vehicle';
+    }
+    util.isValueRange = function(range) {
+        return constants.valueRanges.indexOf(range) > -1;
+    }
+    util.getAttributes = function(name) {
+        var attributes = window.crashAttributes[name];
+        if (attributes.length && !attributes[0].name && attributes[0].label)
+            attributes.map(function(x) { x.name = x.label });
+        return attributes;
     }
     return util;
 })();
@@ -286,5 +305,6 @@ var ui = (function () {
 
 var constants = {
     dayList: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-    monthList: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    monthList: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+    valueRanges: ['weight', 'year']
 };

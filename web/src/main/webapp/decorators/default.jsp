@@ -13,6 +13,7 @@
         <script type="text/javascript" src="<c:url value='/scripts/util.js'/>"></script>
         <script type="text/javascript" src="<c:url value='/scripts/gis-helper.js'/>"></script>
         <script type="text/javascript" src="<c:url value='/scripts/ajax.js'/>"></script>
+        <script type="text/javascript" src="<c:url value='/scripts/pluralize.js'/>"></script>
         <decorator:head />
         <script type="text/javascript">
             ui.init();

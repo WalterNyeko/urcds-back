@@ -7,46 +7,35 @@
     crossTabs.countCrashes = function (xAttribute, yAttribute, xCrashProp, yCrashProp) {
         var ctx = this;
         this.attributeCounts.length = 0;
-        var xAttributes = this.getAttributes(xAttribute);
-        var yAttributes = this.getAttributes(yAttribute);
-        var xWeight = $('#xCrashAttribute option:selected').attr('data-weight');
-        var yWeight = $('#yCrashAttribute option:selected').attr('data-weight');
-        xAttributes.forEach(function (xAttr) {
-            var xAttributeCount = { xName: xAttr.name, yAttributeCounts: [] };
-            yAttributes.forEach(function (yAttr) {
+        var unit = $('#unit option:selected').val();
+        var xAttributes = util.getAttributes(xAttribute);
+        var yAttributes = util.getAttributes(yAttribute);
+        var xElement = $('#xCrashAttribute option:selected');
+        var yElement = $('#yCrashAttribute option:selected');
+        var xRangeAttribute = xElement.attr('data-range');
+        var yRangeAttribute = yElement.attr('data-range');
+        var xAttributeType = xElement.attr('data-attr-type');
+        var yAttributeType = yElement.attr('data-attr-type');
+        xAttributes.map(function (xAttr, xIndex) {
+            var filterParams = util.pushArray([], xAttr, xAttribute, xCrashProp);;
+            if (xRangeAttribute)
+                filterParams = util.pushArray([], (util.isValueRange(xRangeAttribute) ? xAttr : xIndex), xAttribute, xCrashProp);
+            var crashFilter = new CrashFilter(xAttributeType, xRangeAttribute, this.crashes);
+            var xCrashes = crashFilter.filter(filterParams);
+            var xAttributeCount = { xName: xAttr.name || xAttr, yAttributeCounts: [] };
+            yAttributes.map(function (yAttr, yIndex) {
+                crashFilter = new CrashFilter(yAttributeType, yRangeAttribute, xCrashes);
+                filterParams = util.pushArray([], yAttr, yAttribute, yCrashProp);;
+                if (yRangeAttribute)
+                    filterParams = util.pushArray([], (util.isValueRange(yRangeAttribute) ? yAttr : yIndex), yAttribute, yCrashProp);
                 xAttributeCount.yAttributeCounts.push({
-                    yName: yAttr.name,
-                    count: ctx.crashes.filter(function (c) {
-                        var xMatch = false;
-                        var yMatch = false;
-                        var xCrashAttr = xCrashProp ? c[xCrashProp][xAttribute] : c[xAttribute];
-                        var yCrashAttr = yCrashProp ? c[yCrashProp][yAttribute] : c[yAttribute];
-                        if (xWeight) {
-                            if (xAttr.maxWeight)
-                                xMatch = (c.weight >= xAttr.minWeight && c.weight <= xAttr.maxWeight);
-                            else
-                                xMatch = c.weight >= xAttr.minWeight;
-                        } else
-                            xMatch = xCrashAttr && xCrashAttr['id'] === xAttr.id;
-                        if (yWeight) {
-                            if (yAttr.maxWeight)
-                                yMatch = (c.weight >= yAttr.minWeight && c.weight <= yAttr.maxWeight);
-                            else
-                                yMatch = c.weight >= yAttr.minWeight;
-                        } else
-                            yMatch = yCrashAttr && yCrashAttr['id'] === yAttr.id;
-                        return xMatch && yMatch;
-                    }).length});
-            });
+                    yName: yAttr.name || yAttr,
+                    count: crashFilter.filter(filterParams, unit).length
+                });
+            }, this);
             ctx.attributeCounts.push(xAttributeCount);
-        });
+        }, this);
         this.tabulateCounts(yAttributes);
-    }
-    crossTabs.getAttributes = function(attributeName) {
-        var attributes = this.crashAttributes[attributeName];
-        if (attributes.length && ! attributes[0].name && attributes[0].label)
-            attributes.map(function(attr) { attr.name = attr.label });
-        return attributes;
     }
     crossTabs.tabulateCounts = function (yAttributes) {
         $('#crosstabs').html('');
@@ -86,10 +75,9 @@
         $(document).ready(function() {
             util.initCrashData();
             crossTabs.attributeCounts = [];
-            crossTabs.crashes = window.crashes
-            crossTabs.crashAttributes = window.crashAttributes;
+            crossTabs.crashes = window.crashes;
             crossTabs.countCrashes('crashSeverity', 'collisionType');
-            $('#xCrashAttribute, #yCrashAttribute').change(function() {
+            $('#xCrashAttribute, #yCrashAttribute, #unit').change(function() {
                 var xSelectedOption = $('#xCrashAttribute').find('option:selected');
                 var ySelectedOption = $('#yCrashAttribute').find('option:selected');
                 crossTabs.countCrashes($('#xCrashAttribute').val(), $('#yCrashAttribute').val(), xSelectedOption.attr('data-prefix'), ySelectedOption.attr('data-prefix'));

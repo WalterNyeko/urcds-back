@@ -7,10 +7,10 @@ var charting = (function() {
         var chart = {};
         chart.type = 'pie';
         chart.name = name;
-        chart.subtitle = 'based on ' + tabulation.totalUnits() + ' ' + tabulation.units();
+        chart.subtitle = 'based on ' + tabulation.totalUnits() + ' ' + pluralize(tabulation.units());
         chart.data = [];
-        tabulation.attributeCounts.forEach(function (attr) {
-            var attribute = [attr.name, attr.count];
+        tabulation.attributeCounts.map(function (attr) {
+            var attribute = [attr.name.toString(), attr.count];
             chart.data.push(attribute);
         });
         new Highcharts.Chart(charting.createPieChartOptions(chart, divId));
@@ -70,14 +70,14 @@ var charting = (function() {
         chart.subtitle = 'based on ' + crossTabulation.crashes.length + ' crashes';
         chart.categories = [];
         chart.series = [];
-        crossTabulation.attributeCounts.forEach(function(xAttr) {
-            chart.categories.push(xAttr.xName);
-            xAttr.yAttributeCounts.forEach(function(yAttr) {
+        crossTabulation.attributeCounts.map(function(xAttr) {
+            chart.categories.push(xAttr.xName.toString());
+            xAttr.yAttributeCounts.map(function(yAttr) {
                 var y = chart.series.filter(function(s) {return s.name === yAttr.yName})[0];
                 if (y) {
                     y.data.push(yAttr.count);
                 } else {
-                    chart.series.push({ name: yAttr.yName, data: [yAttr.count]});
+                    chart.series.push({ name: yAttr.yName.toString(), data: [yAttr.count]});
                 }
             });
         });
@@ -130,11 +130,11 @@ var charting = (function() {
         var chart = {};
         chart.type = 'column';
         chart.title = title;
-        chart.subtitle = 'based on ' + tabulation.totalUnits() + ' ' + tabulation.units();
+        chart.subtitle = 'based on ' + tabulation.totalUnits() + ' ' + pluralize(tabulation.units());
         chart.series = [];
         chart.data = [];
         tabulation.attributeCounts.forEach(function (attr) {
-            chart.data.push([attr.name, attr.count]);
+            chart.data.push([attr.name.toString(), attr.count]);
         });
         chart.dataLabels = {
             enabled: true,
@@ -149,7 +149,7 @@ var charting = (function() {
             }
         };
         chart.series.push({
-            name: util.capitalizeFirst(tabulation.units()),
+            name: util.capitalizeFirst(pluralize(tabulation.units())),
             data: chart.data,
             dataLabels: chart.dataLabels
         });
@@ -204,16 +204,20 @@ var charting = (function() {
     charting.createTrendLineGraph = function(crashTrend, categories, title, divId) {
         var chart = {};
         chart.title = title;
-        chart.subtitle = 'based on ' + crashTrend.crashes.length + ' crashes';
+        chart.subtitle = 'based on ' + crashTrend.totalUnits() + ' ' + pluralize(crashTrend.attributeType);
         chart.categories = categories;
         chart.series = [];
-        crashTrend.attributeCounts.forEach(function(xAttr) {
-            xAttr.yAttributeCounts.forEach(function(yAttr) {
-                var y = chart.series.filter(function(s) {return s.name === yAttr.yName})[0];
+        crashTrend.attributeCounts.map(function(xAttr) {
+            xAttr.yAttributeCounts.map(function(yAttr) {
+                var y = chart.series.filter(function(s) { return s.name === yAttr.yName })[0];
                 if (y) {
                     y.data.push(yAttr.count);
                 } else {
-                    chart.series.push({ name: yAttr.yName, data: [yAttr.count]});
+                    chart.series.push({
+                        name: yAttr.yName.toString(),
+                        data: [yAttr.count],
+                        unit: pluralize(util.capitalizeFirst(crashTrend.attributeType))
+                    });
                 }
             });
         });
@@ -240,7 +244,7 @@ var charting = (function() {
             },
             yAxis: {
                 title: {
-                    text: 'No. of Crashes'
+                    text: 'No. of ' + chart.series[0].unit
                 },
                 plotLines: [{
                     value: 0,
