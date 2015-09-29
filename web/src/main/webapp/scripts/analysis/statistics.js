@@ -11,11 +11,10 @@
         var attribute = attrElement.val();
         var attributes = util.getAttributes(attribute);
         var selected = attrElement.find('option:selected');
-        var crashProp = selected.attr('data-prefix');
         var rangeAttribute = selected.attr('data-range');
         var attributeType = attrElement.find('option:selected').attr('data-attr-type');
         this.crashFilter = new CrashFilter(attributeType, rangeAttribute, this.crashes);
-        this.countAttributes(rangeAttribute, attributes, attribute, crashProp);
+        this.countAttributes(rangeAttribute, attributes, attribute);
         if (this.canSum()) {
             var totalStats = this.attributeCounts.reduce(function(total, b) {
                 return total + b.count;
@@ -36,19 +35,13 @@
     statistics.totalUnits = function() {
         return this.crashFilter.totalUnits($('#unit').val());
     }
-    statistics.countAttributes = function(rangeAttribute, attributes, attribute, crashProp) {
+    statistics.countAttributes = function(rangeAttribute, attributes, attribute) {
         attributes.map(function(attr, index) {
-            var params = [];
+            var params = [attr, attribute];
             if (util.isCrashAttribute('#crashAttribute')) {
-                if (rangeAttribute) {
-                    if (util.isValueRange(rangeAttribute))
-                        params.push(attr);
-                    else
-                        params.push(index);
-                } else
-                    params = util.pushArray(params, attr, attribute, crashProp);
-            } else
-                params = util.pushArray(params, attr, attribute);
+                if (rangeAttribute && !util.isValueRange(rangeAttribute))
+                    params[0] = index;
+            }
             this.attributeCounts.push({
                 name: attr.name || attr,
                 count: this.countUnits(params)

@@ -35,7 +35,7 @@
         <option selected value="crashSeverity" data-attr-type="crash">Crash Severity</option>
         <option value="weightRange" data-range="weight" data-attr-type="crash">Crash Weight</option>
         <option value="day" data-range="day" data-attr-type="crash">Day of Week</option>
-        <option value="district" data-prefix="policeStation" data-attr-type="crash">District</option>
+        <option value="district" data-attr-type="crash">District</option>
         <option value="junctionType" data-attr-type="crash">Junction Type</option>
         <option value="month" data-range="month" data-attr-type="crash">Month</option>
         <option value="policeStation" data-attr-type="crash">Police Station</option>
@@ -69,7 +69,7 @@
         <option value="crashSeverity" data-attr-type="crash">Crash Severity</option>
         <option value="weightRange" data-range="weight" data-attr-type="crash">Crash Weight</option>
         <option value="day" data-range="day" data-attr-type="crash">Day of Week</option>
-        <option value="district" data-prefix="policeStation" data-attr-type="crash">District</option>
+        <option value="district" data-attr-type="crash">District</option>
         <option value="junctionType" data-attr-type="crash">Junction Type</option>
         <option value="month" data-range="month" data-attr-type="crash">Month</option>
         <option value="policeStation" data-attr-type="crash">Police Station</option>

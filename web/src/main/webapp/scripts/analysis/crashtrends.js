@@ -4,7 +4,7 @@
 (function () {
     var crashTrends = Object.create(null);
 
-    crashTrends.countCrashes = function (viewBy, yAttribute, yCrashProp) {
+    crashTrends.countCrashes = function (viewBy, yAttribute) {
         this.attributeCounts.length = 0;
         var xAttributes = util.getAttributes(viewBy);
         var yAttributes = util.getAttributes(yAttribute);
@@ -20,7 +20,7 @@
             var xCrashes = crashFilter.filter(filterParams);
             yAttributes.map(function (yAttr) {
                 crashFilter = new CrashFilter(this.attributeType, weightRange ? 'weight' : null, xCrashes);
-                filterParams = util.pushArray([], yAttr, yAttribute, yCrashProp);
+                filterParams = [yAttr, yAttribute];
                 xAttributeCount.yAttributeCounts.push({
                     yName: yAttr.name,
                     count: crashFilter.filter(filterParams).length
@@ -41,8 +41,7 @@
             crashTrends.crashes = window.crashes;
             crashTrends.countCrashes('month', 'crashSeverity');
             $('#xCrashAttribute, #yCrashAttribute').change(function () {
-                var ySelectedOption = $('#yCrashAttribute').find('option:selected');
-                crashTrends.countCrashes($('#xCrashAttribute').val(), $('#yCrashAttribute').val(), ySelectedOption.attr('data-prefix'));
+                crashTrends.countCrashes($('#xCrashAttribute').val(), $('#yCrashAttribute').val());
             });
             ui.renderQuerySummary();
         });

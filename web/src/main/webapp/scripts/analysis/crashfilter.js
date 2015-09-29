@@ -30,6 +30,25 @@ var CrashFilter = (function() {
                     return this.filterCasualties(params);
             }
         }
+        filter.match = function(x, attribute, attributeName) {
+            switch(this.type) {
+                case 'crash':
+                    return this.matchCrash(x, attribute, attributeName);
+                case 'vehicle':
+                    return this.matchVehicle(x, attribute, attributeName);
+                case 'casualty':
+                    return this.matchCasualty(x, attribute, attributeName);
+            }
+        }
+        filter.matchCrash = function(crash, attribute, attributeName) {
+            if (util.isNullAttribute(attribute)) {
+                if (attributeName == 'district')
+                    attributeName = 'policeStation';
+                return !crash[attributeName];
+            }
+            var crashAttr = attributeName == 'district' ? crash['policeStation']['district'] : crash[attributeName];
+            return crashAttr && crashAttr['id'] === attribute.id;
+        }
         filter.totalUnits = function(unit) {
             unit = unit ? unit : this.type;
             switch(unit) {
@@ -60,55 +79,52 @@ var CrashFilter = (function() {
     }
     CrashFilter.prototype.createCrashFilter = function(rangeAttribute) {
         var crashFilter = Object.create(this.createFilter());
-
         if (rangeAttribute) {
             switch(rangeAttribute) {
                 case 'day':
-                    crashFilter.filterCrashes = function(params) {
-                        return this.crashes.filter(function(c) {
-                            var crashDate = c.crashDateTime ? new Date(c.crashDateTime) : null;
-                            return crashDate && crashDate.getDay() == params[0];
-                        });
+                    crashFilter.matchCrash = function(crash, day) {
+                        if (util.isNullAttribute(day))
+                            return Object.getPrototypeOf(this).matchCrash(crash, day, 'crashDateTime');
+                        var crashDate = crash.crashDateTime ? new Date(crash.crashDateTime) : null;
+                        return crashDate && crashDate.getDay() == day;
                     }
                     break;
                 case 'month':
-                    crashFilter.filterCrashes = function(params) {
-                        return this.crashes.filter(function(c) {
-                            var crashDate = c.crashDateTime ? new Date(c.crashDateTime) : null;
-                            return crashDate && crashDate.getMonth() == params[0];
-                        });
+                    crashFilter.matchCrash = function(crash, month) {
+                        if (util.isNullAttribute(month))
+                            return Object.getPrototypeOf(this).matchCrash(crash, month, 'crashDateTime');
+                        var crashDate = crash.crashDateTime ? new Date(crash.crashDateTime) : null;
+                        return crashDate && crashDate.getMonth() == month;
                     }
                     break;
                 case 'year':
-                    crashFilter.filterCrashes = function(params) {
-                        return this.crashes.filter(function(c) {
-                            var crashDate = c.crashDateTime ? new Date(c.crashDateTime) : null;
-                            return crashDate && crashDate.getFullYear() == params[0];
-                        });
+                    crashFilter.matchCrash = function(crash, year) {
+                        if (util.isNullAttribute(year))
+                            return Object.getPrototypeOf(this).matchCrash(crash, year, 'crashDateTime');
+                        var crashDate = crash.crashDateTime ? new Date(crash.crashDateTime) : null;
+                        return crashDate && crashDate.getFullYear() == year;
                     }
                     break;
                 case 'weight':
-                    crashFilter.filterCrashes = function(params) {
-                        return this.crashes.filter(function(c) {
-                            var weightRange = params[0];
-                            if (c.weight) {
-                                if (weightRange.maxWeight)
-                                    return (c.weight >= weightRange.minWeight && c.weight <= weightRange.maxWeight);
-                                else
-                                    return c.weight >= weightRange.minWeight;
-                            }
-                            return false;
-                        });
+                    crashFilter.matchCrash = function(crash, weight) {
+                        if (util.isNullAttribute(weight))
+                            return Object.getPrototypeOf(this).matchCrash(crash, weight, 'weight');
+                        var weightRange = weight;
+                        if (c.weight) {
+                            if (weightRange.maxWeight)
+                                return (crash.weight >= weightRange.minWeight && crash.weight <= weightRange.maxWeight);
+                            else
+                                return crash.weight >= weightRange.minWeight;
+                        }
+                        return false;
                     }
             }
-        } else {
-            crashFilter.filterCrashes = function(params) {
-                var attr = params[0], attribute =  params[1], crashProp = params[2];
-                return this.crashes.filter(function(c) {
-                    var crashAttr = crashProp ? c[crashProp][attribute] : c[attribute];
-                    return crashAttr && crashAttr['id'] === attr.id
-                });
-            }
+        }
+        crashFilter.filterCrashes = function(params) {
+            var attribute = params[0], attributeName =  params[1];
+            return this.crashes.filter(function(c) {
+                return this.matchCrash(c, attribute, attributeName);
+            }, this);
         }
         crashFilter.filterVehicles = function(params) {
             return this.getCrashVehicles(this.filterCrashes(params));
@@ -144,14 +160,23 @@ var CrashFilter = (function() {
             return this.getCrashCasualties(this.filterCrashes(params));
         }
         vehicleFilter.matchVehicle = function(vehicle, attribute, attributeName) {
+            var nullAttribute = util.isNullAttribute(attribute);
             switch(attributeName) {
                 case 'vehicleType':
+                    if (nullAttribute)
+                        return vehicle && !vehicle.vehicleType;
                     return vehicle && vehicle.vehicleType && vehicle.vehicleType.id == attribute.id;
                 case 'ageRange':
+                    if (nullAttribute)
+                        return vehicle && (!vehicle.driver || !vehicle.driver.age);
                     return vehicle && vehicle.driver && vehicle.driver.age && vehicle.driver.age >= attribute.minAge && vehicle.driver.age <= attribute.maxAge;
                 case 'gender':
+                    if (nullAttribute)
+                        return vehicle && (!vehicle.driver || !vehicle.driver.gender);
                     return vehicle && vehicle.driver && vehicle.driver.gender == attribute.value;
                 case 'licenseType':
+                    if (nullAttribute)
+                        return false;
                     if (vehicle && vehicle.driver) {
                         var type = null;
                         if (attribute.id == 1)
@@ -162,6 +187,8 @@ var CrashFilter = (function() {
                     }
                     return false;
                 case 'beltUsedOption':
+                    if (nullAttribute)
+                        return false;
                     if (vehicle && vehicle.driver) {
                         var type = null;
                         if (attribute.id == 1)
@@ -172,6 +199,8 @@ var CrashFilter = (function() {
                     }
                     return false;
                 case 'casualtyType':
+                    if (nullAttribute)
+                        return vehicle && (!vehicle.driver || !vehicle.driver.casualtyType);
                     return vehicle && vehicle.driver && vehicle.driver.casualtyType && vehicle.driver.casualtyType.id == attribute.id;
                 default:
                     return false;
@@ -212,16 +241,27 @@ var CrashFilter = (function() {
             return this.getCrashVehicles(this.filterCrashes(params));
         }
         casualtyFilter.matchCasualty = function(casualty, attribute, attributeName) {
+            var nullAttribute = util.isNullAttribute(attribute);
             switch(attributeName) {
                 case 'casualtyType':
+                    if (nullAttribute)
+                        return casualty && !casualty.casualtyType;
                     return casualty && casualty.casualtyType && casualty.casualtyType.id == attribute.id;
                 case 'casualtyClass':
+                    if (nullAttribute)
+                        return casualty && !casualty.casualtyClass;
                     return casualty && casualty.casualtyClass && casualty.casualtyClass.id == attribute.id;
                 case 'gender':
+                    if (nullAttribute)
+                        return casualty && !casualty.gender;
                     return casualty && casualty.gender && casualty.gender == attribute.value;
                 case 'ageRange':
+                    if (nullAttribute)
+                        return casualty && !casualty.age;
                     return casualty && casualty.age && casualty.age >= attribute.minAge && casualty.age <= attribute.maxAge;
                 case 'beltUsedOption':
+                    if (nullAttribute)
+                        return false;
                     var type = null;
                     if (attribute.id == 1)
                         type = true;

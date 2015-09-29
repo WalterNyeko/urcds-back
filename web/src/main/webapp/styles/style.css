@@ -389,10 +389,12 @@ td.blue-header {
 	background-color: #2B65EC !important;
 	color: #FFF !important;
 	text-align: center;
-}td.orange-header {
-     background-color: #EDB32B !important;
-     color: #FFF !important;
-     text-align: center;
+}
+td.orange-header {
+    font-weight: bold;
+    color: #FFF !important;
+    padding: 4px !important;
+    background-color: #EDB32B !important;
  }
 .drop-shadow {
     box-shadow: 1px 1px 2px #333;
@@ -498,7 +500,6 @@ table.crosstab-orange {
     border-collapse: collapse;
     min-width: 100%;
 }
-
 table.crosstab-orange td {
     border: solid 1px #2C6CAF;
     padding: 3px;
@@ -506,7 +507,6 @@ table.crosstab-orange td {
     background-color: #FFF;
     vertical-align: top;
 }
-
 table.crosstab-orange th {
     border: solid 1px #2C6CAF;
     background-color: #EDB32B;
@@ -514,9 +514,23 @@ table.crosstab-orange th {
     color: #FFF;
     text-align: center;
 }
-
+table.crosstab-orange th.total {
+    color: #000000;
+    background-color: #FFFFFF;
+}
 table.crosstab-orange tr:hover {
     background-color: #F5F1F1 !important;
+}
+table.crosstab-orange tfoot td, td.crosstab-cell.total {
+    font-weight: bold;
+    background-color: #F5F5DC;
+}
+table.crosstab-orange tfoot tr:not(:first-child) {
+    text-align: right;
+}
+td.crosstab-cell {
+    text-align: right;
+    padding: 4px !important;
 }
 .height-130 {
     height: 130px;

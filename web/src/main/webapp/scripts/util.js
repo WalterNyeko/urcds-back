@@ -142,12 +142,6 @@ var util = (function () {
     util.injuredCasualty = function(casualtyType) {
         return casualtyType && casualtyType.id < 4;
     }
-    util.pushArray = function() {
-        var array = arguments[0];
-        for(var i = 1; i < arguments.length; i++)
-            array.push(arguments[i]);
-        return array;
-    }
     util.driverToCasualty = function(vehicle) {
         var driver = vehicle.driver;
         if (!driver || !this.injuredCasualty(driver.casualtyType))
@@ -173,11 +167,18 @@ var util = (function () {
     util.isValueRange = function(range) {
         return constants.valueRanges.indexOf(range) > -1;
     }
-    util.getAttributes = function(name) {
+    util.getAttributes = function(name, appendNull) {
         var attributes = window.crashAttributes[name];
         if (attributes.length && !attributes[0].name && attributes[0].label)
             attributes.map(function(x) { x.name = x.label });
+        appendNull && attributes.push(util.nullAttribute());
         return attributes;
+    }
+    util.nullAttribute = function() {
+        return { id: null, name: constants.NOT_SPECIFIED }
+    }
+    util.isNullAttribute = function(attribute) {
+        return attribute.id === null && attribute.name === constants.NOT_SPECIFIED;
     }
     return util;
 })();
@@ -304,7 +305,8 @@ var ui = (function () {
 })();
 
 var constants = {
+    NOT_SPECIFIED: 'Not Specified',
+    valueRanges: ['weight', 'year'],
     dayList: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-    monthList: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-    valueRanges: ['weight', 'year']
+    monthList: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 };
