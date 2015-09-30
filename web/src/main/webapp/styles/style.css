@@ -50,7 +50,10 @@ h1,h2 {
 #content {
 	padding-bottom: 60px;
 }
-
+.row {
+    margin-left: -45px;
+    margin-right: -45px
+}
 .row h2 {
 	margin-top: 0;
 }
@@ -412,9 +415,9 @@ td.orange-header {
 }
 
 .content-wrapper {
-    border: solid 1px #C0C0C0;
-    /*border-radius: 8px;*/
     padding: 5px;
+    overflow-x: auto;
+    border: solid 1px #C0C0C0;
 }
 
 .min-page-height {
@@ -516,7 +519,7 @@ table.crosstab-orange th {
 }
 table.crosstab-orange th.total {
     color: #000000;
-    background-color: #FFFFFF;
+    background-color: #F5F5DC;
 }
 table.crosstab-orange tr:hover {
     background-color: #F5F1F1 !important;
@@ -525,7 +528,7 @@ table.crosstab-orange tfoot td, td.crosstab-cell.total {
     font-weight: bold;
     background-color: #F5F5DC;
 }
-table.crosstab-orange tfoot tr:not(:first-child) {
+table.crosstab-orange tfoot td:not(:first-child) {
     text-align: right;
 }
 td.crosstab-cell {

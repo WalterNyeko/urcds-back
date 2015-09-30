@@ -81,6 +81,14 @@ var CrashFilter = (function() {
         var crashFilter = Object.create(this.createFilter());
         if (rangeAttribute) {
             switch(rangeAttribute) {
+                case 'timeRange':
+                    crashFilter.matchCrash = function(crash, time) {
+                        if (util.isNullAttribute(time))
+                            return Object.getPrototypeOf(this).matchCrash(crash, time, 'crashDateTime');
+                        var crashDate = crash.crashDateTimeString ? new Date(crash.crashDateTimeString) : null;
+                        return crashDate && crashDate.getHours() == time.id;
+                    }
+                    break;
                 case 'day':
                     crashFilter.matchCrash = function(crash, day) {
                         if (util.isNullAttribute(day))

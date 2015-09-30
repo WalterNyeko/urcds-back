@@ -67,7 +67,7 @@ var charting = (function() {
         var chart = {};
         chart.type = 'column';
         chart.title = title;
-        chart.subtitle = 'based on ' + crossTabulation.crashes.length + ' crashes';
+        chart.subtitle = 'based on ' + crossTabulation.totalUnits() + ' ' + pluralize(crossTabulation.units());
         chart.categories = [];
         chart.series = [];
         crossTabulation.attributeCounts.map(function(xAttr) {
@@ -77,7 +77,11 @@ var charting = (function() {
                 if (y) {
                     y.data.push(yAttr.count);
                 } else {
-                    chart.series.push({ name: yAttr.yName.toString(), data: [yAttr.count]});
+                    chart.series.push({
+                        data: [yAttr.count],
+                        name: yAttr.yName.toString(),
+                        unit: util.capitalizeFirst(pluralize(crossTabulation.units()))
+                    });
                 }
             });
         });
@@ -105,7 +109,7 @@ var charting = (function() {
             yAxis: {
                 min: 0,
                 title: {
-                    text: 'No. of Crashes'
+                    text: 'No. of ' + chart.series[0].unit
                 }
             },
             tooltip: {
@@ -133,7 +137,7 @@ var charting = (function() {
         chart.subtitle = 'based on ' + tabulation.totalUnits() + ' ' + pluralize(tabulation.units());
         chart.series = [];
         chart.data = [];
-        tabulation.attributeCounts.forEach(function (attr) {
+        tabulation.attributeCounts.map(function (attr) {
             chart.data.push([attr.name.toString(), attr.count]);
         });
         chart.dataLabels = {

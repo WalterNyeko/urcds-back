@@ -1,11 +1,13 @@
 /**
  * Created by Frank on 3/26/15.
  */
-(function () {
-    var crashTrends = Object.create(null);
+var crashtrends = (function () {
+    var crashtrends = Object.create(null);
 
-    crashTrends.countCrashes = function (viewBy, yAttribute) {
+    crashtrends.countCrashes = function () {
         this.attributeCounts.length = 0;
+        var viewBy = $('#xCrashAttribute').val();
+        var yAttribute = $('#yCrashAttribute').val();
         var xAttributes = util.getAttributes(viewBy);
         var yAttributes = util.getAttributes(yAttribute);
         var weightRange = $('#yCrashAttribute option:selected').val() == 'weightRange';
@@ -28,23 +30,29 @@
             }, this);
             this.attributeCounts.push(xAttributeCount);
         }, this);
-        charting.createTrendLineGraph(this, xAttributes, $('#yCrashAttribute option:selected').text() + ' by ' + $('#xCrashAttribute option:selected').text(), 'crashtrend-chart');
+        charting.createTrendLineGraph(this,
+                viewBy == 'timeRange' ? xAttributes.map(function(x) { return x.label.split('-')[0].trim() }) : xAttributes,
+                $('#yCrashAttribute option:selected').text() + ' by ' + $('#xCrashAttribute option:selected').text(), 'crashtrend-chart');
     }
-    crashTrends.totalUnits = function() {
+    crashtrends.totalUnits = function() {
         var crashFilter =  new CrashFilter(this.attributeType, null, this.crashes);
         return crashFilter.totalUnits();
     }
-    crashTrends.init = function() {
-        $(document).ready(function() {
-            util.initCrashData();
-            crashTrends.attributeCounts = [];
-            crashTrends.crashes = window.crashes;
-            crashTrends.countCrashes('month', 'crashSeverity');
-            $('#xCrashAttribute, #yCrashAttribute').change(function () {
-                crashTrends.countCrashes($('#xCrashAttribute').val(), $('#yCrashAttribute').val());
-            });
-            ui.renderQuerySummary();
+    crashtrends.init = function() {
+        ui.trendTools();
+        ui.trendTable();
+        crashtrends.attributeCounts = [];
+        crashtrends.crashes = window.crashes;
+        $('#xCrashAttribute, #yCrashAttribute').change(function () {
+            if (!$('#yCrashAttribute').val()) {
+                var defaultAttr = $('#yCrashAttribute').find('option:selected').attr('data-default');
+                $('#yCrashAttribute').find('option[value=' + defaultAttr + ']').prop('selected', true);
+            }
+            crashtrends.countCrashes();
         });
+        crashtrends.countCrashes();
+        $('h2.analysis-header').text($('#crashtrends-header').val());
+        document.title = $('#crashtrends-header').val() + ' | ' + document.title.split('|')[1].trim();
     }
-    crashTrends.init();
+    return crashtrends;
 })();

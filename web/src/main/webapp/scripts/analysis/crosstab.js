@@ -1,13 +1,15 @@
 /**
  * Created by Frank on 3/26/15.
  */
-(function () {
-    var crossTabs = Object.create(null);
+var crosstabs = (function () {
+    var crosstabs = Object.create(null);
 
-    crossTabs.countCrashes = function (xAttribute, yAttribute) {
+    crosstabs.countCrashes = function () {
         var ctx = this;
         this.attributeCounts.length = 0;
-        var unit = $('#unit option:selected').val();
+        var unit = this.units();
+        var xAttribute = $('#xCrashAttribute').val();
+        var yAttribute = $('#yCrashAttribute').val()
         var xAttributes = util.getAttributes(xAttribute, true);
         var yAttributes = util.getAttributes(yAttribute, true);
         var xElement = $('#xCrashAttribute option:selected');
@@ -20,20 +22,20 @@
             var xFilterParams = [xAttr, xAttribute];
             if (xRangeAttribute && !util.isValueRange(xRangeAttribute) && !util.isNullAttribute(xAttr))
                 xFilterParams[0] = xIndex;
-            var xCrashFilter = new CrashFilter(xAttributeType, xRangeAttribute, this.crashes);
-            var xCrashes = xCrashFilter.filter(xFilterParams, 'crash');
+            this.xCrashFilter = new CrashFilter(xAttributeType, xRangeAttribute, this.crashes);
+            var xCrashes = this.xCrashFilter.filter(xFilterParams, 'crash');
             var xAttributeCount = { xName: xAttr.name || xAttr, yAttributeCounts: [] };
             yAttributes.map(function (yAttr, yIndex) {
                 var count = 0;
-                var yCrashFilter = new CrashFilter(yAttributeType, yRangeAttribute, xCrashes);
+                this.yCrashFilter = new CrashFilter(yAttributeType, yRangeAttribute, xCrashes);
                 var yFilterParams = [yAttr, yAttribute];
                 if (yRangeAttribute && !util.isValueRange(yRangeAttribute) && !util.isNullAttribute(yAttr))
                     yFilterParams[0] = yIndex;
-                if (unit != 'crash' && xCrashFilter.type == unit) {
-                    var filteredUnits = yCrashFilter.filter(yFilterParams, unit);
-                    count = filteredUnits.filter(function(x) { return xCrashFilter.match(x, xFilterParams[0], xFilterParams[1]) }).length;
+                if (unit != 'crash' && this.xCrashFilter.type == unit) {
+                    var filteredUnits = this.yCrashFilter.filter(yFilterParams, unit);
+                    count = filteredUnits.filter(function(x) { return this.xCrashFilter.match(x, xFilterParams[0], xFilterParams[1]) }).length;
                 } else {
-                    count = yCrashFilter.filter(yFilterParams, unit).length;
+                    count = this.yCrashFilter.filter(yFilterParams, unit).length;
                 }
                 xAttributeCount.yAttributeCounts.push({
                     yName: yAttr.name || yAttr,
@@ -47,7 +49,7 @@
         xAttributes.pop();
         yAttributes.pop();
     }
-    crossTabs.tabulateCounts = function (yAttributes) {
+    crosstabs.tabulateCounts = function (yAttributes) {
         $('#crosstabs').html('');
         var xAttrName = $('#xCrashAttribute option:selected').text();
         var yAttrName = $('#yCrashAttribute option:selected').text();
@@ -57,15 +59,16 @@
         var tfoot = $('<tfoot><tr><td>Total</td></tr></tfoot>');
         var headerRow1 = $('<tr>');
         var xHeader = $('<th>').attr('rowspan', 2).append(xAttrName);
-        var yColspan = yAttributes.length + 1;
+        var yColspan = yAttributes.length;
         var yHeader = $('<th>').attr('colspan', yColspan).append(yAttrName);
         var headerRow2 = $('<tr>');
         yAttributes.map(function(attr) {
             var yAttrHeader = $('<th>').append(attr.name);
             headerRow2.append(yAttrHeader);
         });
-        headerRow2.append($('<th class="total">Total</th>'));
-        thead.append(headerRow1.append(xHeader).append(yHeader)).append(headerRow2);
+        headerRow1.append(xHeader).append(yHeader);
+        headerRow1.append($('<th class="total">Total</th>').attr('rowspan', 2));
+        thead.append(headerRow1).append(headerRow2);
         var xTotals = [];
         this.attributeCounts.map(function (xAttr) {
             var yTotal = 0;
@@ -95,17 +98,31 @@
         $('#crosstabs').append(table);
         charting.createBarChart(this, xAttrName + ' by ' + yAttrName, 'crosstab-chart');
     }
-    crossTabs.init = function() {
-        $(document).ready(function() {
-            util.initCrashData();
-            crossTabs.attributeCounts = [];
-            crossTabs.crashes = window.crashes;
-            crossTabs.countCrashes('crashSeverity', 'collisionType');
-            $('#xCrashAttribute, #yCrashAttribute, #unit').change(function() {
-                crossTabs.countCrashes($('#xCrashAttribute').val(), $('#yCrashAttribute').val());
-            });
-            ui.renderQuerySummary();
-        });
+    crosstabs.units = function() {
+        return $('#unit').val();
     }
-    crossTabs.init();
+    crosstabs.totalUnits = function() {
+        return this.xCrashFilter.totalUnits($('#unit').val());
+    }
+    crosstabs.init = function() {
+        ui.crosstabTools();
+        ui.crosstabTable();
+        crosstabs.attributeCounts = [];
+        crosstabs.crashes = window.crashes;
+        $('#xCrashAttribute, #yCrashAttribute, #unit').change(function () {
+            if (!$('#xCrashAttribute').val()) {
+                var defaultAttr = $('#xCrashAttribute').find('option:selected').attr('data-default');
+                $('#xCrashAttribute').find('option[value=' + defaultAttr + ']').prop('selected', true);
+            }
+            if (!$('#yCrashAttribute').val()) {
+                var defaultAttr = $('#yCrashAttribute').find('option:selected').attr('data-default');
+                $('#yCrashAttribute').find('option[value=' + defaultAttr + ']').prop('selected', true);
+            }
+            crosstabs.countCrashes();
+        });
+        crosstabs.countCrashes();
+        $('h2.analysis-header').text($('#crosstabs-header').val());
+        document.title = $('#crosstabs-header').val() + ' | ' + document.title.split('|')[1].trim();
+    }
+    return crosstabs;
 })();

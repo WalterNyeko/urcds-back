@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/analysis*")
+@RequestMapping("/analysis*/**")
 public class CrashAnalysisController extends BaseFormController {
 
     @Autowired
@@ -174,5 +174,10 @@ public class CrashAnalysisController extends BaseFormController {
         } else {
             log.error("File" + excelFile + "(" + f.getAbsolutePath() + ") does not exist");
         }
+    }
+
+    @RequestMapping(value = {"/analysis/crashstats", "/analysis/crosstabs", "/analysis/crashtrends"}, method = RequestMethod.GET)
+    public ModelAndView showAnalysis() {
+        return new ModelAndView("analysis/analysis");
     }
 }

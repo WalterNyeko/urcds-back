@@ -301,12 +301,124 @@ var ui = (function () {
             $('.tablesorter-wrapper').height($(window).height() - 310);
         });
     }
+    ui.attributeSelect = function(id, selected) {
+        var select = $('<select>').attr('id', id);
+        select.append('<option value="" data-default="crashSeverity">==== Crash Attributes ====</option>');
+        select.append('<option value="collisionType" data-attr-type="crash">Collision Type</option>');
+        select.append('<option value="crashCause" data-attr-type="crash">Crash Cause</option>');
+        select.append('<option value="crashSeverity" data-attr-type="crash">Crash Severity</option>');
+        select.append('<option value="weightRange" data-range="weight" data-attr-type="crash">Crash Weight</option>');
+        select.append('<option value="day" data-range="day" data-attr-type="crash">Day of Week</option>');
+        select.append('<option value="district" data-attr-type="crash">District</option>');
+        select.append('<option value="junctionType" data-attr-type="crash">Junction Type</option>');
+        select.append('<option value="month" data-range="month" data-attr-type="crash">Month</option>');
+        select.append('<option value="policeStation" data-attr-type="crash">Police Station</option>');
+        select.append('<option value="roadSurface" data-attr-type="crash">Road Surface</option>');
+        select.append('<option value="roadwayCharacter" data-attr-type="crash">Roadway Character</option>');
+        select.append('<option value="surfaceCondition" data-attr-type="crash">Surface Condition</option>');
+        select.append('<option value="surfaceType" data-attr-type="crash">Surface Type</option>');
+        select.append('<option value="vehicleFailureType" data-attr-type="crash">Vehicle Failure Type</option>');
+        select.append('<option value="weather" data-attr-type="crash">Weather</option>');
+        select.append('<option value="year" data-range="year" data-attr-type="crash">Year</option>');
+        select.append('<option value="" data-default="vehicleType">==== Vehicle Attributes ====</option>');
+        select.append('<option value="vehicleType" data-attr-type="vehicle">Vehicle Type</option>');
+        select.append('<option value="ageRange" data-attr-type="vehicle">Driver Age</option>');
+        select.append('<option value="gender" data-attr-type="vehicle">Driver Sex</option>');
+        select.append('<option value="licenseType" data-attr-type="vehicle">License Type</option>');
+        select.append('<option value="beltUsedOption" data-attr-type="vehicle">Belt/Helmet Used (Driver)</option>');
+        select.append('<option value="casualtyType" data-attr-type="vehicle">Driver Casualty</option>');
+        select.append('<option value="" data-default="casualtyType">==== Casualty Attributes ====</option>');
+        select.append('<option value="casualtyType" data-attr-type="casualty">Casualty Type</option>');
+        select.append('<option value="casualtyClass" data-attr-type="casualty">Casualty Class</option>');
+        select.append('<option value="ageRange" data-attr-type="casualty">Casualty Age</option>');
+        select.append('<option value="gender" data-attr-type="casualty">Casualty Sex</option>');
+        select.append('<option value="beltUsedOption" data-attr-type="casualty">Belt/Helmet Used (Casualty)</option>');
+        selected && select.find('option[value=' + selected +']').prop('selected', true);
+        return select;
+    }
+    ui.unitSelect = function() {
+        var select = $('<select id="unit">');
+        select.append('<option value="casualty">Casualties</option>');
+        select.append('<option selected value="crash">Crashes</option>');
+        select.append('<option value="vehicle">Vehicles</option>');
+        return select;
+    }
+    ui.trendSelect = function(id) {
+        var select = $('<select>').attr('id', id);
+        select.append('<option value="timeRange">Time of Day</option>');
+        select.append('<option value="day">Day of Week</option>');
+        select.append('<option selected value="month">Month</option>');
+        select.append('<option value="year">Year</option>');
+        return select;
+    }
+    ui.statisticsTable = function() {
+        var div = $('div.content-wrapper');
+        div.html('');
+        var table = $('<table cellpadding="3" width="100%" class="stats-tab">');
+        var row1 = $('<tr>');
+        var row2 = $('<tr>');
+        row1.append('<td width="40%" id="stats" style="padding-right: 30px;"></td>');
+        row1.append($('<td width="60%">').append('<div id="stat-chart" style="width:100%"></div>'));
+        row2.append($('<td colspan="2" align="center">').append('<div id="stat-column" style="width:100%"></div>'));
+        table.append(row1).append(row2);
+        div.append(table);
+    }
+    ui.trendTable = function() {
+        var div = $('div.content-wrapper');
+        div.html('');
+        var table = $('<table cellpadding="3" width="100%">');
+        var row1 = $('<tr>');
+        row1.append($('<td width="100%">').append('<br/><div id="crashtrend-chart" style="width:100%"></div>'));
+        table.append(row1);
+        div.append($('<p>').html(constants.HTML_SPACE));
+        div.append(table);
+    }
+    ui.crosstabTable = function() {var div = $('div.content-wrapper');
+        div.html('');
+        var table = $('<table cellpadding="3" width="100%" class="cross-tab">');
+        var row1 = $('<tr>');
+        var row2 = $('<tr>');
+        row1.append('<td width="100%" id="crosstabs"></td>');
+        row2.append($('<td width="100%">').append('<br/><div id="crosstab-chart" style="width:100%"></div>'));
+        table.append(row1).append(row2);
+        div.append(table);
+    }
+    ui.statisticsTools = function() {
+        var div = $('div.analysis-tools');
+        div.html('');
+        div.append($('<label for="crashAttribute" class="control-label">').text('Attribute:')).append(constants.HTML_SPACE);
+        div.append(ui.attributeSelect('crashAttribute', 'crashSeverity')).append(constants.HTML_SPACE);
+        div.append($('<label for="unit" class="control-label">').text('Units:')).append(constants.HTML_SPACE);
+        div.append(ui.unitSelect());
+    }
+    ui.trendTools = function() {
+        var div = $('div.analysis-tools');
+        div.html('');
+        div.append($('<label for="xCrashAttribute" class="control-label">').text('Rows:')).append(constants.HTML_SPACE);
+        div.append(ui.trendSelect('xCrashAttribute')).append(constants.HTML_SPACE);
+        div.append($('<label for="yCrashAttribute" class="control-label">').text('Columns:')).append(constants.HTML_SPACE);
+        div.append(ui.attributeSelect('yCrashAttribute', 'crashSeverity')).append(constants.HTML_SPACE);
+        div.append($('<label for="unit" class="control-label">').text('Units:')).append(constants.HTML_SPACE);
+        div.append($('<div id="unit" style="display: inline">'));
+        div.find('select#yCrashAttribute option[data-range]').remove();
+    }
+    ui.crosstabTools = function() {
+        var div = $('div.analysis-tools');
+        div.html('');
+        div.append($('<label for="xCrashAttribute" class="control-label">').text('Rows:')).append(constants.HTML_SPACE);
+        div.append(ui.attributeSelect('xCrashAttribute', 'crashSeverity')).append(constants.HTML_SPACE);
+        div.append($('<label for="yCrashAttribute" class="control-label">').text('Columns:')).append(constants.HTML_SPACE);
+        div.append(ui.attributeSelect('yCrashAttribute', 'collisionType')).append(constants.HTML_SPACE);
+        div.append($('<label for="unit" class="control-label">').text('Units:')).append(constants.HTML_SPACE);
+        div.append(ui.unitSelect());
+    }
     return ui;
 })();
 
 var constants = {
+    HTML_SPACE: '&nbsp;&nbsp;',
     NOT_SPECIFIED: 'Not Specified',
-    valueRanges: ['weight', 'year'],
+    valueRanges: ['timeRange', 'weight', 'year'],
     dayList: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
     monthList: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 };

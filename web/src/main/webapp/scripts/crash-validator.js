@@ -5,7 +5,6 @@
 var validationFunctions = [];
 var validationWarningMessage = [];
 function initCrashValidation() {
-    validationFunctions.push(checkGpsCoordinateLimits);
     validationFunctions.push(checkWeather);
     validationFunctions.push(checkRoadwayCharacter);
     util.initFormChangeDetection('#crashForm');
@@ -63,19 +62,6 @@ var getCrashDate = function() {
         dateConverted = new Date(dataSplit[0], dataSplit[1] - 1, dataSplit[2]);
     }
     return dateConverted;
-}
-
-var checkGpsCoordinateLimits = function() {
-    if ($("#gMaps")) {
-        var latitude = parseFloat($("#tdLat").attr('data-lat-val'));
-        var longitude = parseFloat($("#tdLon").attr('data-lon-val'));
-        if(latitude <= -2 || latitude >= 3) {
-            validationWarningMessage.push("The <b><i>GPS latitude</i></b> value provided seems to be outside the country.");
-        }
-        if(longitude < 29.5 || longitude > 34.8) {
-            validationWarningMessage.push("The <b><i>GPS longitude</i></b> value provided seems to be outside the country.");
-        }
-    }
 }
 
 var checkWeather = function() {

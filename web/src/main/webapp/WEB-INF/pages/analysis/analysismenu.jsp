@@ -10,13 +10,13 @@
     <a href="<c:url value='/analysis'/>">
         <fmt:message key="menu.crashes" />
     </a>|
-    <a href="<c:url value='/crashstats'/>">
+    <a href="<c:url value='/analysis/crashstats'/>" class="analysis" data-type="crashstats">
         <fmt:message key="rcds.crashStatistics" />
     </a>|
-    <a href="<c:url value='/crosstabs'/>">
+    <a href="<c:url value='/analysis/crosstabs'/>" class="analysis" data-type="crosstabs">
         <fmt:message key="rcds.CrossTabulations" />
     </a>|
-    <a href="<c:url value='/crashtrends'/>">
+    <a href="<c:url value='/analysis/crashtrends'/>" class="analysis" data-type="crashtrends">
         <fmt:message key="rcds.CrashTrends" />
     </a>|
     <a href="<c:url value='/analysisdownloadexcel'/>">

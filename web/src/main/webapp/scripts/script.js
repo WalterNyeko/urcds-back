@@ -69,6 +69,16 @@ function validateFields() {
             valMessages += "- <b><i>Crash date</i></b> cannot be a future date.<br/>";
         }
     }
+    if ($("#gMaps")) {
+        var latitude = parseFloat($("#tdLat").attr('data-lat-val'));
+        var longitude = parseFloat($("#tdLon").attr('data-lon-val'));
+        if(latitude <= -2 || latitude >= 3) {
+            valMessages += "- <b><i>GPS latitude</i></b> value provided seems to be outside the country.<br/>";
+        }
+        if(longitude < 29.5 || longitude > 34.8) {
+            valMessages += "- <b><i>GPS longitude</i></b> value provided seems to be outside the country.<br/>";
+        }
+    }
     if (valMessages != "") {
         alertDialog({message: valMessages});
         return false;

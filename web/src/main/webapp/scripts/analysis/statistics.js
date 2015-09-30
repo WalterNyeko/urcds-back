@@ -2,7 +2,7 @@
  * Created by Frank on 3/18/15.
  */
 
-(function() {
+var statistics = (function() {
     var statistics = Object.create(null);
 
     statistics.countCrashes = function() {
@@ -97,22 +97,20 @@
         charting.createColumnChart(this, attrName, 'stat-column');
     }
     statistics.init = function() {
-        $(document).ready(function() {
-            util.initCrashData();
-            statistics.attributeCounts = [];
-            statistics.crashes = window.crashes;
-            $('#crashAttribute, #unit').change(function () {
-                if ($(this).val())
-                    statistics.countCrashes();
-                else {
-                    var defaultAttr = $(this).find('option:selected').attr('data-default');
-                    $(this).find('option[value=' + defaultAttr + ']').prop('selected', true);
-                    statistics.countCrashes();
-                }
-            });
-            $('#crashAttribute').trigger('change')
-            ui.renderQuerySummary();
+        ui.statisticsTools();
+        ui.statisticsTable();
+        statistics.attributeCounts = [];
+        statistics.crashes = window.crashes;
+        $('#crashAttribute, #unit').change(function () {
+            if (!$('#crashAttribute').val()) {
+                var defaultAttr = $('#crashAttribute').find('option:selected').attr('data-default');
+                $('#crashAttribute').find('option[value=' + defaultAttr + ']').prop('selected', true);
+            }
+            statistics.countCrashes();
         });
+        statistics.countCrashes();
+        $('h2.analysis-header').text($('#crashstats-header').val());
+        document.title = $('#crashstats-header').val() + ' | ' + document.title.split('|')[1].trim();
     }
-    statistics.init();
+    return statistics;
 })();
