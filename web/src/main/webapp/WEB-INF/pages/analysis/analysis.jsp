@@ -42,4 +42,4 @@
 <input id="crashstats-header" type="hidden" value="<fmt:message key="rcds.crashStatistics" />" />
 <input id="crashtrends-header" type="hidden" value="<fmt:message key="rcds.CrashTrends" />" />
 <input id="crosstabs-header" type="hidden" value="<fmt:message key="rcds.CrossTabulations" />" />
-<%@ include file="/common/session.jsp"%>
+<div id="crashdata"></div>

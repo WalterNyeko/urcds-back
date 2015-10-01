@@ -142,7 +142,7 @@ function loadCrashSeverityChart() {
             options.series = $.parseJSON(result);
             $('.crashCount').html('(based on ' + options.series[0].crashCount + ' crashes)');
             $('.crashCount').css('margin-top', '0px');
-            var chart = new Highcharts.Chart(options);
+            new Highcharts.Chart(options);
         }
     });
 }
@@ -155,7 +155,7 @@ function loadCrashCauseChart() {
             var options = createOptions("container-cause",
                 "Main Cause of Crash");
             options.series = $.parseJSON(result)
-            var chart = new Highcharts.Chart(options);
+            new Highcharts.Chart(options);
         }
     });
 }

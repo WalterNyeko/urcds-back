@@ -117,11 +117,11 @@ function sendRequest(params) {
         url: params.url,
         success: function (result) {
             if(params.responseDiv) {
-                $(params.responseDiv).html(result);
-                if(params.rootElementId) {
-                    var rootElement = $(params.responseDiv).find("#"+params.rootElementId);
-                    $(params.responseDiv).html("");
-                    $(params.responseDiv).append(rootElement);
+                params.responseDiv.html(result);
+                if(params.responseDiv) {
+                    var rootElement = params.responseDiv.find("#"+params.rootElementId);
+                    params.responseDiv.html("");
+                    params.responseDiv.append(rootElement);
                 }
                 if (params.callback) {
                     params.callback();

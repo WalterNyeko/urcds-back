@@ -3,12 +3,19 @@
  */
 $(function() {
     $(document).ready(function() {
-        util.initCrashData();
-        $('a.analysis').click(function() {
-            displayAnalysis($(this).attr('data-type'));
-            return false;
+        sendRequest({
+            rootElementId: 'crashdata',
+            responseDiv: $('div#crashdata'),
+            url: util.basePath().replace('analysis/', 'analysisdata'),
+            callback: function() {
+                util.initCrashData();
+                $('a.analysis').click(function() {
+                    displayAnalysis($(this).attr('data-type'));
+                    return false;
+                });
+                displayAnalysis();
+            }
         });
-        displayAnalysis();
         ui.renderQuerySummary();
     });
 

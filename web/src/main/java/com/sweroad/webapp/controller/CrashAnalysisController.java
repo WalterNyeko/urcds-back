@@ -62,6 +62,13 @@ public class CrashAnalysisController extends BaseFormController {
         return mav;
     }
 
+    @RequestMapping(value = "/analysisdata", method = RequestMethod.GET)
+    public ModelAndView getAnalysisData(HttpServletRequest request) throws Exception {
+        ModelAndView mav = new ModelAndView("analysis/crashdata");
+        getCrashes(request);
+        return mav;
+    }
+
     @RequestMapping(value="/analysisgisselect", method = RequestMethod.POST)
     public ModelAndView showGisSelectedCrashes(HttpServletRequest request, @RequestParam("crashIds") String crashIds) throws Exception {
         List<Long> ids = new ArrayList<Long>();

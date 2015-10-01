@@ -109,4 +109,4 @@
         showCrashesInGoogleMaps();
     });
 </script>
-<%@ include file="/common/session.jsp"%>
+<div id="crashdata"></div>
