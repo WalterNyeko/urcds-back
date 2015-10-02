@@ -317,8 +317,10 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
     @Override
     public Map<String, List> getOrderedRefData() {
         Map<String, List> refData = this.getReferenceData();
-        for (List l : refData.values()) {
-            Collections.sort(l);
+        for (String key : refData.keySet()) {
+            if (!key.equalsIgnoreCase("crashSeverities") && !key.equalsIgnoreCase("casualtyTypes")) {
+                Collections.sort(refData.get(key));
+            }
         }
         refData.put("genders", lookupManager.getAllGenders());
         refData.put("ageRanges", lookupManager.getAllAgeRanges());

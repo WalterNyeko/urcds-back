@@ -19,23 +19,21 @@
 			</td>
 			<td width="40%" align="right">
                 <c:if test="${crash.editable and !crash.removed}">
-                    <a href="<c:url value='/crashform?id=${crash.id}'/>">
+                    <a href="<c:url value='/crashform?id=${crash.id}'/>" class="show-loading">
                         <img src="<c:url value='/images/bt_Edit.gif' />" hspace="4" title="Edit Crash" />
                     </a>
                 </c:if>
                 <c:if test="${crash.removable and !crash.removed}">
-                    <a href="<c:url value='/crashremove?id=${crash.id}'/>" onclick="return confirm('Remove crash?');">
+                    <a href="<c:url value='/crashremove?id=${crash.id}'/>" onclick="return confirmDialog({message : 'Remove crash?', aLink : this});">
                         <img src="<c:url value='/images/bt_Remove.gif' />" hspace="4" title="Remove Crash" />
                     </a>
                 </c:if>
                 <c:if test="${crash.removable and crash.removed}">
-                    <a href="<c:url value='/crashrestore?id=${crash.id}'/>" onclick="return confirm('Restore crash?');">
+                    <a href="<c:url value='/crashrestore?id=${crash.id}'/>" onclick="return confirmDialog({message : 'Restore crash?', aLink : this});">
                         <img src="<c:url value='/images/bt_Restore.gif' />" hspace="4" title="Restore Crash" />
                     </a>
                 </c:if>
-				<a href="<c:url value='/crashes'/>"> <fmt:message
-						key="button.backToCrashes" />
-				</a>
+				<a href="<c:url value='/crashes'/>" class="show-loading"> <fmt:message key="button.backToCrashes" /></a>
 			</td>
 		</tr>
 	</table>
@@ -603,9 +601,7 @@
                     </table>
                 </td>
                <td width="50%" align="right" valign="bottom">
-                    <a href="<c:url value='/crashes'/>"> <fmt:message
-                            key="button.backToCrashes" />
-                    </a>
+                    <a href="<c:url value='/crashes'/>" class="show-loading"> <fmt:message key="button.backToCrashes" /></a>
                 </td>
             </tr>
         </table>

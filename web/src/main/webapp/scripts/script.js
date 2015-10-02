@@ -156,7 +156,8 @@ function loadCrashCauseChart() {
                 "Main Cause of Crash");
             options.series = $.parseJSON(result)
             new Highcharts.Chart(options);
-        }
+        },
+        complete: ui.closeNotification
     });
 }
 
@@ -166,7 +167,7 @@ function loadDialog(params) {
         params.message +
         "</div></div>").appendTo("body");
     var dialogButtons = params.dialogButtons ? params.dialogButtons : { 'Close': function () { $('#map-canvas').remove() } };
-    $('#map-canvas').dialog({
+    window.dialog = $('#map-canvas').dialog({
         modal: true,
         autoOpen: true,
         width: params.width,
@@ -237,6 +238,7 @@ function confirmDialog(params){
                 $("#confirmDialog").remove();
                 if(params.aLink){
                     var href = $(params.aLink).attr('href');
+                    ui.loadingNotification();
                     util.unbindBeforeUnload();
                     window.location.href = href;
                 } else if (params.redirectLink){

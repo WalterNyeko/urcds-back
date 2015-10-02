@@ -23,6 +23,7 @@
     <script type="text/javascript">
         $( document ).ready(function() {
             $('form').submit(function() {
+                ui.loadingNotification();
                 util.unbindBeforeUnload();
                 util.persistQuery();
             });
@@ -638,7 +639,7 @@
                 </tr>
 				<tr>
 					<td>
-						<a class="btn btn-default" href="<c:url value='/crashquery'/>">
+						<a class="btn btn-default show-loading" href="<c:url value='/crashquery'/>">
 							<i class="icon-ok"></i>
 							<fmt:message key="button.cancel" />
 						</a>

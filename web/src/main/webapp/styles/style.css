@@ -590,5 +590,21 @@ td.crosstab-cell {
     font-size: 12px;
 }
 .ui-dialog-content {
-    background-color: #ffffff !important;
+    background-color: #FFFFFF !important;
+}
+.loading div {
+    text-align: center;
+}
+.loading .modal-header {
+    border-bottom-width: 0px;
+}
+.modal-scrollable {
+    z-index: 2000 !important;
+}
+.modal-backdrop.in, .ui-widget-overlay {
+    opacity: 0.5;
+    background-color: #000000;
+}
+.ui-widget-overlay {
+    background-image: none;
 }

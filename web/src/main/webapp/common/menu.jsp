@@ -5,8 +5,11 @@
 	<div class="collapse navbar-collapse" id="navbar">
 		<ul class="nav navbar-nav">
 			<c:if test="${empty pageContext.request.remoteUser}">
-				<li class="active"><a href="<c:url value="/login"/>"><fmt:message
-							key="login.title" /></a></li>
+				<li class="active">
+                    <a href="<c:url value="/login"/>">
+                        <fmt:message key="login.title" />
+                    </a>
+                </li>
 			</c:if>
 			<menu:displayMenu name="Home" />
 			<menu:displayMenu name="CrashMenu" />

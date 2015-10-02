@@ -25,7 +25,7 @@
             <option value="100">100</option>
         </select>
         &nbsp;&nbsp;
-        <a href="<c:url value='/crashqueryform' />" id="addQuery"><fmt:message key="button.addQuery" /></a>
+        <a href="<c:url value='/crashqueryform' />" class="show-loading" id="addQuery"><fmt:message key="button.addQuery" /></a>
     </div>
     <div class="content-wrapper">
         <div class="tablesorter-wrapper">
@@ -51,10 +51,10 @@
                                 </c:if>
                             </td>
                             <td>
-                                <a href="#" alt="Run query" onclick="util.runQuery(${query.id}); setAccessedObject(this);"data-queries-id="${query.id}" >
+                                <a href="#" alt="Run query" class="show-loading" onclick="util.runQuery(${query.id}); setAccessedObject(this);"data-queries-id="${query.id}" >
                                     <img src="<c:url value='/images/run.png'/>" alt="Run query" title="Run query" hspace="4" width="15">
                                 </a>
-                                <a href="<c:url value='/crashqueryform'/>?id=${query.id}" alt="Edit query" onclick="setAccessedObject(this)">
+                                <a href="<c:url value='/crashqueryform'/>?id=${query.id}" class="show-loading" alt="Edit query" onclick="setAccessedObject(this)">
                                     <img src="<c:url value='/images/bt_Edit.gif'/>" alt="Edit query" title="Edit query" hspace="4" width="25">
                                 </a>
                                 <a href="<c:url value='/crashquerydelete'/>?id=${query.id}" alt="Delete query" onclick="setAccessedObject(this); return confirmDialog({message : 'Delete query?', aLink : this});">

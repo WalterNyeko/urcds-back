@@ -33,7 +33,7 @@ public class ChartController extends BaseFormController {
     @RequestMapping(value = "/crashchartseverity", method = RequestMethod.GET)
     public
     @ResponseBody
-    String getCrashSeverityPieChart(HttpServletRequest request)
+    String getCrashSeverityPieChart()
             throws Exception {
         List<Crash> crashes = crashManager.getAvailableCrashes();
         String chart = "[{\"type\":\"pie\",\"name\":\"Crash Severity Pie Chart\",";
@@ -46,7 +46,7 @@ public class ChartController extends BaseFormController {
     @RequestMapping(value = "/crashchartcause", method = RequestMethod.GET)
     public
     @ResponseBody
-    String getCrashCausePieChart(HttpServletRequest request) throws Exception {
+    String getCrashCausePieChart() throws Exception {
         String chart = "[{\"type\":\"pie\",\"name\":\"Crash Cause Pie Chart\",";
         chart += constructCrashCauseChartData();
         chart += "}]";
@@ -56,7 +56,7 @@ public class ChartController extends BaseFormController {
     @RequestMapping(value = "/crashchartdistrctmonthly", method = RequestMethod.GET)
     public
     @ResponseBody
-    String getCrashDistricMonthlyNumbers(HttpServletRequest request) throws Exception {
+    String getCrashDistricMonthlyNumbers() throws Exception {
         String chart = "[{\"type\":\"pie\",\"name\":\"Crash Cause Pie Chart\",";
         chart += constructCrashCauseChartData();
         chart += "}]";

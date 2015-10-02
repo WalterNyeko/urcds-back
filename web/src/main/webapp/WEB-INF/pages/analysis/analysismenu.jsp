@@ -4,10 +4,10 @@
     <a href="" onclick="return loadSelectCrash({url: '<c:url value="/analysiscrashselect" />'});">
         <fmt:message key="crashAnalysis.Select" />
     </a>|
-    <a href="<c:url value='/crashquery'/>">
+    <a href="<c:url value='/crashquery'/>" class="show-loading">
         <fmt:message key="crashAnalysis.AdvancedSelect" />
     </a>|
-    <a href="<c:url value='/analysis'/>">
+    <a href="<c:url value='/analysis'/>" class="show-loading">
         <fmt:message key="menu.crashes" />
     </a>|
     <a href="<c:url value='/analysis/crashstats'/>" class="analysis" data-type="crashstats">
@@ -19,10 +19,10 @@
     <a href="<c:url value='/analysis/crashtrends'/>" class="analysis" data-type="crashtrends">
         <fmt:message key="rcds.CrashTrends" />
     </a>|
-    <a href="<c:url value='/analysisdownloadexcel'/>">
+    <a href="<c:url value='/analysisdownloadexcel'/>" class="show-loading">
         <fmt:message key="button.exportToExcel" />
     </a>|
-    <a id='gMaps' href="<c:url value='/mapping'/>">
+    <a id='gMaps' href="<c:url value='/mapping'/>" class="show-loading">
         <fmt:message key="maps.viewInGoogleMaps"/>
     </a>
 </div>

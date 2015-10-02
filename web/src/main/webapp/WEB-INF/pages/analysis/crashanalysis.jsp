@@ -26,8 +26,8 @@
             <td width="40%">
                 <ul class="nav nav-tabs" style="float: right;">
                     <li class="active"><a href=""  class="non-click"><fmt:message key="crashList.crashes" /></a></li>
-                    <li><a href="<c:url value='/analysisvehicles'/>"><fmt:message key="crashAnalysis.vehicles" /></a></li>
-                    <li><a href="<c:url value='/analysiscasualties'/>"><fmt:message key="crashAnalysis.casualties"/></a></li>
+                    <li><a href="<c:url value='/analysisvehicles'/>" class="show-loading"><fmt:message key="crashAnalysis.vehicles" /></a></li>
+                    <li><a href="<c:url value='/analysiscasualties'/>" class="show-loading"><fmt:message key="crashAnalysis.casualties"/></a></li>
                 </ul>
             </td>
         </tr>
@@ -62,7 +62,7 @@
                         <td>${crash.policeStation.name}</td>
                         <td>${crash.policeStation.district.name}</td>
                         <td>
-                            <a href="<c:url value='/crashview'/>?id=${crash.id}" alt="View crash" onclick="setAccessedObject(this)" data-crashanalysis-id="${crash.id}">
+                            <a href="<c:url value='/crashview'/>?id=${crash.id}" class="show-loading" alt="View crash" onclick="setAccessedObject(this)" data-crashanalysis-id="${crash.id}">
                                 <img src="<c:url value='/images/bt_View.gif'/>" alt="View" title="View" hspace="4">
                             </a>
                         </td>

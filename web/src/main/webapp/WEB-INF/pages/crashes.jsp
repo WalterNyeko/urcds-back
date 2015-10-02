@@ -29,7 +29,7 @@
         </select>
         &nbsp;&nbsp;
         <security:authorize url="/app/crashform*">
-            <a href="<c:url value='/crashform' />" id="addCrash"> <fmt:message
+            <a href="<c:url value='/crashform' />" id="addCrash" class="show-loading"> <fmt:message
                     key="button.addCrash" />
             </a>
         </security:authorize>
@@ -71,11 +71,11 @@
                                         </a>
                                     </c:when>
                                     <c:otherwise>
-                                        <a href="<c:url value='/crashview'/>?id=${crash.id}" alt="View crash" onclick="setAccessedObject(this)" data-crashes-id="${crash.id}">
+                                        <a href="<c:url value='/crashview'/>?id=${crash.id}" class="show-loading" alt="View crash" onclick="setAccessedObject(this)" data-crashes-id="${crash.id}">
                                             <img src="<c:url value='/images/bt_View.gif'/>" alt="View" title="View" hspace="4">
                                         </a>
                                         <c:if test="${crash.editable}">
-                                            <a href="<c:url value='/crashform'/>?id=${crash.id}" alt="Edit crash" onclick="setAccessedObject(this)">
+                                            <a href="<c:url value='/crashform'/>?id=${crash.id}" class="show-loading" alt="Edit crash" onclick="setAccessedObject(this)">
                                                 <img src="<c:url value='/images/bt_Edit.gif'/>" alt="Edit" title="Edit" hspace="4">
                                             </a>
                                         </c:if>

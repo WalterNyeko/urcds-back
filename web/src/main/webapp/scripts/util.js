@@ -1,6 +1,13 @@
 var util = (function () {
     var util = Object.create(null);
 
+    util.scheduleDeferredFunctionExecution = function(waitTime, f) {
+        setTimeout(function() {
+            f.call();
+        }, waitTime);
+        return false;
+    }
+
     util.nameValuePair = function (name) {
         return { name: name, value: null};
     }
@@ -16,7 +23,12 @@ var util = (function () {
         return text;
     }
     util.basePath = function () {
-        return window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/') + 1);
+        var basePath = window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/') + 1);
+        constants.nonBasePath.map(function(x) {
+            if (basePath.endsWith(x + '/'))
+                basePath = basePath.replace(x + '/', '');
+        });
+        return basePath;
     }
     util.yearList = function () {
         var years = [];
@@ -91,11 +103,20 @@ var util = (function () {
     }
     util.bindBeforeUnload = function () {
         $(window).on('beforeunload', function () {
+            ui.closeNotification();
             return 'You have unsaved changes. They will be lost if you go ahead and leave this page without saving.';
         });
     }
     util.unbindBeforeUnload = function () {
         $(window).off('beforeunload');
+    }
+    util.fetchCrashData = function(callback) {
+        sendRequest({
+            callback: callback,
+            rootElementId: 'crashdata',
+            responseDiv: $('div#crashdata'),
+            url: util.basePath() + 'analysisdata'
+        });
     }
     util.initCrashData = function () {
         if ($('#crashesJSON').length)
@@ -190,12 +211,10 @@ var ui = (function () {
         $(window).load(function () {
             ui.initDatePicker();
             ui.initSearchButton();
-            ui.initNoneClickAnchor();
-            $('a[title=Logout]').click(ui.cleanUp);
+            $('a.non-click').click(function () { return false });
+            $('a[title=Logout]').click(function () { sessionStorage.clear() });
+            $('.show-loading, .navbar-nav a:not(.dropdown-toggle)').click(function() { ui.loadingNotification() });
         });
-    }
-    ui.cleanUp = function() {
-        sessionStorage.clear();
     }
     ui.initDatePicker = function () {
         $('.dtpicker').datepicker({
@@ -224,9 +243,21 @@ var ui = (function () {
             }
         });
     }
-    ui.initNoneClickAnchor = function () {
-        $('a.non-click').click(function () {
-            return false;
+    ui.loadingNotification = function(message) {
+        message = message || 'Please wait...'
+        var gif = util.basePath() + 'images/loading.gif';
+        var loading = $('<div class="modal loading" data-backdrop="static" data-keyboard="false">');
+        loading.append($('<div class="modal-header">').append('<h4 class="waitMessage">' + message + '</h4>'));
+        loading.append($('<div class="modal-body">').append('<img src="' + gif + '" height="80">'));
+        loading.modal({backdrop: 'static'});
+    }
+    ui.closeNotification = function(lag) {
+        lag = lag || 100;
+        util.scheduleDeferredFunctionExecution(lag, function() {
+            $('.loading').modal('hide');
+            $('.loading').remove();
+            $('body').removeClass('modal-open');
+            $('.modal-scrollable, .modal-backdrop').remove();
         });
     }
     ui.appendQueryHeader = function (query, table) {
@@ -275,10 +306,11 @@ var ui = (function () {
         }
     }
     ui.dialogContent = function () {
-        return $('.ui-dialog-content');
+        return window.dialog;
     }
     ui.centerDialog = function () {
-        ui.dialogContent().dialog("option", "position", { my: "center", at: "center", of: window });
+        var dialog = ui.dialogContent();
+        dialog && dialog.dialog("option", "position", { my: "center", at: "center", of: window });
     }
     ui.initMappingSurface = function () {
         $('.drawing-actions').hide();
@@ -416,6 +448,7 @@ var ui = (function () {
 })();
 
 var constants = {
+    nonBasePath: ['analysis'],
     HTML_SPACE: '&nbsp;&nbsp;',
     NOT_SPECIFIED: 'Not Specified',
     valueRanges: ['timeRange', 'weight', 'year'],

@@ -12,7 +12,7 @@
 	<h2 style="text-align: center;">
 		<fmt:message key="rcds.crashStatistics" />
 	</h2>
-    <div class="crashCount" style="margin-top: 200px;">Loading statistics... Please wait.</div>
+    <div class="crashCount" style="margin-top: 200px;"></div>
     <table width="100%" cellpadding="3">
         <tr>
             <td width="50%">
@@ -25,6 +25,7 @@
     </table>
 	<script type="text/javascript">
 		$(document).ready(function() {
+            ui.loadingNotification('Loading statistics. Please wait...');
 			loadCrashSeverityChart();	
 			loadCrashCauseChart();
 		});

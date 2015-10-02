@@ -236,7 +236,7 @@
                         <table width="100%">
                             <tr>
                                 <td width="50%">
-                                    <a class="btn btn-default" href="<c:url value='/crashform?id=${crash.id}&back=true' />" onclick="util.unbindBeforeUnload()">
+                                    <a class="btn btn-default show-loading" href="<c:url value='/crashform?id=${crash.id}&back=true' />" onclick="util.unbindBeforeUnload()">
                                         <i class="icon-ok"></i>
                                         <fmt:message key="button.back" />
                                     </a>
@@ -286,6 +286,7 @@
         return false;
     }
     function submitForm() {
+        ui.loadingNotification();
         util.unbindBeforeUnload();
         window.location.href = '<c:url value="/crashformsubmit" />';
     }

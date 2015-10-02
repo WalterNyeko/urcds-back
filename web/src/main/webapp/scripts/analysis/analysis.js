@@ -3,18 +3,16 @@
  */
 $(function() {
     $(document).ready(function() {
-        sendRequest({
-            rootElementId: 'crashdata',
-            responseDiv: $('div#crashdata'),
-            url: util.basePath().replace('analysis/', 'analysisdata'),
-            callback: function() {
-                util.initCrashData();
-                $('a.analysis').click(function() {
-                    displayAnalysis($(this).attr('data-type'));
-                    return false;
-                });
-                displayAnalysis();
-            }
+        ui.loadingNotification();
+        util.fetchCrashData(function() {
+            util.initCrashData();
+            displayAnalysis();
+        });
+        $('a.analysis').click(function() {
+            ui.loadingNotification();
+            displayAnalysis($(this).attr('data-type'));
+            ui.closeNotification(500);
+            return false;
         });
         ui.renderQuerySummary();
     });

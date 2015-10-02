@@ -176,6 +176,8 @@ function ConvertDMSToDD(params) {
 
 function showCrashesInGoogleMaps() {
     if (crashes) {
+        if ($('.loading').length == 0)
+            ui.loadingNotification();
         defineCrashMarkers();
         var center = markers.length ? markers[0].getPosition() : getDefaultPosition();
         var map = initGoogleMap(center, 8);
@@ -191,6 +193,7 @@ function showCrashesInGoogleMaps() {
         showDrawingManager(false);
         $('#draw-enable').attr('checked', false);
         window.map = map;
+        ui.closeNotification(2000);
     }
 }
 

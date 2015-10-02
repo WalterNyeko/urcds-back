@@ -427,7 +427,7 @@
 				</tr>
 				<tr>
 					<td>
-						<a class="btn btn-default" href="<c:url value='/crashes'/>" onclick="bCancel=true;"> 
+						<a class="btn btn-default show-loading" href="<c:url value='/crashes'/>" onclick="bCancel=true;">
 							<i class="icon-ok"></i>
 							<fmt:message key="button.cancel" />
 						</a>
@@ -468,6 +468,7 @@
         return false;
     }
     function submitForm() {
+        ui.loadingNotification();
         util.unbindBeforeUnload();
         document.getElementById('crashForm').submit();
     }

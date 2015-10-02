@@ -8,7 +8,7 @@ function loadSelectCrash(params) {
         "<div style='clear: both; margin-top: 2%; text-align: justify'>Loading..." +
         "</div></div>").appendTo("body");
 
-    $("#select-crash").dialog({
+    window.dialog = $("#select-crash").dialog({
         autoOpen: true,
         closeOnEscape: false,
         modal: true,
@@ -16,6 +16,7 @@ function loadSelectCrash(params) {
         buttons: {
             'Search': function () {
                 if(validateCrashSearch()) {
+                    ui.loadingNotification();
                     $("#selectCrashForm").submit();
                 }
             },
@@ -43,13 +44,14 @@ function loadVehicleForm(params) {
         "<div style='clear: both; margin-top: 2%; text-align: justify'>Loading..." +
         "</div></div>").appendTo("body");
 
-    $("#vehicle-dialog").dialog({
+    window.dialog = $("#vehicle-dialog").dialog({
         autoOpen: true,
         closeOnEscape: false,
         modal: true,
         width: 'auto',
         buttons: {
             'Save' : function () {
+                ui.loadingNotification();
                 $("#vehicleform").submit();
 
             },
@@ -77,7 +79,7 @@ function loadCasualtyForm(params) {
         "<div style='clear: both; margin-top: 2%; text-align: justify'>Loading..." +
         "</div></div>").appendTo("body");
 
-    $("#casualty-dialog").dialog({
+    window.dialog = $("#casualty-dialog").dialog({
         autoOpen: true,
         closeOnEscape: false,
         modal: true,
@@ -85,6 +87,7 @@ function loadCasualtyForm(params) {
         buttons: {
             'Save' : function () {
                 if (validateFields()) {
+                    ui.loadingNotification();
                     $("#casualtyform").submit();
                 }
             },
@@ -130,6 +133,7 @@ function sendRequest(params) {
         },
         complete: function() {
             ui.centerDialog();
+            ui.closeNotification(params.closeLag);
         }
     });
 }

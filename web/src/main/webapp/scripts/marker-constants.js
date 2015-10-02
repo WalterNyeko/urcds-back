@@ -135,3 +135,19 @@ google.maps.event.addListener(drawingManager, 'rectanglecomplete', function(rect
     });
     $('.drawing-actions').show();
 });
+
+(function() {
+    $(document).ready(function() {
+        ui.loadingNotification('Initializing map. Please wait...');
+        util.fetchCrashData(function() {
+            util.initCrashData();
+            showCrashesInGoogleMaps();
+        });
+        ui.initMappingSurface();
+        $('.kml-layer').click(showCrashesInGoogleMaps);
+        $('#crashAttribute').change(showCrashesInGoogleMaps);
+        $('#draw-enable').change(function(evt) {
+            showDrawingManager(this.checked, evt);
+        });
+    });
+})();

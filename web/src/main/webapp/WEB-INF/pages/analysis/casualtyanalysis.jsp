@@ -25,8 +25,8 @@
             </td>
             <td width="40%">
                 <ul class="nav nav-tabs" style="float: right;">
-                    <li><a href="<c:url value='/analysis'/>"><fmt:message key="crashList.crashes" /></a></li>
-                    <li><a href="<c:url value='/analysisvehicles'/>"><fmt:message key="crashAnalysis.vehicles" /></a></li>
+                    <li><a href="<c:url value='/analysis'/>" class="show-loading"><fmt:message key="crashList.crashes" /></a></li>
+                    <li><a href="<c:url value='/analysisvehicles'/>" class="show-loading"><fmt:message key="crashAnalysis.vehicles" /></a></li>
                     <li class="active"><a href="" class="non-click"><fmt:message key="crashAnalysis.casualties"/></a></li>
                 </ul>
             </td>
@@ -50,7 +50,7 @@
                 <c:forEach var="casualty" items="${casualties}" varStatus="status">
                     <tr>
                         <td>
-                            <a href="<c:url value='/crashview?id='/>${casualty.crash.id}" data-casualty-id="${casualty.id}">
+                            <a href="<c:url value='/crashview?id='/>${casualty.crash.id}" class="show-loading" data-casualty-id="${casualty.id}">
                                 ${casualty.crash.uniqueCode}
                             </a>
                         </td>
