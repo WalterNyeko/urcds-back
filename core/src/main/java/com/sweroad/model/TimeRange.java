@@ -20,7 +20,7 @@ public class TimeRange extends LabelValue {
     public String getLabel() {
         String hourPart = hour < 10 ? "0" : "";
         hourPart += hour;
-        return hourPart.concat(":00 - ").concat(hourPart).concat(":59");
+        return hourPart.concat(":00");
     }
 
     @Override

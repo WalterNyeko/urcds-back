@@ -231,6 +231,38 @@
 					    </a>
                     </td>
 				</tr>
+                <tr>
+                    <td>
+                        <table width="100%" class="crashform-gray">
+                            <tr>
+                                <th colspan="3"><appfuse:label styleClass="control-label" key="crashForm.reportingOfficer" /></th>
+                                <th colspan="3"><appfuse:label styleClass="control-label" key="crashForm.supervisingOfficer" /></th>
+                            </tr>
+                            <tr>
+                                <td width="20%" class="blue-header"><appfuse:label styleClass="control-label" key="crashForm.rank" /></td>
+                                <td width="20%" class="blue-header"><appfuse:label styleClass="control-label" key="crashForm.name" /></td>
+                                <td width="10%" class="blue-header"><appfuse:label styleClass="control-label" key="crashForm.date" /></td>
+                                <td width="20%" class="blue-header"><appfuse:label styleClass="control-label" key="crashForm.rank" /></td>
+                                <td width="20%" class="blue-header"><appfuse:label styleClass="control-label" key="crashForm.name" /></td>
+                                <td width="10%" class="blue-header"><appfuse:label styleClass="control-label" key="crashForm.date" /></td>
+                            </tr>
+                            <tr>
+                                <td><form:input cssClass="form-control" path="reportingOfficerRank" id="reportingOfficerRank" /> </td>
+                                <td><form:input cssClass="form-control" path="reportingOfficerName" id="reportingOfficerName" /></td>
+                                <td>
+                                    <input type="text" id="reportingDateString" name="reportingDateString" class="form-control dtpicker right-al"
+                                           readonly="readonly" style="background-color: #FFFFFF; cursor: pointer;"/>
+                                </td>
+                                <td><form:input cssClass="form-control" path="supervisingOfficerRank" id="supervisingOfficerRank" /> </td>
+                                <td><form:input cssClass="form-control" path="supervisingOfficerName" id="supervisingOfficerName" /></td>
+                                <td>
+                                    <input type="text" id="supervisingDateString" name="supervisingDateString" class="form-control dtpicker right-al"
+                                           readonly="readonly" style="background-color: #FFFFFF; cursor: pointer;"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
 				<tr>
                     <td>
                         <table width="100%">

@@ -43,8 +43,8 @@ function initGoogleMap(coordinates, zoom) {
     return map;
 }
 function initMap(coordinates, crashTitle) {
-    var map = initGoogleMap(coordinates, 10);
-    var marker = new google.maps.Marker({
+    var map = initGoogleMap(coordinates, 14);
+    new google.maps.Marker({
         position: coordinates,
         map: map,
         animation: google.maps.Animation.DROP,

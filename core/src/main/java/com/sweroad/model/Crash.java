@@ -466,11 +466,23 @@ public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertib
         return reportingDate;
     }
 
+    public String getReportingDateString() {
+        if (reportingDate != null) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            return sdf.format(reportingDate);
+        }
+        return "";
+    }
+
     /**
      * @param reportingDate the reportingDate to set
      */
     public void setReportingDate(Date reportingDate) {
         this.reportingDate = reportingDate;
+    }
+
+    public void setReportingDateString(String reportingDateString) {
+        this.reportingDate = DateUtil.parseDate("yyyy-MM-dd", reportingDateString);
     }
 
     /**
@@ -508,11 +520,23 @@ public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertib
         return supervisingDate;
     }
 
+    public String getSupervisingDateString() {
+        if (supervisingDate != null) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            return sdf.format(supervisingDate);
+        }
+        return "";
+    }
+
     /**
      * @param supervisingDate the supervisingDate to set
      */
     public void setSupervisingDate(Date supervisingDate) {
         this.supervisingDate = supervisingDate;
+    }
+
+    public void setSupervisingDateString(String supervisingDateString) {
+        this.supervisingDate = DateUtil.parseDate("yyyy-MM-dd", supervisingDateString);
     }
 
     /**
@@ -824,9 +848,9 @@ public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertib
         json.append(toJsonProperty(this.longitudeNumeric, "longitudeNumeric")).append(",");
         json.append(toJsonProperty(this.surfaceCondition, "surfaceCondition")).append(",");
         json.append(toJsonProperty(this.roadwayCharacter, "roadwayCharacter")).append(",");
+        json.append(toJsonProperty(this.getCrashDisplayDate(), "crashDateTime")).append(",");
         json.append(toJsonProperty(this.vehicleFailureType, "vehicleFailureType")).append(",");
-        json.append(toJsonProperty(this.crashDateTimeString, "crashDateTimeString")).append(",");
-        json.append(toJsonProperty(DateUtil.convertDateToString(this.crashDateTime), "crashDateTime")).append("}");
+        json.append(toJsonProperty(this.getCrashDisplayDateTime(), "crashDateTimeString")).append("}");
         return json.toString();
     }
 

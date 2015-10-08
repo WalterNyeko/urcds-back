@@ -536,6 +536,32 @@
 						</td>
 					</tr>
 				</c:if>
+                <tr>
+                    <td colspan="9">
+                        <table width="100%" class="crashform-gray" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <th colspan="3"><appfuse:label styleClass="control-label" key="crashForm.reportingOfficer" /></th>
+                                <th colspan="3"><appfuse:label styleClass="control-label" key="crashForm.supervisingOfficer" /></th>
+                            </tr>
+                            <tr>
+                                <td width="20%" class="blue-header"><appfuse:label styleClass="control-label" key="crashForm.rank" /></td>
+                                <td width="20%" class="blue-header"><appfuse:label styleClass="control-label" key="crashForm.name" /></td>
+                                <td width="10%" class="blue-header"><appfuse:label styleClass="control-label" key="crashForm.date" /></td>
+                                <td width="20%" class="blue-header"><appfuse:label styleClass="control-label" key="crashForm.rank" /></td>
+                                <td width="20%" class="blue-header"><appfuse:label styleClass="control-label" key="crashForm.name" /></td>
+                                <td width="10%" class="blue-header"><appfuse:label styleClass="control-label" key="crashForm.date" /></td>
+                            </tr>
+                            <tr>
+                                <td>${reportingOfficerRank}</td>
+                                <td>${reportingOfficerName}</td>
+                                <td align="right">${reportingDateString}</td>
+                                <td>${supervisingOfficerRank}</td>
+                                <td>${supervisingOfficerName}</td>
+                                <td align="right">${supervisingDateString}</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
 			</c:if>
 		</table>
         <table width="100%" cellpadding="0" cellspacing="0">

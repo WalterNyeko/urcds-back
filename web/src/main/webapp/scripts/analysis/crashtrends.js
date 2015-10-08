@@ -30,8 +30,7 @@ var crashtrends = (function () {
             }, this);
             this.attributeCounts.push(xAttributeCount);
         }, this);
-        charting.createTrendLineGraph(this,
-                viewBy == 'timeRange' ? xAttributes.map(function(x) { return x.label.split('-')[0].trim() }) : xAttributes,
+        charting.createTrendLineGraph(this, xAttributes,
                 $('#yCrashAttribute option:selected').text() + ' by ' + $('#xCrashAttribute option:selected').text(), 'crashtrend-chart');
     }
     crashtrends.totalUnits = function() {

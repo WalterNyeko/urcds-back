@@ -118,7 +118,7 @@ var CrashFilter = (function() {
                         if (util.isNullAttribute(weight))
                             return Object.getPrototypeOf(this).matchCrash(crash, weight, 'weight');
                         var weightRange = weight;
-                        if (c.weight) {
+                        if (crash.weight) {
                             if (weightRange.maxWeight)
                                 return (crash.weight >= weightRange.minWeight && crash.weight <= weightRange.maxWeight);
                             else

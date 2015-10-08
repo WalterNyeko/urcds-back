@@ -11,7 +11,7 @@ var crosstabs = (function () {
         var xAttribute = $('#xCrashAttribute').val();
         var yAttribute = $('#yCrashAttribute').val()
         var xAttributes = util.getAttributes(xAttribute, true);
-        var yAttributes = util.getAttributes(yAttribute, true);
+        var yAttributes = util.getAttributes(yAttribute, yAttribute !== xAttribute);
         var xElement = $('#xCrashAttribute option:selected');
         var yElement = $('#yCrashAttribute option:selected');
         var xRangeAttribute = xElement.attr('data-range');

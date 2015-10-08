@@ -95,7 +95,7 @@ public class CrashFormController extends BaseFormController {
         mergeWithSession(crash, request);
         request.getSession().setAttribute("crash", crash);
         if (!StringUtils.isBlank(request.getParameter("shouldSave"))) {
-            onSubmit(request, response);
+            onSubmit(crash, request, response);
             return null;
         }
         mav.addObject("crash", crash);
@@ -135,21 +135,27 @@ public class CrashFormController extends BaseFormController {
     }
 
     @ModelAttribute
-    @RequestMapping(value = "/crashformsubmit", method = RequestMethod.GET)
-    public void onSubmit(HttpServletRequest request,
+    @RequestMapping(value = "/crashformsubmit", method = RequestMethod.POST)
+    public void onSubmit(Crash crash, HttpServletRequest request,
                          HttpServletResponse response) throws Exception {
-        Crash crash = (Crash) request.getSession().getAttribute("crash");
-        if (crash != null && crash.getCrashDateTimeString() != null
-                && !"".equals(crash.getCrashDateTimeString())) {
-            crash.setCrashDateTime(DateUtil.parseDate("yyyy-MM-dd hh:mm", crash
+        Crash sessionCrash = (Crash) request.getSession().getAttribute("crash");
+        if (sessionCrash != null && sessionCrash.getCrashDateTimeString() != null
+                && !"".equals(sessionCrash.getCrashDateTimeString())) {
+            sessionCrash.setCrashDateTime(DateUtil.parseDate("yyyy-MM-dd hh:mm", sessionCrash
                     .getCrashDateTimeString()));
         }
+        sessionCrash.setReportingDate(crash.getReportingDate());
+        sessionCrash.setSupervisingDate(crash.getSupervisingDate());
+        sessionCrash.setReportingOfficerName(crash.getReportingOfficerName());
+        sessionCrash.setReportingOfficerRank(crash.getReportingOfficerRank());
+        sessionCrash.setSupervisingOfficerName(crash.getSupervisingOfficerName());
+        sessionCrash.setSupervisingOfficerRank(crash.getSupervisingOfficerRank());
         try {
-            String successMessage = getCrashSaveMessage(crash);
-            crashManager.saveCrash(crash);
+            String successMessage = getCrashSaveMessage(sessionCrash);
+            crashManager.saveCrash(sessionCrash);
             saveMessage(request, successMessage);
         } catch (Exception e) {
-            logException(request, e, "FAILURE: Crash " + crash.getTarNo() + " failed to save. Please contact your System Administrator.");
+            logException(request, e, "FAILURE: Crash " + sessionCrash.getTarNo() + " failed to save. Please contact your System Administrator.");
         }
         request.getSession().removeAttribute("crash");
         response.sendRedirect(request.getContextPath() + "/crashes");

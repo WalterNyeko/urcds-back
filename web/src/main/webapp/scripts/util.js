@@ -349,6 +349,7 @@ var ui = (function () {
         select.append('<option value="roadwayCharacter" data-attr-type="crash">Roadway Character</option>');
         select.append('<option value="surfaceCondition" data-attr-type="crash">Surface Condition</option>');
         select.append('<option value="surfaceType" data-attr-type="crash">Surface Type</option>');
+        select.append('<option value="timeRange" data-range="timeRange" data-attr-type="crash">Time of Day</option>');
         select.append('<option value="vehicleFailureType" data-attr-type="crash">Vehicle Failure Type</option>');
         select.append('<option value="weather" data-attr-type="crash">Weather</option>');
         select.append('<option value="year" data-range="year" data-attr-type="crash">Year</option>');

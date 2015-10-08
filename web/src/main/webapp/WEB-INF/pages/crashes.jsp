@@ -116,7 +116,6 @@
     </div>
 </div>
 <script type="text/javascript">
-
     $(window).load(function(){
         highlightLastAccessedObject();
         $('.tablesorter-wrapper').height($(window).height() - 320);
