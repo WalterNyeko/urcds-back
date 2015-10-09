@@ -7,7 +7,27 @@ var util = (function () {
         }, waitTime);
         return false;
     }
-
+    util.sendRequest = function(params) {
+        $.ajax({
+            url: params.url,
+            success: function (result) {
+                var response = $(result);
+                if (params.rootElementId)
+                    response = $(result).find('[id=' + params.rootElementId + ']');
+                if(params.responseDiv)
+                    params.responseDiv.html(response);
+                if (params.modal) {
+                    params.modal.body = response;
+                    ui.popup(params.modal);
+                }
+                if (params.callback)
+                    params.callback();
+            },
+            complete: function() {
+                //ui.closeNotification(params.closeLag);
+            }
+        });
+    }
     util.nameValuePair = function (name) {
         return { name: name, value: null};
     }
@@ -39,24 +59,18 @@ var util = (function () {
         }
         return years;
     }
-    util.loadQueryForm = function () {
-        var queryData = $('#queryData').val().trim();
-        if (queryData) {
-            var query = new CrashQuery(queryData);
-            query.loadForm();
-        }
-    }
     util.runQuery = function (queryId) {
-        return loadQueryForm({
+        util.sendRequest({
             url: this.basePath() + 'crashqueryform?id=' + queryId,
             responseDiv: $('#form-container'),
             rootElementId: 'crashQuery',
             callback: function () {
-                util.loadQueryForm();
+                ui.loadQueryForm();
                 util.persistQuery();
                 $('#crashQuery').submit();
             }
         });
+        return false;
     }
     util.persistQuery = function () {
         var query = new CrashQuery();
@@ -111,7 +125,7 @@ var util = (function () {
         $(window).off('beforeunload');
     }
     util.fetchCrashData = function(callback) {
-        sendRequest({
+        util.sendRequest({
             callback: callback,
             rootElementId: 'crashdata',
             responseDiv: $('div#crashdata'),
@@ -244,21 +258,52 @@ var ui = (function () {
         });
     }
     ui.loadingNotification = function(message) {
+        ui.clearModal();
         message = message || 'Please wait...'
         var gif = util.basePath() + 'images/loading.gif';
         var loading = $('<div class="modal loading" data-backdrop="static" data-keyboard="false">');
         loading.append($('<div class="modal-header">').append('<h4 class="waitMessage">' + message + '</h4>'));
         loading.append($('<div class="modal-body">').append('<img src="' + gif + '" height="80">'));
-        loading.modal({backdrop: 'static'});
+        loading.modal();
     }
     ui.closeNotification = function(lag) {
         lag = lag || 100;
         util.scheduleDeferredFunctionExecution(lag, function() {
-            $('.loading').modal('hide');
-            $('.loading').remove();
+            ui.clearModal();
             $('body').removeClass('modal-open');
             $('.modal-scrollable, .modal-backdrop').remove();
         });
+    }
+    ui.clearModal = function() {
+        $('.modal').remove();
+    }
+    ui.dialogContent = function () {
+        return window.dialog;
+    }
+    ui.centerDialog = function () {
+        var dialog = ui.dialogContent();
+        dialog && dialog.dialog("option", "position", { my: "center", at: "center", of: window });
+    }
+    ui.popup = function(params) {
+        ui.clearModal();
+        var popup = $('<div id="rcds-modal" class="modal fade" aria-hidden="true" data-backdrop="static" data-keyboard="false">');
+        var header = $('<div class="modal-header">');
+        header.append('<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>');
+        header.append('<h4 class="modal-title"></h4>');
+        header.find('.modal-title').text(params.header);
+        var body = $('<div class="modal-body"><div class="row"></div></div>');
+        body.find('.row').html(params.body);
+        var footer = $('<div class="modal-footer">');
+        var cancelButton = $('<button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>');
+        var okButton = $('<button type="button" class="btn btn-primary"></button>').text(params.okButtonText ? params.okButtonText : 'OK');
+        okButton.click(function() { params.okFunction() });
+        footer.append(cancelButton).append(okButton);
+        popup.append(header).append(body).append(footer);
+        popup.modal();
+        //center popup
+        var diff = $(window).width() - popup.outerWidth();
+        diff = (diff / $(window).width()) * 100;
+        popup.css('left', diff + '%');
     }
     ui.appendQueryHeader = function (query, table) {
         if (query.name && query.description) {
@@ -282,6 +327,13 @@ var ui = (function () {
         table.append('<tr><td colspan="2"></td></tr>');
         return form.append(table);
     }
+    ui.loadQueryForm = function () {
+        var queryData = $('#queryData').val().trim();
+        if (queryData) {
+            var query = new CrashQuery(queryData);
+            query.loadForm();
+        }
+    }
     ui.queryFormButtons = function () {
         return  {
             'Save': function () {
@@ -304,13 +356,6 @@ var ui = (function () {
         } else {
 
         }
-    }
-    ui.dialogContent = function () {
-        return window.dialog;
-    }
-    ui.centerDialog = function () {
-        var dialog = ui.dialogContent();
-        dialog && dialog.dialog("option", "position", { my: "center", at: "center", of: window });
     }
     ui.initMappingSurface = function () {
         $('.drawing-actions').hide();
@@ -444,6 +489,67 @@ var ui = (function () {
         div.append(ui.attributeSelect('yCrashAttribute', 'collisionType')).append(constants.HTML_SPACE);
         div.append($('<label for="unit" class="control-label">').text('Units:')).append(constants.HTML_SPACE);
         div.append(ui.unitSelect());
+    }
+    ui.loadSelectCrash = function(params) {
+        $("<div id='select-crash' title='Select Crashes'>" +
+            "<div style='clear: both; margin-top: 2%; text-align: justify'>Loading..." +
+            "</div></div>").appendTo("body");
+
+        window.dialog = $("#select-crash").dialog({
+            autoOpen: true,
+            closeOnEscape: false,
+            modal: true,
+            width: 850,
+            buttons: {
+                'Search': function () {
+                    if(validateCrashSearch()) {
+                        ui.loadingNotification();
+                        $("#selectCrashForm").submit();
+                    }
+                },
+                'Cancel' : function () {
+                    $(".ui-dialog").remove();
+                    $(".ui-widget-overlay").remove();
+                }
+            },
+            open: function () {
+                openDialog({
+                    dialogDiv: this,
+                    showClose: false
+                });
+            }
+        });
+        params.responseDiv = $("#select-crash");
+        params.rootElementId = "selectCrashForm";
+        params.dialogDiv = $("#select-crash");
+        util.sendRequest(params);
+        return false;
+    }
+    ui.loadVehicleForm = function(params) {
+        params.modal = {
+            okButtonText: 'Save',
+            header: 'Vehicle Form',
+            okFunction: function () {
+                $("#vehicleform").submit();
+            }
+        };
+        params.rootElementId = "vehicleform";
+        util.sendRequest(params);
+        return false;
+    }
+    ui.loadCasualtyForm = function(params) {
+        params.modal = {
+            okButtonText: 'Save',
+            header: 'Casualty Form',
+            okFunction: function () {
+                if (validateFields()) {
+                    $("#casualtyform").submit();
+                }
+            }
+        };
+        params.rootElementId = "casualtyform";
+        util.sendRequest(params);
+        return false;
     }
     return ui;
 })();

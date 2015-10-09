@@ -17,31 +17,21 @@ function initVehicleAndCasualtyValidation() {
 
 var validateCrashData = function() {
     validationWarningMessage.length = 0;
-    $(validationFunctions).each(function() {
-        this.call();
-    });
-
+    validationFunctions.map(function(func) { func.call() });
     if(validationWarningMessage.length) {
-        var warningHtml = "<div id='warning-message'>Some irregularities were noted with your data. Please see below";
-        warningHtml += "<ul>";
-        $(validationWarningMessage).each(function() {
-            warningHtml += "<li>" + this + "</li>";
+        var warningDiv = $('<div>Some irregularities were noted with your data. Please see below</div>');
+        var messageList = $('<ul>');
+        validationWarningMessage.map(function(message) { messageList.append('<li>' + message + '</li>') });
+        warningDiv.append(messageList);
+        ui.popup({
+            body: warningDiv,
+            header: 'Warning',
+            okFunction: submitForm,
+            okButtonText: 'Proceed Anyway'
         });
-        warningHtml += "</ul></div>";
-        clearWarningMessage();
-        $("#warning-content").append(warningHtml);
-        var $modal = $('#warning-modal');
-        $modal.modal();
         return false;
     }
     return true;
-}
-
-var clearWarningMessage = function(){
-    var p = $("#warning-message");
-    if(p.length) {
-        p.remove();
-    }
 }
 
 var getCrashDate = function() {

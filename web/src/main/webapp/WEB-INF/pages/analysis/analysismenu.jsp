@@ -1,7 +1,7 @@
 <%@ include file="/common/taglibs.jsp"%>
 <script type="text/javascript" src="<c:url value='/scripts/crash-validator.js'/>"></script>
 <div id="actions" class="btn=group" style="padding-bottom: 2px;">
-    <a href="" onclick="return loadSelectCrash({url: '<c:url value="/analysiscrashselect" />'});">
+    <a href="" onclick="return ui.loadSelectCrash({url: '<c:url value="/analysiscrashselect" />'});">
         <fmt:message key="crashAnalysis.Select" />
     </a>|
     <a href="<c:url value='/crashquery'/>" class="show-loading">

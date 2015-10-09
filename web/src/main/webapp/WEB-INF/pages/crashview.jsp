@@ -552,12 +552,12 @@
                                 <td width="10%" class="blue-header"><appfuse:label styleClass="control-label" key="crashForm.date" /></td>
                             </tr>
                             <tr>
-                                <td>${reportingOfficerRank}</td>
-                                <td>${reportingOfficerName}</td>
-                                <td align="right">${reportingDateString}</td>
-                                <td>${supervisingOfficerRank}</td>
-                                <td>${supervisingOfficerName}</td>
-                                <td align="right">${supervisingDateString}</td>
+                                <td class="padd2">${crash.reportingOfficerRank}</td>
+                                <td class="padd2">${crash.reportingOfficerName}</td>
+                                <td class="padd2">${crash.reportingDateString}</td>
+                                <td class="padd2">${crash.supervisingOfficerRank}</td>
+                                <td class="padd2">${crash.supervisingOfficerName}</td>
+                                <td class="padd2">${crash.supervisingDateString}&nbsp;</td>
                             </tr>
                         </table>
                     </td>

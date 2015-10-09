@@ -128,7 +128,7 @@
                                             </c:if>
                                         </td>
                                         <td class="padd2" align="center">
-                                            <a href="" onclick="util.unbindBeforeUnload(); return loadVehicleForm({url: '<c:url value="/crashformvehicle?id=${vehicle.id}"/>'});">
+                                            <a href="" onclick="util.unbindBeforeUnload(); return ui.loadVehicleForm({url: '<c:url value="/crashformvehicle?id=${vehicle.id}"/>'});">
                                                 <i class="icon-edit"></i>
                                                 <fmt:message key="button.edit" />
                                             </a>
@@ -147,7 +147,7 @@
 				</c:if>
 				<tr>
 					<td>
-                        <a href="" onclick="util.unbindBeforeUnload(); return loadVehicleForm({url: '<c:url value="/crashformvehicle"/>'});">
+                        <a href="" onclick="util.unbindBeforeUnload(); return ui.loadVehicleForm({url: '<c:url value="/crashformvehicle"/>'});">
                             <i class="icon-ok"></i>
                             <fmt:message key="button.addVehicle" />
 					    </a>
@@ -208,7 +208,7 @@
                                                     </c:otherwise>
                                                 </c:choose></td>
                                             <td class="padd2" align="center">
-                                                <a href="" onclick="util.unbindBeforeUnload(); return loadCasualtyForm({url: '<c:url value="/crashformcasualty?id=${casualty.id}"/>'});">
+                                                <a href="" onclick="util.unbindBeforeUnload(); return ui.loadCasualtyForm({url: '<c:url value="/crashformcasualty?id=${casualty.id}"/>'});">
                                                     <i class="icon-edit"></i>
                                                     <fmt:message key="button.edit" />
                                                 </a> |
@@ -225,7 +225,7 @@
 				</c:if>
 				<tr>
 					<td>
-                        <a href="" onclick="util.unbindBeforeUnload(); return loadCasualtyForm({url: '<c:url value="/crashformcasualty"/>'});">
+                        <a href="" onclick="util.unbindBeforeUnload(); return ui.loadCasualtyForm({url: '<c:url value="/crashformcasualty"/>'});">
                             <i class="icon-ok"></i>
 							<fmt:message key="button.addCasualty" />
 					    </a>
@@ -251,13 +251,13 @@
                                 <td><form:input cssClass="form-control" path="reportingOfficerName" id="reportingOfficerName" /></td>
                                 <td>
                                     <input type="text" id="reportingDateString" name="reportingDateString" class="form-control dtpicker right-al"
-                                           readonly="readonly" style="background-color: #FFFFFF; cursor: pointer;"/>
+                                           readonly="readonly" value="${crash.reportingDateString}" style="background-color: #FFFFFF; cursor: pointer;"/>
                                 </td>
                                 <td><form:input cssClass="form-control" path="supervisingOfficerRank" id="supervisingOfficerRank" /> </td>
                                 <td><form:input cssClass="form-control" path="supervisingOfficerName" id="supervisingOfficerName" /></td>
                                 <td>
                                     <input type="text" id="supervisingDateString" name="supervisingDateString" class="form-control dtpicker right-al"
-                                           readonly="readonly" style="background-color: #FFFFFF; cursor: pointer;"/>
+                                           readonly="readonly" value="${crash.supervisingDateString}" style="background-color: #FFFFFF; cursor: pointer;"/>
                                 </td>
                             </tr>
                         </table>
@@ -294,22 +294,6 @@
 		</div>
 	</form:form>
 </div>
-<div id="warning-modal" class="modal fade" tabindex="-1" style="display: none; margin-top: 40px; color: #000;" aria-hidden="true">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-        <h4 class="modal-title" style="color: #800000; font-weight: bold;">Warning</h4>
-    </div>
-    <div class="modal-body">
-        <div class="row">
-            <div id="warning-content" class="col-md-15">
-            </div>
-        </div>
-    </div>
-    <div class="modal-footer">
-        <button type="button" data-dismiss="modal" class="btn btn-default">Back</button>
-        <button type="button" class="btn btn-primary" onclick="submitForm()">Proceed Anyway</button>
-    </div>
-</div>
 <script type="text/javascript">
     function onSubmit() {
         if(validateCrashData()) {
@@ -320,6 +304,6 @@
     function submitForm() {
         ui.loadingNotification();
         util.unbindBeforeUnload();
-        window.location.href = '<c:url value="/crashformsubmit" />';
+        $('#crashform').submit();
     }
 </script>

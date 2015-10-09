@@ -113,6 +113,12 @@ public class CrashFormController extends BaseFormController {
             crash.setCasualties(sessionCrash.getCasualties());
             crash.setDateCreated(sessionCrash.getDateCreated());
             crash.setCreatedBy(sessionCrash.getCreatedBy());
+            crash.setReportingDate(sessionCrash.getReportingDate());
+            crash.setSupervisingDate(sessionCrash.getSupervisingDate());
+            crash.setReportingOfficerName(sessionCrash.getReportingOfficerName());
+            crash.setReportingOfficerRank(sessionCrash.getReportingOfficerRank());
+            crash.setSupervisingOfficerName(sessionCrash.getSupervisingOfficerName());
+            crash.setSupervisingOfficerRank(sessionCrash.getSupervisingOfficerRank());
             Collections.sort(crash.getVehicles());
         }
     }
