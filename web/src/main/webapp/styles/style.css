@@ -598,12 +598,12 @@ td.crosstab-cell {
 }
 .loading div {
     text-align: center;
-    top: 35% !important;
 }
 .loading .modal-header {
     border-bottom-width: 0px;
 }
 .modal {
+    top: 35%;
     width: auto;
     min-width: 30%;
     max-width: 75%;

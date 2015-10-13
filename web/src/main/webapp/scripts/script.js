@@ -217,51 +217,22 @@ function alertDialog(params) {
     return false;
 }
 
-function confirmDialog(params){
-
-    $("<div id='confirmDialog' title='Confirm Action'>" +
-        "<div style='clear: both; margin-top: 2%; text-align: justify'>" +
-        params.message +
-        "</div></div>").appendTo("body");
-
-    var height = params.height ? params.height : 180;
-    var width = params.weight ? params.width : 400;
-
-    $("#confirmDialog").dialog({
-        autoOpen : true,
-        closeOnEscape: false,
-        modal : true,
-        height: height,
-        width: width,
-        buttons:{
-            'Yes': function() {
-                $("#confirmDialog").remove();
-                if(params.aLink){
-                    var href = $(params.aLink).attr('href');
-                    ui.loadingNotification();
-                    util.unbindBeforeUnload();
-                    window.location.href = href;
-                } else if (params.redirectLink){
-                    window.location.href = params.redirectLink;
-                } else if (params.checkbox) {
-                    var isChecked = $(params.checkbox).is(':checked');
-                    $(params.checkbox).attr("checked", !isChecked);
-                }
-                params.callback && params.callback();
-            },
-            'No': function() {
-                $("#confirmDialog").remove();
-            }
-        },
-        open: function() {
-            openDialog({
-                dialogDiv: this
-            });
-            if(params.aLink && params.highlightRow) {
-                setAccessedObjected(params.aLink);
-            }
+function confirmDialog(params) {
+    var modal = Object.create(null);
+    modal.header = 'Confirm Action';
+    modal.body = params.message;
+    modal.okButtonText = 'Yes';
+    modal.cancelButtonText = 'No';
+    modal.okFunction =  function() {
+        if(params.aLink){
+            var href = $(params.aLink).attr('href');
+            ui.loadingNotification();
+            util.unbindBeforeUnload();
+            window.location.href = href;
         }
-    });
+        params.callback && params.callback();
+    }
+    ui.popup(modal);
     return false;
 }
 

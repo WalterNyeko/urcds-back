@@ -7,6 +7,7 @@ $(function() {
         util.fetchCrashData(function() {
             util.initCrashData();
             displayAnalysis();
+            ui.closeNotification();
         });
         $('a.analysis').click(function() {
             ui.loadingNotification();

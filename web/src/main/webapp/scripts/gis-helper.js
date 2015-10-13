@@ -374,6 +374,7 @@ function clearDrawings(callback) {
         message: 'Are you sure you want to clear drawings?',
         callback: function() {
             clearShapes();
+            ui.clearModal();
             markers.map(function(marker) { marker.setMap(window.map); callback && callback() });
             $('.drawing-actions').hide();
         }

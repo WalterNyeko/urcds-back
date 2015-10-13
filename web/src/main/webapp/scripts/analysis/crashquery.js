@@ -265,7 +265,6 @@ var CrashQuery = (function() {
                     var queryForm = ui.createQueryForm(ctx);
                     queryForm.find('table tr:last td').append(summaryTable.clone());
                     ui.dialogContent().html(queryForm);
-                    ui.centerDialog();
                 });
                 querySummary.show();
             }

@@ -22,9 +22,6 @@ var util = (function () {
                 }
                 if (params.callback)
                     params.callback();
-            },
-            complete: function() {
-                //ui.closeNotification(params.closeLag);
             }
         });
     }
@@ -265,24 +262,26 @@ var ui = (function () {
         loading.append($('<div class="modal-header">').append('<h4 class="waitMessage">' + message + '</h4>'));
         loading.append($('<div class="modal-body">').append('<img src="' + gif + '" height="80">'));
         loading.modal();
+        ui.centerDialog(loading);
     }
     ui.closeNotification = function(lag) {
         lag = lag || 100;
         util.scheduleDeferredFunctionExecution(lag, function() {
             ui.clearModal();
+            $('.modal-backdrop').remove();
             $('body').removeClass('modal-open');
-            $('.modal-scrollable, .modal-backdrop').remove();
         });
     }
     ui.clearModal = function() {
-        $('.modal').remove();
+        $('.modal, .modal-backdrop.in, .modal-scrollable').remove();
     }
     ui.dialogContent = function () {
         return window.dialog;
     }
-    ui.centerDialog = function () {
-        var dialog = ui.dialogContent();
-        dialog && dialog.dialog("option", "position", { my: "center", at: "center", of: window });
+    ui.centerDialog = function (dialog) {
+        dialog.css('left', 0);
+        var diff = $(window).width() - dialog.outerWidth();
+        dialog.css('left', diff/2);
     }
     ui.popup = function(params) {
         ui.clearModal();
@@ -294,16 +293,13 @@ var ui = (function () {
         var body = $('<div class="modal-body"><div class="row"></div></div>');
         body.find('.row').html(params.body);
         var footer = $('<div class="modal-footer">');
-        var cancelButton = $('<button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>');
         var okButton = $('<button type="button" class="btn btn-primary"></button>').text(params.okButtonText ? params.okButtonText : 'OK');
+        var cancelButton = $('<button type="button" data-dismiss="modal" class="btn btn-default"></button>').text(params.cancelButtonText ? params.cancelButtonText : 'Cancel');
         okButton.click(function() { params.okFunction() });
         footer.append(cancelButton).append(okButton);
         popup.append(header).append(body).append(footer);
         popup.modal();
-        //center popup
-        var diff = $(window).width() - popup.outerWidth();
-        diff = (diff / $(window).width()) * 100;
-        popup.css('left', diff + '%');
+        ui.centerDialog(popup);
     }
     ui.appendQueryHeader = function (query, table) {
         if (query.name && query.description) {
@@ -530,7 +526,9 @@ var ui = (function () {
             okButtonText: 'Save',
             header: 'Vehicle Form',
             okFunction: function () {
-                $("#vehicleform").submit();
+                var form = $("#vehicleform");
+                ui.loadingNotification();
+                form.submit();
             }
         };
         params.rootElementId = "vehicleform";
@@ -543,7 +541,9 @@ var ui = (function () {
             header: 'Casualty Form',
             okFunction: function () {
                 if (validateFields()) {
-                    $("#casualtyform").submit();
+                    var form = $("#casualtyform");
+                    ui.loadingNotification();
+                    form.submit();
                 }
             }
         };
