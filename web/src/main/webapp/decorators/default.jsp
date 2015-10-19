@@ -14,9 +14,6 @@
         <script type="text/javascript" src="<c:url value='/scripts/gis-helper.js'/>"></script>
         <script type="text/javascript" src="<c:url value='/scripts/pluralize.js'/>"></script>
         <decorator:head />
-        <script type="text/javascript">
-            ui.init();
-        </script>
     </head>
     <body
         <decorator:getProperty property="body.id" writeEntireProperty="true"/>

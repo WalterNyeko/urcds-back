@@ -205,7 +205,11 @@
 
 	<c:if test="${param.from == 'list' and param.method != 'Add'}">
 		<button type="submit" class="btn btn-default" name="delete"
-			onclick="bCancel=true;return confirmMessage(msgDelConfirm)">
+			onclick="bCancel=true; ui.confirmDialog({message : msgDelConfirm, callback : function() {
+			    var form = $('#userForm');
+			    ui.loadingNotification();
+			    form.submit();
+			 }});">
 			<i class="icon-trash"></i>
 			<fmt:message key="button.delete" />
 		</button>

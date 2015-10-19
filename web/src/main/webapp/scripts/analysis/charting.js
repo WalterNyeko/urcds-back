@@ -274,5 +274,79 @@ var charting = (function() {
         };
         return options;
     }
+    charting.createOptions = function(divId, chartTitle) {
+        var options = {
+            chart: {
+                renderTo: divId,
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: chartTitle
+            },
+            tooltip: {
+                formatter: function () {
+                    return '<b>' + this.point.name + '</b>: ' + Highcharts.numberFormat(this.percentage, 2)
+                        + ' %';
+                }
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: false,
+                        color: '#000000',
+                        connectorColor: '#000000',
+                        formatter: function () {
+                            return '<b>' + this.point.name + '</b>: '
+                                + Highcharts.numberFormat(this.percentage, 2) + ' %';
+                        },
+                        style: {
+                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                        }
+                    },
+                    showInLegend: true
+                }
+            },
+            legend : {
+                labelFormatter: function() {
+                    return this.name + ' (' + Highcharts.numberFormat(this.percentage, 2) + ' %)';
+                }
+            },
+            series: []
+        };
+        return options;
+    }
+
+    charting.loadCrashSeverityChart = function() {
+        var chartUrl = util.basePath() + 'crashchartseverity';
+        $.ajax({
+            url: chartUrl,
+            success: function (result) {
+                var options = charting.createOptions("container-severity",
+                    "Crash Severity");
+                options.series = JSON.parse(result);
+                $('.crashCount').html('(based on ' + options.series[0].crashCount + ' crashes)');
+                $('.crashCount').css('margin-top', '0px');
+                new Highcharts.Chart(options);
+            }
+        });
+    }
+
+    charting.loadCrashCauseChart = function() {
+        var chartUrl = util.basePath() + 'crashchartcause';
+        $.ajax({
+            url: chartUrl,
+            success: function (result) {
+                var options = charting.createOptions("container-cause",
+                    "Main Cause of Crash");
+                options.series = JSON.parse(result)
+                new Highcharts.Chart(options);
+            },
+            complete: ui.closeNotification
+        });
+    }
     return charting;
 })();

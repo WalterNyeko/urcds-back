@@ -6,6 +6,7 @@
     <link class="theme ice" rel="stylesheet" href="<c:url value='/styles/tablesorter/addons/pager/jquery.tablesorter.pager.css'/>">
     <script src="<c:url value='/scripts/tablesorter/jquery.tablesorter.min.js'/>"></script>
     <script src="<c:url value='/scripts/tablesorter/jquery.tablesorter.widgets.min.js'/>"></script>
+    <script type="text/javascript" src="<c:url value='/scripts/analysis/crashquery.js'/>"></script>
     <script src="<c:url value='/scripts/tablesorter/addons/pager/jquery.tablesorter.pager.min.js'/>"></script>
 </head>
 <div class="col-sm-15">
@@ -57,7 +58,7 @@
                                 <a href="<c:url value='/crashqueryform'/>?id=${query.id}" class="show-loading" alt="Edit query" onclick="setAccessedObject(this)">
                                     <img src="<c:url value='/images/bt_Edit.gif'/>" alt="Edit query" title="Edit query" hspace="4" width="25">
                                 </a>
-                                <a href="<c:url value='/crashquerydelete'/>?id=${query.id}" alt="Delete query" onclick="setAccessedObject(this); return confirmDialog({message : 'Delete query?', aLink : this});">
+                                <a href="<c:url value='/crashquerydelete'/>?id=${query.id}" alt="Delete query" onclick="setAccessedObject(this); return ui.confirmDialog({message : 'Delete query?', aLink : this});">
                                     <img src="<c:url value='/images/bt_Remove.gif'/>" alt="Delete query" title="Delete query" hspace="4" width="25">
                                 </a>
                             </td>

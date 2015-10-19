@@ -8,11 +8,12 @@
     <script type="text/javascript" src="<c:url value='/scripts/crash-validator.js' />"></script>
     <script type="text/javascript">
         $( document ).ready(function() {
-            loadGpsCoordinates();
             loadCrashTime();
+            ui.initDatePicker();
+            loadGpsCoordinates();
+            initCrashValidation();
             generateCoordDegrees();
             initDistrictSelectChange();
-            initCrashValidation();
         });
     </script>
 </head>
@@ -111,6 +112,9 @@
                                            readonly="readonly" style="background-color: #FFFFFF; cursor: pointer;"/>
                                     <input type="text" id="crashTime" name="crashTime" class="form-control right-al" placeholder="Enter time in 24hr" onblur="defineCrashTime();"/>
 								</td>
+                                <td>
+                                    <div id="auto-map-canvas" class="auto-map"></div>
+                                </td>
 							</tr>
 							<tr>
 								<th colspan="2"><appfuse:label styleClass="control-label"
@@ -123,7 +127,7 @@
 										key="crashForm.gpsCoordinates.longitude" />
                                     &nbsp;
                                     <img id="gMaps" src="<c:url value='/images/gglMap.png'/>" alt="<fmt:message key='maps.viewInGoogleMaps'/>" title="<fmt:message key='maps.viewInGoogleMaps'/>" width="20"
-                                             style="cursor: pointer;" onclick="javascript:loadInGoogleMaps();"/>
+                                             style="cursor: pointer;" onclick="javascript:quickMapView();"/>
                                 </td>
 							</tr>
 							<tr>
@@ -427,7 +431,7 @@
 				</tr>
 				<tr>
 					<td>
-						<a class="btn btn-default show-loading" href="<c:url value='/crashes'/>" onclick="bCancel=true;">
+						<a class="btn btn-default show-loading" href="<c:url value='/crashes'/>" onclick="bCancel=true; ui.loadingNotification()">
 							<i class="icon-ok"></i>
 							<fmt:message key="button.cancel" />
 						</a>

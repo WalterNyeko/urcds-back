@@ -2,14 +2,35 @@
  * Created by Frank on 11/16/14.
  */
 /** Contains GIS specific functions ...*/
-function loadInGoogleMaps() {
-    loadDialog({
-        width: 850,
-        height: 600,
-        message: "Loading map...",
-        dialogTitle: "Crash Location - Google Maps"
+function quickMapView(latitude, longitude) {
+    var gif = util.basePath() + 'images/loading.gif';
+    var popup = ui.popup({
+        body: '<img src="' + gif + '" height="80" style="margin-left: 370px; margin-top: 220px;">',
+        header: 'Crash Location - Google Maps',
+        cancelButtonText: 'Close'
     });
-    initializeSingleCrashMap();
+    popup.find('button.btn-primary').hide();
+    popup.find('.modal-body').attr('id', 'map-canvas').css('height', 540).css('width', 850);
+    ui.centerDialog(popup);
+    util.scheduleDeferredFunctionExecution(2000, function() {
+        if ($("#gMaps")) {
+            latitude = latitude || parseFloat($("#tdLat").attr('data-lat-val'));
+            longitude = longitude || parseFloat($("#tdLon").attr('data-lon-val'));
+        }
+        initMap(latitude, longitude, 'map-canvas');
+    });
+    return false;
+}
+
+function initMap(latitude, longitude, divId) {
+    var coordinates = new google.maps.LatLng(latitude, longitude);
+    var map = initGoogleMap(coordinates, 14, divId);
+    window.crashMarker = new google.maps.Marker({
+        position: coordinates,
+        map: map,
+        animation: google.maps.Animation.DROP
+    });
+    return map;
 }
 
 function validateGpsCoordinates() {
@@ -32,33 +53,15 @@ function loadGpsCoordinates() {
     }
 }
 
-function initGoogleMap(coordinates, zoom) {
+function initGoogleMap(coordinates, zoom, divId) {
     var mapOptions = {
         center: coordinates,
         zoom: zoom,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-    var map = new google.maps.Map(document.getElementById('map-canvas'),
+    var map = new google.maps.Map(document.getElementById(divId),
         mapOptions);
     return map;
-}
-function initMap(coordinates, crashTitle) {
-    var map = initGoogleMap(coordinates, 14);
-    new google.maps.Marker({
-        position: coordinates,
-        map: map,
-        animation: google.maps.Animation.DROP,
-        title: crashTitle
-    });
-}
-function initializeSingleCrashMap() {
-    if ($("#gMaps")) {
-        var latitude = parseFloat($("#tdLat").attr('data-lat-val'));
-        var longitude = parseFloat($("#tdLon").attr('data-lon-val'));
-        var crashTitle = "Crash TAR No.: " + $("#tdTarNo").attr("data-crash-tarNo");
-        var coordinates = new google.maps.LatLng(latitude, longitude);
-        initMap(coordinates, crashTitle);
-    }
 }
 
 function defineGpsCoord(coord) {
@@ -72,7 +75,7 @@ function defineGpsCoord(coord) {
 
     if (coordDegs.length > 0) {
         if (!validateInteger(coordDegs)) {
-            alertDialog({ message: coordText + " degrees value must be numeric", focusTarget: $(degTb) });
+            ui.alertDialog({ message: coordText + " degrees value must be numeric", focusTarget: $(degTb) });
             mapButton(false);
             return false;
         }
@@ -82,7 +85,7 @@ function defineGpsCoord(coord) {
         }
         var degNum = parseInt(coordDegs, 10);
         if (degNum > maxDegs || degNum < 0) {
-            alertDialog({ message: coordText + " degrees value must be between 0 and " + maxDegs, focusTarget: $(degTb) });
+            ui.alertDialog({ message: coordText + " degrees value must be between 0 and " + maxDegs, focusTarget: $(degTb) });
             mapButton(false);
             return false;
         }
@@ -99,12 +102,12 @@ function defineGpsCoord(coord) {
         if (coordMins.length > 0) {
             var minNum = parseFloat(coordMins);
             if (isNaN(minNum)) {
-                alertDialog({ message: coordText + " minutes value must be numeric", focusTarget: $(minTb) });
+                ui.alertDialog({ message: coordText + " minutes value must be numeric", focusTarget: $(minTb) });
                 mapButton(false);
                 return false;
             }
             if (minNum >= 60) {
-                alertDialog({ message: coordText + " minutes value cannot be greater than 60.", focusTarget: $(minTb) });
+                ui.alertDialog({ message: coordText + " minutes value cannot be greater than 60.", focusTarget: $(minTb) });
                 mapButton(false);
                 return false;
             }
@@ -130,6 +133,7 @@ function mapButton(show) {
         $("#gMaps").show();
     } else {
         $("#gMaps").hide();
+        window.crashMarker && window.crashMarker.setMap(null);
     }
 }
 
@@ -144,22 +148,26 @@ function generateCoordDegrees() {
         mapButton(false);
         return;
     }
-    var latDecimals = ConvertDMSToDD({
+    var latDecimals = ConvertDegreesToDecimals({
         degrees: parseInt(latDegs),
         minutes: parseFloat(latMins),
         direction: $("#latLetter").val()
     });
-    var lonDecimals = ConvertDMSToDD({
+    var lonDecimals = ConvertDegreesToDecimals({
         degrees: parseInt(lonDegs),
         minutes: parseFloat(lonMins),
         direction: $("#lonLetter").val()
     });
     $("#tdLat").attr('data-lat-val', latDecimals);
     $("#tdLon").attr('data-lon-val', lonDecimals);
+    if (!window.crashMarker || window.crashMarker.getMap() === null) {
+        var map = initMap(latDecimals, lonDecimals, 'auto-map-canvas');
+        map.setOptions({ scrollwheel: false });
+    }
     mapButton(true);
 }
 
-function ConvertDMSToDD(params) {
+function ConvertDegreesToDecimals(params) {
     var dd = params.degrees;
     if (params.minutes) {
         dd += (params.minutes / 60);
@@ -300,18 +308,6 @@ function clearKmlLayers() {
     unraBRoads.setMap(null);
 }
 
-function quickMapView(crashTitle, latitude, longitude) {
-    loadDialog({
-        width: 850,
-        height: 600,
-        message: "Loading map...",
-        dialogTitle: "Crash Location - Google Maps"
-    });
-    var coordinates = new google.maps.LatLng(latitude, longitude);
-    initMap(coordinates, crashTitle);
-    return false;
-}
-
 function showDrawingManager(show, evt) {
     if(show) {
         drawingManager.setMap(map);
@@ -370,7 +366,7 @@ function showMarkersInRectangle(rectangle) {
 }
 
 function clearDrawings(callback) {
-    return confirmDialog({
+    return ui.confirmDialog({
         message: 'Are you sure you want to clear drawings?',
         callback: function() {
             clearShapes();
@@ -388,7 +384,7 @@ function analyzeFiltered() {
         $('#selection-form').find('#crashIds').val(filteredCrashIds.toString());
         $('#selection-form').submit();
     } else {
-        alertDialog({ message: 'No crashes were selected.'});
+        ui.alertDialog({ message: 'No crashes were selected.'});
     }
     return false;
 }

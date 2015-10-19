@@ -134,7 +134,7 @@
                                             </a>
                                             |
                                             <a href="<c:url value='/crashformvehicledelete?id=${vehicle.id}'/>"
-                                               onclick="return confirmDialog({message : '<fmt:message key="rcds.confirmRemove" />', aLink : this});">
+                                               onclick="return ui.confirmDialog({message : '<fmt:message key="rcds.confirmRemove" />', aLink : this});">
                                                 <i class="icon-delete"></i>
                                                 <fmt:message key="button.remove" />
                                             </a>
@@ -213,7 +213,7 @@
                                                     <fmt:message key="button.edit" />
                                                 </a> |
                                                 <a href="<c:url value='/crashformcasualtydelete?id=${casualty.id}'/>"
-                                                onclick="return confirmDialog({message : '<fmt:message key="rcds.confirmRemove" />', aLink : this});">
+                                                onclick="return ui.confirmDialog({message : '<fmt:message key="rcds.confirmRemove" />', aLink : this});">
                                                     <i class="icon-delete"></i> <fmt:message
                                                         key="button.remove" />
                                             </a></td>

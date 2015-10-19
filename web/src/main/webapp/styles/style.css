@@ -614,6 +614,9 @@ td.crosstab-cell {
     color: #800000;
     font-weight: bold;
 }
+.modal-footer {
+    margin-top: 0px;
+}
 .modal-scrollable {
     z-index: 2000 !important;
 }
@@ -623,4 +626,11 @@ td.crosstab-cell {
 }
 .ui-widget-overlay {
     background-image: none;
+}
+.ui-datepicker {
+    z-index: 2000 !important;
+}
+.auto-map {
+    height: 200px;
+    margin: -105px -26px -2px -3px;
 }

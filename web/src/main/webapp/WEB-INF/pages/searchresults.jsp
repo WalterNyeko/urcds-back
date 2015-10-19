@@ -67,7 +67,7 @@
                                         </a>
                                     </c:if>
                                     <c:if test="${crash.latitudeNumeric ne null and crash.longitudeNumeric ne null}">
-                                        <a href="" alt="View on Map" onclick="return quickMapView('${crash.uniqueCode}', ${crash.latitudeNumeric}, ${crash.longitudeNumeric});">
+                                        <a href="" alt="View on Map" onclick="return quickMapView(${crash.latitudeNumeric}, ${crash.longitudeNumeric});">
                                             <img src="<c:url value='/images/gglMap.png'/>" alt="View on Map" title="View on Map" hspace="4" height="18">
                                         </a>
                                     </c:if>

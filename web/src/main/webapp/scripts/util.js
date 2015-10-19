@@ -220,12 +220,12 @@ var ui = (function () {
 
     ui.init = function () {
         $(window).load(function () {
-            ui.initDatePicker();
             ui.initSearchButton();
             $('a.non-click').click(function () { return false });
             $('a[title=Logout]').click(function () { sessionStorage.clear() });
             $('.show-loading, .navbar-nav a:not(.dropdown-toggle)').click(function() { ui.loadingNotification() });
         });
+        return this;
     }
     ui.initDatePicker = function () {
         $('.dtpicker').datepicker({
@@ -244,7 +244,7 @@ var ui = (function () {
         });
         $('.dtpicker').focus(function () {
             this.value = '';
-        })
+        });
     }
     ui.initSearchButton = function () {
         $('#searchButton').click(function () {
@@ -274,6 +274,7 @@ var ui = (function () {
     }
     ui.clearModal = function() {
         $('.modal, .modal-backdrop.in, .modal-scrollable').remove();
+        $('body').removeClass('modal-open').removeClass('page-overflow');
     }
     ui.dialogContent = function () {
         return window.dialog;
@@ -300,6 +301,42 @@ var ui = (function () {
         popup.append(header).append(body).append(footer);
         popup.modal();
         ui.centerDialog(popup);
+        popup.draggable({ containment: 'window', handle: '.modal-header', cursor: 'move' });
+        return popup;
+    }
+    ui.confirmDialog = function(params) {
+        var modal = Object.create(null);
+        modal.header = 'Confirm Action';
+        modal.body = params.message;
+        modal.okButtonText = 'Yes';
+        modal.cancelButtonText = 'No';
+        modal.okFunction =  function() {
+            if(params.aLink){
+                var href = $(params.aLink).attr('href');
+                ui.loadingNotification();
+                util.unbindBeforeUnload();
+                window.location.href = href;
+            }
+            params.callback && params.callback();
+        }
+        ui.popup(modal);
+        return false;
+    }
+    ui.alertDialog = function(params) {
+        if ($('.alert-dialog').length)
+            return false;
+        var modal = Object.create(null);
+        modal.header = 'Notification';
+        modal.body = params.message;
+        modal.okFunction =  function() {
+            if (params.focusTarget) {
+                $(params.focusTarget).focus();
+                $(params.focusTarget).select();
+            }
+            ui.clearModal();
+        }
+        ui.popup(modal).addClass('alert-dialog').find('button[data-dismiss]').hide();
+        return false;
     }
     ui.appendQueryHeader = function (query, table) {
         if (query.name && query.description) {
@@ -315,10 +352,10 @@ var ui = (function () {
         var action = util.basePath() + 'crashquerysave';
         var form = $('<form id="query-form" method="post" action="' + action + '">');
         var table = $('<table class="query-form">');
-        table.append('<tr><td>Query Name:</td><td><input id="name" name="name"><input type="hidden" id="id" name="id" /></td></tr>');
+        table.append('<tr><td>Query Name:</td><td><input id="name" name="name" class="form-control"><input type="hidden" id="id" name="id" /></td></tr>');
         table.find('tr:last td:last input#id').val(query.id || '');
         table.find('tr:last td:last input#name').val(query.name || '');
-        table.append('<tr><td>Description:</td><td><textarea id="description" name="description"></textarea></td></tr>');
+        table.append('<tr><td>Description:</td><td><textarea id="description" name="description" class="form-control"></textarea></td></tr>');
         table.find('textarea').text(query.description);
         table.append('<tr><td colspan="2"></td></tr>');
         return form.append(table);
@@ -487,37 +524,19 @@ var ui = (function () {
         div.append(ui.unitSelect());
     }
     ui.loadSelectCrash = function(params) {
-        $("<div id='select-crash' title='Select Crashes'>" +
-            "<div style='clear: both; margin-top: 2%; text-align: justify'>Loading..." +
-            "</div></div>").appendTo("body");
-
-        window.dialog = $("#select-crash").dialog({
-            autoOpen: true,
-            closeOnEscape: false,
-            modal: true,
-            width: 850,
-            buttons: {
-                'Search': function () {
-                    if(validateCrashSearch()) {
-                        ui.loadingNotification();
-                        $("#selectCrashForm").submit();
-                    }
-                },
-                'Cancel' : function () {
-                    $(".ui-dialog").remove();
-                    $(".ui-widget-overlay").remove();
+        params.modal = {
+            okButtonText: 'Search',
+            header: 'Select Crashes',
+            okFunction: function () {
+                if(validateCrashSearch()) {
+                    var form = $("#selectCrashForm");
+                    ui.loadingNotification();
+                    form.submit();
                 }
-            },
-            open: function () {
-                openDialog({
-                    dialogDiv: this,
-                    showClose: false
-                });
             }
-        });
-        params.responseDiv = $("#select-crash");
+        };
         params.rootElementId = "selectCrashForm";
-        params.dialogDiv = $("#select-crash");
+        params.callback = ui.initDatePicker;
         util.sendRequest(params);
         return false;
     }
@@ -551,7 +570,7 @@ var ui = (function () {
         util.sendRequest(params);
         return false;
     }
-    return ui;
+    return ui.init();
 })();
 
 var constants = {

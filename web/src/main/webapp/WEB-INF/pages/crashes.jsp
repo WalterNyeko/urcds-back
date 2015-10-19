@@ -66,7 +66,7 @@
                             <td>
                                 <c:choose>
                                     <c:when test="${crash.removed eq true}">
-                                        <a href="<c:url value='/crashrestore'/>?id=${crash.id}" alt="Restore crash" onclick="setAccessedObject(this); return confirmDialog({message : 'Restore crash?', aLink : this});">
+                                        <a href="<c:url value='/crashrestore'/>?id=${crash.id}" alt="Restore crash" onclick="setAccessedObject(this); return ui.confirmDialog({message : 'Restore crash?', aLink : this});">
                                             <img src="<c:url value='/images/bt_Restore.gif'/>" alt="Restore" title="Restore" hspace="4">
                                         </a>
                                     </c:when>
@@ -80,12 +80,12 @@
                                             </a>
                                         </c:if>
                                         <c:if test="${crash.removable}">
-                                            <a href="<c:url value='/crashremove'/>?id=${crash.id}" alt="Remove crash" onclick="setAccessedObject(this); return confirmDialog({message : 'Remove crash?', aLink : this});">
+                                            <a href="<c:url value='/crashremove'/>?id=${crash.id}" alt="Remove crash" onclick="setAccessedObject(this); return ui.confirmDialog({message : 'Remove crash?', aLink : this});">
                                                 <img src="<c:url value='/images/bt_Remove.gif'/>" alt="Remove" title="Remove" hspace="4">
                                             </a>
                                         </c:if>
                                         <c:if test="${crash.latitudeNumeric ne null and crash.longitudeNumeric ne null}">
-                                            <a href="" alt="View on Map" onclick="setAccessedObject(this); return quickMapView('${crash.uniqueCode}', ${crash.latitudeNumeric}, ${crash.longitudeNumeric});">
+                                            <a href="" alt="View on Map" onclick="setAccessedObject(this); return quickMapView(${crash.latitudeNumeric}, ${crash.longitudeNumeric});">
                                                 <img src="<c:url value='/images/gglMap.png'/>" alt="View on Map" title="View on Map" hspace="4" height="18">
                                             </a>
                                         </c:if>

@@ -3,8 +3,8 @@
 <head>
 <title><fmt:message key="home.title" /></title>
 <meta name="menu" content="Home" />
-<script src="<c:url value='/scripts/script.js' />"></script>
 <script src="<c:url value='/scripts/highcharts.js'/>"></script>
+    <script src="<c:url value='/scripts/analysis/charting.js' />"></script>
 <%--<script src="<c:url value='/scripts/themes/grid-light.js'/>"></script>--%>
 </head>
 <body class="home">
@@ -26,8 +26,8 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
             ui.loadingNotification('Loading statistics. Please wait...');
-			loadCrashSeverityChart();	
-			loadCrashCauseChart();
+			charting.loadCrashSeverityChart();
+			charting.loadCrashCauseChart();
 		});
 	</script>
 </body>

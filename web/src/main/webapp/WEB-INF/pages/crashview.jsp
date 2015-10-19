@@ -24,12 +24,12 @@
                     </a>
                 </c:if>
                 <c:if test="${crash.removable and !crash.removed}">
-                    <a href="<c:url value='/crashremove?id=${crash.id}'/>" onclick="return confirmDialog({message : 'Remove crash?', aLink : this});">
+                    <a href="<c:url value='/crashremove?id=${crash.id}'/>" onclick="return ui.confirmDialog({message : 'Remove crash?', aLink : this});">
                         <img src="<c:url value='/images/bt_Remove.gif' />" hspace="4" title="Remove Crash" />
                     </a>
                 </c:if>
                 <c:if test="${crash.removable and crash.removed}">
-                    <a href="<c:url value='/crashrestore?id=${crash.id}'/>" onclick="return confirmDialog({message : 'Restore crash?', aLink : this});">
+                    <a href="<c:url value='/crashrestore?id=${crash.id}'/>" onclick="return ui.confirmDialog({message : 'Restore crash?', aLink : this});">
                         <img src="<c:url value='/images/bt_Restore.gif' />" hspace="4" title="Restore Crash" />
                     </a>
                 </c:if>
@@ -109,7 +109,7 @@
                                 &nbsp;
                                 <c:if test="${ crash.latitudeNumeric ne null and crash.longitudeNumeric ne null }">
                                     <img id='gMaps' src='<c:url value="/images/gglMap.png" />' alt='<fmt:message key="maps.viewInGoogleMaps"/>' title='<fmt:message key="maps.viewInGoogleMaps"/>' width='20'
-                                                                                     style='cursor: pointer;' onclick='javascript:loadInGoogleMaps();'/>
+                                                                                     style='cursor: pointer;' onclick='javascript:quickMapView();'/>
                                 </c:if>
                             </td>
 						</tr>

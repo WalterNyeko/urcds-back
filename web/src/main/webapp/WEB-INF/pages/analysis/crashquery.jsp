@@ -32,7 +32,8 @@
                 showHideDateControls();
             });
             $('.district').click(crashQueryFilterPoliceStations);
-            util.loadQueryForm();
+            ui.loadQueryForm();
+            ui.initDatePicker();
             util.initFormChangeDetection('#crashQuery');
         });
     </script>

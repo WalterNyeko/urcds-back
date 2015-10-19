@@ -255,16 +255,14 @@ var CrashQuery = (function() {
                 if (this.dirty || !this.id)
                     querySummary.append($('<div class="save-query"><input id="saveQuery" type="button" value="' + buttonCaption + '">'));
                 $('#saveQuery').click(function() {
-                    loadDialog({
-                        width: 'auto',
-                        height: 'auto',
-                        message: "Loading form...",
-                        dialogTitle: "Save Crash Query",
-                        dialogButtons: ui.queryFormButtons()
-                    });
                     var queryForm = ui.createQueryForm(ctx);
                     queryForm.find('table tr:last td').append(summaryTable.clone());
-                    ui.dialogContent().html(queryForm);
+                    ui.popup({
+                        body: queryForm,
+                        header: 'Save Crash Query',
+                        okFunction: ui.saveQuery,
+                        okButtonText: 'Save'
+                    });
                 });
                 querySummary.show();
             }
