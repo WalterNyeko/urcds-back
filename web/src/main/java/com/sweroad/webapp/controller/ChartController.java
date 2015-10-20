@@ -35,7 +35,7 @@ public class ChartController extends BaseFormController {
     @ResponseBody
     String getCrashSeverityPieChart()
             throws Exception {
-        List<Crash> crashes = crashManager.getAvailableCrashes();
+        List<Crash> crashes = crashManager.getAvailableCrashes(false);
         String chart = "[{\"type\":\"pie\",\"name\":\"Crash Severity Pie Chart\",";
         chart +=  "\"crashCount\" : " + crashes.size() + ",";
         chart += constructCrashChartData(crashes);
@@ -118,7 +118,7 @@ public class ChartController extends BaseFormController {
 
     private Map<String, Integer> getCrashCauseNumbers() {
         List<CrashCause> causes = crashCauseManager.getAllDistinct();
-        List<Crash> crashes = crashManager.getAvailableCrashes();
+        List<Crash> crashes = crashManager.getAvailableCrashes(false);
         Map<String, Integer> causeNumbers = new HashMap<String, Integer>();
         for (CrashCause cause : causes) {
             int count = getNumberOfCrashesByCauseId(crashes, cause.getId());

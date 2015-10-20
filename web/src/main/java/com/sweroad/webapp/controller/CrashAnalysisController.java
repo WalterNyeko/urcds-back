@@ -84,7 +84,7 @@ public class CrashAnalysisController extends BaseFormController {
         if (crashes != null) {
             return crashes;
         } else {
-            crashes = crashManager.getAvailableCrashes();
+            crashes = crashManager.getAvailableCrashes(true);
             setCrashesInSession(request, crashes);
             return crashes;
         }

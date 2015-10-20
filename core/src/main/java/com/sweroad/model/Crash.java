@@ -27,7 +27,9 @@ import com.sweroad.Constants;
 @NamedQueries({
         @NamedQuery(name = Crash.FIND_CRASHES_ORDER_BY_DATE, query = "from Crash c order by c.crashDateTime"),
         @NamedQuery(name = Crash.FIND_CRASHES_ORDER_BY_DATE_DESC, query = "from Crash c order by c.crashDateTime desc"),
-        @NamedQuery(name = Crash.FIND_AVAILABLE_CRASHES_ORDER_BY_DATE_DESC, query = "from Crash c where c.isRemoved = false order by c.crashDateTime desc")})
+        @NamedQuery(name = Crash.FIND_AVAILABLE_CRASHES_ORDER_BY_DATE_DESC, query = "from Crash c where c.isRemoved = false order by c.crashDateTime desc"),
+        @NamedQuery(name = Crash.FIND_DISTRICT_CRASHES_ORDER_BY_DATE_DESC, query = "from Crash c where c.policeStation.district = :district order by c.crashDateTime desc"),
+        @NamedQuery(name = Crash.FIND_AVAILABLE_DISTRICT_CRASHES_ORDER_BY_DATE_DESC, query = "from Crash c where c.isRemoved = false and c.policeStation.district = :district order by c.crashDateTime desc")})
 public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertible, IAuditable {
 
     /**
@@ -36,7 +38,9 @@ public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertib
     private static final long serialVersionUID = 2144213374837809344L;
     public static final String FIND_CRASHES_ORDER_BY_DATE = "findCrashesOrderByDate";
     public static final String FIND_CRASHES_ORDER_BY_DATE_DESC = "findCrashesOrderByDateDesc";
+    public static final String FIND_DISTRICT_CRASHES_ORDER_BY_DATE_DESC = "findDistrictCrashesOrderByDateDesc";
     public static final String FIND_AVAILABLE_CRASHES_ORDER_BY_DATE_DESC = "findAvailableCrashesOrderByDateDesc";
+    public static final String FIND_AVAILABLE_DISTRICT_CRASHES_ORDER_BY_DATE_DESC = "findAvailableDistrictCrashesOrderByDateDesc";
     public static final String CRASH_ALIAS_DOT = "c.";
     public static final String CASUALTY_ALIAS_DOT  = "i.";
     public static final String VEHICLE_ALIAS_DOT = "v.";
@@ -797,16 +801,6 @@ public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertib
      */
     public void setRemoved(boolean isRemoved) {
         this.isRemoved = isRemoved;
-    }
-
-    /**
-     * Checks if this crash is editable for the current user's district
-     *
-     * @param districtId
-     * @return
-     */
-    public boolean isEditableForDistrict(Long districtId) {
-        return districtId.equals(policeStation.getDistrict().getId());
     }
 
     /**

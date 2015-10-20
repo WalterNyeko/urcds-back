@@ -11,6 +11,7 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import com.sweroad.Constants;
 import com.sweroad.util.DateUtil;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
@@ -194,6 +195,20 @@ public class User extends BaseModel implements Serializable, UserDetails {
 	public void addRole(Role role) {
 		getRoles().add(role);
 	}
+
+    /**
+     * Check if user has a given role
+     * @param roleName
+     * @return
+     */
+    public boolean hasRole(String roleName) {
+        for (LabelValue role : this.getRoleList()) {
+            if (role.getValue().equalsIgnoreCase(roleName)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 	/**
 	 * @return GrantedAuthority[] an array of roles.

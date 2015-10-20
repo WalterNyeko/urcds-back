@@ -98,12 +98,15 @@ public interface GenericDao<T, PK extends Serializable> {
     List<T> findByNamedQuery(String queryName, Map<String, Object> queryParams);
 
     /**
-     * Find a list of records by using a named query
+     * Find a paged list of records
      *
-     * @param namedQuery Query object defining named query with optional params
+     * @param queryName query name of the named query
+     * @param queryParams a map of the query names and the values
+     * @param page page number
+     * @param maxSize number of records per page
      * @return a list of the records found
      */
-    List<T> findByNamedQuery(Query namedQuery);
+    List<T> findByNamedQuery(String queryName, Map<String, Object> queryParams, int page, int maxSize);
 
     /**
      * Generic method to regenerate full text index of the persistent class T

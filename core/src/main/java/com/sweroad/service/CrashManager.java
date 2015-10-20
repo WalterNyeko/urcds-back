@@ -16,7 +16,7 @@ public interface CrashManager extends GenericManager<Crash, Long> {
 	 * crashes for display. Use getAll() otherwise.
 	 * @return
 	 */
-	List<Crash> getCrashes();
+	List<Crash> getCrashes(boolean latestOnly);
 
     /**
      * Gets crashes whose ids are in the passed list
@@ -29,7 +29,7 @@ public interface CrashManager extends GenericManager<Crash, Long> {
      * Gets only available crashes (non-removed).
      * @return
      */
-    List<Crash> getAvailableCrashes();
+    List<Crash> getAvailableCrashes(boolean latestOnly);
 
     /**
      * Gets Crash for view.

@@ -32,14 +32,14 @@ public class ReportsController extends BaseFormController {
     private CrashManager crashManager;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView showReports(HttpServletRequest request) throws Exception {
+    public ModelAndView showReports() throws Exception {
         ModelAndView mav = new ModelAndView("reports/reports");
         return mav;
     }
 
     @RequestMapping(value = "/reportsgen", method = RequestMethod.GET)
     public ResponseEntity<byte[]> generateReport(HttpServletRequest request) throws Exception {
-        String reportFilePath = buildReport(request, crashManager.getAvailableCrashes());
+        String reportFilePath = buildReport(request, crashManager.getAvailableCrashes(false));
         File reportFile = new File(reportFilePath);
         FileInputStream fileInputStream = new FileInputStream(reportFile);
         byte[] contents = new byte[(int) reportFile.length()];

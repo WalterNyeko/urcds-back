@@ -29,7 +29,7 @@ public class CrashMapController extends BaseFormController {
         mav.addObject("crashSeverities", crashSeverityManager.getAll());
         List<Crash> crashes = (List<Crash>) request.getSession().getAttribute("crashes");
         if (crashes == null) {
-            crashes = crashManager.getAvailableCrashes();
+            crashes = crashManager.getAvailableCrashes(true);
             SessionHelper.crashesToJsonAndSetInSession(request, crashes);
             SessionHelper.crashAttributesToJsonAndSetInSession(request, crashManager.getOrderedRefData());
         }

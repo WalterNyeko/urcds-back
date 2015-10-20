@@ -195,18 +195,29 @@ public class GenericDaoHibernate<T, PK extends Serializable> implements GenericD
      */
     @SuppressWarnings("unchecked")
     public List<T> findByNamedQuery(String queryName, Map<String, Object> queryParams) {
+        return findByNamedQuery(createQuery(queryName, queryParams));
+    }
+
+    private Query createQuery(String queryName, Map<String, Object> queryParams) {
         Session sess = getSession();
         Query namedQuery = sess.getNamedQuery(queryName);
 
         if (queryParams != null) {
-        	for (String s : queryParams.keySet()) {
+            for (String s : queryParams.keySet()) {
                 namedQuery.setParameter(s, queryParams.get(s));
             }
         }
+        return namedQuery;
+    }
+
+    public List<T> findByNamedQuery(String queryName, Map<String, Object> queryParams, int page, int maxSize) {
+        Query namedQuery = createQuery(queryName, queryParams);
+        namedQuery.setFirstResult((page - 1) * maxSize);
+        namedQuery.setMaxResults(maxSize);
         return findByNamedQuery(namedQuery);
     }
 
-    public List<T> findByNamedQuery(Query namedQuery) {
+    protected List<T> findByNamedQuery(Query namedQuery) {
         return namedQuery.list();
     }
 

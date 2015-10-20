@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.sweroad.Constants;
 import com.sweroad.model.*;
 import com.sweroad.query.CrashQuery;
 import com.sweroad.service.*;
@@ -96,13 +97,20 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
         return crashes;
     }
 
-    public List<Crash> getCrashes() {
-        return super.findByNamedQuery(Crash.FIND_CRASHES_ORDER_BY_DATE_DESC, null);
+    public List<Crash> getCrashes(boolean latestOnly) {
+        User user = userManager.getCurrentUser();
+        if ((user.hasRole(Constants.USER_ROLE) && user.getDistrict() != null)
+                || user.hasRole(Constants.READONLY_ROLE)) {
+            return this.getAvailableCrashes(latestOnly);
+        } else {
+            return latestOnly ? dao.findByNamedQuery(Crash.FIND_CRASHES_ORDER_BY_DATE_DESC, null, 1, 500)
+                    : dao.findByNamedQuery(Crash.FIND_CRASHES_ORDER_BY_DATE_DESC, null);
+        }
     }
 
     @Override
     public List<Crash> getCrashes(List<Long> ids) {
-        List<Crash> crashes = new ArrayList<Crash>();
+        List<Crash> crashes = new ArrayList<>();
         for(Crash crash : this.getAllDistinct()) {
             if (ids.contains(crash.getId())) {
                 crashes.add(crash);
@@ -111,8 +119,17 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
         return crashes;
     }
 
-    public List<Crash> getAvailableCrashes() {
-        return super.findByNamedQuery(Crash.FIND_AVAILABLE_CRASHES_ORDER_BY_DATE_DESC, null);
+    public List<Crash> getAvailableCrashes(boolean latestOnly) {
+        if (latestOnly) {
+            User user = userManager.getCurrentUser();
+            if (user.hasRole(Constants.USER_ROLE) && user.getDistrict() != null) {
+                Map<String, Object> parameters = new HashMap<>();
+                parameters.put("district", user.getDistrict());
+                return dao.findByNamedQuery(Crash.FIND_AVAILABLE_DISTRICT_CRASHES_ORDER_BY_DATE_DESC, parameters, 1, 500);
+            }
+            return dao.findByNamedQuery(Crash.FIND_AVAILABLE_CRASHES_ORDER_BY_DATE_DESC, null, 1, 500);
+        }
+        return dao.findByNamedQuery(Crash.FIND_AVAILABLE_CRASHES_ORDER_BY_DATE_DESC, null);
     }
 
     @Override
@@ -146,7 +163,6 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
         if (crash.getVehicles() != null) {
             for (Vehicle vehicle : crash.getVehicles()) {
                 saveVehicleDriver(vehicle, user);
-                long vehicleId = vehicle.getId();
                 if (vehicle.getDateCreated() == null) {
                     vehicle.setDateCreated(new Date());
                     vehicle.setCreatedBy(user);
@@ -290,7 +306,7 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
     @Override
     @SuppressWarnings("rawtypes")
     public Map<String, List> getReferenceData() {
-        Map<String, List> referenceData = new HashMap<String, List>();
+        Map<String, List> referenceData = new HashMap<>();
         List<District> districts = districtManager.getAllDistinct();
         Collections.sort(districts);
         List<PoliceStation> policeStations = policeStationManager.getAllDistinct();
@@ -355,7 +371,7 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
     }
 
     private void removeVehicleCasualtiesFromCrash(Crash crash, Vehicle vehicle) {
-        List<Long> casualtyIds = new ArrayList<Long>();
+        List<Long> casualtyIds = new ArrayList<>();
         for (Casualty casualty : crash.getCasualties()) {
             if (casualty.getVehicle() != null
                     && casualty.getVehicle().equals(vehicle)) {
@@ -383,8 +399,8 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
     private List<Vehicle> getVehiclesForDeletion(Crash dbCrash,
                                                  Crash crashInEdit) {
 
-        List<Vehicle> vehiclesToDelete = new ArrayList<Vehicle>();
-        ListUtil<Vehicle> vehicleUtil = new ListUtil<Vehicle>();
+        List<Vehicle> vehiclesToDelete = new ArrayList<>();
+        ListUtil<Vehicle> vehicleUtil = new ListUtil<>();
         for (Vehicle vehicle : dbCrash.getVehicles()) {
             if (!vehicleUtil.itemExistsInList(vehicle,
                     crashInEdit.getVehicles())) {
@@ -406,8 +422,8 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
     private List<Casualty> getCasualtiesForDeletion(Crash dbCrash,
                                                     Crash crashInEdit) {
 
-        List<Casualty> casualtiesToDelete = new ArrayList<Casualty>();
-        ListUtil<Casualty> casualtyUtil = new ListUtil<Casualty>();
+        List<Casualty> casualtiesToDelete = new ArrayList<>();
+        ListUtil<Casualty> casualtyUtil = new ListUtil<>();
         for (Casualty casualty : dbCrash.getCasualties()) {
             if (!casualtyUtil.itemExistsInList(casualty,
                     crashInEdit.getCasualties())) {
