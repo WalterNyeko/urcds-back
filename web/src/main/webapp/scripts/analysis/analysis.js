@@ -31,5 +31,6 @@ $(function() {
                 crashtrends.init();
                 break;
         }
+        ui.toggleMenuItem($('div[id=' + type + '] > a:first'));
     }
 });

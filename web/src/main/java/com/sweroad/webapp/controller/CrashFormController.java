@@ -64,7 +64,7 @@ public class CrashFormController extends BaseFormController {
         }
         mav.addObject("crash", crash);
         mav.addAllObjects(crashManager.getReferenceData());
-        SessionHelper.policeStationsToJsonAndSetInAttribute(request, (List<PoliceStation>) mav.getModelMap().get("policeStations"));
+        SessionHelper.persistPoliceStationsInSession(request, (List<PoliceStation>) mav.getModelMap().get("policeStations"));
         return mav;
     }
 

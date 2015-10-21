@@ -59,7 +59,7 @@ function initGoogleMap(coordinates, zoom, divId) {
         zoom: zoom,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-    var map = new google.maps.Map(document.getElementById(divId),
+    var map = new google.maps.Map(document.getElementById(divId || 'map-canvas'),
         mapOptions);
     return map;
 }

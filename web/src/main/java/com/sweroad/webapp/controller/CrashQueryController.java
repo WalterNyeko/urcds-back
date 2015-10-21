@@ -3,6 +3,7 @@ package com.sweroad.webapp.controller;
 import com.sweroad.model.Crash;
 import com.sweroad.model.PoliceStation;
 import com.sweroad.model.Query;
+import com.sweroad.query.CrashQuery;
 import com.sweroad.query.CrashSearch;
 import com.sweroad.service.CrashQueryManager;
 import com.sweroad.webapp.util.CrashAnalysisHelper;
@@ -52,7 +53,7 @@ public class CrashQueryController extends BaseFormController {
         mav.addAllObjects(crashQueryManager.getCrashQueryReferenceData());
         mav.addObject("years", CrashAnalysisHelper.getYearsForSearch());
         mav.addObject("months", CrashAnalysisHelper.getMonthsForSearch(request));
-        SessionHelper.policeStationsToJsonAndSetInAttribute(request, (List<PoliceStation>) mav.getModelMap().get("policeStations"));
+        SessionHelper.persistPoliceStationsInSession(request, (List<PoliceStation>) mav.getModelMap().get("policeStations"));
         return mav;
     }
 
@@ -61,8 +62,9 @@ public class CrashQueryController extends BaseFormController {
                                  HttpServletResponse response) throws Exception {
         try {
             crashQueryManager.processCrashSearch(crashSearch);
+            CrashQuery crashQuery = crashSearch.toQuery();
             List<Crash> crashes = crashQueryManager.getCrashesByQuery(crashSearch.toQuery());
-            SessionHelper.crashesToJsonAndSetInSession(request, crashes);
+            SessionHelper.persistCrashesInSession(request, crashes, crashQuery);
         } catch (ParseException e) {
             logException(request, e, "Date provided was in wrong format.");
         } catch (Exception e) {

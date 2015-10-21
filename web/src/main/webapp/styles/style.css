@@ -634,3 +634,53 @@ td.crosstab-cell {
     height: 200px;
     margin: -105px -26px -2px -3px;
 }
+.pager {
+    margin: 0px;
+}
+.toggle-menu {
+    float: left;
+    font-size: 0px;
+    margin-bottom: 5px;
+    border-radius: 6px;
+    background: #ECEEEF;
+    border-bottom: #CCCCCC 3px solid;
+}
+.toggle-menu div {
+    padding: 8px;
+    display: inline-block;
+}
+.toggle-menu div:first-child {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+.toggle-menu div:last-child {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+.toggle-menu a {
+    color: #404040;
+    font-size: 12px;
+    text-decoration: none;
+}
+.toggle-menu a:hover {
+    text-decoration: none;
+}
+.toggle-menu div.active {
+    background: #4FB845;
+}
+.toggle-menu div:not(.active) {
+    cursor: pointer;
+}
+.toggle-menu div.active > a {
+    color: #FFFFFF;
+    cursor: default;
+}
+.toggle-menu div:not(.active):hover {
+    background: #47A8D8;
+}
+.toggle-menu div:not(.active):hover > a {
+    color: #FFFFFF;
+}
+.pager .toggle-menu {
+    float: right;
+}

@@ -13,7 +13,16 @@
 	<h2>
 		<fmt:message key="crashAnalysis.crashQueries" />
 	</h2>
-    <c:import url="analysismenu.jsp" />
+    <table width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+            <td width="75%">
+                <c:import url="analysismenu.jsp" />
+            </td>
+            <td width="25%">
+                &nbsp;
+            </td>
+        </tr>
+    </table>
     <div class="pager tablesorter-pager" style="text-align: left !important;">
         <img src="<c:url value='/styles/tablesorter/addons/pager/icons/first.png'/>" class="first disabled" alt="First" title="First page" tabindex="0" aria-disabled="true">
         <img src="<c:url value='/styles/tablesorter/addons/pager/icons/prev.png'/>" class="prev disabled" alt="Prev" title="Previous page" tabindex="0" aria-disabled="true">
@@ -85,14 +94,11 @@
     </div>
 </div>
 <script type="text/javascript">
-    $(window).load(function(){
-        highlightLastAccessedObject();
-        $('.tablesorter-wrapper').height($(window).height() - 320);
-    });
+    ui.initLastAccessedObject();
     $(document).ready(function() {
         util.initTableSorter('#queryList', 'queries');
-        $('.tablesorter-wrapper').height($(window).height() - 320);
     });
+    ui.toggleMenuItem($('#queries > a:first'));
 </script>
 <input id="accessAttributeName" type="hidden" value="data-queries-id">
 <div id="form-container" style="visibility: hidden"></div>

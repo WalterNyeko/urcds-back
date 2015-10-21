@@ -50,7 +50,7 @@ var crosstabs = (function () {
         yAttributes.pop();
     }
     crosstabs.tabulateCounts = function (yAttributes) {
-        $('#crosstabs').html('');
+        $('td#crosstabs').html('');
         var xAttrName = $('#xCrashAttribute option:selected').text();
         var yAttrName = $('#yCrashAttribute option:selected').text();
         var table = $('<table class="crosstab-orange">');
@@ -95,7 +95,7 @@ var crosstabs = (function () {
             tfoot.find('tr').append($('<td></td>').append(x));
         })
         table.append(thead).append(tbody).append(tfoot);
-        $('#crosstabs').append(table);
+        $('td#crosstabs').append(table);
         charting.createBarChart(this, xAttrName + ' by ' + yAttrName, 'crosstab-chart');
     }
     crosstabs.units = function() {

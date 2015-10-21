@@ -24,11 +24,10 @@
     <br/>
     <table width="100%" cellpadding="0" cellspacing="0">
         <tr>
-            <td width="60%">
+            <td width="75%">
                 <c:import url="analysismenu.jsp" />
-                <br/>
             </td>
-            <td width="40%">
+            <td width="25%">
                 &nbsp;
             </td>
         </tr>

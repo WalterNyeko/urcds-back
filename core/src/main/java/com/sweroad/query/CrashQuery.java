@@ -91,10 +91,10 @@ public class CrashQuery {
         public enum CrashJoinType {CASUALTY, VEHICLE}
 
         public CrashQueryBuilder() {
-            queryables = new TreeMap<String, List<? extends Queryable>>();
-            parameters = new TreeMap<String, Object>();
-            customQueryables = new TreeMap<String, Map<String, Object>>();
-            literalQueryables = new ArrayList<LiteralQueryable>();
+            queryables = new TreeMap<>();
+            parameters = new TreeMap<>();
+            customQueryables = new TreeMap<>();
+            literalQueryables = new ArrayList<>();
         }
 
         public CrashQueryBuilder addQueryable(List<? extends Queryable> queryableList) {

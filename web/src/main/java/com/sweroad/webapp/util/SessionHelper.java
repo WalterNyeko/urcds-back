@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.sweroad.Constants;
 import com.sweroad.model.Crash;
 import com.sweroad.model.PoliceStation;
+import com.sweroad.query.CrashQuery;
 import com.sweroad.util.ConvertUtil;
 import com.sweroad.util.DateUtil;
 
@@ -26,22 +27,26 @@ public class SessionHelper {
      * @param request
      * @param crashes
      */
-    public static void crashesToJsonAndSetInSession(HttpServletRequest request, List<Crash> crashes) {
+    public static void persistCrashesInSession(HttpServletRequest request, List<Crash> crashes) {
         request.getSession().setAttribute("crashes", crashes);
         request.getSession().setAttribute("crashesJSON", ConvertUtil.listToJSON(crashes));
     }
 
+    public static void persistCrashesInSession(HttpServletRequest request, List<Crash> crashes, CrashQuery crashQuery) {
+        persistCrashesInSession(request, crashes);
+        request.getSession().setAttribute("crashQuery", crashQuery);
+    }
     /**
      * Takes list of police stations, converts them to JSON and adds the JSON string as a request attribute
      *
      * @param request
      * @param policeStations
      */
-    public static void policeStationsToJsonAndSetInAttribute(HttpServletRequest request, List<PoliceStation> policeStations) {
+    public static void persistPoliceStationsInSession(HttpServletRequest request, List<PoliceStation> policeStations) {
         request.setAttribute("police_stations_json", ConvertUtil.listToJSON(policeStations));
     }
 
-    public static void crashAttributesToJsonAndSetInSession(HttpServletRequest request, Map<String,
+    public static void persistCrashAttributesInSession(HttpServletRequest request, Map<String,
             List> crashAttributes) throws ParseException {
         StringBuilder crashAttributeJSON = new StringBuilder("{");
         Gson gson = new Gson();

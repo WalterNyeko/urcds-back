@@ -26,8 +26,7 @@ public class CrashFormControllerTest extends BaseControllerTestCase {
 	@Test
 	public void testThatCrashFormHasCrashModel() throws Exception {
 		log.debug("testing that crash form has crash model...");
-		request = newGet("/crashform");
-		ModelAndView mav = crashForm.showForm(request);
+		ModelAndView mav = crashForm.showForm(newGet("/crashform"));
 		ModelMap mp = mav.getModelMap();
 		assertNotNull(mp.get("crash"));
 	}
@@ -35,8 +34,7 @@ public class CrashFormControllerTest extends BaseControllerTestCase {
 	@Test
 	public void testThatCrashFormHasReferenceData() throws Exception {
 		log.debug("testing that crash form has reference data...");
-		request = newGet("/crashform");
-		ModelAndView mav = crashForm.showForm(request);
+		ModelAndView mav = crashForm.showForm(newGet("/crashform"));
 		ModelMap mp = mav.getModelMap();
 		assertNotNull(mp.get("crashSeverities"));
 	}

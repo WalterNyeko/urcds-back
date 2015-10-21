@@ -20,11 +20,11 @@
     <br/>
     <table width="100%" cellpadding="0" cellspacing="0">
         <tr>
-            <td width="60%">
+            <td width="75%">
                 <c:import url="analysismenu.jsp" />
             </td>
-            <td width="40%">
-                <ul class="nav nav-tabs" style="float: right;">
+            <td width="25%">
+                <ul class="nav nav-tabs" style="float: right; margin-bottom: -1px;">
                     <li><a href="<c:url value='/analysis'/>" class="show-loading"><fmt:message key="crashList.crashes" /></a></li>
                     <li class="active"><a href="" class="non-click"><fmt:message key="crashAnalysis.vehicles" /></a></li>
                     <li><a href="<c:url value='/analysiscasualties'/>" class="show-loading"><fmt:message key="crashAnalysis.casualties"/></a></li>
@@ -111,5 +111,4 @@
 <input id="accessAttributeName" type="hidden" value="data-vehicle-id">
 <script type="text/javascript">
     util.initCrashAnalysis();
-    ui.initLastAccessedObject();
 </script>

@@ -91,8 +91,8 @@ public class CrashAnalysisController extends BaseFormController {
     }
 
     private void setCrashesInSession(HttpServletRequest request, List<Crash> crashes) throws ParseException {
-        SessionHelper.crashesToJsonAndSetInSession(request, crashes);
-        SessionHelper.crashAttributesToJsonAndSetInSession(request, crashManager.getOrderedRefData());
+        SessionHelper.persistCrashesInSession(request, crashes);
+        SessionHelper.persistCrashAttributesInSession(request, crashManager.getOrderedRefData());
     }
 
     private List<Vehicle> getVehicles(HttpServletRequest request) throws Exception {
@@ -114,7 +114,7 @@ public class CrashAnalysisController extends BaseFormController {
             mav.addAllObjects(crashManager.getOrderedRefData());
             mav.addObject("years", CrashAnalysisHelper.getYearsForSearch());
             mav.addObject("months", CrashAnalysisHelper.getMonthsForSearch(request));
-            SessionHelper.policeStationsToJsonAndSetInAttribute(request, (List<PoliceStation>) mav.getModelMap().get("policeStations"));
+            SessionHelper.persistPoliceStationsInSession(request, (List<PoliceStation>) mav.getModelMap().get("policeStations"));
             return mav;
         } catch (Exception e) {
             log.error("Select crash failed: " + e.getLocalizedMessage());

@@ -140,11 +140,10 @@ var util = (function () {
     }
     util.initCrashAnalysis = function () {
         $(document).ready(function () {
-            $("#gMaps").hide();
-            util.initTableSorter('table.tablesorter', 'crashes');
-            if (window.crashes && window.crashes.length)
-                $("#gMaps").show();
             ui.renderQuerySummary();
+            ui.initLastAccessedObject();
+            ui.toggleMenuItem($('.toggle-menu div#crashes > a:first'));
+            util.initTableSorter('table.tablesorter', 'crashes');
         });
     }
     util.initTableSorter = function (tableSelector, itemsName) {
@@ -221,7 +220,10 @@ var ui = (function () {
     ui.init = function () {
         $(window).load(function () {
             ui.initSearchButton();
-            $('a.non-click').click(function () { return false });
+            $('a.non-click').click(function (evt) {
+                evt.stopImmediatePropagation();
+                return false;
+            });
             $('a[title=Logout]').click(function () { sessionStorage.clear() });
             $('.show-loading, .navbar-nav a:not(.dropdown-toggle)').click(function() { ui.loadingNotification() });
         });
@@ -408,7 +410,7 @@ var ui = (function () {
     ui.initLastAccessedObject = function () {
         $(window).load(function () {
             highlightLastAccessedObject();
-            $('.tablesorter-wrapper').height($(window).height() - 310);
+            $('.tablesorter-wrapper').height($(window).height() - 290);
         });
     }
     ui.attributeSelect = function(id, selected) {
@@ -569,6 +571,25 @@ var ui = (function () {
         params.rootElementId = "casualtyform";
         util.sendRequest(params);
         return false;
+    }
+    ui.toggleCrashMenu = function() {
+        var allCrashes = window.location.href.indexOf('?all=true') > -1;
+        if (allCrashes)
+            ui.toggleMenuItem($('#all-data > a'));
+        else
+            ui.toggleMenuItem($('#summary > a'));
+        $('.toggle-menu div:not(.active), .toggle-menu div:not(.active) > a').click(function() {
+            var item = $(this).is('a') ? $(this) : $(this).find('a:first');
+            ui.toggleMenuItem(item);
+            if ($(this).is('div'))
+                window.location.href = item.attr('href');
+        });
+    }
+    ui.toggleMenuItem = function(item) {
+        $('.toggle-menu .active').removeClass('active');
+        $('.toggle-menu .non-click').removeClass('non-click');
+        item.addClass('non-click');
+        item.parent().addClass('active');
     }
     return ui.init();
 })();

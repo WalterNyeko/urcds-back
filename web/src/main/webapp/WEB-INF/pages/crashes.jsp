@@ -33,6 +33,10 @@
                     key="button.addCrash" />
             </a>
         </security:authorize>
+        <div class="toggle-menu">
+           <div id="summary"><a href="<c:url value='/crashes' />">Recent Crashes</a></div>
+           <div id="all-data"><a href="<c:url value='/crashes' />?all=true">All Crashes</a></div>
+        </div>
     </div>
     <div class="content-wrapper">
         <div class="tablesorter-wrapper">
@@ -116,11 +120,9 @@
     </div>
 </div>
 <script type="text/javascript">
-    $(window).load(function(){
-        highlightLastAccessedObject();
-        $('.tablesorter-wrapper').height($(window).height() - 320);
-    });
+    ui.initLastAccessedObject();
     $(document).ready(function() {
+        ui.toggleCrashMenu();
         util.initTableSorter('#crashList', 'crashes');
     });
 </script>
