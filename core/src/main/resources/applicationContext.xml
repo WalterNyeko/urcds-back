@@ -166,4 +166,52 @@
             </bean>
         </constructor-arg>
     </bean>
+    <bean id="injuryTypeManager" class="com.sweroad.service.impl.GenericManagerImpl">
+        <constructor-arg>
+            <bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
+                <constructor-arg value="com.sweroad.model.InjuryType" />
+                <property name="sessionFactory" ref="sessionFactory" />
+            </bean>
+        </constructor-arg>
+    </bean>
+    <bean id="hospitalManager" class="com.sweroad.service.impl.GenericManagerImpl">
+        <constructor-arg>
+            <bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
+                <constructor-arg value="com.sweroad.model.Hospital" />
+                <property name="sessionFactory" ref="sessionFactory" />
+            </bean>
+        </constructor-arg>
+    </bean>
+    <bean id="patientDispositionManager" class="com.sweroad.service.impl.GenericManagerImpl">
+        <constructor-arg>
+            <bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
+                <constructor-arg value="com.sweroad.model.PatientDisposition" />
+                <property name="sessionFactory" ref="sessionFactory" />
+            </bean>
+        </constructor-arg>
+    </bean>
+    <bean id="patientStatusManager" class="com.sweroad.service.impl.GenericManagerImpl">
+        <constructor-arg>
+            <bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
+                <constructor-arg value="com.sweroad.model.PatientStatus" />
+                <property name="sessionFactory" ref="sessionFactory" />
+            </bean>
+        </constructor-arg>
+    </bean>
+    <bean id="roadUserTypeManager" class="com.sweroad.service.impl.GenericManagerImpl">
+        <constructor-arg>
+            <bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
+                <constructor-arg value="com.sweroad.model.RoadUserType" />
+                <property name="sessionFactory" ref="sessionFactory" />
+            </bean>
+        </constructor-arg>
+    </bean>
+    <bean id="transportModeManager" class="com.sweroad.service.impl.GenericManagerImpl">
+        <constructor-arg>
+            <bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
+                <constructor-arg value="com.sweroad.model.TransportMode" />
+                <property name="sessionFactory" ref="sessionFactory" />
+            </bean>
+        </constructor-arg>
+    </bean>
 </beans>
