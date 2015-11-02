@@ -63,7 +63,7 @@
                                         <label for="gender2" class="form-label"><fmt:message key="rcds.female" /></label><br/>
                                     </td>
                                     <td align="right">
-                                        <form:input cssClass="form-control right-al" path="age" id="age" placeholder="${enterDriverAge}" />
+                                        <form:input cssClass="form-control right-al int-val" path="age" id="age" placeholder="${enterDriverAge}" />
                                     </td>
                                     <td>
                                         <input type="hidden" value="casualtyClass.id" class="rb-helper" data-labelName="${casualtyClassLabel}" />

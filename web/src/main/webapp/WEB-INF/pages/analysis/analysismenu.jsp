@@ -32,7 +32,7 @@
         </a>
     </div>
     <div id="excel">
-        <a href="<c:url value='/analysisdownloadexcel'/>" class="show-loading">
+        <a href="<c:url value='/analysisdownloadexcel'/>" class="show-loading auto-hide">
             <fmt:message key="button.exportToExcel" />
         </a>
     </div>

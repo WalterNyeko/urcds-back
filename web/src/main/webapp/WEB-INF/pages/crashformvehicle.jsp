@@ -91,7 +91,7 @@
                                         <label for="driver.gender3" class="form-label"><fmt:message key="rcds.unknown" /></label>
                                     </td>
                                     <td>
-                                        <form:input cssClass="form-control" path="driver.age" id="age" placeholder="${enterDriverAge}" />
+                                        <form:input cssClass="form-control right-al int-val" path="driver.age" id="age" placeholder="${enterDriverAge}" />
                                     </td>
                                     <td>
                                         <form:radiobutton path="driver.beltUsed" value="1" />&nbsp;

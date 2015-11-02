@@ -25,7 +25,7 @@
         </select>
         &nbsp;&nbsp;
         <security:authorize url="/app/crashform*">
-            <a href="<c:url value='/patientform'/>" class="non-click">
+            <a href="<c:url value='/patientform'/>">
                 <fmt:message key="button.addPatient" />
             </a>
         </security:authorize>

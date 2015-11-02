@@ -110,5 +110,5 @@
 </div>
 <input id="accessAttributeName" type="hidden" value="data-vehicle-id">
 <script type="text/javascript">
-    util.initCrashAnalysis();
+    util.initCrashAnalysis('vehicles');
 </script>

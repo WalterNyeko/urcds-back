@@ -6,7 +6,7 @@ import javax.persistence.*;
  * Created by Frank on 3/12/15.
  */
 @Entity(name = "hospital")
-public class Hospital extends BaseModel {
+public class Hospital extends BaseModel implements Comparable<Hospital> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -63,5 +63,13 @@ public class Hospital extends BaseModel {
     @Override
     public int hashCode() {
         return 0;
+    }
+
+    @Override
+    public int compareTo(Hospital hospital) {
+        if (hospital == null || hospital.getName() == null) {
+            return -1;
+        }
+        return this.name.compareTo(hospital.getName());
     }
 }

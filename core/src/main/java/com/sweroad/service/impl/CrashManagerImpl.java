@@ -103,7 +103,7 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
                 || user.hasRole(Constants.READONLY_ROLE)) {
             return this.getAvailableCrashes(latestOnly);
         } else {
-            return latestOnly ? dao.findByNamedQuery(Crash.FIND_CRASHES_ORDER_BY_DATE_DESC, null, 1, 500)
+            return latestOnly ? dao.findByNamedQuery(Crash.FIND_CRASHES_ORDER_BY_DATE_DESC, null, 1, 300)
                     : dao.findByNamedQuery(Crash.FIND_CRASHES_ORDER_BY_DATE_DESC, null);
         }
     }
@@ -125,9 +125,9 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
             if (user.hasRole(Constants.USER_ROLE) && user.getDistrict() != null) {
                 Map<String, Object> parameters = new HashMap<>();
                 parameters.put("district", user.getDistrict());
-                return dao.findByNamedQuery(Crash.FIND_AVAILABLE_DISTRICT_CRASHES_ORDER_BY_DATE_DESC, parameters, 1, 500);
+                return dao.findByNamedQuery(Crash.FIND_AVAILABLE_DISTRICT_CRASHES_ORDER_BY_DATE_DESC, parameters, 1, 300);
             }
-            return dao.findByNamedQuery(Crash.FIND_AVAILABLE_CRASHES_ORDER_BY_DATE_DESC, null, 1, 500);
+            return dao.findByNamedQuery(Crash.FIND_AVAILABLE_CRASHES_ORDER_BY_DATE_DESC, null, 1, 300);
         }
         return dao.findByNamedQuery(Crash.FIND_AVAILABLE_CRASHES_ORDER_BY_DATE_DESC, null);
     }

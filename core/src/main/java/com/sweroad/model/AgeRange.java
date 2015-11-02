@@ -24,7 +24,7 @@ public class AgeRange extends LabelValue {
     @Override
     public String getLabel() {
         if (minAge == 0 && maxAge != null) {
-            return "00 - " + padZeroes(maxAge + 1);
+            return "00 - " + padZeroes(maxAge);
         }
         if (minAge != null && maxAge == null) {
             return "> " + (minAge - 1);
