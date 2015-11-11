@@ -22,8 +22,8 @@
 			roles="ROLE_ADMIN" page="/admin/users">
 			<Item name="ViewUsers" title="menu.admin.users" page="/admin/users" />
 			<Item name="ActiveUsers" title="home.activeUsers" page="/admin/activeUsers" />
-			<Item name="ReloadContext" title="menu.admin.reload" page="/admin/reload" />
-			<Item name="FileUpload" title="menu.selectFile" page="/fileupload" />
+			<Item name="SystemSettings" title="menu.settings" page="#" />
+			<Item name="LookupTables" title="menu.lookupTables" page="#" />
 		</Menu>
 		<Menu name="Logout" title="user.logout" page="/logout"
 			roles="ROLE_ADMIN,ROLE_USER,ROLE_READONLY,ROLE_SUPER_USER" />

@@ -43,53 +43,6 @@ function validateInteger(num) {
     return rx.test(num);
 }
 
-function validate24HrTime(time) {
-    var rx = RegExp('([01]?[0-9]|2[0-3]):[0-5][0-9]');
-    return rx.test(time);
-}
-
-function defineCrashTime() {
-    if (!$("#crashTime").length) {
-        return;
-    }
-    var time = $.trim($("#crashTime").val());
-    if (time == "") {
-        return;
-    }
-    if (!validate24HrTime(time)) {
-        ui.alertDialog({ message: "Crash time must be in 24-hour format", focusTarget: $("#crashTime") });
-        return;
-    }
-
-    if (time.length == 4) {
-        time = "0" + time;
-    }
-
-    var date = $('#crashDateTimeString').val();
-    if (date.trim() == "") {
-        return;
-    }
-    var dateParts = date.split(" ");
-    if (dateParts.length > 1) {
-        date = dateParts[0];
-    }
-    date = date + " " + time;
-    $('#crashDateTimeString').val(date);
-
-}
-
-function loadCrashTime() {
-    var date = $('#crashDateTimeString').val();
-    if (date.trim() == "") {
-        return;
-    }
-    var dateParts = date.split(" ");
-    if (dateParts.length > 1) {
-        var time = $.trim(dateParts[1]);
-        $("#crashTime").val(time);
-    }
-}
-
 function getCrashInfoContent(crash) {
     var crashViewUrl = util.basePath() + 'crashview';
     var content = "<table class='infoWindow'><tr><th colspan='2'>";

@@ -211,6 +211,11 @@ var util = (function () {
     util.isNullAttribute = function(attribute) {
         return attribute.id === null && attribute.name === constants.NOT_SPECIFIED;
     }
+    util.validate24HrTime = function(time) {
+        var rx = RegExp('([01]?[0-9]|2[0-3]):[0-5][0-9]');
+        return rx.test(time);
+    }
+
     return util;
 })();
 
@@ -237,7 +242,7 @@ var ui = (function () {
         });
         return this;
     }
-    ui.initDatePicker = function () {
+    ui.initDatePicker = function (selectDate) {
         $('.dtpicker').datepicker({
             dateFormat: "yy-mm-dd",
             autoSize: true,
@@ -248,13 +253,9 @@ var ui = (function () {
             yearRange: 'c-20:c',
             dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
             showAnim: "fold",
-            onSelect: function () {
-                defineCrashTime();
-            }
+            onSelect: selectDate
         });
-        $('.dtpicker').focus(function () {
-            this.value = '';
-        });
+        $('.time-control').on('blur focusout', selectDate);
     }
     ui.initSearchButton = function () {
         $('#searchButton').click(function () {
@@ -583,8 +584,11 @@ var ui = (function () {
     }
     ui.toggleCrashMenu = function() {
         var allCrashes = window.location.href.indexOf('?all=true') > -1;
+        var removedCrashes = window.location.href.indexOf('?removed=true') > -1;
         if (allCrashes)
             ui.toggleMenuItem($('#all-data > a'));
+        else if (removedCrashes)
+            ui.toggleMenuItem($('#removed-data > a'));
         else
             ui.toggleMenuItem($('#summary > a'));
         $('.toggle-menu div:not(.active), .toggle-menu div:not(.active) > a').click(function() {
@@ -599,6 +603,62 @@ var ui = (function () {
         $('.toggle-menu .non-click').removeClass('non-click');
         item.addClass('non-click');
         item.parent().addClass('active');
+    }
+    ui.setCrashTime = function() {
+        if (!$('#crashTime').length)
+            return;
+        var time = $.trim($('#crashTime').val());
+        if (time == '')
+            return;
+        if (!util.validate24HrTime(time)) {
+            ui.alertDialog({ message: 'Crash time must be in 24-hour format', focusTarget: $('#crashTime') });
+            return;
+        }
+        if (time.length == 4)
+            time = '0' + time;
+        var date = $('#crashDateTimeString').val();
+        if (date.trim() == '')
+            return;
+        var dateParts = date.split(' ');
+        if (dateParts.length > 1)
+            date = dateParts[0];
+        date = date + " " + time;
+        $('#crashDateTimeString').val(date);
+    }
+    ui.loadCrashTime = function() {
+        var date = $('#crashDateTimeString').val();
+        if (date.trim() == '')
+            return;
+        var dateParts = date.split(' ');
+        if (dateParts.length > 1) {
+            var time = $.trim(dateParts[1]);
+            $('#crashTime').val(time);
+        }
+    }
+    ui.setInjuryDateTime = function() {
+        var date = $.trim($('#injuryDate').val());
+        var time = $.trim($('#injuryTime').val());
+        if (date.length == 0)
+            return;
+        if (time) {
+            if (!util.validate24HrTime(time)) {
+                ui.alertDialog({ message: 'Crash time must be in 24-hour format', focusTarget: $('#injuryTime') });
+                return;
+            }
+            if (time.length == 4)
+                time = '0' + time;
+        }
+        date = date + " " + time;
+        $('#injuryDateTimeString').val(date);
+    }
+    ui.loadInjuryDateTime = function() {
+        var datetime = $.trim($('#injuryDateTimeString').val());
+        if (datetime.length == 0)
+            return;
+        var dateParts = datetime.split(' ');
+        $('#injuryDate').val(dateParts[0])
+        if (dateParts.length > 1)
+            $('#injuryTime').val(dateParts[1]);
     }
     return ui.init();
 })();

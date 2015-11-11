@@ -13,6 +13,11 @@
 
 	<!-- Add new DAOs here -->
 
+    <bean id="patientDao" class="com.sweroad.dao.hibernate.GenericDaoHibernate">
+        <constructor-arg value="com.sweroad.model.Patient" />
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
 	<!-- Add new Managers here -->
 	<bean id="crashSeverityManager" class="com.sweroad.service.impl.GenericManagerImpl">
 		<constructor-arg>
@@ -210,6 +215,14 @@
         <constructor-arg>
             <bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
                 <constructor-arg value="com.sweroad.model.TransportMode" />
+                <property name="sessionFactory" ref="sessionFactory" />
+            </bean>
+        </constructor-arg>
+    </bean>
+    <bean id="patientInjuryManager" class="com.sweroad.service.impl.GenericManagerImpl">
+        <constructor-arg>
+            <bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
+                <constructor-arg value="com.sweroad.model.PatientInjuryType" />
                 <property name="sessionFactory" ref="sessionFactory" />
             </bean>
         </constructor-arg>

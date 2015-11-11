@@ -72,6 +72,21 @@ public class LookupManagerImpl implements LookupManager {
     }
 
     @Override
+    public List<Quadrian> getAllQuadrianOptions(boolean includeNotApplicable) {
+        List<Quadrian> quadrians = new ArrayList();
+        for(Quadrian quadrian : Quadrian.values()) {
+            if (quadrian.equals(Quadrian.NOT_APPLICABLE)) {
+                if (includeNotApplicable) {
+                    quadrians.add(quadrian);
+                }
+            } else {
+                quadrians.add(quadrian);
+            }
+        }
+        return quadrians;
+    }
+
+    @Override
     public List<LabelValue> getFilteredGenders(List<LabelValue> selectedValues) {
         List<LabelValue> filteredGenders = new ArrayList<LabelValue>();
         for(LabelValue labelValue : getAllGenders()) {

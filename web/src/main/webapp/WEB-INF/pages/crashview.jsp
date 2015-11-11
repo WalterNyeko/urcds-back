@@ -1,3 +1,4 @@
+<%@ page import="com.google.common.net.HttpHeaders" %>
 <%@ include file="/common/taglibs.jsp"%>
 <fmt:message key="crashForm.tarNo" var="tarNoLabel" />
 <fmt:message key="crashForm.policeStation" var="policeStationLabel" />
@@ -33,7 +34,10 @@
                         <img src="<c:url value='/images/bt_Restore.gif' />" hspace="4" title="Restore Crash" />
                     </a>
                 </c:if>
-				<a href="<c:url value='/crashes'/>" class="show-loading"> <fmt:message key="button.backToCrashes" /></a>
+                <%
+                    out.println("<a href=\"" + request.getHeader(HttpHeaders.REFERER) + "\" class=\"show-loading\">");
+                %>
+                <fmt:message key="button.backToCrashes" /></a>
 			</td>
 		</tr>
 	</table>

@@ -1,9 +1,6 @@
 package com.sweroad.service;
 
-import com.sweroad.model.AgeRange;
-import com.sweroad.model.LabelValue;
-import com.sweroad.model.TimeRange;
-import com.sweroad.model.WeightRange;
+import com.sweroad.model.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -27,6 +24,8 @@ public interface LookupManager {
     List<LabelValue> getFilteredLicenseTypes(List<LabelValue> selectedValues);
 
     List<LabelValue> getAllGenders();
+
+    List<Quadrian> getAllQuadrianOptions(boolean includeNotApplicable);
 
     List<LabelValue> getFilteredGenders(List<LabelValue> selectedValues);
 

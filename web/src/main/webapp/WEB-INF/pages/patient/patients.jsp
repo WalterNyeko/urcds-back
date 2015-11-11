@@ -42,12 +42,51 @@
                         <th><fmt:message key="patient.village"/></th>
                         <th><fmt:message key="crash.district"/></th>
                         <th><fmt:message key="patient.dateInjured"/></th>
-                        <th><fmt:message key="patient.modeOfTransport"/></th>
+                        <th><fmt:message key="patient.transportMode"/></th>
                         <th data-filter="false" data-sorter="false"><fmt:message key="rcds.actions"/></th>
                     </tr>
                 </thead>
                 <tbody>
+                    <c:forEach var="patient" items="${patients}" varStatus="status">
+                        <tr>
+                            <td>${empty(patient.hospitalInpatientNo) ? patient.hospitalOutpatientNo : patient.hospitalInpatientNo}</td>
+                            <td align="center">${patient.gender}</td>
+                            <td align="right">${patient.age}</td>
+                            <td>${patient.hospital.name}</td>
+                            <td>${patient.village}</td>
+                            <td>${patient.district.name}</td>
+                            <td align="right">${patient.injuryDateTimeString}</td>
+                            <td>${patient.transportMode.name}</td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${patient.removed eq true}">
+                                        <a href="<c:url value='/patientview'/>?id=${patient.id}" class="show-loading" alt="View patient" onclick="setAccessedObject(this)" data-patients-id="${patient.id}">
+                                            <img src="<c:url value='/images/bt_View.gif'/>" alt="View" title="View" hspace="4">
+                                        </a>
+                                        <a href="<c:url value='/patientrestore'/>?id=${patient.id}" alt="Restore patient" onclick="setAccessedObject(this); return ui.confirmDialog({message : 'Restore patient?', aLink : this});">
+                                            <img src="<c:url value='/images/bt_Restore.gif'/>" alt="Restore" title="Restore" hspace="4">
+                                        </a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a href="<c:url value='/patientview'/>?id=${patient.id}" class="show-loading" alt="View patient" onclick="setAccessedObject(this)" data-patients-id="${patient.id}">
+                                            <img src="<c:url value='/images/bt_View.gif'/>" alt="View" title="View" hspace="4">
+                                        </a>
+                                        <c:if test="${patient.editable}">
+                                            <a href="<c:url value='/patientform'/>?id=${patient.id}" class="show-loading" alt="Edit patient" onclick="setAccessedObject(this)">
+                                                <img src="<c:url value='/images/bt_Edit.gif'/>" alt="Edit" title="Edit" hspace="4">
+                                            </a>
+                                        </c:if>
+                                        <c:if test="${patient.removable}">
+                                            <a href="<c:url value='/patientremove'/>?id=${crash.id}" alt="Remove patient" onclick="setAccessedObject(this); return ui.confirmDialog({message : 'Remove patient?', aLink : this});">
+                                                <img src="<c:url value='/images/bt_Remove.gif'/>" alt="Remove" title="Remove" hspace="4">
+                                            </a>
+                                        </c:if>
+                                    </c:otherwise>
+                                </c:choose>
 
+                            </td>
+                        </tr>
+                    </c:forEach>
                 </tbody>
             </table>
         </div>

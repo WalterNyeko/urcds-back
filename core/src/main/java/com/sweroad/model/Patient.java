@@ -1,19 +1,31 @@
 package com.sweroad.model;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import com.sweroad.util.DateUtil;
 
-import javax.annotation.Generated;
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created by Frank on 3/12/15.
  */
-@Entity(name = "patient")
+@Entity
+@Table(name = "patient")
+@NamedQueries({
+        @NamedQuery(name = Patient.FIND_PATIENTS_ORDER_BY_DATE, query = "from Patient p order by p.injuryDateTime"),
+        @NamedQuery(name = Patient.FIND_PATIENTS_ORDER_BY_DATE_DESC, query = "from Patient p order by p.injuryDateTime desc"),
+        @NamedQuery(name = Patient.FIND_REMOVED_PATIENTS_ORDER_BY_DATE_DESC, query = "from Patient p where p.isRemoved = true order by p.injuryDateTime desc"),
+        @NamedQuery(name = Patient.FIND_AVAILABLE_PATIENT_ORDER_BY_DATE_DESC, query = "from Patient p where p.isRemoved = false order by p.injuryDateTime desc"),
+        @NamedQuery(name = Patient.FIND_HOSPITAL_PATIENTS_ORDER_BY_DATE_DESC, query = "from Patient p where p.hospital = :hospital order by p.injuryDateTime desc"),
+        @NamedQuery(name = Patient.FIND_AVAILABLE_HOSPITAL_PATIENTS_ORDER_BY_DATE_DESC, query = "from Patient p where p.isRemoved = false and p.hospital = :hospital order by p.injuryDateTime desc")})
 public class Patient extends BaseModel {
+
+    public static final String FIND_PATIENTS_ORDER_BY_DATE = "findPatientsOrderByDate";
+    public static final String FIND_PATIENTS_ORDER_BY_DATE_DESC = "findPatientsOrderByDateDesc";
+    public static final String FIND_REMOVED_PATIENTS_ORDER_BY_DATE_DESC = "findRemovedPatientsOrderByDateDesc";
+    public static final String FIND_HOSPITAL_PATIENTS_ORDER_BY_DATE_DESC = "findHospitalPatientsOrderByDateDesc";
+    public static final String FIND_AVAILABLE_PATIENT_ORDER_BY_DATE_DESC = "findAvailablePatientsOrderByDateDesc";
+    public static final String FIND_AVAILABLE_HOSPITAL_PATIENTS_ORDER_BY_DATE_DESC = "findAvailableHospitalPatientsOrderByDateDesc";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -48,13 +60,11 @@ public class Patient extends BaseModel {
     @JoinColumn(name = "counterpart_transport_mode_id")
     private TransportMode counterpartTransportMode;
     @Column(name = "belt_used")
-    private Boolean beltUsed;
-    @Column(name = "helmet_used")
-    private Boolean helmetUsed;
-    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    @Fetch(FetchMode.SELECT)
-    @JoinTable(name = "patient_injury", joinColumns = {@JoinColumn(name = "patient_id", referencedColumnName = "id")}, inverseJoinColumns = @JoinColumn(name = "injury_type_id", referencedColumnName = "id"))
-    private List<InjuryType> injuryTypes = new ArrayList<InjuryType>();
+    private Integer beltUsed;
+    @Transient
+    private Quadrian beltUsedOption;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "pk.patient", cascade = CascadeType.ALL)
+    private List<PatientInjuryType> patientInjuryTypes = new ArrayList<>(0);
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "patient_disposition_id")
     private PatientDisposition patientDisposition;
@@ -79,6 +89,12 @@ public class Patient extends BaseModel {
     @ManyToOne
     @JoinColumn(name = "updated_by")
     private User updatedBy;
+    @Column(nullable = false)
+    private boolean editable;
+    @Column(nullable = false)
+    private boolean removable;
+    @Column(name = "is_removed", nullable = false)
+    private boolean isRemoved;
 
     public Long getId() {
         return id;
@@ -160,6 +176,18 @@ public class Patient extends BaseModel {
         this.injuryDateTime = injuryDateTime;
     }
 
+    public String getInjuryDateTimeString() {
+        if (injuryDateTime != null) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            return sdf.format(injuryDateTime);
+        }
+        return "";
+    }
+
+    public void setInjuryDateTimeString(String injuryDateTimeString) {
+        this.injuryDateTime = DateUtil.parseDate("yyyy-MM-dd HH:mm", injuryDateTimeString);
+    }
+
     public TransportMode getTransportMode() {
         return transportMode;
     }
@@ -184,35 +212,49 @@ public class Patient extends BaseModel {
         this.counterpartTransportMode = counterpartTransportMode;
     }
 
-    public Boolean getBeltUsed() {
+    public Integer getBeltUsed() {
         return beltUsed;
     }
 
-    public void setBeltUsed(Boolean beltUsed) {
+    public void setBeltUsed(Integer beltUsed) {
         this.beltUsed = beltUsed;
     }
 
-    public Boolean getHelmetUsed() {
-        return helmetUsed;
-    }
-
-    public void setHelmetUsed(Boolean helmetUsed) {
-        this.helmetUsed = helmetUsed;
-    }
-
-    public List<InjuryType> getInjuryTypes() {
-        return injuryTypes;
-    }
-
-    public void setInjuryTypes(List<InjuryType> injuryTypes) {
-        this.injuryTypes = injuryTypes;
-    }
-
-    public void addInjuryType(InjuryType injuryType) {
-        if(injuryTypes == null) {
-            injuryTypes = new ArrayList<InjuryType>();
+    public Quadrian getBeltUsedOption() {
+        if (this.beltUsedOption == null && this.beltUsed != null) {
+            for(Quadrian option : Quadrian.values()) {
+                if (option.getValue() == this.beltUsed.intValue()) {
+                    this.beltUsedOption = option;
+                }
+            }
         }
-        injuryTypes.add(injuryType);
+        return beltUsedOption;
+    }
+
+    public void setBeltUsedOption(Quadrian beltUsedOption) {
+        this.beltUsedOption = beltUsedOption;
+        this.beltUsed = beltUsedOption.getValue();
+    }
+
+    public List<PatientInjuryType> getPatientInjuryTypes() {
+        return this.patientInjuryTypes;
+    }
+
+    public void setPatientInjuryTypes(List<PatientInjuryType> patientInjuryTypes) {
+        this.patientInjuryTypes = patientInjuryTypes;
+    }
+
+    public void addPatientInjuryType(PatientInjuryType patientInjuryType) {
+        if(patientInjuryTypes == null) {
+            patientInjuryTypes = new ArrayList<>(0);
+        }
+        patientInjuryTypes.add(patientInjuryType);
+    }
+
+    public void clearPatientInjuryTypes() {
+        if (this.patientInjuryTypes != null) {
+            this.patientInjuryTypes.clear();
+        }
     }
 
     public PatientDisposition getPatientDisposition() {
@@ -247,6 +289,18 @@ public class Patient extends BaseModel {
         this.formFilledOn = formFilledOn;
     }
 
+    public String getFormFillDate() {
+        if (formFilledOn != null) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            return sdf.format(formFilledOn);
+        }
+        return "";
+    }
+
+    public void setFormFillDate(String date) {
+        this.formFilledOn = DateUtil.parseDate("yyyy-MM-dd", date);
+    }
+
     public String getFormCheckedBy() {
         return formCheckedBy;
     }
@@ -261,6 +315,18 @@ public class Patient extends BaseModel {
 
     public void setFormCheckedOn(Date formCheckedOn) {
         this.formCheckedOn = formCheckedOn;
+    }
+
+    public String getFormCheckDate() {
+        if (formCheckedOn != null) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            return sdf.format(formCheckedOn);
+        }
+        return "";
+    }
+
+    public void setFormCheckDate(String date) {
+        this.formCheckedOn = DateUtil.parseDate("yyyy-MM-dd", date);
     }
 
     public Date getDateCreated() {
@@ -295,9 +361,33 @@ public class Patient extends BaseModel {
         this.updatedBy = updatedBy;
     }
 
+    public boolean isEditable() {
+        return editable;
+    }
+
+    public void setEditable(boolean editable) {
+        this.editable = editable;
+    }
+
+    public boolean isRemovable() {
+        return removable;
+    }
+
+    public void setRemovable(boolean removable) {
+        this.removable = removable;
+    }
+
+    public boolean isRemoved() {
+        return isRemoved;
+    }
+
+    public void setRemoved(boolean isRemoved) {
+        this.isRemoved = isRemoved;
+    }
+
     @Override
     public String toString() {
-        return null;
+        return String.format("Patient {%s}", id != null ? id : "New");
     }
 
     @Override

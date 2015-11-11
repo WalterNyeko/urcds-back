@@ -10,5 +10,13 @@ import java.util.Map;
  */
 public interface PatientManager extends GenericManager<Patient, Long> {
 
+    List<Patient> getPatients();
+
+    Patient savePatient(Patient patient);
+
+    List<Patient> getRemovedPatients();
+
+    List<Patient> getAvailablePatients();
+
     Map<String, List> getReferenceData();
 }

@@ -34,6 +34,7 @@
         <mapping class="com.sweroad.model.PatientStatus" />
 		<mapping class="com.sweroad.model.RoadwayCharacter" />
 		<mapping class="com.sweroad.model.SurfaceCondition" />
+        <mapping class="com.sweroad.model.PatientInjuryType" />
 		<mapping class="com.sweroad.model.VehicleFailureType" />
         <mapping class="com.sweroad.model.PatientDisposition" />
 	</session-factory>

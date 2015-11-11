@@ -21,6 +21,7 @@
 		<intercept-url pattern="/app/signup*"
 			access="ROLE_ANONYMOUS,ROLE_ADMIN,ROLE_USER,ROLE_READONLY,ROLE_SUPER_USER" />
 		<intercept-url pattern="/app/crashremove*" access="ROLE_ADMIN,ROLE_SUPER_USER" />
+        <intercept-url pattern="/app/crashesremoved*" access="ROLE_ADMIN,ROLE_SUPER_USER" />
 		<intercept-url pattern="/app/crashform*" access="ROLE_ADMIN,ROLE_USER,ROLE_SUPER_USER" />
 		<intercept-url pattern="/app/**" access="ROLE_ADMIN,ROLE_USER,ROLE_READONLY,ROLE_SUPER_USER" />
 		<form-login login-page="/login" authentication-failure-url="/login?error=true"

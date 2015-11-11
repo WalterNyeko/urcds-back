@@ -1,14 +1,8 @@
 package com.sweroad.service.impl;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import com.sweroad.model.CrashSeverity;
-import com.sweroad.query.CrashSearch;
-import com.sweroad.query.Queryable;
-import com.sweroad.util.GenericManagerHelper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 

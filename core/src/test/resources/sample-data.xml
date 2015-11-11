@@ -2250,7 +2250,7 @@
         </row>
         <row>
             <value description="id">2</value>
-            <value description="name">Admitted-IP No</value>
+            <value description="name">Admitted</value>
         </row>
         <row>
             <value description="id">3</value>
@@ -2287,6 +2287,10 @@
         <row>
             <value description="id">5</value>
             <value description="name">Bony Pelvis &amp; Extremities</value>
+        </row>
+        <row>
+            <value description="id">6</value>
+            <value description="name">Vertebrae not involving the spinal code</value>
         </row>
     </table>
     <table name="road_user_type">
@@ -2376,7 +2380,6 @@
         <column>rode_user_type_id</column>
         <column>counterpart_transport_mode_id</column>
         <column>belt_used</column>
-        <column>helmet_used</column>
         <column>patient_disposition_id</column>
         <column>patient_status_id</column>
         <column>form_filled_by</column>
@@ -2400,7 +2403,6 @@
             <value description="rode_user_type_id">1</value>
             <value description="counterpart_transport_mode_id">3</value>
             <value description="belt_used">1</value>
-            <null/>
             <value description="patient_disposition_id">1</value>
             <value description="patient_status_id">1</value>
             <value description="form_filled_by">Kamoga</value>
@@ -2411,7 +2413,7 @@
             <null/>
         </row>
     </table>
-    <table name="patient_injury">
+    <table name="patient_injury_type">
         <column>patient_id</column>
         <column>injury_type_id</column>
         <row>

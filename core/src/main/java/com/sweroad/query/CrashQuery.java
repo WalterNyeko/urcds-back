@@ -6,12 +6,13 @@ import com.sweroad.model.Crash;
 import com.sweroad.model.DateRangable;
 import com.sweroad.model.NameIdModel;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * Created by Frank on 12/9/14.
  */
-public class CrashQuery {
+public class CrashQuery implements Serializable {
 
     private Long id;
     private Map<String, List<? extends Queryable>> queryables;

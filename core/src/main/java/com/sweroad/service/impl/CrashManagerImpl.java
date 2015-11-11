@@ -133,6 +133,11 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
     }
 
     @Override
+    public List<Crash> getRemovedCrashes() {
+        return dao.findByNamedQuery(Crash.FIND_REMOVED_CRASHES_ORDER_BY_DATE_DESC, null);
+    }
+
+    @Override
     public Crash getCrashForView(Long id) {
         return this.get(id);
     }
@@ -300,7 +305,6 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
             casualty.setCasualtyType(casualtyTypeManager.get(casualty
                     .getCasualtyType().getId()));
         }
-
     }
 
     @Override
@@ -326,7 +330,6 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
         referenceData.put("surfaceConditions", surfaceConditionManager.getAllDistinct());
         referenceData.put("roadwayCharacters", roadwayCharacterManager.getAllDistinct());
         referenceData.put("vehicleFailureTypes", vehicleFailureTypeManager.getAllDistinct());
-
         return referenceData;
     }
 

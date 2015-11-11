@@ -1,6 +1,8 @@
 package com.sweroad.webapp.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,31 +23,36 @@ public class CrashController extends BaseFormController {
     public ModelAndView showCrashes(HttpServletRequest request) throws Exception {
         try {
             boolean latestOnly = request.getParameter("all") == null;
-            return new ModelAndView("crashes").addObject("crashes", crashManager.getCrashes(latestOnly));
+            boolean removedOnly = request.getParameter("removed") != null;
+            if (removedOnly) {
+                return new ModelAndView("crashes").addObject("crashes", crashManager.getRemovedCrashes());
+            } else {
+                return new ModelAndView("crashes").addObject("crashes", crashManager.getCrashes(latestOnly));
+            }
         } catch (Exception e) {
-            log.error("Load crashes encountered a problem: " + e.getLocalizedMessage());
+            logException(request, e, "Load crashes encountered a problem");
             return new ModelAndView("crashes").addObject("crashes", crashManager.getCrashes(true));
         }
     }
 
     @RequestMapping(value = "/crashview", method = RequestMethod.GET)
-    public ModelAndView viewCrash(HttpServletRequest request) throws Exception {
+    public ModelAndView viewCrash(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        ModelAndView mav = new ModelAndView("crashview");
         try {
-            ModelAndView mav = new ModelAndView("crashview");
             Crash crash;
             String id = request.getParameter("id");
             crash = crashManager.getCrashForView(new Long(id));
             mav.addObject("crash", crash);
             mav.addAllObjects(crashManager.getReferenceData());
-            return mav;
         } catch (Exception e) {
             log.error("View crash failed: " + e.getLocalizedMessage());
-            return showCrashes(request);
+            response.sendRedirect(request.getContextPath() + "/crashes");
         }
+        return mav;
     }
 
     @RequestMapping(value = "/crashremove", method = RequestMethod.GET)
-    public ModelAndView removeCrash(HttpServletRequest request) throws Exception {
+    public void removeCrash(HttpServletRequest request, HttpServletResponse response) throws Exception {
         try {
             String id = request.getParameter("id");
             crashManager.removeCrashById(new Long(id));
@@ -53,11 +60,11 @@ public class CrashController extends BaseFormController {
         } catch (Exception e) {
             logException(request, e, "Remove crash failed");
         }
-        return showCrashes(request);
+        response.sendRedirect(request.getContextPath() + "/crashes");
     }
 
     @RequestMapping(value = "/crashrestore", method = RequestMethod.GET)
-    public ModelAndView restoreCrash(HttpServletRequest request) throws Exception {
+    public void restoreCrash(HttpServletRequest request, HttpServletResponse response) throws Exception {
         try {
             String id = request.getParameter("id");
             crashManager.restoreCrashById(new Long(id));
@@ -65,6 +72,6 @@ public class CrashController extends BaseFormController {
         } catch (Exception e) {
             logException(request, e, "Restore crash failed");
         }
-        return showCrashes(request);
+        response.sendRedirect(request.getContextPath() + "/crashes");
     }
 }

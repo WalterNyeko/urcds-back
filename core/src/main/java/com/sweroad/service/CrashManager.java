@@ -32,6 +32,12 @@ public interface CrashManager extends GenericManager<Crash, Long> {
     List<Crash> getAvailableCrashes(boolean latestOnly);
 
     /**
+     * Gets only removed crashes (unavailable)
+     * @return
+     */
+    List<Crash> getRemovedCrashes();
+
+    /**
      * Gets Crash for view.
      * @param id
      * @return

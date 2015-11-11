@@ -29,13 +29,16 @@
         </select>
         &nbsp;&nbsp;
         <security:authorize url="/app/crashform*">
-            <a href="<c:url value='/crashform' />" id="addCrash" class="show-loading"> <fmt:message
-                    key="button.addCrash" />
+            <a href="<c:url value='/crashform' />" id="addCrash" class="show-loading">
+                <fmt:message key="button.addCrash" />
             </a>
         </security:authorize>
         <div class="toggle-menu">
-           <div id="summary"><a href="<c:url value='/crashes' />">Recent Crashes</a></div>
-           <div id="all-data"><a href="<c:url value='/crashes' />?all=true">All Crashes</a></div>
+           <div id="summary"><a href="<c:url value='/crashes' />"><fmt:message key="crash.recentCrashes"/></a></div>
+           <div id="all-data"><a href="<c:url value='/crashes' />?all=true"><fmt:message key="crash.allCrashes"/></a></div>
+            <security:authorize url="/app/crashesremoved*">
+                <div id="removed-data"><a href="<c:url value='/crashesremoved' />?removed=true"><fmt:message key="crash.removedCrashes"/></a></div>
+            </security:authorize>
         </div>
     </div>
     <div class="content-wrapper">
@@ -62,14 +65,17 @@
                             <td>${crash.townOrVillage}</td>
                             <td>${crash.road}</td>
                             <td>${crash.crashSeverity.name}</td>
-                            <td>${crash.vehicleCount}</td>
-                            <td>${crash.casualtyCount}</td>
+                            <td align="right">${crash.vehicleCount}</td>
+                            <td align="right">${crash.casualtyCount}</td>
                             <td>${crash.crashDisplayDate}</td>
                             <td>${crash.policeStation.name}</td>
                             <td>${crash.policeStation.district.name}</td>
                             <td>
                                 <c:choose>
                                     <c:when test="${crash.removed eq true}">
+                                        <a href="<c:url value='/crashview'/>?id=${crash.id}" class="show-loading" alt="View crash" onclick="setAccessedObject(this)" data-crashes-id="${crash.id}">
+                                            <img src="<c:url value='/images/bt_View.gif'/>" alt="View" title="View" hspace="4">
+                                        </a>
                                         <a href="<c:url value='/crashrestore'/>?id=${crash.id}" alt="Restore crash" onclick="setAccessedObject(this); return ui.confirmDialog({message : 'Restore crash?', aLink : this});">
                                             <img src="<c:url value='/images/bt_Restore.gif'/>" alt="Restore" title="Restore" hspace="4">
                                         </a>

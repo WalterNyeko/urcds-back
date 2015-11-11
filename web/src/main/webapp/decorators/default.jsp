@@ -59,7 +59,7 @@
             </div>
         </div>
 
-        <div id="footer" class="container navbar-fixed-bottom">
+        <div id="footer" class="navbar-fixed-bottom">
             <span class="col-sm-6 text-left"><fmt:message
                     key="webapp.version" /> <c:if
                     test="${pageContext.request.remoteUser != null}">

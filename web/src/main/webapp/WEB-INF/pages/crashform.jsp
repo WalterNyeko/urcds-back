@@ -8,8 +8,8 @@
     <script type="text/javascript" src="<c:url value='/scripts/crash-validator.js' />"></script>
     <script type="text/javascript">
         $( document ).ready(function() {
-            loadCrashTime();
-            ui.initDatePicker();
+            ui.loadCrashTime();
+            ui.initDatePicker(ui.setCrashTime);
             loadGpsCoordinates();
             initCrashValidation();
             generateCoordDegrees();
@@ -109,8 +109,8 @@
 							<tr>
 								<td>
 									<input type="text" id="crashDateTimeString" name="crashDateTimeString" class="form-control dtpicker right-al" value="${crash.crashDateTimeString}"
-                                           readonly="readonly" style="background-color: #FFFFFF; cursor: pointer;"/>
-                                    <input type="text" id="crashTime" name="crashTime" class="form-control right-al" placeholder="Enter time in 24hr" onblur="defineCrashTime();"/>
+                                           readonly="readonly" style="background-color: #FFFFFF; cursor: pointer;" placeholder="YYYY-MM-DD"/>
+                                    <input type="text" id="crashTime" name="crashTime" class="form-control right-al time-control" placeholder="HH:MM"/>
 								</td>
                                 <td>
                                     <div id="auto-map-canvas" class="auto-map"></div>
