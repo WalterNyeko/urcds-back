@@ -272,9 +272,9 @@
                             <td width="20%" class="blue-header"><appfuse:label styleClass="control-label" key="crashForm.date" /></td>
                         </tr>
                         <tr>
-                            <td align="center">${formFilledBy}</td>
+                            <td align="center">${patient.formFilledBy}</td>
                             <td align="center"><fmt:formatDate pattern="yyyy-MM-dd" value="${patient.formFilledOn}" /></td>
-                            <td align="center">${formCheckedBy}</td>
+                            <td align="center">${patient.formCheckedBy}</td>
                             <td align="center"><fmt:formatDate pattern="yyyy-MM-dd" value="${patient.formCheckedOn}" /></td>
                         </tr>
                     </table>

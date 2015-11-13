@@ -8,7 +8,6 @@ import java.io.Serializable;
 public interface IAuditable extends Serializable, Cloneable {
     public static final String OPERATION_INSERT = "Insert";
     public static final String OPERATION_UPDATE = "Update";
-    public static final String OPERATION_DELETE = "Delete";
     public static final String OPERATION_REMOVE = "Remove";
     public static final String OPERATION_RESTORE = "Restore";
     Long getId();

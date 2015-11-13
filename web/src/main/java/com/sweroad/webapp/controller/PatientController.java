@@ -73,7 +73,7 @@ public class PatientController extends BaseFormController {
         try {
             Patient patient;
             String id = request.getParameter("id");
-            patient = patientManager.get(new Long(id));
+            patient = patientManager.getPatientForView(new Long(id));
             mav.addObject("patient", patient);
             mav.addAllObjects(patientManager.getReferenceData());
         } catch (Exception e) {

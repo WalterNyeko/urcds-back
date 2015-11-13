@@ -59,6 +59,7 @@ public class User extends BaseModel implements Serializable, UserDetails {
 	private boolean accountLocked;
 	private boolean credentialsExpired;
 	private District district;
+    private Hospital hospital;
 
 	/**
 	 * Default constructor - creates a new instance with no values set.
@@ -139,7 +140,13 @@ public class User extends BaseModel implements Serializable, UserDetails {
 		return district;
 	}
 
-	@Field
+    @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinColumn(name = "hospital_id", nullable = true)
+    public Hospital getHospital() {
+        return hospital;
+    }
+
+    @Field
 	public String getWebsite() {
 		return website;
 	}
@@ -320,6 +327,8 @@ public class User extends BaseModel implements Serializable, UserDetails {
 	public void setDistrict(District district) {
 		this.district = district;
 	}
+
+    public void setHospital(Hospital hospital) { this.hospital = hospital; }
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;

@@ -63,6 +63,11 @@ public class PatientManagerImpl extends GenericManagerImpl<Patient, Long> implem
     }
 
     @Override
+    public Patient getPatientForView(Long id) {
+        return this.get(id);
+    }
+
+    @Override
     public Patient savePatient(Patient patient) {
         User currentUser = userManager.getCurrentUser();
         List<PatientInjuryType> patientInjuryTypes = new ArrayList<>();

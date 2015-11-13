@@ -57,7 +57,11 @@ public class Hospital extends BaseModel implements Comparable<Hospital> {
 
     @Override
     public boolean equals(Object o) {
-        return false;
+        if (!(o instanceof Hospital)) {
+            return false;
+        }
+        Hospital that = (Hospital) o;
+        return that != null && this.getId().equals(that.getId());
     }
 
     @Override

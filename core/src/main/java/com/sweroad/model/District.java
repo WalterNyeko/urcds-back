@@ -56,16 +56,11 @@ public class District extends NameIdModel implements Comparable<District>, Query
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) {
-            return true;
-        }
         if (!(o instanceof District)) {
             return false;
         }
-
-        final District district = (District) o;
-
-        return district != null ? id.equals(district.getId()) : false;
+        District that = (District) o;
+        return that != null && this.getId().equals(that.getId());
 	}
 
 	@Override

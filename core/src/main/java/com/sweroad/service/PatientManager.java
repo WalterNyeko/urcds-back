@@ -19,4 +19,6 @@ public interface PatientManager extends GenericManager<Patient, Long> {
     List<Patient> getAvailablePatients();
 
     Map<String, List> getReferenceData();
+
+    Patient getPatientForView(Long id);
 }

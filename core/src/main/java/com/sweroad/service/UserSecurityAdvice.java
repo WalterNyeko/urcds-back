@@ -142,20 +142,4 @@ public class UserSecurityAdvice implements MethodBeforeAdvice, AfterReturningAdv
 			}
 		}
 	}
-
-//	public static User getCurrentUser(Authentication auth, UserManager userManager) {
-//		User currentUser;
-//		if ((auth.getPrincipal() instanceof LdapUserDetails) && userManager != null) {
-//			LdapUserDetails ldapDetails = (LdapUserDetails) auth.getPrincipal();
-//			String username = ldapDetails.getUsername();
-//			currentUser = userManager.getUserByUsername(username);
-//		} else if (auth.getPrincipal() instanceof UserDetails) {
-//			currentUser = (User) auth.getPrincipal();
-//		} else if (auth.getDetails() instanceof UserDetails) {
-//			currentUser = (User) auth.getDetails();
-//		} else {
-//			throw new AccessDeniedException("User not properly authenticated.");
-//		}
-//		return currentUser;
-//	}
 }

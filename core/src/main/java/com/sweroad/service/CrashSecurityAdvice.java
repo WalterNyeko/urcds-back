@@ -60,10 +60,11 @@ public class CrashSecurityAdvice {
     }
 
     private void setCrashEditable(Crash crash) {
-        if (editable && editableOnlyForDistrict) {
-            if (crash.getPoliceStation() != null && crash.getPoliceStation().getDistrict() != null
-                    && crash.getPoliceStation().getDistrict().equals(currentUser.getDistrict())) {
+        if (editable && editableOnlyForDistrict && crash.getPoliceStation() != null && crash.getPoliceStation().getDistrict() != null) {
+            if (crash.getPoliceStation().getDistrict().equals(currentUser.getDistrict())) {
                 crash.setEditable(true);
+            } else {
+                crash.setEditable(false);
             }
         } else {
             crash.setEditable(editable);
