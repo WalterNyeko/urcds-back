@@ -23,6 +23,10 @@ public class CasualtyClass extends NameIdModel implements Comparable<CasualtyCla
     @Column(nullable = false)
     private String name;
 
+    public CasualtyClass() { }
+
+    public CasualtyClass(Long id) { this.setId(id); }
+
     /**
      * @return the id
      */

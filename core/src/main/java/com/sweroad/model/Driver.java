@@ -48,6 +48,10 @@ public class Driver extends BaseModel {
     @JoinColumn(name = "updated_by")
     private User updatedBy;
 
+    public Driver() { }
+
+    public Driver(Long id) { this.setId(id); }
+
     /**
      * @return the id
      */
@@ -253,9 +257,6 @@ public class Driver extends BaseModel {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
         if (!(o instanceof Driver)) {
             return false;
         }

@@ -22,6 +22,10 @@ public class JunctionType extends NameIdModel implements Comparable<JunctionType
 	@Column(nullable = false)
 	private String name;
 
+    public JunctionType() { }
+
+    public JunctionType(Long id) { this.setId(id); }
+
 	/**
 	 * @return the id
 	 */
@@ -57,16 +61,10 @@ public class JunctionType extends NameIdModel implements Comparable<JunctionType
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) {
-            return true;
-        }
-        if (!(o instanceof JunctionType)) {
+		if (!(o instanceof JunctionType)) {
             return false;
         }
-
-        final JunctionType junctionType = (JunctionType) o;
-
-        return junctionType != null ? name.equalsIgnoreCase(junctionType.getName()) : false;
+        return this.id != null && this.id.equals(((JunctionType)o).getId());
 	}
 	
 	@Override

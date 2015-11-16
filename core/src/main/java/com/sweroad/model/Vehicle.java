@@ -38,6 +38,10 @@ public class Vehicle extends BaseModel implements Comparable<Vehicle> {
     @Transient
     private Crash crash;
 
+    public Vehicle() { }
+
+    public Vehicle(Long id) { this.setId(id); }
+
 	/**
 	 * @return the number
 	 */
@@ -199,24 +203,10 @@ public class Vehicle extends BaseModel implements Comparable<Vehicle> {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) {
-			return true;
-		}
 		if (!(o instanceof Vehicle)) {
 			return false;
 		}
-
-		final Vehicle vehicle = (Vehicle) o;
-
-		if (vehicle != null) {
-			if (id != null && id.equals(vehicle.getId())) {
-				return true;
-			}
-			if (driver != null && driver.equals(vehicle.getDriver())) {
-				return true;
-			}
-		}
-		return false;
+        return this.id != null && this.id.equals(((Vehicle)o).getId());
 	}
 
 	@Override

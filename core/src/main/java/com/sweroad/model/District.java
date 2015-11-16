@@ -20,7 +20,10 @@ public class District extends NameIdModel implements Comparable<District>, Query
 	private Long id;
 	@Column(nullable = false)
 	private String name;
-	
+
+    public District() { }
+
+    public District(Long id) { this.setId(id); }
 	/**
 	 * @return the id
 	 */
@@ -59,8 +62,7 @@ public class District extends NameIdModel implements Comparable<District>, Query
         if (!(o instanceof District)) {
             return false;
         }
-        District that = (District) o;
-        return that != null && this.getId().equals(that.getId());
+        return this.id != null && this.id.equals(((District)o).getId());
 	}
 
 	@Override

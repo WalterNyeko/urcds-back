@@ -17,6 +17,10 @@ public class Hospital extends BaseModel implements Comparable<Hospital> {
     @JoinColumn(name = "district_id")
     private District district;
 
+    public Hospital() { }
+
+    public Hospital(Long id) { this.setId(id); }
+
     public Long getId() {
         return id;
     }
@@ -60,8 +64,7 @@ public class Hospital extends BaseModel implements Comparable<Hospital> {
         if (!(o instanceof Hospital)) {
             return false;
         }
-        Hospital that = (Hospital) o;
-        return that != null && this.getId().equals(that.getId());
+        return this.id != null && this.id.equals(((Hospital) o).getId());
     }
 
     @Override

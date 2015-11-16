@@ -22,6 +22,9 @@ public class VehicleType extends NameIdModel implements Comparable<VehicleType>,
 	@Column(nullable = false)
 	private String name;
 
+    public VehicleType() { }
+
+    public VehicleType(Long id) { this.setId(id); }
 	/**
 	 * @return the id
 	 */
@@ -57,16 +60,10 @@ public class VehicleType extends NameIdModel implements Comparable<VehicleType>,
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) {
-            return true;
-        }
-        if (!(o instanceof VehicleType)) {
+		if (!(o instanceof VehicleType)) {
             return false;
         }
-
-        final VehicleType vehicleType = (VehicleType) o;
-
-        return vehicleType != null ? name.equalsIgnoreCase(vehicleType.getName()) : false;
+        return this.id != null && this.id.equals(((VehicleType)o).getId());
 	}
 	
 	@Override

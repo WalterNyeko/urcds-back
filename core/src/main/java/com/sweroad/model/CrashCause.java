@@ -22,6 +22,10 @@ public class CrashCause extends NameIdModel implements Comparable<CrashCause>, Q
 	@Column(nullable = false)
 	private String name;
 
+    public CrashCause() { }
+
+    public CrashCause(Long id) { this.setId(id); }
+
 	/**
 	 * @return the id
 	 */
@@ -57,16 +61,10 @@ public class CrashCause extends NameIdModel implements Comparable<CrashCause>, Q
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) {
-            return true;
-        }
-        if (!(o instanceof CrashCause)) {
+		if (!(o instanceof CrashCause)) {
             return false;
         }
-
-        final CrashCause crashCause = (CrashCause) o;
-
-        return crashCause != null ? id.equals(crashCause.getId()) : false;
+        return this.id != null && this.id.equals(((CrashCause)o).getId());
 	}
 
 	@Override

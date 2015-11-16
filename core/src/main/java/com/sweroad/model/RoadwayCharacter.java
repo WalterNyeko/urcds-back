@@ -22,6 +22,10 @@ public class RoadwayCharacter extends NameIdModel implements Comparable<RoadwayC
 	@Column(nullable = false)
 	private String name;
 
+    public RoadwayCharacter() { }
+
+    public RoadwayCharacter(Long id) { this.setId(id); }
+
 	/**
 	 * @return the id
 	 */
@@ -57,16 +61,10 @@ public class RoadwayCharacter extends NameIdModel implements Comparable<RoadwayC
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) {
-            return true;
-        }
-        if (!(o instanceof RoadwayCharacter)) {
+		if (!(o instanceof RoadwayCharacter)) {
             return false;
         }
-
-        final RoadwayCharacter roadwayCharacter = (RoadwayCharacter) o;
-
-        return roadwayCharacter != null ? id.equals(roadwayCharacter.getId()) : false;
+        return this.id != null && this.id.equals(((RoadwayCharacter)o).getId());
 	}
 	
 	@Override

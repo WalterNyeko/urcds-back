@@ -4,18 +4,13 @@ import com.sweroad.audit.IAuditable;
 import com.sweroad.audit.IXMLConvertible;
 import com.sweroad.model.Audit;
 import com.sweroad.model.User;
-import com.sweroad.model.VehicleType;
 import com.sweroad.service.GenericManager;
 import com.sweroad.service.UserManager;
-import com.sweroad.service.UserSecurityAdvice;
 import com.sweroad.util.XStreamUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -32,14 +27,13 @@ public class AuditAdvice {
     private UserManager userManager;
 
     @Around("execution(* com.sweroad.service.GenericManager.save(..))")
-    public Object auditSave(ProceedingJoinPoint pjp) {
-        String operation = null;
-        Object[] arguments = pjp.getArgs();
+    public Object auditSave(ProceedingJoinPoint joinPoint) {
         Object returnValue = null;
+        Object[] arguments = joinPoint.getArgs();
         if (arguments.length > 0) {
             if (!(arguments[0] instanceof IAuditable)) {
                 try {
-                    returnValue = pjp.proceed();
+                    returnValue = joinPoint.proceed();
                 } catch (Throwable e) {
                     e.printStackTrace();
                 }
@@ -48,10 +42,9 @@ public class AuditAdvice {
                 Object object = arguments[0];
                 IXMLConvertible preImage = null;
                 IXMLConvertible postImage = null;
-                IAuditable memObject = null;
                 IAuditable dbObject = null;
-                memObject = (IAuditable) object;
-                GenericManager gm = (GenericManager) pjp.getTarget();
+                IAuditable memObject = (IAuditable) object;
+                GenericManager gm = (GenericManager) joinPoint.getTarget();
                 if (memObject.getId() != null && !memObject.getId().equals(0L)) {
                     dbObject = (IAuditable) gm.get(memObject.getId());
                     try {
@@ -60,13 +53,13 @@ public class AuditAdvice {
                         e.printStackTrace();
                     }
                 }
-                operation = determineOperation(memObject, dbObject);
+                String operation = inferOperation(memObject, dbObject);
                 if (!operation.equalsIgnoreCase(IAuditable.OPERATION_INSERT)
                         && object instanceof IXMLConvertible) {
                     preImage = (IXMLConvertible) object;
                 }
                 try {
-                    returnValue = pjp.proceed();
+                    returnValue = joinPoint.proceed();
                     if (returnValue instanceof IAuditable
                             && returnValue instanceof IXMLConvertible) {
                         postImage = (IXMLConvertible) returnValue;
@@ -74,7 +67,7 @@ public class AuditAdvice {
                 } catch (Throwable e) {
                     e.printStackTrace();
                 }
-                if (shouldAudit(operation, memObject, dbObject)) {
+                if (shouldAudit(operation, dbObject, memObject)) {
                     Audit auditLog = new Audit();
                     auditLog.setOperation(operation);
                     if (preImage != null) {
@@ -85,8 +78,6 @@ public class AuditAdvice {
                         auditLog.setPostImage(XStreamUtils.getXMLFromObject(postImage, postImage.getClass().getName(),
                                 postImage.getFieldsAliases(), postImage.getFieldsToBeOmitted()));
                     }
-                    SecurityContext sc = SecurityContextHolder.getContext();
-                    Authentication auth = sc.getAuthentication();
                     User currentUser = userManager.getCurrentUser();
                     auditLog.setId(0L);
                     auditLog.setOperation(operation);
@@ -102,11 +93,16 @@ public class AuditAdvice {
     }
 
     @Around("execution(* com.sweroad.service.CrashManager.sav*(..))")
-    public Object auditCrash(ProceedingJoinPoint pjp) {
-        return auditSave(pjp);
+    public Object auditCrash(ProceedingJoinPoint joinPoint) {
+        return auditSave(joinPoint);
     }
 
-    private String determineOperation(IAuditable memObject, IAuditable dbObject) {
+    @Around("execution(* com.sweroad.service.PatientManager.sav*(..))")
+    public Object auditPatient(ProceedingJoinPoint joinPoint) {
+        return auditSave(joinPoint);
+    }
+
+    private String inferOperation(IAuditable memObject, IAuditable dbObject) {
         if (dbObject == null) {
             return IAuditable.OPERATION_INSERT;
         } else if (memObject.isRemoved() && !dbObject.isRemoved()) {
@@ -125,15 +121,11 @@ public class AuditAdvice {
         if (memObject == null) {
             return false;
         }
-        if (dbObject != null || memObject != null) {
-            if (operation.equals(IAuditable.OPERATION_UPDATE)) {
-                if (dbObject == null || memObject == null) {
-                    return false;
-                }
-                if (!dbObject.isUpdated(memObject)) {
-                    return false;
-                }
+        if (operation.equals(IAuditable.OPERATION_UPDATE)) {
+            if (dbObject == null || memObject == null) {
+                return false;
             }
+            return dbObject.isUpdated(memObject);
         }
         return true;
     }

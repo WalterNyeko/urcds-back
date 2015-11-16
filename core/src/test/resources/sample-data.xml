@@ -2388,6 +2388,9 @@
         <column>form_checked_on</column>
         <column>date_created</column>
         <column>created_by</column>
+        <column>editable</column>
+        <column>removable</column>
+        <column>is_removed</column>
         <row>
             <value description="id">1</value>
             <value description="hospital_outpatient_no">123456</value>
@@ -2411,6 +2414,9 @@
             <value description="form_checked_on">2014-05-24 08:45:00</value>
             <value description="date_created">2014-05-26 08:57:00</value>
             <null/>
+            <value description="editable">0</value>
+            <value description="removable">0</value>
+            <value description="is_removed">0</value>
         </row>
     </table>
     <table name="patient_injury_type">

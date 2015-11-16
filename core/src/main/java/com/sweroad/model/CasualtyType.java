@@ -26,6 +26,10 @@ public class CasualtyType extends NameIdModel implements Comparable<CasualtyType
     @Column
     private BigDecimal weight;
 
+    public CasualtyType() { }
+
+    public CasualtyType(Long id) { this.setId(id); }
+
     /**
      * @return the id
      */
@@ -69,16 +73,10 @@ public class CasualtyType extends NameIdModel implements Comparable<CasualtyType
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
         if (!(o instanceof CasualtyType)) {
             return false;
         }
-
-        final CasualtyType casualtyType = (CasualtyType) o;
-
-        return casualtyType != null ? id.equals(casualtyType.getId()) : false;
+        return this.id != null && this.id.equals(((CasualtyType) o).getId());
     }
 
     @Override

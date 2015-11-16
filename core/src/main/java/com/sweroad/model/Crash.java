@@ -3,7 +3,7 @@
  */
 package com.sweroad.model;
 
-import java.beans.Transient;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -12,7 +12,7 @@ import javax.persistence.*;
 
 import com.sweroad.audit.IAuditable;
 import com.sweroad.audit.IXMLConvertible;
-import com.sweroad.util.CrashHelper;
+import com.sweroad.audit.CrashAudit;
 import com.sweroad.util.DateUtil;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -143,6 +143,9 @@ public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertib
     private BigDecimal weight;
     private transient boolean dirty;
 
+    public Crash() { }
+
+    public Crash(Long id) { this.setId(id); }
     /**
      * @return the casualties
      */
@@ -795,7 +798,7 @@ public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertib
         if (!(obj instanceof Crash)) {
             return false;
         }
-        return CrashHelper.isUpdatedVersionOf(this, (Crash) obj);
+        return CrashAudit.hasChanges(this, (Crash) obj);
     }
 
     /**
@@ -852,14 +855,10 @@ public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertib
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
         if (!(o instanceof Crash)) {
             return false;
         }
-        final Crash crash = (Crash) o;
-        return crash != null && id != null ? id.equals(crash.getId()) : false;
+        return id != null && this.id.equals(((Crash)o).getId());
     }
 
     @Override
@@ -886,17 +885,16 @@ public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertib
         return id;
     }
 
+
     @Override
     @Transient
     public List<String> getFieldsToBeOmitted() {
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
     @Transient
-    public Map<String, String> getFieldsAliases() {
-        return null;
-    }
+    public Map<String, String> getFieldsAliases() { return new HashMap<>(); }
 
     @Override
     public Crash clone() throws CloneNotSupportedException {

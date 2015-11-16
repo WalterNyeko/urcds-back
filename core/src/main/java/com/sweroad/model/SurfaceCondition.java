@@ -29,6 +29,10 @@ public class SurfaceCondition extends NameIdModel implements Comparable<SurfaceC
 	@Column(nullable = false)
 	private String name;
 
+    public SurfaceCondition() { }
+
+    public SurfaceCondition(Long id) { this.setId(id); }
+
 	/**
 	 * @return the id
 	 */
@@ -64,16 +68,10 @@ public class SurfaceCondition extends NameIdModel implements Comparable<SurfaceC
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) {
-            return true;
-        }
-        if (!(o instanceof SurfaceCondition)) {
+		if (!(o instanceof SurfaceCondition)) {
             return false;
         }
-
-        final SurfaceCondition surfaceCondition = (SurfaceCondition) o;
-
-        return surfaceCondition != null ? name.equalsIgnoreCase(surfaceCondition.getName()) : false;
+        return this.id != null && this.id.equals(((SurfaceCondition)o).getId());
 	}
 	
 	@Override

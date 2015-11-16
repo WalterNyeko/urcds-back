@@ -28,6 +28,10 @@ public class Weather extends NameIdModel implements Comparable<Weather>, Queryab
 	@Column(nullable = false)
 	private String name;
 
+    public Weather() { }
+
+    public Weather(Long id) { this.setId(id); }
+
 	/**
 	 * @return the id
 	 */
@@ -63,16 +67,10 @@ public class Weather extends NameIdModel implements Comparable<Weather>, Queryab
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Weather)) {
+		if (!(o instanceof Weather)) {
             return false;
         }
-
-        final Weather weather = (Weather) o;
-
-        return weather != null ? name.equalsIgnoreCase(weather.getName()) : false;
+        return this.id != null && this.id.equals(((Weather)o).getId());
 	}
 	
 	@Override

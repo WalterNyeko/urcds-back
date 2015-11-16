@@ -25,6 +25,10 @@ public class SurfaceType extends NameIdModel implements Comparable<SurfaceType>,
 	@Column(nullable = false)
 	private String name;
 
+    public SurfaceType() { }
+
+    public SurfaceType(Long id) { this.setId(id); }
+
 	/**
 	 * @return the id
 	 */
@@ -60,16 +64,10 @@ public class SurfaceType extends NameIdModel implements Comparable<SurfaceType>,
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) {
-            return true;
-        }
-        if (!(o instanceof SurfaceType)) {
+		if (!(o instanceof SurfaceType)) {
             return false;
         }
-
-        final SurfaceType surfaceType = (SurfaceType) o;
-
-        return surfaceType != null ? name.equalsIgnoreCase(surfaceType.getName()) : false;
+        return this.id != null && this.id.equals(((SurfaceType)o).getId());
 	}
 	
 	@Override

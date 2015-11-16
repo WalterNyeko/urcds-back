@@ -26,6 +26,10 @@ public class RoadSurface extends NameIdModel implements Comparable<RoadSurface>,
 	@Column(nullable = false)
 	private String name;
 
+    public RoadSurface() { }
+
+    public RoadSurface(Long id) { this.setId(id); }
+
 	/**
 	 * @return the id
 	 */
@@ -61,16 +65,10 @@ public class RoadSurface extends NameIdModel implements Comparable<RoadSurface>,
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) {
-            return true;
-        }
-        if (!(o instanceof RoadSurface)) {
+		if (!(o instanceof RoadSurface)) {
             return false;
         }
-
-        final RoadSurface roadSurface = (RoadSurface) o;
-
-        return roadSurface != null ? id.equals(roadSurface.getId()) : false;
+        return this.id != null && this.id.equals(((RoadSurface)o).getId());
 	}
 	
 	@Override

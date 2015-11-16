@@ -158,16 +158,12 @@ public final class DateUtil {
      * @see java.text.SimpleDateFormat
      */
     public static String getDateTime(String aMask, Date aDate) {
-        SimpleDateFormat df = null;
         String returnValue = "";
-
         if (aDate == null) {
             log.warn("aDate is null!");
         } else {
-            df = new SimpleDateFormat(aMask);
-            returnValue = df.format(aDate);
+            returnValue = new SimpleDateFormat(aMask).format(aDate);
         }
-
         return (returnValue);
     }
 

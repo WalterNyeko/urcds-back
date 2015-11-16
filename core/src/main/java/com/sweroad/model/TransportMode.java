@@ -1,6 +1,5 @@
 package com.sweroad.model;
 
-import javax.annotation.Generated;
 import javax.persistence.*;
 
 /**
@@ -14,6 +13,10 @@ public class TransportMode extends NameIdModel {
     private Long id;
     @Column
     private String name;
+
+    public TransportMode() { }
+
+    public TransportMode(Long id) { this.setId(id); }
 
     public Long getId() {
         return id;
@@ -38,7 +41,10 @@ public class TransportMode extends NameIdModel {
 
     @Override
     public boolean equals(Object o) {
-        return false;
+        if (!(o instanceof TransportMode)) {
+            return false;
+        }
+        return this.id != null && this.id.equals(((TransportMode)o).getId());
     }
 
     @Override

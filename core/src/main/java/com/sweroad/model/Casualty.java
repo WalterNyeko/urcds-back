@@ -44,6 +44,10 @@ public class Casualty extends BaseModel {
     @Transient
     private Crash crash;
 
+    public Casualty() { }
+
+    public Casualty(Long id) { this.setId(id); }
+
 	/**
 	 * @return the id
 	 */
@@ -237,16 +241,10 @@ public class Casualty extends BaseModel {
 
     @Override
 	public boolean equals(Object o) {
-		if (this == o) {
-			return true;
-		}
 		if (!(o instanceof Casualty)) {
 			return false;
 		}
-
-		final Casualty casualty = (Casualty) o;
-
-		return casualty != null ? id.equals(casualty.getId()) : false;
+        return id != null && this.id.equals(((Casualty)o).getId());
 	}
 
 	@Override

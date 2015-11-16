@@ -22,6 +22,9 @@ public class CollisionType extends NameIdModel implements Comparable<CollisionTy
 	@Column(nullable = false)
 	private String name;
 
+    public CollisionType() { }
+
+    public CollisionType(Long id) { this.setId(id); }
 	/**
 	 * @return the id
 	 */
@@ -57,16 +60,10 @@ public class CollisionType extends NameIdModel implements Comparable<CollisionTy
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) {
-            return true;
-        }
-        if (!(o instanceof CollisionType)) {
+		if (!(o instanceof CollisionType)) {
             return false;
         }
-
-        final CollisionType collisionType = (CollisionType) o;
-
-        return collisionType != null ? id.equals(collisionType.getId()) : false;
+        return this.id != null && this.id.equals(((CollisionType)o).getId());
 	}
 
 	@Override

@@ -1,8 +1,12 @@
 package com.sweroad.model;
 
+import com.sweroad.audit.IAuditable;
+import com.sweroad.audit.IXMLConvertible;
+import com.sweroad.audit.PatientAudit;
 import com.sweroad.util.DateUtil;
 
 import javax.persistence.*;
+import javax.persistence.Transient;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -18,7 +22,7 @@ import java.util.*;
         @NamedQuery(name = Patient.FIND_AVAILABLE_PATIENT_ORDER_BY_DATE_DESC, query = "from Patient p where p.isRemoved = false order by p.injuryDateTime desc"),
         @NamedQuery(name = Patient.FIND_HOSPITAL_PATIENTS_ORDER_BY_DATE_DESC, query = "from Patient p where p.hospital = :hospital order by p.injuryDateTime desc"),
         @NamedQuery(name = Patient.FIND_AVAILABLE_HOSPITAL_PATIENTS_ORDER_BY_DATE_DESC, query = "from Patient p where p.isRemoved = false and p.hospital = :hospital order by p.injuryDateTime desc")})
-public class Patient extends BaseModel {
+public class Patient extends BaseModel implements IXMLConvertible, IAuditable {
 
     public static final String FIND_PATIENTS_ORDER_BY_DATE = "findPatientsOrderByDate";
     public static final String FIND_PATIENTS_ORDER_BY_DATE_DESC = "findPatientsOrderByDateDesc";
@@ -95,6 +99,10 @@ public class Patient extends BaseModel {
     private boolean removable;
     @Column(name = "is_removed", nullable = false)
     private boolean isRemoved;
+
+    public Patient() { }
+
+    public Patient(Long id) { this.setId(id); }
 
     public Long getId() {
         return id;
@@ -381,6 +389,16 @@ public class Patient extends BaseModel {
         return isRemoved;
     }
 
+    @Override
+    public boolean isUpdated(IAuditable obj) {
+        return PatientAudit.hasChanges(this, (Patient) obj);
+    }
+
+    @Override
+    public IAuditable clone() throws CloneNotSupportedException {
+        return (Patient) super.clone();
+    }
+
     public void setRemoved(boolean isRemoved) {
         this.isRemoved = isRemoved;
     }
@@ -413,11 +431,35 @@ public class Patient extends BaseModel {
 
     @Override
     public boolean equals(Object o) {
-        return false;
+        if (!(o instanceof Patient)) {
+            return false;
+        }
+        return this.id != null && this.id.equals(((Patient)o).getId());
     }
 
     @Override
     public int hashCode() {
-        return 0;
+        return this.id.hashCode();
     }
+
+    @Override
+    @Transient
+    public String getClassAlias() {
+        return this.getClass().getSimpleName();
+    }
+
+    @Override
+    public Long getInstanceId() {
+        return this.id;
+    }
+
+    @Override
+    @Transient
+    public List<String> getFieldsToBeOmitted() {
+        return new ArrayList<>();
+    }
+
+    @Override
+    @Transient
+    public Map<String, String> getFieldsAliases() { return new HashMap<>(); }
 }

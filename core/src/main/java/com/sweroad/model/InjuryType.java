@@ -20,6 +20,10 @@ public class InjuryType extends NameIdModel {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "pk.injuryType", cascade = CascadeType.ALL)
     private Set<PatientInjuryType> patientInjuryTypes = new HashSet(0);
 
+    public InjuryType() { }
+
+    public InjuryType(Long id) { this.setId(id); }
+
     public Long getId() {
         return id;
     }
@@ -51,7 +55,10 @@ public class InjuryType extends NameIdModel {
 
     @Override
     public boolean equals(Object o) {
-        return false;
+        if (!(o instanceof InjuryType)) {
+            return false;
+        }
+        return this.id != null && this.id.equals(((InjuryType)o).getId());
     }
 
     @Override

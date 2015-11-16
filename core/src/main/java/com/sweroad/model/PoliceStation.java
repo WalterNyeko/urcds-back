@@ -31,6 +31,10 @@ public class PoliceStation extends NameIdModel implements Comparable<PoliceStati
 	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "district_id")
 	private District district;
+
+    public PoliceStation() { }
+
+    public PoliceStation(Long id) { this.setId(id); }
 	
 	/**
 	 * @return the id
@@ -89,16 +93,10 @@ public class PoliceStation extends NameIdModel implements Comparable<PoliceStati
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) {
-            return true;
-        }
-        if (!(o instanceof PoliceStation)) {
+		if (!(o instanceof PoliceStation)) {
             return false;
         }
-
-        final PoliceStation policeStation = (PoliceStation) o;
-
-        return policeStation != null ? id.equals(policeStation.getId()) : false;
+        return this.id != null && this.id.equals(((PoliceStation)o).getId());
 	}
 	
 	@Override

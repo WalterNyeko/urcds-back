@@ -25,6 +25,10 @@ public class CrashSeverity extends NameIdModel implements Comparable<CrashSeveri
     @Column
     private BigDecimal weight;
 
+    public CrashSeverity() { }
+
+    public CrashSeverity(Long id) { this.setId(id); }
+
 	/**
 	 * @return the id
 	 */
@@ -68,16 +72,10 @@ public class CrashSeverity extends NameIdModel implements Comparable<CrashSeveri
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) {
-            return true;
-        }
-        if (!(o instanceof CrashSeverity)) {
+		if (!(o instanceof CrashSeverity)) {
             return false;
         }
-
-        final CrashSeverity crashSeverity = (CrashSeverity) o;
-
-        return crashSeverity != null ? id.equals(crashSeverity.getId()) : false;
+        return this.id != null && this.id.equals(((CrashSeverity)o).getId());
 	}
 
 	@Override

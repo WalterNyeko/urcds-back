@@ -15,6 +15,10 @@ public class RoadUserType extends NameIdModel {
     @Column
     private String name;
 
+    public RoadUserType() { }
+
+    public RoadUserType(Long id) { this.setId(id); }
+
     public Long getId() {
         return id;
     }
@@ -38,7 +42,10 @@ public class RoadUserType extends NameIdModel {
 
     @Override
     public boolean equals(Object o) {
-        return false;
+        if (!(o instanceof RoadUserType)) {
+            return false;
+        }
+        return this.id != null && this.id.equals(((RoadUserType)o).getId());
     }
 
     @Override

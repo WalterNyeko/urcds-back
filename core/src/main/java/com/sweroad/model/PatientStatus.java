@@ -15,6 +15,10 @@ public class PatientStatus extends NameIdModel {
     @Column
     private String name;
 
+    public PatientStatus() { }
+
+    public PatientStatus(Long id) { this.setId(id); }
+
     public Long getId() {
         return id;
     }
@@ -38,7 +42,10 @@ public class PatientStatus extends NameIdModel {
 
     @Override
     public boolean equals(Object o) {
-        return false;
+        if (!(o instanceof PatientStatus)) {
+            return false;
+        }
+        return this.id != null && this.id.equals(((PatientStatus)o).getId());
     }
 
     @Override
