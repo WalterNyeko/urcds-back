@@ -55,9 +55,6 @@ public class PatientAudit extends BaseAudit {
             if (isDifferent(dbPatient.getHospitalInpatientNo(), patient.getHospitalInpatientNo())) {
                 return true;
             }
-            if (dbPatient.getPatientInjuryTypes().size() != patient.getPatientInjuryTypes().size()) {
-                return true;
-            }
             if (isDifferent(dbPatient.getInjuryDateTimeString(), patient.getInjuryDateTimeString())) {
                 return true;
             }
@@ -67,16 +64,26 @@ public class PatientAudit extends BaseAudit {
             if (isDifferent(dbPatient.getCounterpartTransportMode(), patient.getCounterpartTransportMode())) {
                 return true;
             }
-            for (int i = 0; i < dbPatient.getPatientInjuryTypes().size(); i++) {
-                PatientInjuryType patientInjury = patient.getPatientInjuryTypes().get(i);
-                PatientInjuryType dbPatientInjury = dbPatient.getPatientInjuryTypes().get(i);
-                if (dbPatientInjury.equals(patientInjury)) {
-                    if (isDifferent(dbPatientInjury.getAis(), patientInjury.getAis())) {
-                        return true;
+            if (dbPatient.getPatientInjuryTypes().size() > 0) {
+                for (PatientInjuryType dbPatientInjury : dbPatient.getPatientInjuryTypes()) {
+                    for (PatientInjuryType patientInjury : patient.getTempPatientInjuries()) {
+                        if (dbPatientInjury.equals(patientInjury)) {
+                            if (!dbPatientInjury.getAis().equals(patientInjury.getAis())) {
+                                return true;
+                            }
+                            break;
+                        }
                     }
-                } else {
-                    return true;
                 }
+                for (PatientInjuryType patientInjury : patient.getTempPatientInjuries()) {
+                    if (patientInjury.getInjuryType().getId() != null) {
+                        if (!dbPatient.getPatientInjuryTypes().contains(patientInjury.getInjuryType())) {
+                            return true;
+                        }
+                    }
+                }
+            } else if (patient.getTempPatientInjuries().size() > 0) {
+                return true;
             }
         }
         return false;

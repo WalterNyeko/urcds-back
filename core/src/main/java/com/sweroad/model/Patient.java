@@ -69,6 +69,8 @@ public class Patient extends BaseModel implements IXMLConvertible, IAuditable {
     private Quadrian beltUsedOption;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "pk.patient", cascade = CascadeType.ALL)
     private List<PatientInjuryType> patientInjuryTypes = new ArrayList<>(0);
+    @Transient
+    private List<PatientInjuryType> tempPatientInjuries = new ArrayList<>(0);
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "patient_disposition_id")
     private PatientDisposition patientDisposition;
@@ -250,6 +252,17 @@ public class Patient extends BaseModel implements IXMLConvertible, IAuditable {
 
     public void setPatientInjuryTypes(List<PatientInjuryType> patientInjuryTypes) {
         this.patientInjuryTypes = patientInjuryTypes;
+    }
+
+    public List<PatientInjuryType> getTempPatientInjuries() {
+        return tempPatientInjuries;
+    }
+
+    public void setTempPatientInjuries(List<PatientInjuryType> tempPatientInjuries) {
+        this.tempPatientInjuries = tempPatientInjuries;
+        for(PatientInjuryType patientInjuryType : this.tempPatientInjuries) {
+            patientInjuryType.setPatient(this);
+        }
     }
 
     public void addPatientInjuryType(PatientInjuryType patientInjuryType) {

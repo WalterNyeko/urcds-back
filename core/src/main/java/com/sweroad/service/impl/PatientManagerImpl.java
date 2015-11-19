@@ -72,6 +72,7 @@ public class PatientManagerImpl extends GenericManagerImpl<Patient, Long> implem
         User currentUser = userManager.getCurrentUser();
         List<PatientInjuryType> patientInjuryTypes = new ArrayList<>();
         patientInjuryTypes.addAll(patient.getPatientInjuryTypes());
+        patient.setTempPatientInjuries(patientInjuryTypes);
         this.processPatient(patient);
         if (patient.getDateCreated() == null) {
             patient.setDateCreated(new Date());

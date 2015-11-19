@@ -129,25 +129,15 @@ public class PatientAuditTest {
     }
 
     @Test
-    public void testThatPatientInjuryNumberChangeIsDetected() {
-        Patient patient1 = new Patient(1L);
-        Patient patient2 = new Patient(1L);
-        patient1.addPatientInjuryType(new PatientInjuryType());
-        patient1.addPatientInjuryType(new PatientInjuryType());
-        patient2.addPatientInjuryType(new PatientInjuryType());
-        assertTrue(PatientAudit.hasChanges(patient1, patient2));
-    }
-
-    @Test
     public void testThatPatientInjuryDataChangeIsDetected() {
         Patient patient1 = new Patient(1L);
         Patient patient2 = new Patient(1L);
         patient1.addPatientInjuryType(new PatientInjuryType());
-        patient2.addPatientInjuryType(new PatientInjuryType());
         patient1.getPatientInjuryTypes().get(0).setPatient(patient1);
-        patient1.getPatientInjuryTypes().get(0).setPatient(patient2);
+        patient2.getTempPatientInjuries().add(new PatientInjuryType());
+        patient2.getTempPatientInjuries().get(0).setPatient(patient2);
         patient1.getPatientInjuryTypes().get(0).setInjuryType(new InjuryType(1L));
-        patient2.getPatientInjuryTypes().get(0).setInjuryType(new InjuryType(2L));
+        patient2.getTempPatientInjuries().get(0).setInjuryType(new InjuryType(2L));
         assertTrue(PatientAudit.hasChanges(patient1, patient2));
     }
 
@@ -156,13 +146,13 @@ public class PatientAuditTest {
         Patient patient1 = new Patient(1L);
         Patient patient2 = new Patient(1L);
         patient1.addPatientInjuryType(new PatientInjuryType());
-        patient2.addPatientInjuryType(new PatientInjuryType());
         patient1.getPatientInjuryTypes().get(0).setPatient(patient1);
-        patient1.getPatientInjuryTypes().get(0).setPatient(patient2);
+        patient2.getTempPatientInjuries().add(new PatientInjuryType());
+        patient2.getTempPatientInjuries().get(0).setPatient(patient2);
         patient1.getPatientInjuryTypes().get(0).setInjuryType(new InjuryType(1L));
-        patient2.getPatientInjuryTypes().get(0).setInjuryType(new InjuryType(1L));
+        patient2.getTempPatientInjuries().get(0).setInjuryType(new InjuryType(1L));
         patient1.getPatientInjuryTypes().get(0).setAis(true);
-        patient2.getPatientInjuryTypes().get(0).setAis(false);
+        patient2.getTempPatientInjuries().get(0).setAis(false);
         assertTrue(PatientAudit.hasChanges(patient1, patient2));
     }
 
