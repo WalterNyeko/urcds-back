@@ -143,5 +143,6 @@ public class PatientManagerImpl extends GenericManagerImpl<Patient, Long> implem
                 patient.addPatientInjuryType(patientInjuryType);
             }
         }
+        patient.getTempPatientInjuries().clear();
     }
 }

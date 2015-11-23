@@ -47,7 +47,7 @@ public class Hospital extends BaseModel implements Comparable<Hospital> {
 
     @Override
     public String toString() {
-        return null;
+        return String.format("Hospital {%s}", name);
     }
 
     @Override

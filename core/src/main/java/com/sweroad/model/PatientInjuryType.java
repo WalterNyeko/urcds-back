@@ -11,7 +11,7 @@ import javax.persistence.*;
         @AssociationOverride(name = "pk.patient", joinColumns = @JoinColumn(name = "patient_id")),
         @AssociationOverride(name = "pk.injuryType", joinColumns = @JoinColumn(name = "injury_type_id"))
 })
-public class PatientInjuryType extends BaseModel {
+public class PatientInjuryType extends BaseModel implements Cloneable {
 
     private PatientInjuryTypeId pk = new PatientInjuryTypeId();
 
@@ -83,4 +83,11 @@ public class PatientInjuryType extends BaseModel {
     public int hashCode() {
         return this.getPatient().hashCode() + this.getInjuryType().hashCode();
     }
+
+    @Override
+    public PatientInjuryType clone() throws CloneNotSupportedException {
+        return (PatientInjuryType) super.clone();
+    }
+
+
 }

@@ -77,7 +77,7 @@ public class PatientAudit extends BaseAudit {
                 }
                 for (PatientInjuryType patientInjury : patient.getTempPatientInjuries()) {
                     if (patientInjury.getInjuryType().getId() != null) {
-                        if (!dbPatient.getPatientInjuryTypes().contains(patientInjury.getInjuryType())) {
+                        if (!dbPatient.getPatientInjuryTypes().contains(patientInjury)) {
                             return true;
                         }
                     }

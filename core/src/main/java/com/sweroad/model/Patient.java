@@ -408,8 +408,13 @@ public class Patient extends BaseModel implements IXMLConvertible, IAuditable {
     }
 
     @Override
-    public IAuditable clone() throws CloneNotSupportedException {
-        return (Patient) super.clone();
+    public Patient clone() throws CloneNotSupportedException {
+        Patient clone = (Patient) super.clone();
+        clone.setPatientInjuryTypes(new ArrayList<PatientInjuryType>());
+        for (PatientInjuryType patientInjuryType : this.patientInjuryTypes) {
+            clone.addPatientInjuryType(patientInjuryType.clone());
+        }
+        return clone;
     }
 
     public void setRemoved(boolean isRemoved) {
