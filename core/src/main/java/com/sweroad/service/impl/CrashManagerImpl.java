@@ -2,12 +2,9 @@ package com.sweroad.service.impl;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import com.sweroad.Constants;
 import com.sweroad.model.*;
@@ -110,12 +107,12 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
 
     @Override
     public List<Crash> getCrashes(List<Long> ids) {
-        List<Crash> crashes = new ArrayList<>();
-        for(Crash crash : this.getAllDistinct()) {
+        final List<Crash> crashes = new ArrayList<>();
+        this.getAllDistinct().forEach(crash -> {
             if (ids.contains(crash.getId())) {
                 crashes.add(crash);
             }
-        }
+        });
         return crashes;
     }
 
@@ -166,22 +163,24 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
 
     private void saveCrashVehicles(Crash crash, User user) {
         if (crash.getVehicles() != null) {
-            for (Vehicle vehicle : crash.getVehicles()) {
-                saveVehicleDriver(vehicle, user);
-                if (vehicle.getDateCreated() == null) {
-                    vehicle.setDateCreated(new Date());
-                    vehicle.setCreatedBy(user);
-                    vehicle.setId(null);
-                } else {
-                    vehicle.setDateUpdated(new Date());
-                    vehicle.setUpdatedBy(user);
-                }
-                setVehicleParams(vehicle);
-                Vehicle savedVehicle = vehicleManager.save(vehicle);
-                if (vehicle.getId() == null) {
-                    vehicle.setId(savedVehicle.getId());
-                }
-            }
+            crash.getVehicles().forEach(vehicle -> this.saveVehicle(vehicle, user));
+        }
+    }
+
+    private void saveVehicle(Vehicle vehicle, User user) {
+        saveVehicleDriver(vehicle, user);
+        if (vehicle.getDateCreated() == null) {
+            vehicle.setDateCreated(new Date());
+            vehicle.setCreatedBy(user);
+            vehicle.setId(null);
+        } else {
+            vehicle.setDateUpdated(new Date());
+            vehicle.setUpdatedBy(user);
+        }
+        setVehicleParams(vehicle);
+        Vehicle savedVehicle = vehicleManager.save(vehicle);
+        if (vehicle.getId() == null) {
+            vehicle.setId(savedVehicle.getId());
         }
     }
 
@@ -203,19 +202,21 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
 
     private void saveCrashCasualties(Crash crash, User user) {
         if (crash.getCasualties() != null) {
-            for (Casualty casualty : crash.getCasualties()) {
-                if (casualty.getDateCreated() == null) {
-                    casualty.setDateCreated(new Date());
-                    casualty.setCreatedBy(user);
-                    casualty.setId(null);
-                } else {
-                    casualty.setDateUpdated(new Date());
-                    casualty.setUpdatedBy(user);
-                }
-                setCasualtyParams(casualty);
-                casualtyManager.save(casualty);
-            }
+            crash.getCasualties().forEach(casualty -> this.saveCasualty(casualty, user));
         }
+    }
+
+    private void saveCasualty(Casualty casualty, User user) {
+        if (casualty.getDateCreated() == null) {
+            casualty.setDateCreated(new Date());
+            casualty.setCreatedBy(user);
+            casualty.setId(null);
+        } else {
+            casualty.setDateUpdated(new Date());
+            casualty.setUpdatedBy(user);
+        }
+        setCasualtyParams(casualty);
+        casualtyManager.save(casualty);
     }
 
     private void setCrashParams(Crash crash) {
@@ -336,11 +337,7 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
     @Override
     public Map<String, List> getOrderedRefData() {
         Map<String, List> refData = this.getReferenceData();
-        for (String key : refData.keySet()) {
-            if (!key.equalsIgnoreCase("crashSeverities") && !key.equalsIgnoreCase("casualtyTypes")) {
-                Collections.sort(refData.get(key));
-            }
-        }
+        refData.keySet().forEach(key -> this.sortRefData(refData, key));
         refData.put("genders", lookupManager.getAllGenders());
         refData.put("ageRanges", lookupManager.getAllAgeRanges());
         refData.put("timeRanges", lookupManager.getAllTimeRanges());
@@ -352,88 +349,67 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
         return refData;
     }
 
+    private void sortRefData(Map<String, List> refData, String key) {
+        if (!key.equalsIgnoreCase("crashSeverities") && !key.equalsIgnoreCase("casualtyTypes")) {
+            Collections.sort(refData.get(key));
+        }
+    }
+
     @Override
     public void removeCasualtyFromCrash(Crash crash, Long casualtyId) {
-        for (Casualty casualty : crash.getCasualties()) {
-            if (casualty.getId().equals(casualtyId)) {
-                crash.getCasualties().remove(casualty);
-                break;
-            }
+        Optional<Casualty> casualty = crash.getCasualties()
+                .stream()
+                .filter(c -> casualtyId.equals(c.getId()))
+                .findFirst();
+        if (casualty.isPresent()) {
+            crash.getCasualties().remove(casualty.get());
         }
     }
 
     @Override
     public void removeVehicleFromCrash(Crash crash, Long vehicleId) {
-        for (Vehicle vehicle : crash.getVehicles()) {
-            if (vehicle.getId().equals(vehicleId)) {
-                removeVehicleCasualtiesFromCrash(crash, vehicle);
-                crash.getVehicles().remove(vehicle);
-                break;
-            }
+        Optional<Vehicle> vehicle = crash.getVehicles()
+                .stream()
+                .filter(v -> vehicleId.equals(v.getId()))
+                .findFirst();
+        if (vehicle.isPresent()) {
+            this.removeVehicleCasualtiesFromCrash(crash, vehicle.get());
+            crash.getVehicles().remove(vehicle.get());
         }
     }
 
     private void removeVehicleCasualtiesFromCrash(Crash crash, Vehicle vehicle) {
-        List<Long> casualtyIds = new ArrayList<>();
-        for (Casualty casualty : crash.getCasualties()) {
-            if (casualty.getVehicle() != null
-                    && casualty.getVehicle().equals(vehicle)) {
-                casualtyIds.add(casualty.getId());
-            }
-        }
-        removeCasualtiesFromCrash(crash, casualtyIds);
-    }
-
-    private void removeCasualtiesFromCrash(Crash crash, List<Long> casualtyIds) {
-        for (Long casualtyId : casualtyIds) {
-            removeCasualtyFromCrash(crash, casualtyId);
-        }
+        List<Long> casualtyIds =  crash.getCasualties()
+                .stream()
+                .filter(casualty -> casualty.getVehicle() != null && casualty.getVehicle().equals(vehicle))
+                .map(Casualty::getId)
+                .collect(Collectors.toList());
+        casualtyIds.forEach(id -> this.removeCasualtyFromCrash(crash, id));
     }
 
     private void deleteRemovedVehicles(Crash dbCrash, Crash crash) {
-
-        List<Vehicle> deletedVehicleIds = getVehiclesForDeletion(dbCrash, crash);
-        for (Vehicle vehicle : deletedVehicleIds) {
+        ListUtil<Vehicle> vehicleUtil = new ListUtil<>();
+        List<Vehicle> vehiclesToDelete = dbCrash.getVehicles()
+                .stream()
+                .filter(vehicle -> !vehicleUtil.itemExistsInList(vehicle, crash.getVehicles()))
+                .collect(Collectors.toList());
+        vehiclesToDelete.forEach(vehicle -> {
+            dbCrash.getVehicles().remove(vehicle);
             vehicleManager.remove(vehicle);
             driverManager.remove(vehicle.getDriver());
-        }
-    }
-
-    private List<Vehicle> getVehiclesForDeletion(Crash dbCrash,
-                                                 Crash crashInEdit) {
-
-        List<Vehicle> vehiclesToDelete = new ArrayList<>();
-        ListUtil<Vehicle> vehicleUtil = new ListUtil<>();
-        for (Vehicle vehicle : dbCrash.getVehicles()) {
-            if (!vehicleUtil.itemExistsInList(vehicle,
-                    crashInEdit.getVehicles())) {
-                vehiclesToDelete.add(vehicle);
-            }
-        }
-        return vehiclesToDelete;
+        });
     }
 
     private void deleteRemovedCasualties(Crash dbCrash, Crash crash) {
-
-        List<Casualty> deletedVehicleIds = getCasualtiesForDeletion(dbCrash,
-                crash);
-        for (Casualty casualty : deletedVehicleIds) {
-            casualtyManager.remove(casualty);
-        }
-    }
-
-    private List<Casualty> getCasualtiesForDeletion(Crash dbCrash,
-                                                    Crash crashInEdit) {
-
-        List<Casualty> casualtiesToDelete = new ArrayList<>();
         ListUtil<Casualty> casualtyUtil = new ListUtil<>();
-        for (Casualty casualty : dbCrash.getCasualties()) {
-            if (!casualtyUtil.itemExistsInList(casualty,
-                    crashInEdit.getCasualties())) {
-                casualtiesToDelete.add(casualty);
-            }
-        }
-        return casualtiesToDelete;
+        List<Casualty> casualtiesToDelete = dbCrash.getCasualties()
+                .stream()
+                .filter(casualty -> !casualtyUtil.itemExistsInList(casualty, crash.getCasualties()))
+                .collect(Collectors.toList());
+        casualtiesToDelete.forEach(casualty -> {
+            dbCrash.getCasualties().remove(casualty);
+            casualtyManager.remove(casualty);
+        });
     }
 
     @Override

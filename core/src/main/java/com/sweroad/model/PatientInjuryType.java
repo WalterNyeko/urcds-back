@@ -76,6 +76,9 @@ public class PatientInjuryType extends BaseModel implements Cloneable {
             return false;
         }
         PatientInjuryType that = (PatientInjuryType) o;
+        if (this.getPatient() == null || this.getInjuryType() == null) {
+            return false;
+        }
         return this.getPatient().equals(that.getPatient()) && this.getInjuryType().equals(that.getInjuryType());
     }
 

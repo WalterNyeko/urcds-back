@@ -1,6 +1,8 @@
 package com.sweroad.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -17,12 +19,14 @@ public class Vehicle extends BaseModel implements Comparable<Vehicle> {
 	private Long id;
 	@Column(nullable = false)
 	private Integer number;
-	@ManyToOne(cascade = { CascadeType.ALL })
+	@ManyToOne
 	@JoinColumn(name = "vehicle_type_id")
 	private VehicleType vehicleType;
-	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@ManyToOne
 	@JoinColumn(name = "driver_id", nullable = false)
 	private Driver driver;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "vehicle", cascade = CascadeType.ALL)
+    private Set<Casualty> casualties = new HashSet<>();
 	@Column(name = "company_name")
 	private String companyName;
 	@Column(name = "date_created", nullable = false)
@@ -117,7 +121,15 @@ public class Vehicle extends BaseModel implements Comparable<Vehicle> {
 		this.companyName = companyName;
 	}
 
-	/**
+    public Set<Casualty> getCasualties() {
+        return casualties;
+    }
+
+    public void setCasualties(Set<Casualty> casualties) {
+        this.casualties = casualties;
+    }
+
+    /**
 	 * @return the dateCreated
 	 */
 	public Date getDateCreated() {

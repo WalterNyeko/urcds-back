@@ -78,14 +78,16 @@ public class AuditAdvice {
                         auditLog.setPostImage(XStreamUtils.getXMLFromObject(postImage, postImage.getClass().getName(),
                                 postImage.getFieldsAliases(), postImage.getFieldsToBeOmitted()));
                     }
-                    User currentUser = userManager.getCurrentUser();
-                    auditLog.setId(0L);
-                    auditLog.setOperation(operation);
-                    auditLog.setEntityId(((IAuditable) returnValue).getId());
-                    auditLog.setEntityName(postImage.getClassAlias());
-                    auditLog.setUser(currentUser);
-                    auditLog.setAuditDate(new Date());
-                    auditManager.save(auditLog);
+                    if (returnValue != null) {
+                        User currentUser = userManager.getCurrentUser();
+                        auditLog.setId(0L);
+                        auditLog.setOperation(operation);
+                        auditLog.setEntityId(((IAuditable) returnValue).getId());
+                        auditLog.setEntityName(postImage.getClassAlias());
+                        auditLog.setUser(currentUser);
+                        auditLog.setAuditDate(new Date());
+                        auditManager.save(auditLog);
+                    }
                 }
             }
         }

@@ -70,9 +70,6 @@ public class PatientManagerImpl extends GenericManagerImpl<Patient, Long> implem
     @Override
     public Patient savePatient(Patient patient) {
         User currentUser = userManager.getCurrentUser();
-        List<PatientInjuryType> patientInjuryTypes = new ArrayList<>();
-        patientInjuryTypes.addAll(patient.getPatientInjuryTypes());
-        patient.setTempPatientInjuries(patientInjuryTypes);
         this.processPatient(patient);
         if (patient.getDateCreated() == null) {
             patient.setDateCreated(new Date());
@@ -83,16 +80,16 @@ public class PatientManagerImpl extends GenericManagerImpl<Patient, Long> implem
             patient.setId(null);
         } else {
             Patient dbPatient = this.get(patient.getId());
-            dbPatient.clearPatientInjuryTypes();
+            for (PatientInjuryType patientInjuryType : dbPatient.getPatientInjuryTypes()) {
+                if (!patient.getPatientInjuryTypes().contains(patientInjuryType)) {
+                    patientInjuryManager.remove(patientInjuryType);
+                }
+            }
             patient.setDateCreated(dbPatient.getDateCreated());
             patient.setCreatedBy(dbPatient.getCreatedBy());
             patient.setDateUpdated(new Date());
             patient.setUpdatedBy(currentUser);
-            super.save(dbPatient);
         }
-        patient.clearPatientInjuryTypes();
-        patient = super.save(patient);
-        this.setPatientInjuries(patient, patientInjuryTypes);
         return super.save(patient);
     }
 
@@ -133,6 +130,10 @@ public class PatientManagerImpl extends GenericManagerImpl<Patient, Long> implem
         if (patient.getPatientStatus() != null && patient.getPatientStatus().getId() != null) {
             patient.setPatientStatus(patientStatusManager.get(patient.getPatientStatus().getId()));
         }
+        List<PatientInjuryType> patientInjuryTypes = new ArrayList<>();
+        patientInjuryTypes.addAll(patient.getPatientInjuryTypes());
+        patient.clearPatientInjuryTypes();
+        this.setPatientInjuries(patient, patientInjuryTypes);
     }
 
     private void setPatientInjuries(Patient patient, List<PatientInjuryType> patientInjuryTypes) {
@@ -143,6 +144,5 @@ public class PatientManagerImpl extends GenericManagerImpl<Patient, Long> implem
                 patient.addPatientInjuryType(patientInjuryType);
             }
         }
-        patient.getTempPatientInjuries().clear();
     }
 }

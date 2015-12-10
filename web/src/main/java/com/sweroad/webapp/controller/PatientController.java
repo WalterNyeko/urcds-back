@@ -41,14 +41,18 @@ public class PatientController extends BaseFormController {
     }
 
     @RequestMapping(value = "/patientform", method = RequestMethod.GET)
-    public ModelAndView showForm(HttpServletRequest request) throws Exception {
+    public ModelAndView showForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
         ModelAndView mav = new ModelAndView("patient/patientform");
-        Patient patient;
+        Patient patient = new Patient();
         String id = request.getParameter("id");
         if (!StringUtils.isBlank(id)) {
-            patient = patientManager.get(Long.parseLong(id));
+            try {
+                patient = patientManager.get(Long.parseLong(id));
+            }  catch (Exception e) {
+                logException(request, e, "Failed to load patient form in edit mode. Please contact your System Administrator.");
+                response.sendRedirect(request.getContextPath() + "/patients");
+            }
         } else {
-            patient = new Patient();
             patient.setId(DEFAULT_ID);
         }
         mav.addObject("patient", patient);

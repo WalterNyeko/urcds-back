@@ -17,7 +17,7 @@ public class InjuryType extends NameIdModel {
     private Long id;
     @Column
     private String name;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "pk.injuryType", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "pk.injuryType", cascade = CascadeType.DETACH)
     private Set<PatientInjuryType> patientInjuryTypes = new HashSet(0);
 
     public InjuryType() { }
