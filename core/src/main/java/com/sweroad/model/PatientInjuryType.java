@@ -64,7 +64,10 @@ public class PatientInjuryType extends BaseModel implements Cloneable {
 
     @Override
     public String toJSON() {
-        return null;
+        StringBuilder json = new StringBuilder("{");
+        json.append(toJsonProperty(this.ais, "ais")).append(",");
+        json.append(toJsonProperty(this.getInjuryType(), "injuryType")).append("}");
+        return json.toString();
     }
 
     @Override

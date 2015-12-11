@@ -442,7 +442,8 @@ public class Patient extends BaseModel implements IXMLConvertible, IAuditable {
         json.append(toJsonProperty(this.transportMode, "transportMode")).append(",");
         json.append(toJsonProperty(this.roadUserType, "roadUserType")).append(",");
         json.append(toJsonProperty(this.counterpartTransportMode, "counterpartTransportMode")).append(",");
-        json.append(toJsonProperty(this.transportMode, "transportMode")).append("}");
+        json.append(toJsonProperty(this.transportMode, "transportMode")).append(",");
+        json.append(toJsonProperty(this.patientInjuryTypes, "patientInjuryTypes")).append("}");
         //Build on this list further when needed
         return json.toString();
     }

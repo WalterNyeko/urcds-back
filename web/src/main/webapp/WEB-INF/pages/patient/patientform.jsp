@@ -42,6 +42,7 @@
                         </form:select>
                         <form:hidden path="id" />
                         <form:hidden path="dateCreated" />
+                        <input type="hidden" id="patientJSON" value="${patientJSON}"/>
                     </td>
                     <td><form:input cssClass="form-control" path="hospitalOutpatientNo" id="hospitalOutpatientNo" /></td>
                     <td><form:input cssClass="form-control" path="hospitalInpatientNo" id="hospitalInpatientNo" /></td>

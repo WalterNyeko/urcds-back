@@ -48,6 +48,7 @@ public class PatientController extends BaseFormController {
         if (!StringUtils.isBlank(id)) {
             try {
                 patient = patientManager.get(Long.parseLong(id));
+                request.getSession().setAttribute("patientJSON", patient.toJSON());
             }  catch (Exception e) {
                 logException(request, e, "Failed to load patient form in edit mode. Please contact your System Administrator.");
                 response.sendRedirect(request.getContextPath() + "/patients");
