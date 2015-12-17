@@ -16,8 +16,7 @@ function validateFields() {
     });
     var crashDate = getCrashDate();
     if (crashDate != null) {
-        var today = new Date();
-        if (crashDate > today) {
+        if (util.isFutureDate(crashDate)) {
             valMessages += "- <b><i>Crash date</i></b> cannot be a future date.<br/>";
         }
     }

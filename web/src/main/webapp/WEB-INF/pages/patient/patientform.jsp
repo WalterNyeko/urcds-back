@@ -3,11 +3,16 @@
 <head>
     <title><fmt:message key="patient.patientForm" /></title>
     <meta name="menu" content="PatientMenu" />
-    <script type="text/javascript" src="<c:url value='/scripts/crash-validator.js' />"></script>
+    <script type="text/javascript" src="<c:url value='/scripts/patient/patient.js' />"></script>
     <script type="text/javascript">
+        var patient;
         $(document).ready(function() {
-            ui.initDatePicker(ui.setInjuryDateTime);
-
+            patient = new Patient(this.getElementById('patientJSON').value, this);
+            patient.view.render();
+            ui.initDatePicker(function() {
+                ui.setInjuryDateTime();
+                patient.view.set30DayStatusReadonly();
+            });
         });
     </script>
 </head>
@@ -156,7 +161,7 @@
                 </tr>
             </table>
             <br>
-            <table width="100%" class="crashform-blue">
+            <table width="100%" class="crashform-blue injury-types">
                 <tr>
                     <th colspan="6">
                         <appfuse:label styleClass="control-label" key="patient.bodyInjuries" />
@@ -182,7 +187,7 @@
                             <label for="injuryType${injuryType.id}" class="form-label">${injuryType.name}</label>
                         </td>
                         <td>
-                            <form:checkbox path="patientInjuryTypes[${status.index}].ais" id="injuryTypeAis${injuryType.id}" />&nbsp;
+                            <form:checkbox path="patientInjuryTypes[${status.index}].ais" id="injuryTypeAis${injuryType.id}" cssClass="ais" />&nbsp;
                         </td>
                     </c:forEach>
                 </tr>

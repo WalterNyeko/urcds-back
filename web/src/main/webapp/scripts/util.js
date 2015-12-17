@@ -215,7 +215,14 @@ var util = (function () {
         var rx = RegExp('([01]?[0-9]|2[0-3]):[0-5][0-9]');
         return rx.test(time);
     }
-
+    util.dateDiff = function(startDate, endDate) {
+        var oneDay = 1000*60*60*24;
+        return Math.ceil((endDate.getTime() - startDate.getTime()) / oneDay);
+    }
+    util.isFutureDate = function(date) {
+        var now = new Date();
+        return date.getTime() > now.getTime();
+    }
     return util;
 })();
 
@@ -639,10 +646,14 @@ var ui = (function () {
         var date = $.trim($('#injuryDate').val());
         var time = $.trim($('#injuryTime').val());
         if (date.length == 0)
+            return
+        if (util.isFutureDate(new Date(date))) {
+            ui.alertDialog({ message: 'Injury date cannot be a future date', focusTarget: $('#injuryDate') });
             return;
+        }
         if (time) {
             if (!util.validate24HrTime(time)) {
-                ui.alertDialog({ message: 'Crash time must be in 24-hour format', focusTarget: $('#injuryTime') });
+                ui.alertDialog({ message: 'Injury time must be in 24-hour format', focusTarget: $('#injuryTime') });
                 return;
             }
             if (time.length == 4)
@@ -650,15 +661,6 @@ var ui = (function () {
         }
         date = date + " " + time;
         $('#injuryDateTimeString').val(date);
-    }
-    ui.loadInjuryDateTime = function() {
-        var datetime = $.trim($('#injuryDateTimeString').val());
-        if (datetime.length == 0)
-            return;
-        var dateParts = datetime.split(' ');
-        $('#injuryDate').val(dateParts[0])
-        if (dateParts.length > 1)
-            $('#injuryTime').val(dateParts[1]);
     }
     return ui.init();
 })();
