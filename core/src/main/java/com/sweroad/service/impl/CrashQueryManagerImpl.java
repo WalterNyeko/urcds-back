@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by Frank on 12/16/14.
@@ -108,14 +109,7 @@ public class CrashQueryManagerImpl implements CrashQueryManager {
 
     @Override
     public List<Query> getCurrentUserQueries() {
-        User currentUser = userManager.getCurrentUser();
-        List<Query> queries = new ArrayList<Query>();
-        for(Query query : queryManager.getAllDistinct()) {
-            if (query.getOwner().equals(currentUser)) {
-                queries.add(query);
-            }
-        }
-        return queries;
+        return queryManager.getAllDistinct().stream().filter(query -> query.getOwner().equals(userManager.getCurrentUser())).collect(Collectors.toList());
     }
 
     @Override

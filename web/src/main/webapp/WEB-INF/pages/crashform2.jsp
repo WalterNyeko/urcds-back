@@ -5,6 +5,7 @@
     <script type="text/javascript" src="<c:url value='/scripts/crash-validator.js'/>"></script>
     <script type="text/javascript">
         $( document ).ready(function() {
+            ui.initDatePicker();
             initVehicleAndCasualtyValidation();
         });
     </script>

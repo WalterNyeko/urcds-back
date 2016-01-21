@@ -685,3 +685,27 @@ td.crosstab-cell {
 .pager .toggle-menu {
     float: right;
 }
+.selection > tbody > tr > td > a{
+    font-size: 16px;
+    font-weight: 700;
+}
+.selection td {
+    text-align: center;
+    vertical-align: top;
+}
+.selection .crashform-blue {
+    min-width: 250px;
+}
+.selection .crashform-blue td {
+    text-align: left;
+}
+.selection-opt {
+    width: 100%;
+    padding: 2px;
+}
+.selection-opt:hover {
+    background: #FFFFCC;
+}
+.selection-opt a:hover {
+    text-decoration: none !important;
+}

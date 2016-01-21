@@ -428,7 +428,7 @@ public class CrashSearch implements DateRangable {
         }
 
         private void addCustomQueryableServices() {
-            customQueryableServices = new ArrayList<CustomQueryableService>();
+            customQueryableServices = new ArrayList<>();
             customQueryableServices.add(new BooleanTypeQueryableService(driverLicenseTypes, lookupManager.getAllLicenseTypes(),
                     CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE, "licenseValid", "driver"));
             customQueryableServices.add(new GenderQueryableService(driverGenders, lookupManager,

@@ -7,7 +7,7 @@
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdGBHIqR--XabhAy6UddDj4toKlEyJzAA"></script>
     <script type="text/javascript" src="<c:url value='/scripts/crash-validator.js' />"></script>
     <script type="text/javascript">
-        $( document ).ready(function() {
+        $(document).ready(function() {
             ui.loadCrashTime();
             ui.initDatePicker(ui.setCrashTime);
             loadGpsCoordinates();

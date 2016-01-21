@@ -32,6 +32,10 @@ public class SessionHelper {
         request.getSession().setAttribute("crashesJSON", ConvertUtil.listToJSON(crashes));
     }
 
+    public static boolean sessionHasCrashes(HttpServletRequest request) {
+        return request.getSession().getAttribute("crashes") != null;
+    }
+
     public static void persistCrashesInSession(HttpServletRequest request, List<Crash> crashes, CrashQuery crashQuery) {
         persistCrashesInSession(request, crashes);
         request.getSession().setAttribute("crashQuery", crashQuery);

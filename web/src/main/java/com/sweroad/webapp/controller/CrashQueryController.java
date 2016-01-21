@@ -58,19 +58,19 @@ public class CrashQueryController extends BaseFormController {
     }
 
     @RequestMapping(value = "/crashqueryrun", method = RequestMethod.POST)
-    public ModelAndView runQuery(CrashSearch crashSearch, BindingResult errors, HttpServletRequest request,
+    public void runQuery(CrashSearch crashSearch, BindingResult errors, HttpServletRequest request,
                                  HttpServletResponse response) throws Exception {
         try {
             crashQueryManager.processCrashSearch(crashSearch);
             CrashQuery crashQuery = crashSearch.toQuery();
-            List<Crash> crashes = crashQueryManager.getCrashesByQuery(crashSearch.toQuery());
+            List<Crash> crashes = crashQueryManager.getCrashesByQuery(crashQuery);
             SessionHelper.persistCrashesInSession(request, crashes, crashQuery);
         } catch (ParseException e) {
             logException(request, e, "Date provided was in wrong format.");
         } catch (Exception e) {
             logException(request, e, "Your query did not run successfully. Please contact your System Administrator.");
         }
-        return new CrashAnalysisController().showCrashes(request);
+        response.sendRedirect(request.getContextPath() + "/analysis");
     }
 
     @RequestMapping(value="/crashquerysave", method = RequestMethod.POST)

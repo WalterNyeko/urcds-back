@@ -1,14 +1,9 @@
 <%@ include file="/common/taglibs.jsp"%>
 <script type="text/javascript" src="<c:url value='/scripts/crash-validator.js'/>"></script>
 <div class="toggle-menu">
-    <div id="quick-search">
-        <a href="" onclick="return ui.loadSelectCrash({url: '<c:url value="/analysiscrashselect" />'});">
-            <fmt:message key="crashAnalysis.Select" />
-        </a>
-    </div>
-    <div id="queries">
-        <a href="<c:url value='/crashquery'/>" class="show-loading">
-            <fmt:message key="crashAnalysis.AdvancedSelect" />
+    <div id="selection">
+        <a href="<c:url value='/crashselection'/>" class="show-loading">
+            <fmt:message key="rcds.crashSelection" />
         </a>
     </div>
     <div id="crashes">

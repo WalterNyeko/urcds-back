@@ -41,11 +41,16 @@ public class CrashAnalysisController extends BaseFormController {
     private VehicleManager vehicleManager;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView showCrashes(HttpServletRequest request) throws Exception {
-        ModelAndView mav = new ModelAndView("analysis/crashanalysis");
-        List<Crash> crashes = getCrashes(request);
-        mav.addObject(crashes);
-        return mav;
+    public ModelAndView showCrashes(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        if (!SessionHelper.sessionHasCrashes(request)) {
+            response.sendRedirect(request.getContextPath() + "/crashselection");
+            return null;
+        } else {
+            ModelAndView mav = new ModelAndView("analysis/crashanalysis");
+            List<Crash> crashes = getCrashes(request);
+            mav.addObject(crashes);
+            return mav;
+        }
     }
 
     @RequestMapping(value = "/analysisvehicles", method = RequestMethod.GET)
@@ -70,24 +75,22 @@ public class CrashAnalysisController extends BaseFormController {
     }
 
     @RequestMapping(value="/analysisgisselect", method = RequestMethod.POST)
-    public ModelAndView showGisSelectedCrashes(HttpServletRequest request, @RequestParam("crashIds") String crashIds) throws Exception {
+    public ModelAndView showGisSelectedCrashes(HttpServletRequest request, HttpServletResponse response, @RequestParam("crashIds") String crashIds) throws Exception {
         List<Long> ids = new ArrayList<Long>();
         for(String crashId : crashIds.split(",")) {
             ids.add(Long.parseLong(crashId));
         }
         setCrashesInSession(request, crashManager.getCrashes(ids));
-        return showCrashes(request);
+        return showCrashes(request, response);
     }
 
     private List<Crash> getCrashes(HttpServletRequest request) throws Exception {
         List<Crash> crashes = (List<Crash>) request.getSession().getAttribute("crashes");
-        if (crashes != null) {
-            return crashes;
-        } else {
+        if (crashes == null) {
             crashes = crashManager.getAvailableCrashes(true);
-            setCrashesInSession(request, crashes);
-            return crashes;
         }
+        setCrashesInSession(request, crashes);
+        return crashes;
     }
 
     private void setCrashesInSession(HttpServletRequest request, List<Crash> crashes) throws ParseException {
@@ -106,7 +109,7 @@ public class CrashAnalysisController extends BaseFormController {
     }
 
     @RequestMapping(value = "/analysiscrashselect", method = RequestMethod.GET)
-    public ModelAndView selectCrash(HttpServletRequest request) throws Exception {
+    public ModelAndView selectCrash(HttpServletRequest request, HttpServletResponse response) throws Exception {
         try {
             ModelAndView mav = new ModelAndView("analysis/selectcrash");
             SearchCriteria criteria = new SearchCriteria();
@@ -118,12 +121,12 @@ public class CrashAnalysisController extends BaseFormController {
             return mav;
         } catch (Exception e) {
             log.error("Select crash failed: " + e.getLocalizedMessage());
-            return showCrashes(request);
+            return showCrashes(request, response);
         }
     }
 
     @RequestMapping(value = "/analysiscrashselect", method = RequestMethod.POST)
-    public ModelAndView selectCrash(SearchCriteria criteria, HttpServletRequest request) throws Exception {
+    public ModelAndView selectCrash(SearchCriteria criteria, HttpServletRequest request, HttpServletResponse response) throws Exception {
         try {
             processCriteria(criteria);
             List<Crash> crashes = searchCriteriaManager.getCrashesByCriteria(criteria);
@@ -133,7 +136,7 @@ public class CrashAnalysisController extends BaseFormController {
         } catch (Exception e) {
             logException(request, e, "Select crashes failed. Please contact your System Administrator.");
         }
-        return showCrashes(request);
+        return showCrashes(request, response);
     }
 
     private void processCriteria(SearchCriteria criteria) throws ParseException {
