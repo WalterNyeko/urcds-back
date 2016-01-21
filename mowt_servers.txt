@@ -1,0 +1,15 @@
+RCDS-SVR1 [192.168.0.200] --> WEB SERVER
+
+logins:
+
+1. administrator/test1234
+2. root/root123
+
+RCDS home: /usr/share/tomcat/webapps/rcds
+
+
+RCDS-SVR2 [192.168.0.201] --> DB SERVER
+
+login: root/root123
+
+mysql: root/test1234
