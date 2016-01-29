@@ -2431,4 +2431,114 @@
             <value description="injury_type_id">5</value>
         </row>
     </table>
+    <table name="system_parameter">
+        <column>id</column>
+        <column>name</column>
+        <column>code</column>
+        <row>
+            <value description="id">1</value>
+            <value description="name">Casualty Class</value>
+            <value description="code">casualtyClass</value>
+        </row>
+        <row>
+            <value description="id">2</value>
+            <value description="name">Casualty Type</value>
+            <value description="code">casualtyType</value>
+        </row>
+        <row>
+            <value description="id">3</value>
+            <value description="name">Collision Type</value>
+            <value description="code">collisionType</value>
+        </row>
+        <row>
+            <value description="id">4</value>
+            <value description="name">Crash Cause</value>
+            <value description="code">crashCause</value>
+        </row>
+        <row>
+            <value description="id">5</value>
+            <value description="name">Crash Severity</value>
+            <value description="code">crashSeverity</value>
+        </row>
+        <row>
+            <value description="id">6</value>
+            <value description="name">District</value>
+            <value description="code">district</value>
+        </row>
+        <row>
+            <value description="id">7</value>
+            <value description="name">Hospital</value>
+            <value description="code">hospital</value>
+        </row>
+        <row>
+            <value description="id">8</value>
+            <value description="name">Injury Type</value>
+            <value description="code">injuryType</value>
+        </row>
+        <row>
+            <value description="id">9</value>
+            <value description="name">Junction Type</value>
+            <value description="code">junctionType</value>
+        </row>
+        <row>
+            <value description="id">10</value>
+            <value description="name">Patient Disposition</value>
+            <value description="code">patientDisposition</value>
+        </row>
+        <row>
+            <value description="id">11</value>
+            <value description="name">Patient Status</value>
+            <value description="code">patientStatus</value>
+        </row>
+        <row>
+            <value description="id">12</value>
+            <value description="name">Police Station</value>
+            <value description="code">policeStation</value>
+        </row>
+        <row>
+            <value description="id">13</value>
+            <value description="name">Road Surface</value>
+            <value description="code">roadSurface</value>
+        </row>
+        <row>
+            <value description="id">14</value>
+            <value description="name">Road User Type</value>
+            <value description="code">roadUserType</value>
+        </row>
+        <row>
+            <value description="id">15</value>
+            <value description="name">Roadway Character</value>
+            <value description="code">roadwayCharacter</value>
+        </row>
+        <row>
+            <value description="id">16</value>
+            <value description="name">Surface Condition</value>
+            <value description="code">surfaceCondition</value>
+        </row>
+        <row>
+            <value description="id">17</value>
+            <value description="name">Transport Mode</value>
+            <value description="code">transportMode</value>
+        </row>
+        <row>
+            <value description="id">18</value>
+            <value description="name">UNRA Road</value>
+            <value description="code">unraRoad</value>
+        </row>
+        <row>
+            <value description="id">19</value>
+            <value description="name">Vehicle Failure Type</value>
+            <value description="code">vehicleFailureType</value>
+        </row>
+        <row>
+            <value description="id">20</value>
+            <value description="name">Vehicle Type</value>
+            <value description="code">vehicleType</value>
+        </row>
+        <row>
+            <value description="id">21</value>
+            <value description="name">Weather</value>
+            <value description="code">weather</value>
+        </row>
+    </table>
 </dataset>

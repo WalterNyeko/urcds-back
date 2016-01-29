@@ -32,6 +32,7 @@
 		<mapping class="com.sweroad.model.CollisionType" />
 		<mapping class="com.sweroad.model.CrashSeverity" />
         <mapping class="com.sweroad.model.PatientStatus" />
+        <mapping class="com.sweroad.model.SystemParameter" />
 		<mapping class="com.sweroad.model.RoadwayCharacter" />
 		<mapping class="com.sweroad.model.SurfaceCondition" />
         <mapping class="com.sweroad.model.PatientInjuryType" />

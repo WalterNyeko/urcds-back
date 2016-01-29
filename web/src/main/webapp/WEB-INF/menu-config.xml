@@ -23,7 +23,7 @@
 			<Item name="ViewUsers" title="menu.admin.users" page="/admin/users" />
 			<Item name="ActiveUsers" title="home.activeUsers" page="/admin/activeUsers" />
 			<Item name="SystemSettings" title="menu.settings" page="#" />
-			<Item name="LookupTables" title="menu.lookupTables" page="#" />
+			<Item name="LookupTables" title="rcds.systemParameters" page="/admin/params" />
 		</Menu>
 		<Menu name="Logout" title="user.logout" page="/logout"
 			roles="ROLE_ADMIN,ROLE_USER,ROLE_READONLY,ROLE_SUPER_USER" />
