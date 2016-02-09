@@ -21,6 +21,8 @@ public class VehicleFailureType extends NameIdModel implements Comparable<Vehicl
 	private Long id;
 	@Column(nullable = false)
 	private String name;
+    @Column(columnDefinition = "bit not null default 1")
+    private boolean active;
 
     public VehicleFailureType() { }
 
@@ -54,7 +56,15 @@ public class VehicleFailureType extends NameIdModel implements Comparable<Vehicl
 		this.name = name;
 	}
 
-	@Override
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    @Override
 	public String toString() {
 		return String.format("VehicleFailureType {%s}", name);
 	}

@@ -9,6 +9,12 @@ public abstract class NameIdModel extends BaseModel {
 
     public abstract String getName();
 
+    public abstract void setName(String name);
+
+    public abstract boolean isActive();
+
+    public abstract void setActive(boolean active);
+
     @Override
     public String toJSON() {
         StringBuilder json = new StringBuilder("{");

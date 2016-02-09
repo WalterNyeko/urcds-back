@@ -6,9 +6,11 @@ import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
+import com.sweroad.model.NameIdModel;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.lucene.analysis.Analyzer;
@@ -85,11 +87,11 @@ public class GenericDaoHibernate<T, PK extends Serializable> implements GenericD
     }
 
     public Session getSession() throws HibernateException {
-        Session sess = getSessionFactory().getCurrentSession();
-        if (sess == null) {
-            sess = getSessionFactory().openSession();
+        Session session = getSessionFactory().getCurrentSession();
+        if (session == null) {
+            session = getSessionFactory().openSession();
         }
-        return sess;
+        return session;
     }
 
     @Autowired
@@ -103,8 +105,8 @@ public class GenericDaoHibernate<T, PK extends Serializable> implements GenericD
      */
     @SuppressWarnings("unchecked")
     public List<T> getAll() {
-        Session sess = getSession();
-        return sess.createCriteria(persistentClass).list();
+        Session session = getSession();
+        return session.createCriteria(persistentClass).list();
     }
 
     /**
@@ -115,17 +117,29 @@ public class GenericDaoHibernate<T, PK extends Serializable> implements GenericD
         return new ArrayList<T>(result);
     }
 
+    @Override
+    public List<T> getAllActive() {
+        List<T> list = this.getAllDistinct();
+        if (list.size() > 0 && list.get(0) instanceof NameIdModel) {
+            return list.stream()
+                    .filter(item -> ((NameIdModel)item).isActive())
+                    .collect(Collectors.toList());
+        } else {
+            return list;
+        }
+    }
+
     /**
      * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
 	public List<T> search(String searchTerm) throws SearchException {
-        Session sess = getSession();
-        FullTextSession txtSession = Search.getFullTextSession(sess);
+        Session session = getSession();
+        FullTextSession txtSession = Search.getFullTextSession(session);
 
         org.apache.lucene.search.Query qry;
         try {
-            qry = HibernateSearchTools.generateQuery(searchTerm, this.persistentClass, sess, defaultAnalyzer);
+            qry = HibernateSearchTools.generateQuery(searchTerm, this.persistentClass, session, defaultAnalyzer);
         } catch (ParseException ex) {
             throw new SearchException(ex);
         }
@@ -139,8 +153,8 @@ public class GenericDaoHibernate<T, PK extends Serializable> implements GenericD
      */
     @SuppressWarnings("unchecked")
     public T get(PK id) {
-        Session sess = getSession();
-        IdentifierLoadAccess byId = sess.byId(persistentClass);
+        Session session = getSession();
+        IdentifierLoadAccess byId = session.byId(persistentClass);
         T entity = (T) byId.load(id);
 
         if (entity == null) {
@@ -156,8 +170,8 @@ public class GenericDaoHibernate<T, PK extends Serializable> implements GenericD
      */
     @SuppressWarnings("unchecked")
     public boolean exists(PK id) {
-        Session sess = getSession();
-        IdentifierLoadAccess byId = sess.byId(persistentClass);
+        Session session = getSession();
+        IdentifierLoadAccess byId = session.byId(persistentClass);
         T entity = (T) byId.load(id);
         return entity != null;
     }
@@ -167,16 +181,16 @@ public class GenericDaoHibernate<T, PK extends Serializable> implements GenericD
      */
     @SuppressWarnings("unchecked")
     public T save(T object) {
-        Session sess = getSession();
-        return (T) sess.merge(object);
+        Session session = getSession();
+        return (T) session.merge(object);
     }
 
     /**
      * {@inheritDoc}
      */
     public void remove(T object) {
-        Session sess = getSession();
-        sess.delete(object);
+        Session session = getSession();
+        session.delete(object);
     }
 
     /**
@@ -184,10 +198,10 @@ public class GenericDaoHibernate<T, PK extends Serializable> implements GenericD
      */
     @SuppressWarnings("unchecked")
 	public void remove(PK id) {
-        Session sess = getSession();
-        IdentifierLoadAccess byId = sess.byId(persistentClass);
+        Session session = getSession();
+        IdentifierLoadAccess byId = session.byId(persistentClass);
         T entity = (T) byId.load(id);
-        sess.delete(entity);
+        session.delete(entity);
     }
 
     /**
@@ -199,8 +213,8 @@ public class GenericDaoHibernate<T, PK extends Serializable> implements GenericD
     }
 
     private Query createQuery(String queryName, Map<String, Object> queryParams) {
-        Session sess = getSession();
-        Query namedQuery = sess.getNamedQuery(queryName);
+        Session session = getSession();
+        Query namedQuery = session.getNamedQuery(queryName);
 
         if (queryParams != null) {
             for (String s : queryParams.keySet()) {

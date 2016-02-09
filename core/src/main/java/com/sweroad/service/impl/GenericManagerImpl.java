@@ -79,6 +79,11 @@ public class GenericManagerImpl<T, PK extends Serializable> implements GenericMa
         return dao.getAllDistinct();
     }
 
+    @Override
+    public List<T> getAllActive() {
+        return dao.getAllActive();
+    }
+
     /**
      * {@inheritDoc}
      */

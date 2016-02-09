@@ -3,21 +3,26 @@
 	<table name="district">
 		<column>id</column>
 		<column>name</column>
+        <column>active</column>
 		<row>
 			<value description="id">1</value>
 			<value description="name">Lugazi</value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">2</value>
 			<value description="name">Mpigi</value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">3</value>
 			<value description="name">Kampala</value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">4</value>
 			<value description="name">Wakiso</value>
+            <value description="active">1</value>
 		</row>
 	</table>
 	<table name="app_user">
@@ -112,25 +117,30 @@
 		<column>id</column>
 		<column>name</column>
 		<column>description</column>
+        <column>active</column>
 		<row>
 			<value description="id">-1</value>
 			<value description="name">ROLE_ADMIN</value>
 			<value description="description"><![CDATA[Administrator role (can edit Users)]]></value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">-2</value>
 			<value description="name">ROLE_USER</value>
 			<value description="description"><![CDATA[Default role for all Users]]></value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">3</value>
 			<value description="name">ROLE_READONLY</value>
 			<value description="description"><![CDATA[Able to view all crash data but not make changes]]></value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">4</value>
 			<value description="name">ROLE_SUPER_USER</value>
 			<value description="description"><![CDATA[Able to change any crash data including removal]]></value>
+            <value description="active">1</value>
 		</row>
 	</table>
 	<table name="user_role">
@@ -157,175 +167,217 @@
 	<table name="casualty_class">
 		<column>id</column>
 		<column>name</column>
+        <column>active</column>
 		<row>
 			<value description="id">1</value>
 			<value description="name">Pedestrian</value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">2</value>
 			<value description="name">Passenger on motorcycle</value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">3</value>
 			<value description="name">Bicycle passenger</value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">4</value>
 			<value description="name">Car passenger</value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">5</value>
 			<value description="name">Passenger Light omnibus</value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">6</value>
 			<value description="name">Passenger medium omnibus</value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">7</value>
 			<value description="name">Passenger heavy omnibus</value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">8</value>
 			<value description="name">Other passengers</value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">9</value>
 			<value description="name">Unknown</value>
+            <value description="active">1</value>
 		</row>
 	</table>
 	<table name="casualty_type">
 		<column>id</column>
 		<column>name</column>
         <column>weight</column>
+        <column>active</column>
 		<row>
 			<value description="id">1</value>
 			<value description="name">Fatal</value>
             <value description="weight">10000</value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">2</value>
 			<value description="name">Serious</value>
             <value description="weight">8000</value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">3</value>
 			<value description="name">Slight</value>
             <value description="weight">6000</value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">4</value>
 			<value description="name">Not injured</value>
             <value description="weight">0</value>
+            <value description="active">1</value>
 		</row>
         <row>
             <value description="id">5</value>
             <value description="name">Unknown</value>
             <value description="weight">0</value>
+            <value description="active">1</value>
         </row>
 	</table>
 	<table name="collision_type">
 		<column>id</column>
 		<column>name</column>
+        <column>active</column>
 		<row>
 			<value description="id">1</value>
 			<value description="name">Hit pedestrian</value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">2</value>
 			<value description="name">Rear end</value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">3</value>
 			<value description="name">Single vehicle, off road</value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">4</value>
 			<value description="name">Side swipe</value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">5</value>
 			<value description="name">Single vehicle, hit object</value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">6</value>
 			<value description="name">Angle</value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">7</value>
 			<value description="name">Head-on collision</value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">8</value>
 			<value description="name">Others</value>
+            <value description="active">1</value>
 		</row>
         <row>
             <value description="id">9</value>
             <value description="name">Unknown</value>
+            <value description="active">1</value>
         </row>
 	</table>
 	<table name="crash_cause">
 		<column>id</column>
 		<column>name</column>
+        <column>active</column>
 		<row>
 			<value description="id">1</value>
 			<value description="name">Careless overtaking</value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">2</value>
 			<value description="name">Sudden entrance from a roadside</value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">3</value>
 			<value description="name">Careless pedestrian</value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">4</value>
 			<value description="name">Following too close (Tail-gating)</value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">5</value>
 			<value description="name">Over speeding</value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">6</value>
 			<value description="name">Passenger falls from vehicle</value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">7</value>
 			<value description="name">Passing too close</value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">8</value>
 			<value description="name">Dangerous loading</value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">9</value>
 			<value description="name">Vehicle mechanical defects</value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">10</value>
 			<value description="name">Violating traffic direction</value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">11</value>
 			<value description="name">Under influence of alcohol/drugs</value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">12</value>
 			<value description="name">Dazzled by lights of another vehicle</value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">13</value>
 			<value description="name">Neglecting right of way or stop sign</value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">14</value>
 			<value description="name">Fatigue, illness</value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">15</value>
 			<value description="name">Obstacle on carriage way</value>
+            <value description="active">1</value>
 		</row>
 		<row>
 			<value description="id">16</value>
@@ -2431,114 +2483,137 @@
             <value description="injury_type_id">5</value>
         </row>
     </table>
+    <!-- End of Injury data tables -->
     <table name="system_parameter">
         <column>id</column>
         <column>name</column>
         <column>code</column>
+        <column>active</column>
         <row>
             <value description="id">1</value>
             <value description="name">Casualty Class</value>
             <value description="code">casualtyClass</value>
+            <value description="active">1</value>
         </row>
         <row>
             <value description="id">2</value>
             <value description="name">Casualty Type</value>
             <value description="code">casualtyType</value>
+            <value description="active">1</value>
         </row>
         <row>
             <value description="id">3</value>
             <value description="name">Collision Type</value>
             <value description="code">collisionType</value>
+            <value description="active">1</value>
         </row>
         <row>
             <value description="id">4</value>
             <value description="name">Crash Cause</value>
             <value description="code">crashCause</value>
+            <value description="active">1</value>
         </row>
         <row>
             <value description="id">5</value>
             <value description="name">Crash Severity</value>
             <value description="code">crashSeverity</value>
+            <value description="active">1</value>
         </row>
         <row>
             <value description="id">6</value>
             <value description="name">District</value>
             <value description="code">district</value>
+            <value description="active">1</value>
         </row>
         <row>
             <value description="id">7</value>
             <value description="name">Hospital</value>
             <value description="code">hospital</value>
+            <value description="active">1</value>
         </row>
         <row>
             <value description="id">8</value>
             <value description="name">Injury Type</value>
             <value description="code">injuryType</value>
+            <value description="active">1</value>
         </row>
         <row>
             <value description="id">9</value>
             <value description="name">Junction Type</value>
             <value description="code">junctionType</value>
+            <value description="active">1</value>
         </row>
         <row>
             <value description="id">10</value>
             <value description="name">Patient Disposition</value>
             <value description="code">patientDisposition</value>
+            <value description="active">1</value>
         </row>
         <row>
             <value description="id">11</value>
             <value description="name">Patient Status</value>
             <value description="code">patientStatus</value>
+            <value description="active">1</value>
         </row>
         <row>
             <value description="id">12</value>
             <value description="name">Police Station</value>
             <value description="code">policeStation</value>
+            <value description="active">1</value>
         </row>
         <row>
             <value description="id">13</value>
             <value description="name">Road Surface</value>
             <value description="code">roadSurface</value>
+            <value description="active">1</value>
         </row>
         <row>
             <value description="id">14</value>
             <value description="name">Road User Type</value>
             <value description="code">roadUserType</value>
+            <value description="active">1</value>
         </row>
         <row>
             <value description="id">15</value>
             <value description="name">Roadway Character</value>
             <value description="code">roadwayCharacter</value>
+            <value description="active">1</value>
         </row>
         <row>
             <value description="id">16</value>
             <value description="name">Surface Condition</value>
             <value description="code">surfaceCondition</value>
+            <value description="active">1</value>
         </row>
         <row>
             <value description="id">17</value>
             <value description="name">Transport Mode</value>
             <value description="code">transportMode</value>
+            <value description="active">1</value>
         </row>
         <row>
             <value description="id">18</value>
             <value description="name">UNRA Road</value>
             <value description="code">unraRoad</value>
+            <value description="active">1</value>
         </row>
         <row>
             <value description="id">19</value>
             <value description="name">Vehicle Failure Type</value>
             <value description="code">vehicleFailureType</value>
+            <value description="active">1</value>
         </row>
         <row>
             <value description="id">20</value>
             <value description="name">Vehicle Type</value>
             <value description="code">vehicleType</value>
+            <value description="active">1</value>
         </row>
         <row>
             <value description="id">21</value>
             <value description="name">Weather</value>
             <value description="code">weather</value>
+            <value description="active">1</value>
         </row>
     </table>
 </dataset>

@@ -20,6 +20,8 @@ public class SystemParameter extends NameIdModel implements Comparable<SystemPar
     private String name;
     @Column(nullable = false)
     private String code;
+    @Column(columnDefinition = "bit not null default 1")
+    private boolean active;
 
     public SystemParameter() { }
 
@@ -57,6 +59,16 @@ public class SystemParameter extends NameIdModel implements Comparable<SystemPar
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    @Override
+    public boolean isActive() {
+        return active;
+    }
+
+    @Override
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     @Override

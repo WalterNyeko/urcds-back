@@ -27,6 +27,8 @@ public class Weather extends NameIdModel implements Comparable<Weather>, Queryab
 	private Long id;
 	@Column(nullable = false)
 	private String name;
+    @Column(columnDefinition = "bit not null default 1")
+    private boolean active;
 
     public Weather() { }
 
@@ -60,7 +62,15 @@ public class Weather extends NameIdModel implements Comparable<Weather>, Queryab
 		this.name = name;
 	}
 
-	@Override
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    @Override
 	public String toString() {
 		return String.format("Weather: {%s}", name);
 	}

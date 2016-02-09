@@ -21,6 +21,8 @@ public class CollisionType extends NameIdModel implements Comparable<CollisionTy
 	private Long id;
 	@Column(nullable = false)
 	private String name;
+    @Column(columnDefinition = "bit not null default 1")
+    private boolean active;
 
     public CollisionType() { }
 
@@ -53,7 +55,15 @@ public class CollisionType extends NameIdModel implements Comparable<CollisionTy
 		this.name = name;
 	}
 
-	@Override
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    @Override
 	public String toString() {
 		return String.format("CollisionType {%s}", name);
 	}

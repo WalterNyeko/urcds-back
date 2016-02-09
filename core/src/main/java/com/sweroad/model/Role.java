@@ -36,6 +36,8 @@ public class Role extends NameIdModel implements Serializable, GrantedAuthority 
     private Long id;
     private String name;
     private String description;
+    @Column(columnDefinition = "bit not null default 1")
+    private boolean active;
 
     /**
      * Default constructor - creates a new instance with no values set.
@@ -87,6 +89,16 @@ public class Role extends NameIdModel implements Serializable, GrantedAuthority 
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public boolean isActive() {
+        return active;
+    }
+
+    @Override
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     /**

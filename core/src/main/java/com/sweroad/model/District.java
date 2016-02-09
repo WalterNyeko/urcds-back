@@ -20,6 +20,8 @@ public class District extends NameIdModel implements Comparable<District>, Query
 	private Long id;
 	@Column(nullable = false)
 	private String name;
+    @Column(columnDefinition = "bit not null default 1")
+    private boolean active;
 
     public District() { }
 
@@ -52,7 +54,15 @@ public class District extends NameIdModel implements Comparable<District>, Query
 		this.name = name;
 	}
 
-	@Override
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    @Override
 	public String toString() {
 		return String.format("District {%s}", name);
 	}

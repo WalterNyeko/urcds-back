@@ -28,7 +28,7 @@ public class CrashDaoHibernate extends GenericDaoHibernate<Crash, Long> implemen
         if (crashList.size() > 0) {
             return crashList;
         }
-        return new ArrayList<Crash>();
+        return new ArrayList<>();
     }
 
     public List<Crash> findCrashesByQueryCrash(CrashQuery crashQuery) {

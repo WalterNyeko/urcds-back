@@ -7,9 +7,18 @@
 <body id="systemParameters">
 
 	<div class="col-sm-10">
-		<h2>
-			<fmt:message key="rcds.systemParameters" />
-		</h2>
+        <table width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+                <td width="60%">
+                    <h3>
+                        <fmt:message key="rcds.systemParameters" />
+                    </h3>
+                </td>
+                <td>
+
+                </td>
+            </tr>
+        </table>
 
         <display:table name="parameters" cellspacing="0" cellpadding="0"
                        requestURI="" defaultsort="1" id="parameters" pagesize="50"
@@ -19,7 +28,7 @@
             <display:column sortProperty="manage"
                             titleKey="rcds.manage" style="width: 10%;"
                             media="html">
-                <a href="/admin/paramslist?type=<c:out value="${parameters.code}"/>">
+                <a href="<c:url value='/admin/paramslist?id=${parameters.id}'/>">
                     <fmt:message key="rcds.manage" />
                 </a>
             </display:column>

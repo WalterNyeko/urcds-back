@@ -24,6 +24,8 @@ public class CrashSeverity extends NameIdModel implements Comparable<CrashSeveri
 	private String name;
     @Column
     private BigDecimal weight;
+    @Column(columnDefinition = "bit not null default 1")
+    private boolean active;
 
     public CrashSeverity() { }
 
@@ -65,7 +67,15 @@ public class CrashSeverity extends NameIdModel implements Comparable<CrashSeveri
         this.weight = weight;
     }
 
-	@Override
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    @Override
 	public String toString() {
 		return String.format("CrashSeverity {%s}", name);
 	}

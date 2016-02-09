@@ -35,6 +35,14 @@ public interface GenericManager<T, PK extends Serializable> {
     List<T> getAllDistinct();
 
     /**
+     * Gets all active records without duplicates.
+     * <p>This targets objects with 'active' property</p>
+     *
+     * @return List of populated objects.
+     */
+    List<T> getAllActive();
+
+    /**
      * Generic method to get an object based on class and identifier. An
      * ObjectRetrievalFailureException Runtime Exception is thrown if
      * nothing is found.

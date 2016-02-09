@@ -21,6 +21,8 @@ public class RoadwayCharacter extends NameIdModel implements Comparable<RoadwayC
 	private Long id;
 	@Column(nullable = false)
 	private String name;
+    @Column(columnDefinition = "bit not null default 1")
+    private boolean active;
 
     public RoadwayCharacter() { }
 
@@ -54,7 +56,15 @@ public class RoadwayCharacter extends NameIdModel implements Comparable<RoadwayC
 		this.name = name;
 	}
 
-	@Override
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    @Override
 	public String toString() {
 		return String.format("RoadwayCharacter {%s}", name);
 	}

@@ -14,6 +14,8 @@ public class PatientStatus extends NameIdModel {
     private Long id;
     @Column
     private String name;
+    @Column(columnDefinition = "bit not null default 1")
+    private boolean active;
 
     public PatientStatus() { }
 
@@ -33,6 +35,14 @@ public class PatientStatus extends NameIdModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     @Override

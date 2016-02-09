@@ -19,6 +19,8 @@ public class InjuryType extends NameIdModel {
     private String name;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "pk.injuryType", cascade = CascadeType.DETACH)
     private Set<PatientInjuryType> patientInjuryTypes = new HashSet(0);
+    @Column(columnDefinition = "bit not null default 1")
+    private boolean active;
 
     public InjuryType() { }
 
@@ -46,6 +48,14 @@ public class InjuryType extends NameIdModel {
 
     public void setPatientInjuryTypes(Set<PatientInjuryType> patientInjuryTypes) {
         this.patientInjuryTypes = patientInjuryTypes;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     @Override

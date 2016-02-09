@@ -38,6 +38,14 @@ public interface GenericDao<T, PK extends Serializable> {
     List<T> getAllDistinct();
 
     /**
+     * Gets all active records without duplicates.
+     * <p>This targets objects with 'active' property</p>
+     *
+     * @return List of populated objects.
+     */
+    List<T> getAllActive();
+
+    /**
      * Gets all records that match a search term. "*" will get them all.
      *
      * @param searchTerm the term to search for

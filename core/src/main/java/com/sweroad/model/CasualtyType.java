@@ -25,6 +25,8 @@ public class CasualtyType extends NameIdModel implements Comparable<CasualtyType
     private String name;
     @Column
     private BigDecimal weight;
+    @Column(columnDefinition = "bit not null default 1")
+    private boolean active;
 
     public CasualtyType() { }
 
@@ -64,6 +66,14 @@ public class CasualtyType extends NameIdModel implements Comparable<CasualtyType
 
     public void setWeight(BigDecimal weight) {
         this.weight = weight;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     @Override

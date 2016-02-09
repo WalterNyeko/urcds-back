@@ -709,3 +709,9 @@ td.crosstab-cell {
 .selection-opt a:hover {
     text-decoration: none !important;
 }
+.edit-param * {
+    padding: 0px 3px;
+}
+tr.removed {
+    text-decoration: line-through;
+}

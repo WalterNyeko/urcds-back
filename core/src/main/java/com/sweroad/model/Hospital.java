@@ -6,7 +6,7 @@ import javax.persistence.*;
  * Created by Frank on 3/12/15.
  */
 @Entity(name = "hospital")
-public class Hospital extends BaseModel implements Comparable<Hospital> {
+public class Hospital extends NameIdModel implements Comparable<Hospital> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,6 +16,8 @@ public class Hospital extends BaseModel implements Comparable<Hospital> {
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "district_id")
     private District district;
+    @Column(columnDefinition = "bit not null default 1")
+    private boolean active;
 
     public Hospital() { }
 
@@ -43,6 +45,14 @@ public class Hospital extends BaseModel implements Comparable<Hospital> {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     @Override

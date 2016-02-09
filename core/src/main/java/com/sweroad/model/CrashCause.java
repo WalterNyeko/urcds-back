@@ -21,6 +21,8 @@ public class CrashCause extends NameIdModel implements Comparable<CrashCause>, Q
 	private Long id;
 	@Column(nullable = false)
 	private String name;
+    @Column(columnDefinition = "bit not null default 1")
+    private boolean active;
 
     public CrashCause() { }
 
@@ -54,7 +56,15 @@ public class CrashCause extends NameIdModel implements Comparable<CrashCause>, Q
 		this.name = name;
 	}
 
-	@Override
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    @Override
 	public String toString() {
 		return String.format("CrashCause {%s}", name);
 	}

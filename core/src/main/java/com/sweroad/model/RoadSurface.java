@@ -25,6 +25,8 @@ public class RoadSurface extends NameIdModel implements Comparable<RoadSurface>,
 	private Long id;
 	@Column(nullable = false)
 	private String name;
+    @Column(columnDefinition = "bit not null default 1")
+    private boolean active;
 
     public RoadSurface() { }
 
@@ -57,8 +59,16 @@ public class RoadSurface extends NameIdModel implements Comparable<RoadSurface>,
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	@Override
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    @Override
 	public String toString() {
 		return String.format("Road Surface: {%s}", name);
 	}

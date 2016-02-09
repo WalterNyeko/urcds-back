@@ -24,6 +24,8 @@ public class SurfaceType extends NameIdModel implements Comparable<SurfaceType>,
 	private Long id;
 	@Column(nullable = false)
 	private String name;
+    @Column(columnDefinition = "bit not null default 1")
+    private boolean active;
 
     public SurfaceType() { }
 
@@ -56,8 +58,16 @@ public class SurfaceType extends NameIdModel implements Comparable<SurfaceType>,
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	@Override
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    @Override
 	public String toString() {
 		return String.format("Surface Type: {%s}", name);
 	}

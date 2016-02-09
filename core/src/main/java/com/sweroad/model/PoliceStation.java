@@ -31,6 +31,8 @@ public class PoliceStation extends NameIdModel implements Comparable<PoliceStati
 	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "district_id")
 	private District district;
+    @Column(columnDefinition = "bit not null default 1")
+    private boolean active;
 
     public PoliceStation() { }
 
@@ -78,7 +80,15 @@ public class PoliceStation extends NameIdModel implements Comparable<PoliceStati
 		this.district = district;
 	}
 
-	@Override
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    @Override
 	public String toString() {
 		return String.format("Police Station {%s}", name);
 	}

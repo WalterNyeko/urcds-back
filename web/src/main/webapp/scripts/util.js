@@ -662,11 +662,106 @@ var ui = (function () {
         date = date + " " + time;
         $('#injuryDateTimeString').val(date);
     }
+    ui.editSystemParameter = function(id, button) {
+        var nameCell = $(button).parent().prev();
+        var oldName = nameCell.text();
+        var saveBtn = $('<a href="">').text('Save');
+        var cancelBtn = $('<a href="" class="cancel">').text('Cancel');
+        var div = $('<div class="edit-param">');
+        var input = $('<input type="text" size="40">');
+        $(button).hide();
+        input.val(nameCell.text());
+        div.append(input).append(saveBtn).append(cancelBtn);
+        nameCell.closest('table').find('a.cancel').trigger('click');
+        nameCell.html(div);
+        var setName = function(name) {
+            nameCell.html(name);
+            $(button).show();
+            return false;
+        }
+        saveBtn.click(function() {
+            var newName = input.val().trim();
+            if (!newName) {
+                ui.alertDialog({ message: 'A value must be specified', focusTarget: input });
+                $(button).show();
+                return false;
+            }
+            if (newName === oldName)
+                return setName(oldName);
+            var unique = true;
+            nameCell.parents('tbody').find('tr').each(function() {
+                unique = unique && $(this).find('td:first').text() != newName;
+            });
+            if (!unique) {
+                ui.alertDialog({ message: 'Value must be unique', focusTarget: input });
+                $(button).show();
+                return false;
+            }
+            util.sendRequest( { url: util.basePath() + "admin/paramsupdate?id=" + id + "&name=" + newName + "&code=" + $('#paramCode').val() });
+            return setName(newName);
+        });
+        cancelBtn.click(function() { return setName(oldName) });
+        return false;
+    }
+    ui.confirmRemoveParameter = function(id, button) {
+        ui.confirmDialog({
+            message: 'Remove this parameter?',
+            callback: function() {
+                ui.clearModal();
+                $(button).closest('tr').addClass('removed');
+                $(button).closest('tr').find('.cancel').trigger('click');
+                $(button).parent().find('.edit, .remove').hide();
+                if ($(button).parent().find('.restore').length)
+                    $(button).parent().find('.restore').show();
+                else
+                    $(button).parent().append(ui.createRestoreParamButton(id));
+                util.sendRequest( { url: util.basePath() + "admin/paramsremove?id=" + id + "&code=" + $('#paramCode').val() });
+            }
+        })
+        return false;
+    }
+    ui.confirmRestoreParameter = function(id, button) {
+        ui.confirmDialog({
+            message: 'Restore this parameter?',
+            callback: function() {
+                ui.clearModal();
+                $(button).hide();
+                $(button).closest('tr').removeClass('removed');
+                if ($(button).parent().find('.edit, .remove').length)
+                    $(button).parent().find('.edit, .remove').show();
+                else
+                    $(button).parent().append(ui.createEditParamButton(id)).append(ui.createRemoveParamButton(id));
+                util.sendRequest( { url: util.basePath() + "admin/paramsrestore?id=" + id + "&code=" + $('#paramCode').val() });
+            }
+        })
+        return false;
+    }
+    ui.createEditParamButton = function(id) {
+        var button = $('<a href="" class="edit">');
+        var icon = $('<img src="" alt="Edit parameter" title="Edit parameter" hspace="4">');
+        icon.attr('src', util.basePath() + "images/bt_Edit.gif");
+        button.click(function() { return ui.editSystemParameter(id, button)});
+        return button.append(icon);
+    }
+    ui.createRemoveParamButton = function(id) {
+        var button = $('<a href="" class="remove">');
+        var icon = $('<img src="" alt="Remove parameter" title="Remove parameter" hspace="4">');
+        icon.attr('src', util.basePath() + "images/bt_Remove.gif");
+        button.click(function() { return ui.confirmRemoveParameter(id, button)});
+        return button.append(icon);
+    }
+    ui.createRestoreParamButton = function(id) {
+        var button = $('<a href="" class="restore">');
+        var icon = $('<img src="" alt="Restore parameter" title="Restore parameter" hspace="4">');
+        icon.attr('src', util.basePath() + "images/bt_Restore.gif");
+        button.click(function() { return ui.confirmRestoreParameter(id, button)});
+        return button.append(icon);
+    }
     return ui.init();
 })();
 
 var constants = {
-    nonBasePath: ['analysis'],
+    nonBasePath: ['analysis', 'admin'],
     HTML_SPACE: '&nbsp;&nbsp;',
     NOT_SPECIFIED: 'Not Specified',
     valueRanges: ['timeRange', 'weight', 'year'],

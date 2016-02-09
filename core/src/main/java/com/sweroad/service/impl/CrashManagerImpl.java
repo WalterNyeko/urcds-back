@@ -3,12 +3,10 @@ package com.sweroad.service.impl;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import com.sweroad.Constants;
 import com.sweroad.model.*;
-import com.sweroad.query.CrashQuery;
 import com.sweroad.service.*;
 import com.sweroad.util.GisHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -312,25 +310,25 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
     @SuppressWarnings("rawtypes")
     public Map<String, List> getReferenceData() {
         Map<String, List> referenceData = new HashMap<>();
-        List<District> districts = districtManager.getAllDistinct();
+        List<District> districts = districtManager.getAllActive();
         Collections.sort(districts);
-        List<PoliceStation> policeStations = policeStationManager.getAllDistinct();
+        List<PoliceStation> policeStations = policeStationManager.getAllActive();
         Collections.sort(policeStations);
         referenceData.put("districts", districts);
         referenceData.put("policeStations", policeStations);
-        referenceData.put("weathers", weatherManager.getAllDistinct());
-        referenceData.put("crashCauses", crashCauseManager.getAllDistinct());
-        referenceData.put("roadSurfaces", roadSurfaceManager.getAllDistinct());
-        referenceData.put("surfaceTypes", surfaceTypeManager.getAllDistinct());
-        referenceData.put("vehicleTypes", vehicleTypeManager.getAllDistinct());
-        referenceData.put("junctionTypes", junctionTypeManager.getAllDistinct());
-        referenceData.put("casualtyTypes", casualtyTypeManager.getAllDistinct());
-        referenceData.put("collisionTypes", collisionTypeManager.getAllDistinct());
-        referenceData.put("crashSeverities", crashSeverityManager.getAllDistinct());
-        referenceData.put("casualtyClasses", casualtyClassManager.getAllDistinct());
-        referenceData.put("surfaceConditions", surfaceConditionManager.getAllDistinct());
-        referenceData.put("roadwayCharacters", roadwayCharacterManager.getAllDistinct());
-        referenceData.put("vehicleFailureTypes", vehicleFailureTypeManager.getAllDistinct());
+        referenceData.put("weathers", weatherManager.getAllActive());
+        referenceData.put("crashCauses", crashCauseManager.getAllActive());
+        referenceData.put("roadSurfaces", roadSurfaceManager.getAllActive());
+        referenceData.put("surfaceTypes", surfaceTypeManager.getAllActive());
+        referenceData.put("vehicleTypes", vehicleTypeManager.getAllActive());
+        referenceData.put("junctionTypes", junctionTypeManager.getAllActive());
+        referenceData.put("casualtyTypes", casualtyTypeManager.getAllActive());
+        referenceData.put("collisionTypes", collisionTypeManager.getAllActive());
+        referenceData.put("crashSeverities", crashSeverityManager.getAllActive());
+        referenceData.put("casualtyClasses", casualtyClassManager.getAllActive());
+        referenceData.put("surfaceConditions", surfaceConditionManager.getAllActive());
+        referenceData.put("roadwayCharacters", roadwayCharacterManager.getAllActive());
+        referenceData.put("vehicleFailureTypes", vehicleFailureTypeManager.getAllActive());
         return referenceData;
     }
 
@@ -342,8 +340,8 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
         refData.put("ageRanges", lookupManager.getAllAgeRanges());
         refData.put("timeRanges", lookupManager.getAllTimeRanges());
         refData.put("licenseTypes", lookupManager.getAllLicenseTypes());
-        refData.put("casualtyTypes", casualtyTypeManager.getAllDistinct());
-        refData.put("casualtyClass", casualtyClassManager.getAllDistinct());
+        refData.put("casualtyTypes", casualtyTypeManager.getAllActive());
+        refData.put("casualtyClass", casualtyClassManager.getAllActive());
         refData.put("crashWeightRanges", lookupManager.getAllWeightRanges());
         refData.put("beltUsedOptions", lookupManager.getAllBeltUsedOptions());
         return refData;

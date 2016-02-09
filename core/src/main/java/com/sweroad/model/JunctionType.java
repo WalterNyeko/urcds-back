@@ -21,6 +21,8 @@ public class JunctionType extends NameIdModel implements Comparable<JunctionType
 	private Long id;
 	@Column(nullable = false)
 	private String name;
+    @Column(columnDefinition = "bit not null default 1")
+    private boolean active;
 
     public JunctionType() { }
 
@@ -54,7 +56,15 @@ public class JunctionType extends NameIdModel implements Comparable<JunctionType
 		this.name = name;
 	}
 
-	@Override
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    @Override
 	public String toString() {
 		return String.format("JunctionType {%s}", name);
 	}

@@ -18,6 +18,11 @@
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
+    <bean id="systemParameterDao" class="com.sweroad.dao.hibernate.GenericDaoHibernate">
+        <constructor-arg value="com.sweroad.model.SystemParameter" />
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
 	<!-- Add new Managers here -->
 	<bean id="crashSeverityManager" class="com.sweroad.service.impl.GenericManagerImpl">
 		<constructor-arg>
@@ -223,14 +228,6 @@
         <constructor-arg>
             <bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
                 <constructor-arg value="com.sweroad.model.PatientInjuryType" />
-                <property name="sessionFactory" ref="sessionFactory" />
-            </bean>
-        </constructor-arg>
-    </bean>
-    <bean id="systemParameterManager" class="com.sweroad.service.impl.GenericManagerImpl">
-        <constructor-arg>
-            <bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
-                <constructor-arg value="com.sweroad.model.SystemParameter" />
                 <property name="sessionFactory" ref="sessionFactory" />
             </bean>
         </constructor-arg>
