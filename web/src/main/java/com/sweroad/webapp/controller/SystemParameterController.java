@@ -2,13 +2,13 @@ package com.sweroad.webapp.controller;
 
 import com.sweroad.model.NameIdModel;
 import com.sweroad.model.SystemParameter;
-import com.sweroad.service.GenericManager;
 import com.sweroad.service.SystemParameterManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -53,6 +53,14 @@ public class SystemParameterController extends BaseFormController {
             response.sendRedirect(request.getContextPath() + "/admin/params");
             return null;
         }
+    }
+
+    @RequestMapping(value = "/admin/paramsadd", method = RequestMethod.GET)
+    public @ResponseBody String addParameter(HttpServletRequest request) throws Exception {
+        String name = request.getParameter("name");
+        String code = request.getParameter("code");
+        NameIdModel parameter = systemParameterManager.addParameter(name, code);
+        return parameter.getId().toString();
     }
 
     @RequestMapping(value = "/admin/paramsupdate", method = RequestMethod.GET)

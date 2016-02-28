@@ -28,6 +28,11 @@ public class VehicleFailureType extends NameIdModel implements Comparable<Vehicl
 
     public VehicleFailureType(Long id) { this.setId(id); }
 
+    public VehicleFailureType(String name) {
+        this.setName(name);
+        this.setActive(true);
+    }
+
 	/**
 	 * @return the id
 	 */

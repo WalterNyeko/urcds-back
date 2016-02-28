@@ -28,6 +28,11 @@ public class CrashCause extends NameIdModel implements Comparable<CrashCause>, Q
 
     public CrashCause(Long id) { this.setId(id); }
 
+    public CrashCause(String name) {
+        this.setName(name);
+        this.setActive(true);
+    }
+
 	/**
 	 * @return the id
 	 */

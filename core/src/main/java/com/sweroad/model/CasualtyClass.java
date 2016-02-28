@@ -29,6 +29,11 @@ public class CasualtyClass extends NameIdModel implements Comparable<CasualtyCla
 
     public CasualtyClass(Long id) { this.setId(id); }
 
+    public CasualtyClass(String name) {
+        this.setName(name);
+        this.setActive(true);
+    }
+
     /**
      * @return the id
      */

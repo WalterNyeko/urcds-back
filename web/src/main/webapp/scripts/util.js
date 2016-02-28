@@ -6,31 +6,37 @@ var util = (function () {
             f.call();
         }, waitTime);
         return false;
-    }
+    };
     util.sendRequest = function(params) {
         $.ajax({
             url: params.url,
             success: function (result) {
                 var response = $(result);
-                if (params.rootElementId)
+                if (params.rootElementId) {
                     response = $(result).find('[id=' + params.rootElementId + ']');
-                if(params.responseDiv)
+                }
+                if (params.responseDiv) {
                     params.responseDiv.html(response);
+                }
+                if (params.responseField) {
+                    params.responseField.val(result);
+                }
                 if (params.modal) {
                     params.modal.body = response;
                     ui.popup(params.modal);
                 }
-                if (params.callback)
+                if (params.callback) {
                     params.callback();
+                }
             }
         });
-    }
+    };
     util.nameValuePair = function (name) {
         return { name: name, value: null};
-    }
+    };
     util.nameListPair = function (name) {
         return { name: name, list: [] };
-    }
+    };
     util.propertyListToString = function (propertyList) {
         var text = propertyList[0].name;
         propertyList.map(function (prop, index) {
@@ -38,7 +44,7 @@ var util = (function () {
                 text += ', ' + prop.name;
         });
         return text;
-    }
+    };
     util.basePath = function () {
         var basePath = window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/') + 1);
         constants.nonBasePath.map(function(x) {
@@ -46,7 +52,7 @@ var util = (function () {
                 basePath = basePath.replace(x + '/', '');
         });
         return basePath;
-    }
+    };
     util.yearList = function () {
         var years = [];
         var year = 2014; //Start year
@@ -55,7 +61,7 @@ var util = (function () {
             years.push(year++);
         }
         return years;
-    }
+    };
     util.runQuery = function (queryId) {
         util.sendRequest({
             url: this.basePath() + 'crashqueryform?id=' + queryId,
@@ -68,7 +74,7 @@ var util = (function () {
             }
         });
         return false;
-    }
+    };
     util.persistQuery = function () {
         var query = new CrashQuery();
         query.dirty = util.formEdited();
@@ -99,28 +105,28 @@ var util = (function () {
         if (util.formEdited()) {
             util.bindBeforeUnload();
         }
-    }
+    };
     util.detectTextChange = function (element) {
         if (element.oldValue !== element.value) {
             util.editForm();
             util.bindBeforeUnload();
         }
-    }
+    };
     util.formEdited = function () {
         return $('#dirty').val() === 'true';
-    }
+    };
     util.editForm = function () {
         $('#dirty').val('true');
-    }
+    };
     util.bindBeforeUnload = function () {
         $(window).on('beforeunload', function () {
             ui.closeNotification();
             return 'You have unsaved changes. They will be lost if you go ahead and leave this page without saving.';
         });
-    }
+    };
     util.unbindBeforeUnload = function () {
         $(window).off('beforeunload');
-    }
+    };
     util.fetchCrashData = function(callback) {
         util.sendRequest({
             callback: callback,
@@ -128,7 +134,7 @@ var util = (function () {
             responseDiv: $('div#crashdata'),
             url: util.basePath() + 'analysisdata'
         });
-    }
+    };
     util.initCrashData = function () {
         if ($('#crashesJSON').length)
             window.crashes = JSON.parse($.trim($("#crashesJSON").val()));
@@ -137,7 +143,7 @@ var util = (function () {
             window.crashAttributes.casualtyClass.unshift({ id: 0, name: 'Driver' });
             window.crashAttributes.day = constants.dayList;
         }
-    }
+    };
     util.initCrashAnalysis = function (itemName) {
         $(document).ready(function () {
             ui.renderQuerySummary();
@@ -145,7 +151,7 @@ var util = (function () {
             ui.toggleMenuItem($('.toggle-menu div#crashes > a:first'));
             util.initTableSorter('table.tablesorter', itemName || 'crashes');
         });
-    }
+    };
     util.initTableSorter = function (tableSelector, itemsName) {
         var pagerOptions = {
             container: $(".pager"),
@@ -166,13 +172,13 @@ var util = (function () {
                 resizable: true
             }
         }).tablesorterPager(pagerOptions);
-    }
+    };
     util.capitalizeFirst = function(text) {
         return text.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
-    }
+    };
     util.injuredCasualty = function(casualtyType) {
         return casualtyType && casualtyType.id < 4;
-    }
+    };
     util.driverToCasualty = function(vehicle) {
         var driver = vehicle.driver;
         if (!driver || !this.injuredCasualty(driver.casualtyType))
@@ -185,44 +191,44 @@ var util = (function () {
         casualty.beltOrHelmetUsed = driver.beltOrHelmetUsed;
         casualty.casualtyType = driver.casualtyType;
         return casualty;
-    }
+    };
     util.isCasualtyAttribute = function(selector) {
         return $(selector).find('option:selected').attr('data-attr-type') == 'casualty';
-    }
+    };
     util.isCrashAttribute = function(selector) {
         return $(selector).find('option:selected').attr('data-attr-type') == 'crash';
-    }
+    };
     util.isVehicleAttribute = function(selector) {
         return $(selector).find('option:selected').attr('data-attr-type') == 'vehicle';
-    }
+    };
     util.isValueRange = function(range) {
         return constants.valueRanges.indexOf(range) > -1;
-    }
+    };
     util.getAttributes = function(name, appendNull) {
         var attributes = window.crashAttributes[name];
         if (attributes.length && !attributes[0].name && attributes[0].label)
             attributes.map(function(x) { x.name = x.label });
         appendNull && attributes.push(util.nullAttribute());
         return attributes;
-    }
+    };
     util.nullAttribute = function() {
         return { id: null, name: constants.NOT_SPECIFIED }
-    }
+    };
     util.isNullAttribute = function(attribute) {
         return attribute.id === null && attribute.name === constants.NOT_SPECIFIED;
-    }
+    };
     util.validate24HrTime = function(time) {
         var rx = RegExp('([01]?[0-9]|2[0-3]):[0-5][0-9]');
         return rx.test(time);
-    }
+    };
     util.dateDiff = function(startDate, endDate) {
         var oneDay = 1000*60*60*24;
         return Math.ceil((endDate.getTime() - startDate.getTime()) / oneDay);
-    }
+    };
     util.isFutureDate = function(date) {
         var now = new Date();
         return date.getTime() > now.getTime();
-    }
+    };
     return util;
 })();
 
@@ -248,7 +254,7 @@ var ui = (function () {
             });
         });
         return this;
-    }
+    };
     ui.initDatePicker = function (selectDate) {
         $('.dtpicker').datepicker({
             dateFormat: "yy-mm-dd",
@@ -263,7 +269,7 @@ var ui = (function () {
             onSelect: selectDate
         });
         $('.time-control').on('blur focusout', selectDate);
-    }
+    };
     ui.initSearchButton = function () {
         $('#searchButton').click(function () {
             var searchTerm = $.trim($('#searchTerm').val());
@@ -271,7 +277,7 @@ var ui = (function () {
                 window.location.href = util.basePath() + 'crashsearch?tarNo=' + searchTerm;
             }
         });
-    }
+    };
     ui.loadingNotification = function(message) {
         ui.clearModal();
         message = message || 'Please wait...'
@@ -281,7 +287,7 @@ var ui = (function () {
         loading.append($('<div class="modal-body">').append('<img src="' + gif + '" height="80">'));
         loading.modal();
         ui.centerDialog(loading);
-    }
+    };
     ui.closeNotification = function(lag) {
         lag = lag || 100;
         util.scheduleDeferredFunctionExecution(lag, function() {
@@ -289,19 +295,19 @@ var ui = (function () {
             $('.modal-backdrop').remove();
             $('body').removeClass('modal-open');
         });
-    }
+    };
     ui.clearModal = function() {
         $('.modal, .modal-backdrop.in, .modal-scrollable').remove();
         $('body').removeClass('modal-open').removeClass('page-overflow');
-    }
+    };
     ui.dialogContent = function () {
         return window.dialog;
-    }
+    };
     ui.centerDialog = function (dialog) {
         dialog.css('left', 0);
         var diff = $(window).width() - dialog.outerWidth();
         dialog.css('left', diff/2);
-    }
+    };
     ui.popup = function(params) {
         ui.clearModal();
         var popup = $('<div id="rcds-modal" class="modal fade" aria-hidden="true" data-backdrop="static" data-keyboard="false">');
@@ -322,7 +328,7 @@ var ui = (function () {
         popup.find('button[data-dismiss]').click(function() { ui.clearModal()});
         popup.draggable({ containment: 'window', handle: '.modal-header', cursor: 'move' });
         return popup;
-    }
+    };
     ui.confirmDialog = function(params) {
         var modal = Object.create(null);
         modal.header = 'Confirm Action';
@@ -340,7 +346,7 @@ var ui = (function () {
         }
         ui.popup(modal);
         return false;
-    }
+    };
     ui.alertDialog = function(params) {
         if ($('.alert-dialog').length)
             return false;
@@ -356,7 +362,7 @@ var ui = (function () {
         }
         ui.popup(modal).addClass('alert-dialog').find('button[data-dismiss]').hide();
         return false;
-    }
+    };
     ui.appendQueryHeader = function (query, table) {
         if (query.name && query.description) {
             var row = $('<tr><td></td><td colspan="2"></td></tr>');
@@ -366,7 +372,7 @@ var ui = (function () {
             row.find('td:last').append('<div class="query-value">' + query.description + '</div>');
             table.append(row);
         }
-    }
+    };
     ui.createQueryForm = function (query) {
         var action = util.basePath() + 'crashquerysave';
         var form = $('<form id="query-form" method="post" action="' + action + '">');
@@ -378,14 +384,14 @@ var ui = (function () {
         table.find('textarea').text(query.description);
         table.append('<tr><td colspan="2"></td></tr>');
         return form.append(table);
-    }
+    };
     ui.loadQueryForm = function () {
         var queryData = $('#queryData').val().trim();
         if (queryData) {
             var query = new CrashQuery(queryData);
             query.loadForm();
         }
-    }
+    };
     ui.queryFormButtons = function () {
         return  {
             'Save': function () {
@@ -395,7 +401,7 @@ var ui = (function () {
                 $('#map-canvas').remove()
             }
         };
-    }
+    };
     ui.saveQuery = function () {
         var queryName = $('#name').val().trim();
         var description = $('#description').val().trim();
@@ -408,7 +414,7 @@ var ui = (function () {
         } else {
 
         }
-    }
+    };
     ui.initMappingSurface = function () {
         $('.drawing-actions').hide();
         $("html").css("height", "100%");
@@ -417,19 +423,19 @@ var ui = (function () {
         $("body").css("padding-top", "51px");
         $("#content").addClass("height-100");
         $("#content").addClass("bot-pad-36");
-    }
+    };
     ui.renderQuerySummary = function () {
         if (sessionStorage.getItem('crashQuery')) {
             window.query = new CrashQuery(sessionStorage.getItem('crashQuery'));
             window.query.render();
         }
-    }
+    };
     ui.initLastAccessedObject = function () {
         $(window).load(function () {
             highlightLastAccessedObject();
             $('.tablesorter-wrapper').height($(window).height() - 290);
         });
-    }
+    };
     ui.attributeSelect = function(id, selected) {
         var select = $('<select>').attr('id', id);
         select.append('<option value="" data-default="crashSeverity">==== Crash Attributes ====</option>');
@@ -465,14 +471,14 @@ var ui = (function () {
         select.append('<option value="beltUsedOption" data-attr-type="casualty">Belt/Helmet Used (Casualty)</option>');
         selected && select.find('option[value=' + selected +']').prop('selected', true);
         return select;
-    }
+    };
     ui.unitSelect = function() {
         var select = $('<select id="unit">');
         select.append('<option value="casualty">Casualties</option>');
         select.append('<option selected value="crash">Crashes</option>');
         select.append('<option value="vehicle">Vehicles</option>');
         return select;
-    }
+    };
     ui.trendSelect = function(id) {
         var select = $('<select>').attr('id', id);
         select.append('<option value="timeRange">Time of Day</option>');
@@ -480,7 +486,7 @@ var ui = (function () {
         select.append('<option selected value="month">Month</option>');
         select.append('<option value="year">Year</option>');
         return select;
-    }
+    };
     ui.statisticsTable = function() {
         var div = $('div.content-wrapper');
         div.html('');
@@ -492,7 +498,7 @@ var ui = (function () {
         row2.append($('<td colspan="2" align="center">').append('<div id="stat-column" style="width:100%"></div>'));
         table.append(row1).append(row2);
         div.append(table);
-    }
+    };
     ui.trendTable = function() {
         var div = $('div.content-wrapper');
         div.html('');
@@ -502,7 +508,7 @@ var ui = (function () {
         table.append(row1);
         div.append($('<p>').html(constants.HTML_SPACE));
         div.append(table);
-    }
+    };
     ui.crosstabTable = function() {var div = $('div.content-wrapper');
         div.html('');
         var table = $('<table cellpadding="3" width="100%" class="cross-tab">');
@@ -512,7 +518,7 @@ var ui = (function () {
         row2.append($('<td width="100%">').append('<br/><div id="crosstab-chart" style="width:100%"></div>'));
         table.append(row1).append(row2);
         div.append(table);
-    }
+    };
     ui.statisticsTools = function() {
         var div = $('div.analysis-tools');
         div.html('');
@@ -520,7 +526,7 @@ var ui = (function () {
         div.append(ui.attributeSelect('crashAttribute', 'crashSeverity')).append(constants.HTML_SPACE);
         div.append($('<label for="unit" class="control-label">').text('Units:')).append(constants.HTML_SPACE);
         div.append(ui.unitSelect());
-    }
+    };
     ui.trendTools = function() {
         var div = $('div.analysis-tools');
         div.html('');
@@ -531,7 +537,7 @@ var ui = (function () {
         div.append($('<label for="unit" class="control-label">').text('Units:')).append(constants.HTML_SPACE);
         div.append($('<div id="unit" style="display: inline">'));
         div.find('select#yCrashAttribute option[data-range]').remove();
-    }
+    };
     ui.crosstabTools = function() {
         var div = $('div.analysis-tools');
         div.html('');
@@ -541,7 +547,7 @@ var ui = (function () {
         div.append(ui.attributeSelect('yCrashAttribute', 'collisionType')).append(constants.HTML_SPACE);
         div.append($('<label for="unit" class="control-label">').text('Units:')).append(constants.HTML_SPACE);
         div.append(ui.unitSelect());
-    }
+    };
     ui.loadSelectCrash = function(params) {
         params.modal = {
             okButtonText: 'Search',
@@ -558,7 +564,7 @@ var ui = (function () {
         params.callback = ui.initDatePicker;
         util.sendRequest(params);
         return false;
-    }
+    };
     ui.loadVehicleForm = function(params) {
         params.modal = {
             okButtonText: 'Save',
@@ -572,7 +578,7 @@ var ui = (function () {
         params.rootElementId = "vehicleform";
         util.sendRequest(params);
         return false;
-    }
+    };
     ui.loadCasualtyForm = function(params) {
         params.modal = {
             okButtonText: 'Save',
@@ -588,7 +594,7 @@ var ui = (function () {
         params.rootElementId = "casualtyform";
         util.sendRequest(params);
         return false;
-    }
+    };
     ui.toggleCrashMenu = function() {
         var allCrashes = window.location.href.indexOf('?all=true') > -1;
         var removedCrashes = window.location.href.indexOf('?removed=true') > -1;
@@ -604,13 +610,13 @@ var ui = (function () {
             if ($(this).is('div'))
                 window.location.href = item.attr('href');
         });
-    }
+    };
     ui.toggleMenuItem = function(item) {
         $('.toggle-menu .active').removeClass('active');
         $('.toggle-menu .non-click').removeClass('non-click');
         item.addClass('non-click');
         item.parent().addClass('active');
-    }
+    };
     ui.setCrashTime = function() {
         if (!$('#crashTime').length)
             return;
@@ -631,7 +637,7 @@ var ui = (function () {
             date = dateParts[0];
         date = date + " " + time;
         $('#crashDateTimeString').val(date);
-    }
+    };
     ui.loadCrashTime = function() {
         var date = $('#crashDateTimeString').val();
         if (date.trim() == '')
@@ -641,7 +647,7 @@ var ui = (function () {
             var time = $.trim(dateParts[1]);
             $('#crashTime').val(time);
         }
-    }
+    };
     ui.setInjuryDateTime = function() {
         var date = $.trim($('#injuryDate').val());
         var time = $.trim($('#injuryTime').val());
@@ -661,7 +667,58 @@ var ui = (function () {
         }
         date = date + " " + time;
         $('#injuryDateTimeString').val(date);
-    }
+    };
+    ui.addSystemParameter = function() {
+        var firstRow = $('#parameters tbody tr:first');
+        if (!firstRow.is('.new-param')) {
+            var newRow = firstRow.clone().addClass('new-param');
+            firstRow.before(newRow);
+            ui.refreshParameterTable();
+            var nameCell = newRow.find('td:first');
+            var actionCell = newRow.find('td:last');
+            var div = $('<div class="edit-param">');
+            var saveBtn = $('<a href="">').text('Save');
+            var input = $('<input type="text" size="40">');
+            var cancelBtn = $('<a href="" class="cancel">').text('Cancel');
+            div.append(input).append(saveBtn).append(cancelBtn);
+            nameCell.html(div);
+            actionCell.html('');
+            nameCell.closest('table').find('a.cancel').trigger('click');
+            saveBtn.click(function() {
+                var newName = ui.validateParameterName(input);
+                if (newName) {
+                    var responseField = $('<input type="hidden">');
+                    util.sendRequest({
+                        url: util.basePath() + "admin/paramsadd?name=" + newName + "&code=" + $('#paramCode').val(),
+                        responseField: responseField,
+                        callback: function () {
+                            actionCell.append(ui.createEditParamButton(responseField.val()));
+                            actionCell.append(ui.createRemoveParamButton(responseField.val()));
+                        }
+                    });
+                    nameCell.html(newName);
+                    return false;
+                } else {
+                    return false;
+                }
+            });
+            cancelBtn.click(function() {
+                newRow.remove();
+                ui.refreshParameterTable();
+                return false;
+            });
+        }
+        return false;
+    };
+    ui.refreshParameterTable = function() {
+        $('#parameters tbody tr').each(function(index) {
+            if ((index + 1) % 2 === 0) {
+                $(this).addClass('odd').removeClass('even');
+            } else {
+                $(this).addClass('even').removeClass('odd');
+            }
+        });
+    };
     ui.editSystemParameter = function(id, button) {
         var nameCell = $(button).parent().prev();
         var oldName = nameCell.text();
@@ -674,35 +731,45 @@ var ui = (function () {
         div.append(input).append(saveBtn).append(cancelBtn);
         nameCell.closest('table').find('a.cancel').trigger('click');
         nameCell.html(div);
+        cancelBtn.click(function() { return setName(oldName) });
         var setName = function(name) {
             nameCell.html(name);
             $(button).show();
             return false;
-        }
+        };
         saveBtn.click(function() {
-            var newName = input.val().trim();
-            if (!newName) {
-                ui.alertDialog({ message: 'A value must be specified', focusTarget: input });
-                $(button).show();
+            var newName = ui.validateParameterName(input, oldName);
+            if (newName) {
+                util.sendRequest({ url: util.basePath() + "admin/paramsupdate?id=" + id + "&name=" + newName + "&code=" + $('#paramCode').val() });
+                return setName(newName);
+            } else {
                 return false;
             }
-            if (newName === oldName)
-                return setName(oldName);
-            var unique = true;
-            nameCell.parents('tbody').find('tr').each(function() {
-                unique = unique && $(this).find('td:first').text() != newName;
-            });
-            if (!unique) {
-                ui.alertDialog({ message: 'Value must be unique', focusTarget: input });
-                $(button).show();
-                return false;
-            }
-            util.sendRequest( { url: util.basePath() + "admin/paramsupdate?id=" + id + "&name=" + newName + "&code=" + $('#paramCode').val() });
-            return setName(newName);
         });
         cancelBtn.click(function() { return setName(oldName) });
         return false;
-    }
+    };
+    ui.validateParameterName = function(input, oldName) {
+        var nameCell = input.closest('td');
+        var name = input.val().trim();
+        if (!name) {
+            ui.alertDialog({ message: 'A value must be specified', focusTarget: input });
+            return false;
+        }
+        if (oldName && name === oldName) {
+            nameCell.closest('table').find('a.cancel').trigger('click');
+            return false;
+        }
+        var unique = true;
+        nameCell.parents('tbody').find('tr').each(function() {
+            unique = unique && $(this).find('td:first').text().toLowerCase() !== name.toLowerCase();
+        });
+        if (!unique) {
+            ui.alertDialog({ message: 'Value must be unique', focusTarget: input });
+            return false;
+        }
+        return name;
+    };
     ui.confirmRemoveParameter = function(id, button) {
         ui.confirmDialog({
             message: 'Remove this parameter?',
@@ -717,9 +784,9 @@ var ui = (function () {
                     $(button).parent().append(ui.createRestoreParamButton(id));
                 util.sendRequest( { url: util.basePath() + "admin/paramsremove?id=" + id + "&code=" + $('#paramCode').val() });
             }
-        })
+        });
         return false;
-    }
+    };
     ui.confirmRestoreParameter = function(id, button) {
         ui.confirmDialog({
             message: 'Restore this parameter?',
@@ -733,30 +800,30 @@ var ui = (function () {
                     $(button).parent().append(ui.createEditParamButton(id)).append(ui.createRemoveParamButton(id));
                 util.sendRequest( { url: util.basePath() + "admin/paramsrestore?id=" + id + "&code=" + $('#paramCode').val() });
             }
-        })
+        });
         return false;
-    }
+    };
     ui.createEditParamButton = function(id) {
         var button = $('<a href="" class="edit">');
         var icon = $('<img src="" alt="Edit parameter" title="Edit parameter" hspace="4">');
         icon.attr('src', util.basePath() + "images/bt_Edit.gif");
         button.click(function() { return ui.editSystemParameter(id, button)});
         return button.append(icon);
-    }
+    };
     ui.createRemoveParamButton = function(id) {
         var button = $('<a href="" class="remove">');
         var icon = $('<img src="" alt="Remove parameter" title="Remove parameter" hspace="4">');
         icon.attr('src', util.basePath() + "images/bt_Remove.gif");
         button.click(function() { return ui.confirmRemoveParameter(id, button)});
         return button.append(icon);
-    }
+    };
     ui.createRestoreParamButton = function(id) {
         var button = $('<a href="" class="restore">');
         var icon = $('<img src="" alt="Restore parameter" title="Restore parameter" hspace="4">');
         icon.attr('src', util.basePath() + "images/bt_Restore.gif");
         button.click(function() { return ui.confirmRestoreParameter(id, button)});
         return button.append(icon);
-    }
+    };
     return ui.init();
 })();
 

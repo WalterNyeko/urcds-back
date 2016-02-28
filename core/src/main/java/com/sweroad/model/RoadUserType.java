@@ -21,6 +21,11 @@ public class RoadUserType extends NameIdModel {
 
     public RoadUserType(Long id) { this.setId(id); }
 
+    public RoadUserType(String name) {
+        this.setName(name);
+        this.setActive(true);
+    }
+
     public Long getId() {
         return id;
     }

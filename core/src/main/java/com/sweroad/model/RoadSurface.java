@@ -32,6 +32,11 @@ public class RoadSurface extends NameIdModel implements Comparable<RoadSurface>,
 
     public RoadSurface(Long id) { this.setId(id); }
 
+    public RoadSurface(String name) {
+        this.setName(name);
+        this.setActive(true);
+    }
+
 	/**
 	 * @return the id
 	 */

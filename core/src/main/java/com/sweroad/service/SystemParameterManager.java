@@ -12,6 +12,8 @@ public interface SystemParameterManager extends GenericManager<SystemParameter, 
 
     List<? extends NameIdModel> getParameters(String type) throws Exception;
 
+    NameIdModel addParameter(String name, String code) throws Exception;
+
     void updateParameterName(Long id, String name, String code) throws Exception;
 
     void setParameterActive(Long id, boolean active, String code) throws Exception;

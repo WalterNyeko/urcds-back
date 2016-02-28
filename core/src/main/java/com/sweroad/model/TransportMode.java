@@ -20,6 +20,11 @@ public class TransportMode extends NameIdModel {
 
     public TransportMode(Long id) { this.setId(id); }
 
+    public TransportMode(String name) {
+        this.setName(name);
+        this.setActive(true);
+    }
+
     public Long getId() {
         return id;
     }

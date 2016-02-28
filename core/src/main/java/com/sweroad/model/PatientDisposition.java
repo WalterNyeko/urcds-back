@@ -20,6 +20,11 @@ public class PatientDisposition extends NameIdModel {
 
     public PatientDisposition(Long id) { this.setId(id); }
 
+    public PatientDisposition(String name) {
+        this.setName(name);
+        this.setActive(true);
+    }
+
     public Long getId() {
         return id;
     }

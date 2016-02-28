@@ -28,6 +28,11 @@ public class RoadwayCharacter extends NameIdModel implements Comparable<RoadwayC
 
     public RoadwayCharacter(Long id) { this.setId(id); }
 
+    public RoadwayCharacter(String name) {
+        this.setName(name);
+        this.setActive(true);
+    }
+
 	/**
 	 * @return the id
 	 */

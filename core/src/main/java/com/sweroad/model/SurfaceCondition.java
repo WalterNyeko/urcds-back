@@ -35,6 +35,11 @@ public class SurfaceCondition extends NameIdModel implements Comparable<SurfaceC
 
     public SurfaceCondition(Long id) { this.setId(id); }
 
+    public SurfaceCondition(String name) {
+        this.setName(name);
+        this.setActive(true);
+    }
+
 	/**
 	 * @return the id
 	 */

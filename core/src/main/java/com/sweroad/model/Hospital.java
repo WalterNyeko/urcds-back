@@ -23,6 +23,11 @@ public class Hospital extends NameIdModel implements Comparable<Hospital> {
 
     public Hospital(Long id) { this.setId(id); }
 
+    public Hospital(String name) {
+        this.setName(name);
+        this.setActive(true);
+    }
+
     public Long getId() {
         return id;
     }

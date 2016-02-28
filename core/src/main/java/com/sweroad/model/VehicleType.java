@@ -27,6 +27,11 @@ public class VehicleType extends NameIdModel implements Comparable<VehicleType>,
     public VehicleType() { }
 
     public VehicleType(Long id) { this.setId(id); }
+
+    public VehicleType(String name) {
+        this.setName(name);
+        this.setActive(true);
+    }
 	/**
 	 * @return the id
 	 */

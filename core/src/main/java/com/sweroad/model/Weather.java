@@ -34,6 +34,11 @@ public class Weather extends NameIdModel implements Comparable<Weather>, Queryab
 
     public Weather(Long id) { this.setId(id); }
 
+    public Weather(String name) {
+        this.setName(name);
+        this.setActive(true);
+    }
+
 	/**
 	 * @return the id
 	 */

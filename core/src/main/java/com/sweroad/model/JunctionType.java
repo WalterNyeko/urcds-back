@@ -28,6 +28,11 @@ public class JunctionType extends NameIdModel implements Comparable<JunctionType
 
     public JunctionType(Long id) { this.setId(id); }
 
+    public JunctionType(String name) {
+        this.setName(name);
+        this.setActive(true);
+    }
+
 	/**
 	 * @return the id
 	 */

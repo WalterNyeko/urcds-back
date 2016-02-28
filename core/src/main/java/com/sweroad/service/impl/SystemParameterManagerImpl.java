@@ -112,6 +112,54 @@ public class SystemParameterManagerImpl extends GenericManagerImpl<SystemParamet
     }
 
     @Override
+    public NameIdModel addParameter(String name, String code) throws Exception {
+        switch(code) {
+            case "weather":
+                return weatherManager.save(new Weather(name));
+            case "district":
+                return districtManager.save(new District(name));
+            case "hospital":
+                return hospitalManager.save(new Hospital(name));
+            case "injuryType":
+                return injuryTypeManager.save(new InjuryType(name));
+            case "crashCause":
+                return crashCauseManager.save(new CrashCause(name));
+            case "vehicleType":
+                return vehicleTypeManager.save(new VehicleType(name));
+            case "roadSurface":
+                return roadSurfaceManager.save(new RoadSurface(name));
+            case "roadUserType":
+                return roadUserTypeManager.save(new RoadUserType(name));
+            case "junctionType":
+                return junctionTypeManager.save(new JunctionType(name));
+            case "casualtyType":
+                return casualtyTypeManager.save(new CasualtyType(name));
+            case "casualtyClass":
+                return casualtyClassManager.save(new CasualtyClass(name));
+            case "collisionType":
+                return collisionTypeManager.save(new CollisionType(name));
+            case "crashSeverity":
+                return crashSeverityManager.save(new CrashSeverity(name));
+            case "patientStatus":
+                return patientStatusManager.save(new PatientStatus(name));
+            case "policeStation":
+                return policeStationManager.save(new PoliceStation(name));
+            case "transportMode":
+                return transportModeManager.save(new TransportMode(name));
+            case "roadwayCharacter":
+                return roadwayCharacterManager.save(new RoadwayCharacter(name));
+            case "surfaceCondition":
+                return surfaceConditionManager.save(new SurfaceCondition(name));
+            case "patientDisposition":
+                return patientDispositionManager.save(new PatientDisposition(name));
+            case "vehicleFailureType":
+                return vehicleFailureTypeManager.save(new VehicleFailureType(name));
+            default:
+                throw new Exception("Unknown parameter type: [" + code + "]");
+        }
+    }
+
+    @Override
     public void updateParameterName(Long id, String name, String code) throws Exception {
         switch(code) {
             case "weather":

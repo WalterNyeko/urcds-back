@@ -31,6 +31,11 @@ public class CrashSeverity extends NameIdModel implements Comparable<CrashSeveri
 
     public CrashSeverity(Long id) { this.setId(id); }
 
+    public CrashSeverity(String name) {
+        this.setName(name);
+        this.setActive(true);
+    }
+
 	/**
 	 * @return the id
 	 */

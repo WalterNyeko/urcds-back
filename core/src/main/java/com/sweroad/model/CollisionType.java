@@ -27,6 +27,12 @@ public class CollisionType extends NameIdModel implements Comparable<CollisionTy
     public CollisionType() { }
 
     public CollisionType(Long id) { this.setId(id); }
+
+    public CollisionType(String name) {
+        this.setName(name);
+        this.setActive(true);
+    }
+
 	/**
 	 * @return the id
 	 */

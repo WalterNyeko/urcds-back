@@ -15,6 +15,16 @@
                     <input type="hidden" value="${systemParameter.code}" id="paramCode" />
                 </td>
                 <td width="30%" align="right" valign="bottom">
+
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-left: 10px">
+                    <a href="" class="addnew" onclick="return ui.addSystemParameter()">
+                        <fmt:message key="rcds.addNew" />
+                    </a>
+                </td>
+                <td align="right">
                     <a href="<c:url value='/admin/params'/>">
                         <fmt:message key="rcds.backToSystemParameters" />
                     </a>

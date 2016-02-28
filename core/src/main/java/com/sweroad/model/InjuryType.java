@@ -26,6 +26,11 @@ public class InjuryType extends NameIdModel {
 
     public InjuryType(Long id) { this.setId(id); }
 
+    public InjuryType(String name) {
+        this.setName(name);
+        this.setActive(true);
+    }
+
     public Long getId() {
         return id;
     }

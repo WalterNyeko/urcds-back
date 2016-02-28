@@ -21,6 +21,11 @@ public class PatientStatus extends NameIdModel {
 
     public PatientStatus(Long id) { this.setId(id); }
 
+    public PatientStatus(String name) {
+        this.setName(name);
+        this.setActive(true);
+    }
+
     public Long getId() {
         return id;
     }

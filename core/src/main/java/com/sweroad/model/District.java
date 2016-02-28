@@ -26,6 +26,10 @@ public class District extends NameIdModel implements Comparable<District>, Query
     public District() { }
 
     public District(Long id) { this.setId(id); }
+
+    public District(String name) {
+        this.setName(name);
+        this.setActive(true); }
 	/**
 	 * @return the id
 	 */

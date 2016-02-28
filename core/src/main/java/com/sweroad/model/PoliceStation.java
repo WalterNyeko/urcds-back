@@ -37,6 +37,11 @@ public class PoliceStation extends NameIdModel implements Comparable<PoliceStati
     public PoliceStation() { }
 
     public PoliceStation(Long id) { this.setId(id); }
+
+    public PoliceStation(String name) {
+        this.setName(name);
+        this.setActive(true);
+    }
 	
 	/**
 	 * @return the id
