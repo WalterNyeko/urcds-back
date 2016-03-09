@@ -697,6 +697,7 @@ var ui = (function () {
                         }
                     });
                     nameCell.html(newName);
+                    newRow.removeClass('new-param');
                     return false;
                 } else {
                     return false;

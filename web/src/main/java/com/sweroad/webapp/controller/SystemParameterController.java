@@ -44,7 +44,11 @@ public class SystemParameterController extends BaseFormController {
         try {
             SystemParameter systemParameter = systemParameterManager.get(paramTypeId);
             List<? extends NameIdModel> parameters = systemParameterManager.getParameters(systemParameter.getCode());
-            ModelAndView mav = new ModelAndView("admin/paramlist");
+            String view = "admin/paramlist";
+            if (systemParameter.getCode().equals("policeStation")) {
+                view = "admin/policestations";
+            }
+            ModelAndView mav = new ModelAndView(view);
             mav.addObject("systemParameter", systemParameter);
             mav.addObject("parameters", parameters);
             return mav;
