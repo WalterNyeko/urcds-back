@@ -3,7 +3,7 @@ package com.sweroad.webapp.controller;
 import com.mysql.jdbc.StringUtils;
 import com.sweroad.model.*;
 import com.sweroad.service.CasualtyManager;
-import com.sweroad.service.CrashManager;
+import com.sweroad.service.CrashService;
 import com.sweroad.service.SearchCriteriaManager;
 import com.sweroad.service.VehicleManager;
 import com.sweroad.util.DateUtil;
@@ -34,7 +34,7 @@ public class CrashAnalysisController extends BaseFormController {
     @Autowired
     private CasualtyManager casualtyManager;
     @Autowired
-    private CrashManager crashManager;
+    private CrashService crashManager;
     @Autowired
     private SearchCriteriaManager searchCriteriaManager;
     @Autowired

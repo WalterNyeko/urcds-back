@@ -2,7 +2,7 @@ package com.sweroad.webapp.controller;
 
 import com.sweroad.model.Crash;
 import com.sweroad.model.CrashSeverity;
-import com.sweroad.service.CrashManager;
+import com.sweroad.service.CrashService;
 import com.sweroad.service.GenericManager;
 import com.sweroad.webapp.util.SessionHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class CrashMapController extends BaseFormController {
     @Autowired
     private GenericManager<CrashSeverity, Long> crashSeverityManager;
     @Autowired
-    private CrashManager crashManager;
+    private CrashService crashService;
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView showMap(HttpServletRequest request) throws Exception {
@@ -29,9 +29,9 @@ public class CrashMapController extends BaseFormController {
         mav.addObject("crashSeverities", crashSeverityManager.getAll());
         List<Crash> crashes = (List<Crash>) request.getSession().getAttribute("crashes");
         if (crashes == null) {
-            crashes = crashManager.getAvailableCrashes(true);
+            crashes = crashService.getAvailableCrashes(true);
             SessionHelper.persistCrashesInSession(request, crashes);
-            SessionHelper.persistCrashAttributesInSession(request, crashManager.getOrderedRefData());
+            SessionHelper.persistCrashAttributesInSession(request, crashService.getOrderedRefData());
         }
         return mav;
     }

@@ -1,7 +1,7 @@
 package com.sweroad.service.impl;
 
 import com.sweroad.model.*;
-import com.sweroad.service.CrashManager;
+import com.sweroad.service.CrashService;
 import com.sweroad.service.DateRangeManager;
 import com.sweroad.service.SearchCriteriaManager;
 import com.sweroad.util.DateUtil;
@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,13 +18,13 @@ import java.util.List;
 public class SearchCriteriaManagerImpl implements SearchCriteriaManager {
 
     @Autowired
-    private CrashManager crashManager;
+    private CrashService crashService;
     @Autowired
     private DateRangeManager dateRangeManager;
 
     @Override
     public List<Crash> getCrashesByCriteria(SearchCriteria searchCriteria) {
-        List<Crash> allCrashes = crashManager.getAllDistinct();
+        List<Crash> allCrashes = crashService.getAllDistinct();
         List<Crash> filteredCrashes = new ArrayList<Crash>();
         for (Crash crash : allCrashes) {
             if (!crash.isRemoved() && meetsCriteria(searchCriteria, crash)) {

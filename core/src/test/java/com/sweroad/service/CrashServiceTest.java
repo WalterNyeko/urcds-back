@@ -15,11 +15,11 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextImpl;
 
-public class CrashManagerTest extends BaseManagerTestCase {
+public class CrashServiceTest extends BaseManagerTestCase {
 
-	private Log log = LogFactory.getLog(CrashManagerTest.class);
+	private Log log = LogFactory.getLog(CrashServiceTest.class);
 	@Autowired
-	private CrashManager crashManager;
+	private CrashService crashService;
     private SecurityContext initialSecurityContext = null;
 
     @Before
@@ -52,7 +52,7 @@ public class CrashManagerTest extends BaseManagerTestCase {
 		crash.addCasualty(new Casualty());
 		crash.getCasualties().get(0).setId(1L);
 		crash.getCasualties().get(1).setId(2L);
-		crashManager.removeCasualtyFromCrash(crash, 2L);
+		crashService.removeCasualtyFromCrash(crash, 2L);
 		assertEquals(1, crash.getCasualties().size());
 	}
 
@@ -64,7 +64,7 @@ public class CrashManagerTest extends BaseManagerTestCase {
 		crash.addVehicle(new Vehicle());
 		crash.getVehicles().get(0).setId(1L);
 		crash.getVehicles().get(1).setId(2L);
-		crashManager.removeVehicleFromCrash(crash, 2L);
+		crashService.removeVehicleFromCrash(crash, 2L);
 		assertEquals(1, crash.getVehicles().size());
 	}
 
@@ -84,29 +84,29 @@ public class CrashManagerTest extends BaseManagerTestCase {
 		crash.getCasualties().get(0).setVehicle(crash.getVehicles().get(0));
 		crash.getCasualties().get(1).setVehicle(crash.getVehicles().get(1));
 
-		crashManager.removeVehicleFromCrash(crash, 2L);
+		crashService.removeVehicleFromCrash(crash, 2L);
 		assertEquals(1, crash.getCasualties().size());
 	}
 	
 	@Test
 	public void testThatRemoveCrashSetsCrashToRemoved() {
 		log.debug("testing that remove crash sets crash status to removed...");
-		Crash crash = crashManager.get(1L);
+		Crash crash = crashService.get(1L);
 		crash.setRemoved(false);
-		crashManager.save(crash);
-		crashManager.removeCrashById(1L);
-		crash  = crashManager.get(1L);
+		crashService.save(crash);
+		crashService.removeCrashById(1L);
+		crash  = crashService.get(1L);
 		assertEquals(true, crash.isRemoved());
 	}
 	
 	@Test
 	public void testThatRestoreCrashSetsCrashIsRemovedToFalse() {
 		log.debug("testing that restore crash sets crash isRemoved to false...");
-		Crash crash = crashManager.get(1L);
+		Crash crash = crashService.get(1L);
 		crash.setRemoved(true);
-		crashManager.save(crash);
-		crashManager.restoreCrashById(1L);
-		crash  = crashManager.get(1L);
+		crashService.save(crash);
+		crashService.restoreCrashById(1L);
+		crash  = crashService.get(1L);
 		assertEquals(false, crash.isRemoved());
 	}
 
@@ -114,7 +114,7 @@ public class CrashManagerTest extends BaseManagerTestCase {
     public void testSaveCrash() {
         log.debug("testing save crash...");
         Crash crash = buildCrashObject();
-        crash = crashManager.saveCrash(crash);
+        crash = crashService.saveCrash(crash);
         assertEquals(11L, crash.getId().longValue());
     }
 

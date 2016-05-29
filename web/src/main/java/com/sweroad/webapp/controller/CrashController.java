@@ -3,6 +3,7 @@ package com.sweroad.webapp.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sweroad.service.CrashService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,14 +11,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sweroad.model.Crash;
-import com.sweroad.service.CrashManager;
 
 @Controller
 @RequestMapping("/crash*")
 public class CrashController extends BaseFormController {
 
     @Autowired
-    private CrashManager crashManager;
+    private CrashService crashService;
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView showCrashes(HttpServletRequest request) throws Exception {
@@ -25,13 +25,13 @@ public class CrashController extends BaseFormController {
             boolean latestOnly = request.getParameter("all") == null;
             boolean removedOnly = request.getParameter("removed") != null;
             if (removedOnly) {
-                return new ModelAndView("crashes").addObject("crashes", crashManager.getRemovedCrashes());
+                return new ModelAndView("crashes").addObject("crashes", crashService.getRemovedCrashes());
             } else {
-                return new ModelAndView("crashes").addObject("crashes", crashManager.getCrashes(latestOnly));
+                return new ModelAndView("crashes").addObject("crashes", crashService.getCrashes(latestOnly));
             }
         } catch (Exception e) {
             logException(request, e, "Load crashes encountered a problem");
-            return new ModelAndView("crashes").addObject("crashes", crashManager.getCrashes(true));
+            return new ModelAndView("crashes").addObject("crashes", crashService.getCrashes(true));
         }
     }
 
@@ -41,9 +41,9 @@ public class CrashController extends BaseFormController {
         try {
             Crash crash;
             String id = request.getParameter("id");
-            crash = crashManager.getCrashForView(new Long(id));
+            crash = crashService.getCrashForView(new Long(id));
             mav.addObject("crash", crash);
-            mav.addAllObjects(crashManager.getReferenceData());
+            mav.addAllObjects(crashService.getReferenceData());
         } catch (Exception e) {
             log.error("View crash failed: " + e.getLocalizedMessage());
             response.sendRedirect(request.getContextPath() + "/crashes");
@@ -55,7 +55,7 @@ public class CrashController extends BaseFormController {
     public void removeCrash(HttpServletRequest request, HttpServletResponse response) throws Exception {
         try {
             String id = request.getParameter("id");
-            crashManager.removeCrashById(new Long(id));
+            crashService.removeCrashById(new Long(id));
             saveMessage(request, "Crash was removed successfully");
         } catch (Exception e) {
             logException(request, e, "Remove crash failed");
@@ -67,7 +67,7 @@ public class CrashController extends BaseFormController {
     public void restoreCrash(HttpServletRequest request, HttpServletResponse response) throws Exception {
         try {
             String id = request.getParameter("id");
-            crashManager.restoreCrashById(new Long(id));
+            crashService.restoreCrashById(new Long(id));
             saveMessage(request, "Crash was restored successfully");
         } catch (Exception e) {
             logException(request, e, "Restore crash failed");

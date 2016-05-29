@@ -3,7 +3,7 @@ package com.sweroad.webapp.controller;
 import com.sweroad.model.*;
 import com.sweroad.query.CrashQuery;
 import com.sweroad.query.CrashSearch;
-import com.sweroad.service.CrashManager;
+import com.sweroad.service.CrashService;
 import com.sweroad.service.CrashQueryManager;
 import com.sweroad.webapp.util.SessionHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,21 +26,21 @@ import java.io.IOException;
 public class CrashSelectionController extends BaseFormController {
 
     @Autowired
-    private CrashManager crashManager;
+    private CrashService crashService;
     @Autowired
     private CrashQueryManager crashQueryManager;
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView crashSelection() throws Exception {
         ModelAndView mav = new ModelAndView("selection/crashselection");
-        mav.addAllObjects(crashManager.getOrderedRefData());
+        mav.addAllObjects(crashService.getOrderedRefData());
         return mav;
     }
 
     @RequestMapping(value = "/crashselectioncrashes", method = RequestMethod.GET)
     public void selectCrashes(HttpServletRequest request, HttpServletResponse response,
                               @RequestParam("recent") Boolean recent) throws Exception {
-        SessionHelper.persistCrashesInSession(request, crashManager.getAvailableCrashes(recent));
+        SessionHelper.persistCrashesInSession(request, crashService.getAvailableCrashes(recent));
         response.sendRedirect(request.getContextPath() + "/analysis");
     }
 

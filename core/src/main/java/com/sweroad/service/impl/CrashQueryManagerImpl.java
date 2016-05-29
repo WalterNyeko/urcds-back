@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +25,7 @@ public class CrashQueryManagerImpl implements CrashQueryManager {
     @Autowired
     private CrashDao crashDao;
     @Autowired
-    private CrashManager crashManager;
+    private CrashService crashService;
     @Autowired
     private GenericManager<CrashSeverity, Long> crashSeverityManager;
     @Autowired
@@ -99,7 +98,7 @@ public class CrashQueryManagerImpl implements CrashQueryManager {
 
     @Override
     public Map<String, List> getCrashQueryReferenceData() {
-        Map<String, List> queryCrashReferenceData = crashManager.getReferenceData();
+        Map<String, List> queryCrashReferenceData = crashService.getReferenceData();
         queryCrashReferenceData.put("licenseTypes", lookupManager.getAllLicenseTypes());
         queryCrashReferenceData.put("genders", lookupManager.getAllGenders());
         queryCrashReferenceData.put("beltUseds", lookupManager.getAllBeltUsedOptions());

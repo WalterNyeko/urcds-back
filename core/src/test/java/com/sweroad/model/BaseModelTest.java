@@ -1,7 +1,7 @@
 package com.sweroad.model;
 
 import com.sweroad.service.BaseManagerTestCase;
-import com.sweroad.service.CrashManager;
+import com.sweroad.service.CrashService;
 import com.sweroad.service.GenericManager;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
 public class BaseModelTest extends BaseManagerTestCase {
 
     @Autowired
-    private CrashManager crashManager;
+    private CrashService crashService;
     @Autowired
     private GenericManager<Driver, Long> driverManager;
     @Autowired
@@ -77,7 +77,7 @@ public class BaseModelTest extends BaseManagerTestCase {
 
     @Test
     public void testCrashJSON() {
-        Crash crash = crashManager.get(1L);
+        Crash crash = crashService.get(1L);
         String expected = "{\"id\":1,\"road\":\"Kampala-Jinja\",\"tarNo\":\"A1509/LGZ\",\"weight\":null,\"weather\":{\"id\":1,\"name\":\"Clear\"}," +
                 "\"vehicles\":[{\"id\":1,\"number\":1,\"driver\":{\"id\":1,\"age\":27,\"gender\":\"M\",\"licenseValid\":true,\"beltOrHelmetUsed\":false," +
                 "\"licenseNumber\":\"123456\",\"casualtyType\":{\"id\":4,\"name\":\"Not injured\"}},\"vehicleType\":{\"id\":1," +

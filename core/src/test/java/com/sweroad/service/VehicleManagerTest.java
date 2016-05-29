@@ -17,17 +17,17 @@ public class VehicleManagerTest extends BaseManagerTestCase {
     @Autowired
     private VehicleManager vehicleManager;
     @Autowired
-    private CrashManager crashManager;
+    private CrashService crashService;
 
     @Test
     public void testExtractVehiclesFromCrashList() {
-        List<Crash> crashes = crashManager.getAllDistinct();
+        List<Crash> crashes = crashService.getAllDistinct();
         assertEquals(25, vehicleManager.extractVehiclesFromCrashList(crashes).size());
     }
 
     @Test
     public void testThatAllVehiclesExtractedHaveNonNullCrash() {
-        List<Crash> crashes = crashManager.getAllDistinct();
+        List<Crash> crashes = crashService.getAllDistinct();
         List<Vehicle> vehicles = vehicleManager.extractVehiclesFromCrashList(crashes);
         boolean nullCrashExists = false;
         for(Vehicle vehicle : vehicles) {

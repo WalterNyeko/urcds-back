@@ -4,8 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
+import com.sweroad.service.CrashService;
 import com.sweroad.util.MapUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sweroad.model.Crash;
 import com.sweroad.model.CrashCause;
 import com.sweroad.model.CrashSeverity;
-import com.sweroad.service.CrashManager;
 import com.sweroad.service.GenericManager;
 
 @Controller
@@ -24,7 +22,7 @@ import com.sweroad.service.GenericManager;
 public class ChartController extends BaseFormController {
 
     @Autowired
-    private CrashManager crashManager;
+    private CrashService crashService;
     @Autowired
     private GenericManager<CrashSeverity, Long> crashSeverityManager;
     @Autowired
@@ -35,7 +33,7 @@ public class ChartController extends BaseFormController {
     @ResponseBody
     String getCrashSeverityPieChart()
             throws Exception {
-        List<Crash> crashes = crashManager.getAvailableCrashes(false);
+        List<Crash> crashes = crashService.getAvailableCrashes(false);
         String chart = "[{\"type\":\"pie\",\"name\":\"Crash Severity Pie Chart\",";
         chart +=  "\"crashCount\" : " + crashes.size() + ",";
         chart += constructCrashChartData(crashes);
@@ -118,7 +116,7 @@ public class ChartController extends BaseFormController {
 
     private Map<String, Integer> getCrashCauseNumbers() {
         List<CrashCause> causes = crashCauseManager.getAllDistinct();
-        List<Crash> crashes = crashManager.getAvailableCrashes(false);
+        List<Crash> crashes = crashService.getAvailableCrashes(false);
         Map<String, Integer> causeNumbers = new HashMap<String, Integer>();
         for (CrashCause cause : causes) {
             int count = getNumberOfCrashesByCauseId(crashes, cause.getId());

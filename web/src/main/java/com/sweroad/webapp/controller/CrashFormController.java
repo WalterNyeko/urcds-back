@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.sweroad.model.*;
+import com.sweroad.service.CrashService;
 import com.sweroad.util.DateUtil;
 import com.sweroad.webapp.util.SessionHelper;
 import org.apache.commons.lang3.StringUtils;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.sweroad.service.CrashManager;
 import com.sweroad.service.GenericManager;
 import com.sweroad.webapp.util.CrashFormHelper;
 
@@ -28,7 +28,7 @@ import com.sweroad.webapp.util.CrashFormHelper;
 public class CrashFormController extends BaseFormController {
 
     @Autowired
-    private CrashManager crashManager;
+    private CrashService crashService;
     @Autowired
     private GenericManager<VehicleType, Long> vehicleTypeManager;
     @Autowired
@@ -63,7 +63,7 @@ public class CrashFormController extends BaseFormController {
             }
         }
         mav.addObject("crash", crash);
-        mav.addAllObjects(crashManager.getReferenceData());
+        mav.addAllObjects(crashService.getReferenceData());
         SessionHelper.persistPoliceStationsInSession(request, (List<PoliceStation>) mav.getModelMap().get("policeStations"));
         return mav;
     }
@@ -78,10 +78,10 @@ public class CrashFormController extends BaseFormController {
                 crash = sessionCrash;
                 crash.setPoliceStation(policeStationManager.get(crash.getPoliceStation().getId()));
             } else {
-                crash = crashManager.get(crashId);
+                crash = crashService.get(crashId);
             }
         } else {
-            crash = crashManager.get(crashId);
+            crash = crashService.get(crashId);
         }
         return crash;
     }
@@ -99,7 +99,7 @@ public class CrashFormController extends BaseFormController {
             return null;
         }
         mav.addObject("crash", crash);
-        mav.addAllObjects(crashManager.getReferenceData());
+        mav.addAllObjects(crashService.getReferenceData());
         return mav;
     }
 
@@ -136,7 +136,7 @@ public class CrashFormController extends BaseFormController {
             Collections.sort(crash.getVehicles());
         }
         mav.addObject("crash", crash);
-        mav.addAllObjects(crashManager.getReferenceData());
+        mav.addAllObjects(crashService.getReferenceData());
         return mav;
     }
 
@@ -158,7 +158,7 @@ public class CrashFormController extends BaseFormController {
         sessionCrash.setSupervisingOfficerRank(crash.getSupervisingOfficerRank());
         try {
             String successMessage = getCrashSaveMessage(sessionCrash);
-            crashManager.saveCrash(sessionCrash);
+            crashService.saveCrash(sessionCrash);
             saveMessage(request, successMessage);
         } catch (Exception e) {
             logException(request, e, "FAILURE: Crash " + sessionCrash.getTarNo() + " failed to save. Please contact your System Administrator.");
@@ -192,7 +192,7 @@ public class CrashFormController extends BaseFormController {
             vehicle.getDriver().setId(DEFAULT_ID);
         }
         mav.addObject("vehicle", vehicle);
-        mav.addAllObjects(crashManager.getReferenceData());
+        mav.addAllObjects(crashService.getReferenceData());
         return mav;
     }
 
@@ -260,7 +260,7 @@ public class CrashFormController extends BaseFormController {
             casualty.setId(DEFAULT_ID);
         }
         mav.addObject("casualty", casualty);
-        Map<String, List> referenceData = crashManager.getReferenceData();
+        Map<String, List> referenceData = crashService.getReferenceData();
         referenceData.put("vehicles", crash.getVehicles());
         mav.addAllObjects(referenceData);
         return mav;
@@ -273,7 +273,7 @@ public class CrashFormController extends BaseFormController {
         String id = request.getParameter("id");
         if (!StringUtils.isBlank(id)) {
             Crash crash = (Crash) request.getSession().getAttribute("crash");
-            crashManager.removeCasualtyFromCrash(crash, Long.parseLong(id));
+            crashService.removeCasualtyFromCrash(crash, Long.parseLong(id));
             request.getSession().setAttribute("crash", crash);
             saveMessage(request, "Casualty removed successfully");
             crash.setDirty(true);
@@ -288,7 +288,7 @@ public class CrashFormController extends BaseFormController {
         String id = request.getParameter("id");
         if (!StringUtils.isBlank(id)) {
             Crash crash = (Crash) request.getSession().getAttribute("crash");
-            crashManager.removeVehicleFromCrash(crash, Long.parseLong(id));
+            crashService.removeVehicleFromCrash(crash, Long.parseLong(id));
             CrashFormHelper.resetVehicleNumbers(crash);
             request.getSession().setAttribute("crash", crash);
             saveMessage(request, "Vehicle removed successfully");

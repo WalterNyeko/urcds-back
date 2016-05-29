@@ -3,7 +3,7 @@ package com.sweroad.reporting;
 import com.sweroad.model.Crash;
 import com.sweroad.reporting.builder.ReportBuilder;
 import com.sweroad.service.BaseManagerTestCase;
-import com.sweroad.service.CrashManager;
+import com.sweroad.service.CrashService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,13 +22,13 @@ public class ReportBuilderTest extends BaseManagerTestCase {
     @Autowired
     private ReportBuilder reportBuilder;
     @Autowired
-    private CrashManager crashManager;
+    private CrashService crashService;
     private File reportDir;
     private List<Crash> crashes;
 
     @Before
     public void setUp() throws Exception {
-        crashes = crashManager.getAllDistinct();
+        crashes = crashService.getAllDistinct();
         reportDir = new File("reports");
         if (!reportDir.exists()) {
             reportDir.mkdir();

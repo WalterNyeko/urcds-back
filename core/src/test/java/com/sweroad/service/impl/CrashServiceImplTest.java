@@ -13,10 +13,10 @@ import org.mockito.Mock;
 import com.sweroad.dao.CrashDao;
 import com.sweroad.model.Crash;
 
-public class CrashManagerImplTest extends BaseManagerMockTestCase {
+public class CrashServiceImplTest extends BaseManagerMockTestCase {
 
 	@InjectMocks
-	private CrashManagerImpl crashManager;
+	private CrashServiceImpl crashService;
 	
 	@Mock
 	private CrashDao crashDao;
@@ -29,7 +29,7 @@ public class CrashManagerImplTest extends BaseManagerMockTestCase {
 		final Crash crash = new Crash();
 		given(crashDao.get(id)).willReturn(crash);
 		//when
-		Crash result = crashManager.get(id);
+		Crash result = crashService.get(id);
 		//then
 		assertSame(crash, result);
 	}
@@ -41,7 +41,7 @@ public class CrashManagerImplTest extends BaseManagerMockTestCase {
 		final List<Crash> crashes = new ArrayList<Crash>();
 		given(crashDao.getAll()).willReturn(crashes);
 		//when
-		List<Crash> result = crashManager.getAll();
+		List<Crash> result = crashService.getAll();
 		//then
 		assertSame(crashes, result);
 	}

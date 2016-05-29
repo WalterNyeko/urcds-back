@@ -94,7 +94,7 @@ public class AuditAdvice {
         return returnValue;
     }
 
-    @Around("execution(* com.sweroad.service.CrashManager.sav*(..))")
+    @Around("execution(* com.sweroad.service.CrashService.sav*(..))")
     public Object auditCrash(ProceedingJoinPoint joinPoint) {
         return auditSave(joinPoint);
     }

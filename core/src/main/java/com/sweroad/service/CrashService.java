@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sweroad.model.Crash;
 
-public interface CrashManager extends GenericManager<Crash, Long> {
+public interface CrashService extends GenericManager<Crash, Long> {
 
 	/**
 	 * This method is monitored by CrashSecurityAdvice and should only be called when getting

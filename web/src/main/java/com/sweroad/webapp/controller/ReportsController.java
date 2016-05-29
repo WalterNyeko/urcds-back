@@ -3,7 +3,7 @@ package com.sweroad.webapp.controller;
 import com.mysql.jdbc.StringUtils;
 import com.sweroad.model.Crash;
 import com.sweroad.reporting.builder.ReportBuilder;
-import com.sweroad.service.CrashManager;
+import com.sweroad.service.CrashService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -29,7 +29,7 @@ public class ReportsController extends BaseFormController {
     @Autowired
     private ReportBuilder reportBuilder;
     @Autowired
-    private CrashManager crashManager;
+    private CrashService crashService;
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView showReports() throws Exception {
@@ -39,7 +39,7 @@ public class ReportsController extends BaseFormController {
 
     @RequestMapping(value = "/reportsgen", method = RequestMethod.GET)
     public ResponseEntity<byte[]> generateReport(HttpServletRequest request) throws Exception {
-        String reportFilePath = buildReport(request, crashManager.getAvailableCrashes(false));
+        String reportFilePath = buildReport(request, crashService.getAvailableCrashes(false));
         File reportFile = new File(reportFilePath);
         FileInputStream fileInputStream = new FileInputStream(reportFile);
         byte[] contents = new byte[(int) reportFile.length()];

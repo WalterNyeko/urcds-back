@@ -15,9 +15,9 @@ import org.springframework.stereotype.Service;
 import com.sweroad.dao.CrashDao;
 import com.sweroad.util.ListUtil;
 
-@Service("crashManager")
-public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
-        CrashManager {
+@Service("crashService")
+public class CrashServiceImpl extends GenericManagerImpl<Crash, Long> implements
+        CrashService {
 
     private CrashDao crashDao;
     @Autowired
@@ -71,7 +71,7 @@ public class CrashManagerImpl extends GenericManagerImpl<Crash, Long> implements
     private GenericManager<Crash, Long> genericCrashManager;
 
     @Autowired
-    public CrashManagerImpl(CrashDao crashDao) {
+    public CrashServiceImpl(CrashDao crashDao) {
         super(crashDao);
         this.crashDao = crashDao;
     }
