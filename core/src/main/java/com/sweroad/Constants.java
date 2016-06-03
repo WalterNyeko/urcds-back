@@ -127,4 +127,7 @@ public final class Constants {
     public static final long NOT_INJURED_ID = 4L;
 
     public static final int HOURS_IN_DAY = 24;
+
+    //======================= Attribute names =====================
+    public static final String CRASH_SEVERITY = "crashSeverity";
 }

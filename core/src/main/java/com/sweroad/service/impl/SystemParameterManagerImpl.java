@@ -1,13 +1,12 @@
 package com.sweroad.service.impl;
 
+import com.sweroad.Constants;
 import com.sweroad.dao.GenericDao;
-import com.sweroad.dao.hibernate.GenericDaoHibernate;
 import com.sweroad.model.*;
 import com.sweroad.service.GenericManager;
 import com.sweroad.service.SystemParameterManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.java2d.Surface;
 
 import java.util.List;
 
@@ -90,7 +89,7 @@ public class SystemParameterManagerImpl extends GenericManagerImpl<SystemParamet
                 return casualtyClassManager.getAllDistinct();
             case "collisionType":
                 return collisionTypeManager.getAllDistinct();
-            case "crashSeverity":
+            case Constants.CRASH_SEVERITY:
                 return crashSeverityManager.getAllDistinct();
             case "patientStatus":
                 return patientStatusManager.getAllDistinct();
@@ -138,7 +137,7 @@ public class SystemParameterManagerImpl extends GenericManagerImpl<SystemParamet
                 return casualtyClassManager.save(new CasualtyClass(name));
             case "collisionType":
                 return collisionTypeManager.save(new CollisionType(name));
-            case "crashSeverity":
+            case Constants.CRASH_SEVERITY:
                 return crashSeverityManager.save(new CrashSeverity(name));
             case "patientStatus":
                 return patientStatusManager.save(new PatientStatus(name));
@@ -198,7 +197,7 @@ public class SystemParameterManagerImpl extends GenericManagerImpl<SystemParamet
             case "collisionType":
                 this.updateParameter(id, name, collisionTypeManager);
                 break;
-            case "crashSeverity":
+            case Constants.CRASH_SEVERITY:
                 this.updateParameter(id, name, crashSeverityManager);
                 break;
             case "patientStatus":
@@ -272,7 +271,7 @@ public class SystemParameterManagerImpl extends GenericManagerImpl<SystemParamet
             case "collisionType":
                 this.setParameterActive(id, active, collisionTypeManager);
                 break;
-            case "crashSeverity":
+            case Constants.CRASH_SEVERITY:
                 this.setParameterActive(id, active, crashSeverityManager);
                 break;
             case "patientStatus":

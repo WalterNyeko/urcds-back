@@ -17,10 +17,10 @@ import org.springframework.security.core.context.SecurityContextImpl;
 
 public class CrashServiceTest extends BaseManagerTestCase {
 
-	private Log log = LogFactory.getLog(CrashServiceTest.class);
 	@Autowired
 	private CrashService crashService;
     private SecurityContext initialSecurityContext = null;
+    private Log log = LogFactory.getLog(CrashServiceTest.class);
 
     @Before
     public void setUp() {

@@ -1,19 +1,18 @@
 package com.sweroad.service.impl;
 
+import com.sweroad.Constants;
+import com.sweroad.dao.CrashDao;
+import com.sweroad.model.*;
+import com.sweroad.service.*;
+import com.sweroad.util.GisHelper;
+import com.sweroad.util.ListUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
-
-import com.sweroad.Constants;
-import com.sweroad.model.*;
-import com.sweroad.service.*;
-import com.sweroad.util.GisHelper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.sweroad.dao.CrashDao;
-import com.sweroad.util.ListUtil;
 
 @Service("crashService")
 public class CrashServiceImpl extends GenericManagerImpl<Crash, Long> implements
