@@ -10,5 +10,5 @@ import java.util.List;
  */
 public interface CountAttributeService {
 
-    List<CountResult> countCrashes(List<Crash> crashes, String attribute);
+    List<CountResult> countCrashes(List<Crash> crashes);
 }

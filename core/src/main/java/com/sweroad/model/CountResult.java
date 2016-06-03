@@ -5,43 +5,63 @@ package com.sweroad.model;
  */
 public class CountResult {
 
+    private Long crashCount;
+    private Long vehicleCount;
+    private Long casualtyCount;
     private NameIdModel attribute;
 
-    private Long crashCount;
-
-    private Long casualtyCount;
-
-    private Long vehicleCount;
+    private CountResult(CountResultBuilder builder) {
+        this.attribute = builder.attribute;
+        this.crashCount = builder.crashCount;
+        this.vehicleCount = builder.vehicleCount;
+        this.casualtyCount = builder.casualtyCount;
+    }
 
     public Long getVehicleCount() {
         return vehicleCount;
-    }
-
-    public void setVehicleCount(Long vehicleCount) {
-        this.vehicleCount = vehicleCount;
     }
 
     public NameIdModel getAttribute() {
         return attribute;
     }
 
-    public void setAttribute(NameIdModel attribute) {
-        this.attribute = attribute;
-    }
-
     public Long getCrashCount() {
         return crashCount;
-    }
-
-    public void setCrashCount(Long crashCount) {
-        this.crashCount = crashCount;
     }
 
     public Long getCasualtyCount() {
         return casualtyCount;
     }
 
-    public void setCasualtyCount(Long casualtyCount) {
-        this.casualtyCount = casualtyCount;
+    public static class CountResultBuilder {
+
+        private Long crashCount;
+        private Long vehicleCount;
+        private Long casualtyCount;
+        private NameIdModel attribute;
+
+        public CountResultBuilder setAttribute(NameIdModel attribute) {
+            this.attribute = attribute;
+            return this;
+        }
+
+        public CountResultBuilder setCrashCount(Long crashCount) {
+            this.crashCount = crashCount;
+            return this;
+        }
+
+        public CountResultBuilder setVehicleCount(Long vehicleCount) {
+            this.vehicleCount = vehicleCount;
+            return this;
+        }
+
+        public CountResultBuilder setCasualtyCount(Long casualtyCount) {
+            this.casualtyCount = casualtyCount;
+            return this;
+        }
+
+        public CountResult build() {
+            return new CountResult(this);
+        }
     }
 }
