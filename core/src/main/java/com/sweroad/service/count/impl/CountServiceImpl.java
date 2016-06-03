@@ -1,5 +1,6 @@
 package com.sweroad.service.count.impl;
 
+import com.sweroad.model.AttributeType;
 import com.sweroad.model.CountResult;
 import com.sweroad.model.Crash;
 import com.sweroad.service.count.CountService;
@@ -14,7 +15,7 @@ import java.util.List;
 public class CountServiceImpl implements CountService {
 
     @Override
-    public List<CountResult> countCrashes(List<Crash> crashes, String attribute) {
+    public List<CountResult> countCrashes(List<Crash> crashes, AttributeType attributeType) {
         return null;
     }
 }

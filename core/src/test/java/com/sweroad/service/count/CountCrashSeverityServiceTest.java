@@ -89,10 +89,18 @@ public class CountCrashSeverityServiceTest extends BaseManagerTestCase {
     }
 
     @Test
+    public void testThatCountVehiclesInSeriousCrashesReturnsCorrectNumber() {
+        log.debug("testing that count vehicles in serious crashes returns the correct number...");
+        List<CountResult> crashCount = countCrashSeverityService.countCrashes(crashes);
+        Optional<CountResult> result = crashCount.stream().filter(c -> c.getAttribute().getId() == 2).findFirst();
+        assertTrue(result.isPresent() && result.get().getVehicleCount() == 8);
+    }
+
+    @Test
     public void testThatCountCasualtiesInSeriousCrashesReturnsCorrectNumber() {
         log.debug("testing that count casualties in serious crashes returns the correct number...");
         List<CountResult> crashCount = countCrashSeverityService.countCrashes(crashes);
         Optional<CountResult> result = crashCount.stream().filter(c -> c.getAttribute().getId() == 2).findFirst();
-        assertTrue(result.isPresent() && result.get().getVehicleCount() == 8);
+        assertTrue(result.isPresent() && result.get().getCasualtyCount() == 15);
     }
 }
