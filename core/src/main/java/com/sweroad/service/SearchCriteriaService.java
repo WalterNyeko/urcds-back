@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by Frank on 11/17/14.
  */
-public interface SearchCriteriaManager {
+public interface SearchCriteriaService {
 
     /**
      * Returns a list of crashes that meet the selection criteria. Crashes are ordered

@@ -4,7 +4,7 @@ import com.sweroad.dao.GenericDao;
 import com.sweroad.model.Casualty;
 import com.sweroad.model.Crash;
 import com.sweroad.model.Vehicle;
-import com.sweroad.service.CasualtyManager;
+import com.sweroad.service.CasualtyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +14,11 @@ import java.util.List;
 /**
  * Created by Frank on 2/19/15.
  */
-@Service("casualtyManager")
-public class CasualtyManagerImpl extends GenericManagerImpl<Casualty, Long> implements CasualtyManager {
+@Service("casualtyService")
+public class CasualtyServiceImpl extends GenericManagerImpl<Casualty, Long> implements CasualtyService {
 
     @Autowired
-    public CasualtyManagerImpl(GenericDao<Casualty, Long> casualtyDao) {
+    public CasualtyServiceImpl(GenericDao<Casualty, Long> casualtyDao) {
         super(casualtyDao);
     }
 

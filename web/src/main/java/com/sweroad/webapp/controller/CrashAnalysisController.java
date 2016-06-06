@@ -2,10 +2,10 @@ package com.sweroad.webapp.controller;
 
 import com.mysql.jdbc.StringUtils;
 import com.sweroad.model.*;
-import com.sweroad.service.CasualtyManager;
+import com.sweroad.service.CasualtyService;
 import com.sweroad.service.CrashService;
-import com.sweroad.service.SearchCriteriaManager;
-import com.sweroad.service.VehicleManager;
+import com.sweroad.service.SearchCriteriaService;
+import com.sweroad.service.VehicleService;
 import com.sweroad.util.DateUtil;
 import com.sweroad.webapp.util.CrashAnalysisHelper;
 import com.sweroad.webapp.util.SessionHelper;
@@ -32,13 +32,13 @@ import java.util.List;
 public class CrashAnalysisController extends BaseFormController {
 
     @Autowired
-    private CasualtyManager casualtyManager;
+    private CasualtyService casualtyService;
     @Autowired
-    private CrashService crashManager;
+    private CrashService crashService;
     @Autowired
-    private SearchCriteriaManager searchCriteriaManager;
+    private SearchCriteriaService searchCriteriaService;
     @Autowired
-    private VehicleManager vehicleManager;
+    private VehicleService vehicleService;
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView showCrashes(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -80,14 +80,14 @@ public class CrashAnalysisController extends BaseFormController {
         for(String crashId : crashIds.split(",")) {
             ids.add(Long.parseLong(crashId));
         }
-        setCrashesInSession(request, crashManager.getCrashes(ids));
+        setCrashesInSession(request, crashService.getCrashes(ids));
         return showCrashes(request, response);
     }
 
     private List<Crash> getCrashes(HttpServletRequest request) throws Exception {
         List<Crash> crashes = (List<Crash>) request.getSession().getAttribute("crashes");
         if (crashes == null) {
-            crashes = crashManager.getAvailableCrashes(true);
+            crashes = crashService.getAvailableCrashes(true);
         }
         setCrashesInSession(request, crashes);
         return crashes;
@@ -95,17 +95,17 @@ public class CrashAnalysisController extends BaseFormController {
 
     private void setCrashesInSession(HttpServletRequest request, List<Crash> crashes) throws ParseException {
         SessionHelper.persistCrashesInSession(request, crashes);
-        SessionHelper.persistCrashAttributesInSession(request, crashManager.getOrderedRefData());
+        SessionHelper.persistCrashAttributesInSession(request, crashService.getOrderedRefData());
     }
 
     private List<Vehicle> getVehicles(HttpServletRequest request) throws Exception {
         List<Crash> crashes = getCrashes(request);
-        return vehicleManager.extractVehiclesFromCrashList(crashes);
+        return vehicleService.extractVehiclesFromCrashList(crashes);
     }
 
     private List<Casualty> getCasualties(HttpServletRequest request) throws Exception {
         List<Crash> crashes = getCrashes(request);
-        return casualtyManager.extractCasualtiesFromCrashList(crashes);
+        return casualtyService.extractCasualtiesFromCrashList(crashes);
     }
 
     @RequestMapping(value = "/analysiscrashselect", method = RequestMethod.GET)
@@ -114,7 +114,7 @@ public class CrashAnalysisController extends BaseFormController {
             ModelAndView mav = new ModelAndView("analysis/selectcrash");
             SearchCriteria criteria = new SearchCriteria();
             mav.addObject("criteria", criteria);
-            mav.addAllObjects(crashManager.getOrderedRefData());
+            mav.addAllObjects(crashService.getOrderedRefData());
             mav.addObject("years", CrashAnalysisHelper.getYearsForSearch());
             mav.addObject("months", CrashAnalysisHelper.getMonthsForSearch(request));
             SessionHelper.persistPoliceStationsInSession(request, (List<PoliceStation>) mav.getModelMap().get("policeStations"));
@@ -129,7 +129,7 @@ public class CrashAnalysisController extends BaseFormController {
     public ModelAndView selectCrash(SearchCriteria criteria, HttpServletRequest request, HttpServletResponse response) throws Exception {
         try {
             processCriteria(criteria);
-            List<Crash> crashes = searchCriteriaManager.getCrashesByCriteria(criteria);
+            List<Crash> crashes = searchCriteriaService.getCrashesByCriteria(criteria);
             setCrashesInSession(request, crashes);
         } catch(ParseException e) {
             logException(request, e, "Date provided was in wrong format.");
@@ -152,7 +152,7 @@ public class CrashAnalysisController extends BaseFormController {
     public void generateExcel(HttpServletRequest request, HttpServletResponse response) throws Exception {
         try {
             String excelFile = getFilename(request);
-            crashManager.generateCrashDataExcel(getCrashes(request), excelFile);
+            crashService.generateCrashDataExcel(getCrashes(request), excelFile);
             downloadFile(response, excelFile);
         } catch (Exception e) {
             logException(request, e, "Data export to Excel failed. Please contact your System Administrator.");

@@ -15,20 +15,20 @@ import static org.junit.Assert.assertEquals;
  */
 public class VehicleManagerTest extends BaseManagerTestCase {
     @Autowired
-    private VehicleManager vehicleManager;
+    private VehicleService vehicleService;
     @Autowired
     private CrashService crashService;
 
     @Test
     public void testExtractVehiclesFromCrashList() {
         List<Crash> crashes = crashService.getAllDistinct();
-        assertEquals(25, vehicleManager.extractVehiclesFromCrashList(crashes).size());
+        assertEquals(25, vehicleService.extractVehiclesFromCrashList(crashes).size());
     }
 
     @Test
     public void testThatAllVehiclesExtractedHaveNonNullCrash() {
         List<Crash> crashes = crashService.getAllDistinct();
-        List<Vehicle> vehicles = vehicleManager.extractVehiclesFromCrashList(crashes);
+        List<Vehicle> vehicles = vehicleService.extractVehiclesFromCrashList(crashes);
         boolean nullCrashExists = false;
         for(Vehicle vehicle : vehicles) {
             if(vehicle.getCrash() == null) {

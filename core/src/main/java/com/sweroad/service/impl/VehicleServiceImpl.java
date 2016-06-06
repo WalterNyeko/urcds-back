@@ -3,7 +3,7 @@ package com.sweroad.service.impl;
 import com.sweroad.dao.GenericDao;
 import com.sweroad.model.Crash;
 import com.sweroad.model.Vehicle;
-import com.sweroad.service.VehicleManager;
+import com.sweroad.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +13,11 @@ import java.util.List;
 /**
  * Created by Frank on 2/19/15.
  */
-@Service("vehicleManager")
-public class VehicleManagerImpl extends GenericManagerImpl<Vehicle, Long> implements VehicleManager {
+@Service("vehicleService")
+public class VehicleServiceImpl extends GenericManagerImpl<Vehicle, Long> implements VehicleService {
 
     @Autowired
-    public VehicleManagerImpl(GenericDao<Vehicle, Long> vehicleDao) {
+    public VehicleServiceImpl(GenericDao<Vehicle, Long> vehicleDao) {
         super(vehicleDao);
     }
 

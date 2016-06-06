@@ -3,19 +3,20 @@ package com.sweroad.service.impl;
 import com.sweroad.model.*;
 import com.sweroad.service.CrashService;
 import com.sweroad.service.DateRangeManager;
-import com.sweroad.service.SearchCriteriaManager;
+import com.sweroad.service.SearchCriteriaService;
 import com.sweroad.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Frank on 11/17/14.
  */
-@Service("searchCriteriaManager")
-public class SearchCriteriaManagerImpl implements SearchCriteriaManager {
+@Service("searchCriteriaService")
+public class SearchCriteriaServiceImpl implements SearchCriteriaService {
 
     @Autowired
     private CrashService crashService;
@@ -25,13 +26,8 @@ public class SearchCriteriaManagerImpl implements SearchCriteriaManager {
     @Override
     public List<Crash> getCrashesByCriteria(SearchCriteria searchCriteria) {
         List<Crash> allCrashes = crashService.getAllDistinct();
-        List<Crash> filteredCrashes = new ArrayList<Crash>();
-        for (Crash crash : allCrashes) {
-            if (!crash.isRemoved() && meetsCriteria(searchCriteria, crash)) {
-                filteredCrashes.add(crash);
-            }
-        }
-        return filteredCrashes;
+        return allCrashes.stream().filter(c -> !c.isRemoved() && meetsCriteria(searchCriteria, c))
+                .collect(Collectors.toList());
     }
 
     private boolean meetsCriteria(SearchCriteria searchCriteria, Crash crash) {
