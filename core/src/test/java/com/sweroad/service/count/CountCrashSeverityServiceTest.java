@@ -45,7 +45,7 @@ public class CountCrashSeverityServiceTest extends BaseManagerTestCase {
         log.debug("testing that count fatal crashes returns the correct number...");
         List<CountResult> crashCount = countCrashSeverityService.countCrashes(crashes);
         Optional<CountResult> result = crashCount.stream().filter(c -> c.getAttribute().getId() == 1).findFirst();
-        assertTrue(result.isPresent() && result.get().getCrashCount() == 2);
+        assertEquals(2, result.get().getCrashCount().longValue());
     }
 
     @Test
@@ -53,7 +53,7 @@ public class CountCrashSeverityServiceTest extends BaseManagerTestCase {
         log.debug("testing that count serious crashes returns the correct number...");
         List<CountResult> crashCount = countCrashSeverityService.countCrashes(crashes);
         Optional<CountResult> result = crashCount.stream().filter(c -> c.getAttribute().getId() == 2).findFirst();
-        assertTrue(result.isPresent() && result.get().getCrashCount() == 4);
+        assertEquals(4, result.get().getCrashCount().longValue());
     }
 
     @Test
@@ -61,7 +61,7 @@ public class CountCrashSeverityServiceTest extends BaseManagerTestCase {
         log.debug("testing that count slight crashes returns the correct number...");
         List<CountResult> crashCount = countCrashSeverityService.countCrashes(crashes);
         Optional<CountResult> result = crashCount.stream().filter(c -> c.getAttribute().getId() == 3).findFirst();
-        assertTrue(result.isPresent() && result.get().getCrashCount() == 1);
+        assertEquals(1, result.get().getCrashCount().longValue());
     }
 
     @Test
@@ -69,7 +69,7 @@ public class CountCrashSeverityServiceTest extends BaseManagerTestCase {
         log.debug("testing that count damage only crashes returns the correct number...");
         List<CountResult> crashCount = countCrashSeverityService.countCrashes(crashes);
         Optional<CountResult> result = crashCount.stream().filter(c -> c.getAttribute().getId() == 4).findFirst();
-        assertTrue(result.isPresent() && result.get().getCrashCount() == 3);
+        assertEquals(3, result.get().getCrashCount().longValue());
     }
 
     @Test
@@ -77,7 +77,7 @@ public class CountCrashSeverityServiceTest extends BaseManagerTestCase {
         log.debug("testing that count crashes with unknown severity returns the correct number...");
         List<CountResult> crashCount = countCrashSeverityService.countCrashes(crashes);
         Optional<CountResult> result = crashCount.stream().filter(c -> c.getAttribute().getId() == 5).findFirst();
-        assertTrue(result.isPresent() && result.get().getCrashCount() == 0);
+        assertEquals(0, result.get().getCrashCount().longValue());
     }
 
     @Test
@@ -85,7 +85,7 @@ public class CountCrashSeverityServiceTest extends BaseManagerTestCase {
         log.debug("testing that count vehicles in fatal crashes returns the correct number...");
         List<CountResult> crashCount = countCrashSeverityService.countCrashes(crashes);
         Optional<CountResult> result = crashCount.stream().filter(c -> c.getAttribute().getId() == 1).findFirst();
-        assertTrue(result.isPresent() && result.get().getVehicleCount() == 4);
+        assertEquals(4, result.get().getVehicleCount().longValue());
     }
 
     @Test
@@ -93,7 +93,7 @@ public class CountCrashSeverityServiceTest extends BaseManagerTestCase {
         log.debug("testing that count vehicles in serious crashes returns the correct number...");
         List<CountResult> crashCount = countCrashSeverityService.countCrashes(crashes);
         Optional<CountResult> result = crashCount.stream().filter(c -> c.getAttribute().getId() == 2).findFirst();
-        assertTrue(result.isPresent() && result.get().getVehicleCount() == 8);
+        assertEquals(8, result.get().getVehicleCount().longValue());
     }
 
     @Test
@@ -101,6 +101,6 @@ public class CountCrashSeverityServiceTest extends BaseManagerTestCase {
         log.debug("testing that count casualties in serious crashes returns the correct number...");
         List<CountResult> crashCount = countCrashSeverityService.countCrashes(crashes);
         Optional<CountResult> result = crashCount.stream().filter(c -> c.getAttribute().getId() == 2).findFirst();
-        assertTrue(result.isPresent() && result.get().getCasualtyCount() == 15);
+        assertEquals(15, result.get().getCasualtyCount().longValue());
     }
 }
