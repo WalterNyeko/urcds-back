@@ -4,8 +4,6 @@ import com.sweroad.model.CountResult;
 import com.sweroad.model.Crash;
 import com.sweroad.service.BaseManagerTestCase;
 import com.sweroad.service.CrashService;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +12,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Frank on 5/31/16.
@@ -26,7 +23,6 @@ public class CountCrashCauseServiceTest extends BaseManagerTestCase {
     @Autowired
     private CountAttributeService countCrashCauseService;
     private List<Crash> crashes;
-    private Log log = LogFactory.getLog(CountCrashCauseServiceTest.class);
 
     @Before
     public void setUp() {
@@ -35,48 +31,49 @@ public class CountCrashCauseServiceTest extends BaseManagerTestCase {
 
     @Test
     public void testThatCountCrashesReturnsCorrectNumberOfRecords() {
-        log.debug("testing that count crashes returns the correct number of records...");
         List<CountResult> crashCount = countCrashCauseService.countCrashes(crashes);
-        assertEquals(19, crashCount.size());
+        assertEquals(20, crashCount.size());
     }
 
     @Test
     public void testThatCountCarelessOvertakingCrashesReturnsCorrectNumber() {
-        log.debug("testing that count Careless Overtaking crashes returns the correct number...");
         List<CountResult> crashCount = countCrashCauseService.countCrashes(crashes);
         Optional<CountResult> result = crashCount.stream().filter(c -> c.getAttribute().getId() == 1).findFirst();
-        assertEquals(4, result.get().getCrashCount().longValue());
+        assertEquals(4, result.get().getCrashCount());
     }
 
     @Test
     public void testThatCountTailGatingCrashesReturnsCorrectNumber() {
-        log.debug("testing that count Tail-gating crashes returns the correct number...");
         List<CountResult> crashCount = countCrashCauseService.countCrashes(crashes);
         Optional<CountResult> result = crashCount.stream().filter(c -> c.getAttribute().getId() == 4).findFirst();
-        assertEquals(3, result.get().getCrashCount().longValue());
+        assertEquals(2, result.get().getCrashCount());
     }
 
     @Test
     public void testThatCountCrashesWithCarelessPedestriansReturnsCorrectNumber() {
-        log.debug("testing that count crashes with Careless Pedestrians returns the correct number...");
         List<CountResult> crashCount = countCrashCauseService.countCrashes(crashes);
         Optional<CountResult> result = crashCount.stream().filter(c -> c.getAttribute().getId() == 3).findFirst();
-        assertEquals(0, result.get().getCrashCount().longValue());
+        assertEquals(0, result.get().getCrashCount());
+    }
+
+    @Test
+    public void testThatCountUnspecifiedCrashCauseCrashesReturnsCorrectNumber() {
+        List<CountResult> crashCount = countCrashCauseService.countCrashes(crashes);
+        Optional<CountResult> result = crashCount.stream().filter(c -> c.getAttribute().getId() == 0).findFirst();
+        assertEquals(1, result.get().getCrashCount());
     }
 
     @Test
     public void testThatCountVehiclesInCarelessOvertakingCrashesReturnsCorrectNumber() {
-        log.debug("testing that count vehicles in head-on crashes returns the correct number...");
         List<CountResult> crashCount = countCrashCauseService.countCrashes(crashes);
         Optional<CountResult> result = crashCount.stream().filter(c -> c.getAttribute().getId() == 1).findFirst();
-        assertEquals(7, result.get().getVehicleCount().longValue());
+        assertEquals(7, result.get().getVehicleCount());
     }
 
     @Test
     public void testThatCountCasualtiesInCarelessOvertakingCrashesReturnsCorrectNumber() {
-        log.debug("testing that count casualties in head-on crashes returns the correct number...");
         List<CountResult> crashCount = countCrashCauseService.countCrashes(crashes);
         Optional<CountResult> result = crashCount.stream().filter(c -> c.getAttribute().getId() == 1).findFirst();
-        assertEquals(10, result.get().getCasualtyCount().longValue());
+        assertEquals(10, result.get().getCasualtyCount());
     }
 }

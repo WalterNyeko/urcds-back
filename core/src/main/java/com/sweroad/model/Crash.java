@@ -31,7 +31,7 @@ import com.sweroad.Constants;
         @NamedQuery(name = Crash.FIND_AVAILABLE_CRASHES_ORDER_BY_DATE_DESC, query = "from Crash c where c.isRemoved = false order by c.crashDateTime desc"),
         @NamedQuery(name = Crash.FIND_DISTRICT_CRASHES_ORDER_BY_DATE_DESC, query = "from Crash c where c.policeStation.district = :district order by c.crashDateTime desc"),
         @NamedQuery(name = Crash.FIND_AVAILABLE_DISTRICT_CRASHES_ORDER_BY_DATE_DESC, query = "from Crash c where c.isRemoved = false and c.policeStation.district = :district order by c.crashDateTime desc")})
-public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertible, IAuditable {
+public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertible, IAuditable, Countable {
 
     /**
      *
@@ -606,19 +606,21 @@ public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertib
 
     public void addCasualty(Casualty casualty) {
         if(casualties == null) {
-            casualties = new ArrayList<Casualty>();
+            casualties = new ArrayList<>();
         }
         casualties.add(casualty);
     }
 
     public void addVehicle(Vehicle vehicle) {
         if(vehicles == null) {
-            vehicles = new ArrayList<Vehicle>();
+            vehicles = new ArrayList<>();
         }
         vehicles.add(vehicle);
     }
 
-    public int getCasualtyCount() {
+    public long getCrashCount() { return 1L; }
+
+    public long getCasualtyCount() {
         int numInjuredDrivers = 0;
         for(Vehicle vehicle : vehicles) {
             if(vehicle.getDriver() != null && vehicle.getDriver().isCasualty()) {
@@ -628,7 +630,7 @@ public class Crash extends BaseModel implements Comparable<Crash>, IXMLConvertib
         return casualties.size() + numInjuredDrivers;
     }
 
-    public int getVehicleCount() {
+    public long getVehicleCount() {
         return vehicles.size();
     }
 

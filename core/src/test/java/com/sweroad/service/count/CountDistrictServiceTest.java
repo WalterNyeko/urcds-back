@@ -4,8 +4,6 @@ import com.sweroad.model.CountResult;
 import com.sweroad.model.Crash;
 import com.sweroad.service.BaseManagerTestCase;
 import com.sweroad.service.CrashService;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +23,6 @@ public class CountDistrictServiceTest extends BaseManagerTestCase {
     @Autowired
     private CountAttributeService countDistrictService;
     private List<Crash> crashes;
-    private Log log = LogFactory.getLog(CountDistrictServiceTest.class);
 
     @Before
     public void setUp() {
@@ -34,56 +31,49 @@ public class CountDistrictServiceTest extends BaseManagerTestCase {
 
     @Test
     public void testThatCountCrashesReturnsCorrectNumberOfRecords() {
-        log.debug("testing that count crashes returns the correct number of records...");
         List<CountResult> crashCount = countDistrictService.countCrashes(crashes);
         assertEquals(4, crashCount.size());
     }
 
     @Test
     public void testThatCountKampalaDistrictCrashesReturnsCorrectNumber() {
-        log.debug("testing that count Kampala District crashes returns the correct number...");
         List<CountResult> crashCount = countDistrictService.countCrashes(crashes);
         Optional<CountResult> result = crashCount.stream().filter(c -> c.getAttribute().getId() == 3).findFirst();
-        assertEquals(7, result.get().getCrashCount().longValue());
+        assertEquals(7, result.get().getCrashCount());
     }
 
     @Test
     public void testThatCountLugaziDistrictCrashesReturnsCorrectNumber() {
-        log.debug("testing that count Lugazi District crashes returns the correct number...");
         List<CountResult> crashCount = countDistrictService.countCrashes(crashes);
         Optional<CountResult> result = crashCount.stream().filter(c -> c.getAttribute().getId() == 1).findFirst();
-        assertEquals(3, result.get().getCrashCount().longValue());
+        assertEquals(3, result.get().getCrashCount());
     }
 
     @Test
     public void testThatCountMpigiDistrictCrashesReturnsCorrectNumber() {
-        log.debug("testing that count Mpigi District crashes returns the correct number...");
         List<CountResult> crashCount = countDistrictService.countCrashes(crashes);
         Optional<CountResult> result = crashCount.stream().filter(c -> c.getAttribute().getId() == 2).findFirst();
-        assertEquals(0, result.get().getCrashCount().longValue());
+        assertEquals(0, result.get().getCrashCount());
     }
 
     @Test
     public void testThatCountVehiclesInKampalaDistrictCrashesReturnsCorrectNumber() {
-        log.debug("testing that count vehicles in Kampala District crashes returns the correct number...");
         List<CountResult> crashCount = countDistrictService.countCrashes(crashes);
         Optional<CountResult> result = crashCount.stream().filter(c -> c.getAttribute().getId() == 3).findFirst();
-        assertEquals(19, result.get().getVehicleCount().longValue());
+        assertEquals(19, result.get().getVehicleCount());
     }
 
     @Test
     public void testThatCountVehiclesInLugaziDistrictCrashesReturnsCorrectNumber() {
-        log.debug("testing that count vehicles in Lugazi District crashes returns the correct number...");
         List<CountResult> crashCount = countDistrictService.countCrashes(crashes);
         Optional<CountResult> result = crashCount.stream().filter(c -> c.getAttribute().getId() == 1).findFirst();
-        assertEquals(6, result.get().getVehicleCount().longValue());
+        assertEquals(6, result.get().getVehicleCount());
     }
 
     @Test
     public void testThatCountCasualtiesInLugaziDistrictCrashesReturnsCorrectNumber() {
-        log.debug("testing that count casualties in Lugazi District crashes returns the correct number...");
         List<CountResult> crashCount = countDistrictService.countCrashes(crashes);
         Optional<CountResult> result = crashCount.stream().filter(c -> c.getAttribute().getId() == 1).findFirst();
-        assertEquals(9, result.get().getCasualtyCount().longValue());
+        assertEquals(9, result.get().getCasualtyCount());
     }
 }

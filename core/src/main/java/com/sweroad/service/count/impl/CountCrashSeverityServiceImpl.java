@@ -1,8 +1,6 @@
 package com.sweroad.service.count.impl;
 
-import com.sweroad.model.CountResult;
-import com.sweroad.model.Crash;
-import com.sweroad.model.CrashSeverity;
+import com.sweroad.model.*;
 import com.sweroad.service.GenericManager;
 import com.sweroad.service.count.CountAttributeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +13,7 @@ import java.util.List;
  * Created by Frank on 5/31/16.
  */
 @Service("countCrashSeverityService")
-public class CountCrashSeverityServiceImpl implements CountAttributeService {
+public class CountCrashSeverityServiceImpl extends BaseCountService implements CountAttributeService {
 
     @Autowired
     private GenericManager<CrashSeverity, Long> crashSeverityManager;
@@ -25,20 +23,21 @@ public class CountCrashSeverityServiceImpl implements CountAttributeService {
         List<CountResult> countResults = new ArrayList<>();
         List<CrashSeverity> crashSeverities = crashSeverityManager.getAllDistinct();
         crashSeverities.forEach(crashSeverity -> countResults.add(countOccurrences(crashSeverity, crashes)));
+        countResults.add(countNotSpecified(crashes));
         return countResults;
     }
 
     private CountResult countOccurrences(CrashSeverity crashSeverity, List<Crash> crashes) {
-        long crashCount = 0, vehicleCount = 0, casualtyCount = 0;
-        for (Crash crash : crashes) {
-            if (crash.getCrashSeverity().equals(crashSeverity)) {
-                crashCount++;
-                vehicleCount += crash.getVehicleCount();
-                casualtyCount += crash.getCasualtyCount();
-            }
-        }
         CountResult.CountResultBuilder countResultBuilder = new CountResult.CountResultBuilder();
-        return countResultBuilder.setAttribute(crashSeverity).setCrashCount(crashCount)
-                .setVehicleCount(vehicleCount).setCasualtyCount(casualtyCount).build();
+        crashes.stream().filter(crash -> crashSeverity.equals(crash.getCrashSeverity()))
+                .forEach(crash -> this.incrementCounts(countResultBuilder, crash));
+        return countResultBuilder.setAttribute(crashSeverity).build();
+    }
+
+    private CountResult countNotSpecified(List<Crash> crashes) {
+        CountResult.CountResultBuilder countResultBuilder = new CountResult.CountResultBuilder();
+        crashes.stream().filter(crash -> crash.getCrashSeverity() == null)
+                .forEach(crash -> this.incrementCounts(countResultBuilder, crash));
+        return countResultBuilder.setAttribute(NameIdModel.createNotSpecifiedInstance()).build();
     }
 }

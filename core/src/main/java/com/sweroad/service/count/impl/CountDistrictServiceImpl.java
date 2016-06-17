@@ -16,7 +16,7 @@ import java.util.List;
  * Created by Frank on 5/31/16.
  */
 @Service("countDistrictService")
-public class CountDistrictServiceImpl implements CountAttributeService {
+public class CountDistrictServiceImpl extends BaseCountService implements CountAttributeService {
 
     @Autowired
     private GenericManager<District, Long> districtManager;
@@ -33,17 +33,14 @@ public class CountDistrictServiceImpl implements CountAttributeService {
     }
 
     private CountResult countOccurrences(District district, List<CountResult> policeStationCounts) {
-        long crashCount = 0, vehicleCount = 0, casualtyCount = 0;
-        for (CountResult result : policeStationCounts) {
-            PoliceStation policeStation = (PoliceStation)result.getAttribute();
-            if (policeStation != null && policeStation.getDistrict().equals(district)) {
-                crashCount += result.getCrashCount();
-                vehicleCount += result.getVehicleCount();
-                casualtyCount += result.getCasualtyCount();
-            }
-        }
         CountResult.CountResultBuilder countResultBuilder = new CountResult.CountResultBuilder();
-        return countResultBuilder.setAttribute(district).setCrashCount(crashCount)
-                .setVehicleCount(vehicleCount).setCasualtyCount(casualtyCount).build();
+        policeStationCounts.stream().filter(result -> this.belongsToDistrict(result, district))
+                .forEach(result -> this.incrementCounts(countResultBuilder, result));
+        return countResultBuilder.setAttribute(district).build();
+    }
+
+    private boolean belongsToDistrict(CountResult policeStationCount, District district) {
+        PoliceStation policeStation = (PoliceStation)policeStationCount.getAttribute();
+        return policeStation != null && policeStation.getDistrict().equals(district);
     }
 }

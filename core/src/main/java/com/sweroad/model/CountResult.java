@@ -3,11 +3,11 @@ package com.sweroad.model;
 /**
  * Created by Frank on 5/31/16.
  */
-public class CountResult {
+public class CountResult implements Countable {
 
-    private Long crashCount;
-    private Long vehicleCount;
-    private Long casualtyCount;
+    private long crashCount;
+    private long vehicleCount;
+    private long casualtyCount;
     private NameIdModel attribute;
 
     private CountResult(CountResultBuilder builder) {
@@ -17,7 +17,7 @@ public class CountResult {
         this.casualtyCount = builder.casualtyCount;
     }
 
-    public Long getVehicleCount() {
+    public long getVehicleCount() {
         return vehicleCount;
     }
 
@@ -25,19 +25,19 @@ public class CountResult {
         return attribute;
     }
 
-    public Long getCrashCount() {
+    public long getCrashCount() {
         return crashCount;
     }
 
-    public Long getCasualtyCount() {
+    public long getCasualtyCount() {
         return casualtyCount;
     }
 
     public static class CountResultBuilder {
 
-        private Long crashCount;
-        private Long vehicleCount;
-        private Long casualtyCount;
+        private long crashCount;
+        private long vehicleCount;
+        private long casualtyCount;
         private NameIdModel attribute;
 
         public CountResultBuilder setAttribute(NameIdModel attribute) {
@@ -45,19 +45,21 @@ public class CountResult {
             return this;
         }
 
-        public CountResultBuilder setCrashCount(Long crashCount) {
-            this.crashCount = crashCount;
+        public CountResultBuilder setCrashCount(long count) {
+            this.crashCount = count;
             return this;
         }
 
-        public CountResultBuilder setVehicleCount(Long vehicleCount) {
-            this.vehicleCount = vehicleCount;
-            return this;
+        public void incrementCrashCount(long value) {
+            this.crashCount += value;
         }
 
-        public CountResultBuilder setCasualtyCount(Long casualtyCount) {
-            this.casualtyCount = casualtyCount;
-            return this;
+        public void incrementVehicleCount(long value) {
+            this.vehicleCount += value;
+        }
+
+        public void incrementCasualtyCount(long value) {
+            this.casualtyCount += value;
         }
 
         public CountResult build() {

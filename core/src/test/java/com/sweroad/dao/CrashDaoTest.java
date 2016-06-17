@@ -1,9 +1,5 @@
 package com.sweroad.dao;
 
-import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
 import com.sweroad.model.*;
 import com.sweroad.query.Comparison;
 import com.sweroad.query.CrashQuery;
@@ -11,14 +7,15 @@ import com.sweroad.query.CrashSearch;
 import com.sweroad.query.CustomQueryable;
 import com.sweroad.service.GenericManager;
 import com.sweroad.util.DateUtil;
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class CrashDaoTest extends BaseDaoTestCase {
 
@@ -44,7 +41,7 @@ public class CrashDaoTest extends BaseDaoTestCase {
 
     @Test
     public void testFindFatalCrashesByQueryCrash() {
-        severities = new ArrayList<CrashSeverity>();
+        severities = new ArrayList<>();
         severities.add(new CrashSeverity());
         severities.get(0).setId(1L);
         CrashQuery query = new CrashQuery.CrashQueryBuilder()
@@ -55,7 +52,7 @@ public class CrashDaoTest extends BaseDaoTestCase {
 
     @Test
     public void testFindFatalAndSeriousCrashesByQueryCrash() {
-        severities = new ArrayList<CrashSeverity>();
+        severities = new ArrayList<>();
         severities.add(new CrashSeverity());
         severities.add(new CrashSeverity());
         severities.get(0).setId(1L);
@@ -63,13 +60,13 @@ public class CrashDaoTest extends BaseDaoTestCase {
         CrashQuery query = new CrashQuery.CrashQueryBuilder()
                 .addQueryable(severities).build();
         List<Crash> crashes = crashDao.findCrashesByQueryCrash(query);
-        assertEquals(6, crashes.size());
+        assertEquals(5, crashes.size());
     }
 
     @Test
     public void testFindAngleCrashesOnARainyDay() {
-        collisionTypes = new ArrayList<CollisionType>();
-        weathers = new ArrayList<Weather>();
+        collisionTypes = new ArrayList<>();
+        weathers = new ArrayList<>();
         collisionTypes.add(new CollisionType());
         weathers.add(new Weather());
         collisionTypes.get(0).setId(6L);

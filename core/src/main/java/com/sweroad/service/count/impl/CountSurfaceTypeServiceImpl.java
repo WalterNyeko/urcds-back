@@ -1,8 +1,6 @@
 package com.sweroad.service.count.impl;
 
-import com.sweroad.model.CountResult;
-import com.sweroad.model.Crash;
-import com.sweroad.model.SurfaceType;
+import com.sweroad.model.*;
 import com.sweroad.service.GenericManager;
 import com.sweroad.service.count.CountAttributeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +13,7 @@ import java.util.List;
  * Created by Frank on 5/31/16.
  */
 @Service("countSurfaceTypeService")
-public class CountSurfaceTypeServiceImpl implements CountAttributeService {
+public class CountSurfaceTypeServiceImpl extends BaseCountService implements CountAttributeService {
 
     @Autowired
     private GenericManager<SurfaceType, Long> surfaceTypeManager;
@@ -25,20 +23,21 @@ public class CountSurfaceTypeServiceImpl implements CountAttributeService {
         List<CountResult> countResults = new ArrayList<>();
         List<SurfaceType> surfaceTypes = surfaceTypeManager.getAllDistinct();
         surfaceTypes.forEach(surfaceType -> countResults.add(countOccurrences(surfaceType, crashes)));
+        countResults.add(countNotSpecified(crashes));
         return countResults;
     }
 
     private CountResult countOccurrences(SurfaceType surfaceType, List<Crash> crashes) {
-        long crashCount = 0, vehicleCount = 0, casualtyCount = 0;
-        for (Crash crash : crashes) {
-            if (crash.getSurfaceType().equals(surfaceType)) {
-                crashCount++;
-                vehicleCount += crash.getVehicleCount();
-                casualtyCount += crash.getCasualtyCount();
-            }
-        }
         CountResult.CountResultBuilder countResultBuilder = new CountResult.CountResultBuilder();
-        return countResultBuilder.setAttribute(surfaceType).setCrashCount(crashCount)
-                .setVehicleCount(vehicleCount).setCasualtyCount(casualtyCount).build();
+        crashes.stream().filter(crash -> surfaceType.equals(crash.getSurfaceType()))
+                .forEach(crash -> this.incrementCounts(countResultBuilder, crash));
+        return countResultBuilder.setAttribute(surfaceType).build();
+    }
+
+    private CountResult countNotSpecified(List<Crash> crashes) {
+        CountResult.CountResultBuilder countResultBuilder = new CountResult.CountResultBuilder();
+        crashes.stream().filter(crash -> crash.getSurfaceType() == null)
+                .forEach(crash -> this.incrementCounts(countResultBuilder, crash));
+        return countResultBuilder.setAttribute(NameIdModel.createNotSpecifiedInstance()).build();
     }
 }

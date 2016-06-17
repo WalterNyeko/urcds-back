@@ -1,8 +1,6 @@
 package com.sweroad.service.count.impl;
 
-import com.sweroad.model.CountResult;
-import com.sweroad.model.Crash;
-import com.sweroad.model.PoliceStation;
+import com.sweroad.model.*;
 import com.sweroad.service.GenericManager;
 import com.sweroad.service.count.CountAttributeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +13,7 @@ import java.util.List;
  * Created by Frank on 5/31/16.
  */
 @Service("countPoliceStationService")
-public class CountPoliceStationServiceImpl implements CountAttributeService {
+public class CountPoliceStationServiceImpl extends BaseCountService implements CountAttributeService {
 
     @Autowired
     private GenericManager<PoliceStation, Long> policeStationManager;
@@ -29,16 +27,9 @@ public class CountPoliceStationServiceImpl implements CountAttributeService {
     }
 
     private CountResult countOccurrences(PoliceStation policeStation, List<Crash> crashes) {
-        long crashCount = 0, vehicleCount = 0, casualtyCount = 0;
-        for (Crash crash : crashes) {
-            if (crash.getPoliceStation().equals(policeStation)) {
-                crashCount++;
-                vehicleCount += crash.getVehicleCount();
-                casualtyCount += crash.getCasualtyCount();
-            }
-        }
         CountResult.CountResultBuilder countResultBuilder = new CountResult.CountResultBuilder();
-        return countResultBuilder.setAttribute(policeStation).setCrashCount(crashCount)
-                .setVehicleCount(vehicleCount).setCasualtyCount(casualtyCount).build();
+        crashes.stream().filter(crash -> policeStation.equals(crash.getPoliceStation()))
+                .forEach(crash -> this.incrementCounts(countResultBuilder, crash));
+        return countResultBuilder.setAttribute(policeStation).build();
     }
 }

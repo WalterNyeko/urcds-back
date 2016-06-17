@@ -1611,17 +1611,17 @@
             <value description="road_number">12</value>
             <value description="tar_no">A1514/LGZ</value>
             <value description="town_or_village"></value>
-            <value description="collision_type_id">7</value>
-            <value description="crash_severity_id">2</value>
-            <value description="junction_type_id">4</value>
-            <value description="main_crash_cause_id">4</value>
+            <null/>
+            <null/>
+            <null/>
+            <null/>
             <value description="police_station_id">3</value>
-            <value description="road_surface_id">2</value>
-            <value description="roadway_character_id">2</value>
-            <value description="surface_condition_id">1</value>
-            <value description="surface_type_id">2</value>
-            <value description="vehicle_failure_type_id">1</value>
-            <value description="weather_id">1</value>
+            <null/>
+            <null/>
+            <null/>
+            <null/>
+            <null/>
+            <null/>
             <value description="editable">0</value>
             <value description="removable">0</value>
             <value description="is_removed">0</value>

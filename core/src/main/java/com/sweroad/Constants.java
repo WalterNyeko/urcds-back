@@ -127,4 +127,8 @@ public final class Constants {
     public static final long NOT_INJURED_ID = 4L;
 
     public static final int HOURS_IN_DAY = 24;
+
+    public static final String NOT_SPECIFIED = "Not Specified";
+
+    public static final long NOT_SPECIFIED_ID = 0L;
 }

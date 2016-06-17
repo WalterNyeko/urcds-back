@@ -1,8 +1,6 @@
 package com.sweroad.service.count.impl;
 
-import com.sweroad.model.CountResult;
-import com.sweroad.model.Crash;
-import com.sweroad.model.JunctionType;
+import com.sweroad.model.*;
 import com.sweroad.service.GenericManager;
 import com.sweroad.service.count.CountAttributeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +13,7 @@ import java.util.List;
  * Created by Frank on 5/31/16.
  */
 @Service("countJunctionTypeService")
-public class CountJunctionTypeServiceImpl implements CountAttributeService {
+public class CountJunctionTypeServiceImpl extends BaseCountService implements CountAttributeService {
 
     @Autowired
     private GenericManager<JunctionType, Long> junctionTypeManager;
@@ -25,20 +23,21 @@ public class CountJunctionTypeServiceImpl implements CountAttributeService {
         List<CountResult> countResults = new ArrayList<>();
         List<JunctionType> junctionTypes = junctionTypeManager.getAllDistinct();
         junctionTypes.forEach(junctionType -> countResults.add(countOccurrences(junctionType, crashes)));
+        countResults.add(countNotSpecified(crashes));
         return countResults;
     }
 
     private CountResult countOccurrences(JunctionType junctionType, List<Crash> crashes) {
-        long crashCount = 0, vehicleCount = 0, casualtyCount = 0;
-        for (Crash crash : crashes) {
-            if (crash.getJunctionType().equals(junctionType)) {
-                crashCount++;
-                vehicleCount += crash.getVehicleCount();
-                casualtyCount += crash.getCasualtyCount();
-            }
-        }
         CountResult.CountResultBuilder countResultBuilder = new CountResult.CountResultBuilder();
-        return countResultBuilder.setAttribute(junctionType).setCrashCount(crashCount)
-                .setVehicleCount(vehicleCount).setCasualtyCount(casualtyCount).build();
+        crashes.stream().filter(crash -> junctionType.equals(crash.getJunctionType()))
+                .forEach(crash -> this.incrementCounts(countResultBuilder, crash));
+        return countResultBuilder.setAttribute(junctionType).build();
+    }
+
+    private CountResult countNotSpecified(List<Crash> crashes) {
+        CountResult.CountResultBuilder countResultBuilder = new CountResult.CountResultBuilder();
+        crashes.stream().filter(crash -> crash.getJunctionType() == null)
+                .forEach(crash -> this.incrementCounts(countResultBuilder, crash));
+        return countResultBuilder.setAttribute(NameIdModel.createNotSpecifiedInstance()).build();
     }
 }
