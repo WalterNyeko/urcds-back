@@ -12,6 +12,7 @@ public enum AttributeType {
     CRASH_CAUSE ("crashCause"),
     VEHICLE_TYPE ("vehicleType"),
     ROAD_SURFACE ("roadSurface"),
+    SURFACE_TYPE ("surfaceType"),
     JUNCTION_TYPE ("junctionType"),
     CASUALTY_TYPE ("casualtyType"),
     ROAD_USER_TYPE ("roadUserType"),

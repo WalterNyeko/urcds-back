@@ -31,8 +31,7 @@ public class CountCrashSeverityServiceTest extends BaseManagerTestCase {
 
     @Test
     public void testThatCountCrashesReturnsCorrectNumberOfRecords() {
-        List<CountResult> crashCount = countCrashSeverityService.countCrashes(crashes);
-        assertEquals(6, crashCount.size());
+        assertEquals(6, countCrashSeverityService.countCrashes(crashes).size());
     }
 
     @Test
