@@ -24,7 +24,7 @@ public class CasualtyServiceImpl extends GenericManagerImpl<Casualty, Long> impl
 
     @Override
     public List<Casualty> extractCasualtiesFromCrashList(List<Crash> crashes) {
-        List<Casualty> casualties = new ArrayList<Casualty>();
+        List<Casualty> casualties = new ArrayList<>();
         for (Crash crash : crashes) {
             addCrashCasualtiesToCasualtyList(crash, casualties);
         }

@@ -23,7 +23,7 @@ public class VehicleServiceImpl extends GenericManagerImpl<Vehicle, Long> implem
 
     @Override
     public List<Vehicle> extractVehiclesFromCrashList(List<Crash> crashes) {
-        List<Vehicle> vehicles = new ArrayList<Vehicle>();
+        List<Vehicle> vehicles = new ArrayList<>();
         for(Crash crash : crashes) {
             addCrashVehiclesToVehicleList(crash, vehicles);
         }

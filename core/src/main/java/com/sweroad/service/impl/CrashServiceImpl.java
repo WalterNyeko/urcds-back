@@ -24,15 +24,15 @@ public class CrashServiceImpl extends GenericManagerImpl<Crash, Long> implements
     @Autowired
     private LookupManager lookupManager;
     @Autowired
+    private VehicleService vehicleService;
+    @Autowired
+    private CasualtyService casualtyService;
+    @Autowired
     private CrashExcelService crashExcelService;
     @Autowired
     private GenericManager<Driver, Long> driverManager;
     @Autowired
     private GenericManager<Weather, Long> weatherManager;
-    @Autowired
-    private GenericManager<Vehicle, Long> vehicleManager;
-    @Autowired
-    private GenericManager<Casualty, Long> casualtyManager;
     @Autowired
     private GenericManager<District, Long> districtManager;
     @Autowired
@@ -175,7 +175,7 @@ public class CrashServiceImpl extends GenericManagerImpl<Crash, Long> implements
             vehicle.setUpdatedBy(user);
         }
         setVehicleParams(vehicle);
-        Vehicle savedVehicle = vehicleManager.save(vehicle);
+        Vehicle savedVehicle = vehicleService.save(vehicle);
         if (vehicle.getId() == null) {
             vehicle.setId(savedVehicle.getId());
         }
@@ -213,7 +213,7 @@ public class CrashServiceImpl extends GenericManagerImpl<Crash, Long> implements
             casualty.setUpdatedBy(user);
         }
         setCasualtyParams(casualty);
-        casualtyManager.save(casualty);
+        casualtyService.save(casualty);
     }
 
     private void setCrashParams(Crash crash) {
@@ -392,7 +392,7 @@ public class CrashServiceImpl extends GenericManagerImpl<Crash, Long> implements
                 .collect(Collectors.toList());
         vehiclesToDelete.forEach(vehicle -> {
             dbCrash.getVehicles().remove(vehicle);
-            vehicleManager.remove(vehicle);
+            vehicleService.remove(vehicle);
             driverManager.remove(vehicle.getDriver());
         });
     }
@@ -405,7 +405,7 @@ public class CrashServiceImpl extends GenericManagerImpl<Crash, Long> implements
                 .collect(Collectors.toList());
         casualtiesToDelete.forEach(casualty -> {
             dbCrash.getCasualties().remove(casualty);
-            casualtyManager.remove(casualty);
+            casualtyService.remove(casualty);
         });
     }
 

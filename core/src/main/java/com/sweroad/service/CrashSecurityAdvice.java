@@ -23,7 +23,7 @@ public class CrashSecurityAdvice {
     private boolean editableOnlyForDistrict;
     private User currentUser;
 
-    @AfterReturning(pointcut = "execution(* *..service.CrashManager.getCrashes(..))",
+    @AfterReturning(pointcut = "execution(* *..service.CrashService.getCrashes(..))",
             returning = "returnValue")
     public void afterReturningCrashes(JoinPoint jp, Object returnValue) throws Throwable {
         setUserAccess();
@@ -33,7 +33,7 @@ public class CrashSecurityAdvice {
         }
     }
 
-    @AfterReturning(pointcut = "execution(* *..service.CrashManager.getCrashForView(..))",
+    @AfterReturning(pointcut = "execution(* *..service.CrashService.getCrashForView(..))",
             returning = "returnValue")
     public void afterReturningOneCrash(JoinPoint jp, Object returnValue) {
         setUserAccess();
