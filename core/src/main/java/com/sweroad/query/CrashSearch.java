@@ -9,7 +9,6 @@ import com.sweroad.service.DateRangeManager;
 import com.sweroad.service.LookupManager;
 import com.sweroad.service.impl.DateRangeManagerImpl;
 import com.sweroad.service.impl.LookupManagerImpl;
-import org.apache.avro.generic.GenericData;
 
 import java.util.ArrayList;
 import java.util.Date;

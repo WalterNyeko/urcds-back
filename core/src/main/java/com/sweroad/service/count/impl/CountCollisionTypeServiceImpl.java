@@ -22,7 +22,7 @@ public class CountCollisionTypeServiceImpl extends BaseCountService implements C
     public List<CountResult> countCrashes(List<Crash> crashes) {
         List<CountResult> countResults = new ArrayList<>();
         List<CollisionType> collisionTypes = collisionTypeManager.getAllDistinct();
-        collisionTypes.forEach(crashCause -> countResults.add(countOccurrences(crashCause, crashes)));
+        collisionTypes.forEach(collisionType -> countResults.add(countOccurrences(collisionType, crashes)));
         countResults.add(countNotSpecified(crashes));
         return countResults;
     }

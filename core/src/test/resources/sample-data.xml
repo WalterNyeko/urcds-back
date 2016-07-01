@@ -698,7 +698,7 @@
 			<value description="id">1</value>
 			<value description="number">1</value>
 			<value description="driver_id">1</value>
-			<value description="vehicle_type_id">1</value>
+			<null/>
 			<value description="company_name"></value>
 			<value description="date_created">2014-06-03 18:15:00</value>
 		</row>
