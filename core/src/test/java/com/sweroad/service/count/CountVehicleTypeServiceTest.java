@@ -32,7 +32,7 @@ public class CountVehicleTypeServiceTest extends BaseManagerTestCase {
     @Test
     public void testThatCountCrashesReturnsCorrectNumberOfRecords() {
         List<CountResult> crashCount = countVehicleTypeService.countCrashes(crashes);
-        assertEquals(16, crashCount.size());
+        assertEquals(17, crashCount.size());
     }
 
     @Test

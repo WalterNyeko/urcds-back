@@ -21,23 +21,15 @@ public class CountSurfaceConditionServiceImpl extends BaseCountService implement
     @Override
     public List<CountResult> countCrashes(List<Crash> crashes) {
         List<CountResult> countResults = new ArrayList<>();
-        List<SurfaceCondition> surfaceConditions = surfaceConditionManager.getAllDistinct();
+        List<NameIdModel> surfaceConditions = this.prepareAttributes(surfaceConditionManager.getAllDistinct());
         surfaceConditions.forEach(surfaceType -> countResults.add(countOccurrences(surfaceType, crashes)));
-        countResults.add(countNotSpecified(crashes));
         return countResults;
     }
 
-    private CountResult countOccurrences(SurfaceCondition surfaceCondition, List<Crash> crashes) {
+    private CountResult countOccurrences(NameIdModel surfaceCondition, List<Crash> crashes) {
         CountResult.CountResultBuilder countResultBuilder = new CountResult.CountResultBuilder();
-        crashes.stream().filter(crash -> surfaceCondition.equals(crash.getSurfaceCondition()))
+        crashes.stream().filter(crash -> this.matchAttributes(surfaceCondition, crash.getSurfaceCondition()))
                 .forEach(crash -> this.incrementCounts(countResultBuilder, crash));
         return countResultBuilder.setAttribute(surfaceCondition).build();
-    }
-
-    private CountResult countNotSpecified(List<Crash> crashes) {
-        CountResult.CountResultBuilder countResultBuilder = new CountResult.CountResultBuilder();
-        crashes.stream().filter(crash -> crash.getSurfaceType() == null)
-                .forEach(crash -> this.incrementCounts(countResultBuilder, crash));
-        return countResultBuilder.setAttribute(NameIdModel.createNotSpecifiedInstance()).build();
     }
 }

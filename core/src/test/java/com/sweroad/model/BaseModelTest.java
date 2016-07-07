@@ -53,7 +53,7 @@ public class BaseModelTest extends BaseManagerTestCase {
         Vehicle vehicle = vehicleManager.get(1L);
         String expected = "{\"id\":1,\"number\":1,\"driver\":{\"id\":1,\"age\":27,\"gender\":\"M\",\"licenseValid\":true," +
                 "\"beltOrHelmetUsed\":false,\"licenseNumber\":\"123456\",\"casualtyType\":{\"id\":4,\"name\":\"Not injured\"}}," +
-                "\"vehicleType\":{\"id\":1,\"name\":\"Motor car\"},\"companyName\":\"\"}";
+                "\"vehicleType\":null,\"companyName\":\"\"}";
         assertEquals(expected, vehicle.toJSON());
     }
 
@@ -63,8 +63,7 @@ public class BaseModelTest extends BaseManagerTestCase {
         String expected = "{\"id\":1,\"age\":25,\"gender\":\"F\",\"beltOrHelmetUsed\":true,\"casualtyType\":{\"id\":3,\"name\":\"Slight\"}," +
                 "\"casualtyClass\":{\"id\":4,\"name\":\"Car passenger\"},\"vehicle\":{\"id\":1,\"number\":1," +
                 "\"driver\":{\"id\":1,\"age\":27,\"gender\":\"M\",\"licenseValid\":true,\"beltOrHelmetUsed\":false,\"licenseNumber\":\"123456\"," +
-                "\"casualtyType\":{\"id\":4,\"name\":\"Not injured\"}},\"vehicleType\":{\"id\":1,\"name\":\"Motor car\"}," +
-                "\"companyName\":\"\"}}";
+                "\"casualtyType\":{\"id\":4,\"name\":\"Not injured\"}},\"vehicleType\":null,\"companyName\":\"\"}}";
         assertEquals(expected, casualty.toJSON());
     }
 
@@ -80,15 +79,15 @@ public class BaseModelTest extends BaseManagerTestCase {
         Crash crash = crashService.get(1L);
         String expected = "{\"id\":1,\"road\":\"Kampala-Jinja\",\"tarNo\":\"A1509/LGZ\",\"weight\":null,\"weather\":{\"id\":1,\"name\":\"Clear\"}," +
                 "\"vehicles\":[{\"id\":1,\"number\":1,\"driver\":{\"id\":1,\"age\":27,\"gender\":\"M\",\"licenseValid\":true,\"beltOrHelmetUsed\":false," +
-                "\"licenseNumber\":\"123456\",\"casualtyType\":{\"id\":4,\"name\":\"Not injured\"}},\"vehicleType\":{\"id\":1," +
-                "\"name\":\"Motor car\"},\"companyName\":\"\"},{\"id\":2,\"number\":2,\"driver\":{\"id\":2,\"age\":53,\"gender\":\"M\"," +
+                "\"licenseNumber\":\"123456\",\"casualtyType\":{\"id\":4,\"name\":\"Not injured\"}},\"vehicleType\":null," +
+                "\"companyName\":\"\"},{\"id\":2,\"number\":2,\"driver\":{\"id\":2,\"age\":53,\"gender\":\"M\"," +
                 "\"licenseValid\":false,\"beltOrHelmetUsed\":true,\"licenseNumber\":\"123789\",\"casualtyType\":{\"id\":3,\"name\":\"Slight\"}}," +
                 "\"vehicleType\":{\"id\":7,\"name\":\"Medium Omnibus\"},\"companyName\":\"Total Uganda\"}],\"latitude\":\"N00 23.000\"," +
                 "\"longitude\":\"E032 55.270\",\"casualties\":[{\"id\":1,\"age\":25,\"gender\":\"F\",\"beltOrHelmetUsed\":true," +
                 "\"casualtyType\":{\"id\":3,\"name\":\"Slight\"},\"casualtyClass\":{\"id\":4,\"name\":\"Car passenger\"}," +
                 "\"vehicle\":{\"id\":1,\"number\":1,\"driver\":{\"id\":1,\"age\":27,\"gender\":\"M\",\"licenseValid\":true,\"beltOrHelmetUsed\":false," +
-                "\"licenseNumber\":\"123456\",\"casualtyType\":{\"id\":4,\"name\":\"Not injured\"}},\"vehicleType\":{\"id\":1," +
-                "\"name\":\"Motor car\"},\"companyName\":\"\"}},{\"id\":2,\"age\":30,\"gender\":\"M\",\"beltOrHelmetUsed\":false," +
+                "\"licenseNumber\":\"123456\",\"casualtyType\":{\"id\":4,\"name\":\"Not injured\"}},\"vehicleType\":null," +
+                "\"companyName\":\"\"}},{\"id\":2,\"age\":30,\"gender\":\"M\",\"beltOrHelmetUsed\":false," +
                 "\"casualtyType\":{\"id\":2,\"name\":\"Serious\"},\"casualtyClass\":{\"id\":1,\"name\":\"Pedestrian\"},\"vehicle\":null}]," +
                 "\"crashCause\":{\"id\":1,\"name\":\"Careless overtaking\"},\"roadNumber\":\"15\",\"crashPlace\":\"Kayanja\"," +
                 "\"roadSurface\":{\"id\":2,\"name\":\"Dry\"},\"surfaceType\":{\"id\":1,\"name\":\"Tar\"},\"junctionType\":{\"id\":1," +

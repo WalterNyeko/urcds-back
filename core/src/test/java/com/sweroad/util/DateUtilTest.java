@@ -31,7 +31,7 @@ public class DateUtilTest extends TestCase {
         LocaleContextHolder.setLocale(Locale.GERMANY);
         assertEquals("dd.MM.yyyy", DateUtil.getDatePattern());
 
-        // non-existant bundle should default to default locale
+        // non-existent bundle should default to default locale
         LocaleContextHolder.setLocale(new Locale("fi"));
         String fiPattern = DateUtil.getDatePattern();
         LocaleContextHolder.setLocale(Locale.getDefault());

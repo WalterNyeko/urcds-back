@@ -342,26 +342,26 @@ public class CrashDaoTest extends BaseDaoTestCase {
 
     @Test
     public void testFindAllCrashesInvolvingMotorVehiclesWithDriversHavingValidLicense() {
-        List<LabelValue> driverLicenseTypes = new ArrayList<LabelValue>();
+        List<LabelValue> driverLicenseTypes = new ArrayList<>();
         driverLicenseTypes.add(new LabelValue());
         driverLicenseTypes.get(0).setValue("1");
         CrashSearch crashSearch = new CrashSearch();
         crashSearch.setDriverLicenseTypes(driverLicenseTypes);
-        vehicleTypes = new ArrayList<VehicleType>();
+        vehicleTypes = new ArrayList<>();
         vehicleTypes.add(vehicleTypeManager.get(1L));
         crashSearch.setVehicleTypes(vehicleTypes);
         List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashSearch.toQuery());
-        assertEquals(8, crashes.size());
+        assertEquals(7, crashes.size());
     }
 
     @Test
     public void testFindAllCrashesInvolvingMotorVehiclesWithDriversHavingInvalidLicense() {
-        List<LabelValue> driverLicenseTypes = new ArrayList<LabelValue>();
+        List<LabelValue> driverLicenseTypes = new ArrayList<>();
         driverLicenseTypes.add(new LabelValue());
         driverLicenseTypes.get(0).setValue("0");
         CrashSearch crashSearch = new CrashSearch();
         crashSearch.setDriverLicenseTypes(driverLicenseTypes);
-        vehicleTypes = new ArrayList<VehicleType>();
+        vehicleTypes = new ArrayList<>();
         vehicleTypes.add(vehicleTypeManager.get(1L));
         crashSearch.setVehicleTypes(vehicleTypes);
         List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashSearch.toQuery());
@@ -370,28 +370,28 @@ public class CrashDaoTest extends BaseDaoTestCase {
 
     @Test
     public void testFindAllCrashesInvolvingMotorVehiclesWithDriversHavingValidOrInvalidLicense() {
-        List<LabelValue> driverLicenseTypes = new ArrayList<LabelValue>();
+        List<LabelValue> driverLicenseTypes = new ArrayList<>();
         driverLicenseTypes.add(new LabelValue());
         driverLicenseTypes.get(0).setValue("1");
         driverLicenseTypes.add(new LabelValue());
         driverLicenseTypes.get(1).setValue("0");
         CrashSearch crashSearch = new CrashSearch();
         crashSearch.setDriverLicenseTypes(driverLicenseTypes);
-        vehicleTypes = new ArrayList<VehicleType>();
+        vehicleTypes = new ArrayList<>();
         vehicleTypes.add(vehicleTypeManager.get(1L));
         crashSearch.setVehicleTypes(vehicleTypes);
         List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashSearch.toQuery());
-        assertEquals(10, crashes.size());
+        assertEquals(9, crashes.size());
     }
 
     @Test
     public void testFindAllCrashesInvolvingMotorVehiclesWithDriversHavingNullLicenseType() {
-        List<LabelValue> driverLicenseTypes = new ArrayList<LabelValue>();
+        List<LabelValue> driverLicenseTypes = new ArrayList<>();
         driverLicenseTypes.add(new LabelValue());
         driverLicenseTypes.get(0).setValue("-1");
         CrashSearch crashSearch = new CrashSearch();
         crashSearch.setDriverLicenseTypes(driverLicenseTypes);
-        vehicleTypes = new ArrayList<VehicleType>();
+        vehicleTypes = new ArrayList<>();
         vehicleTypes.add(vehicleTypeManager.get(1L));
         crashSearch.setVehicleTypes(vehicleTypes);
         List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashSearch.toQuery());
@@ -407,11 +407,11 @@ public class CrashDaoTest extends BaseDaoTestCase {
         driverLicenseTypes.get(1).setValue("-1");
         CrashSearch crashSearch = new CrashSearch();
         crashSearch.setDriverLicenseTypes(driverLicenseTypes);
-        vehicleTypes = new ArrayList<VehicleType>();
+        vehicleTypes = new ArrayList<>();
         vehicleTypes.add(vehicleTypeManager.get(1L));
         crashSearch.setVehicleTypes(vehicleTypes);
         List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashSearch.toQuery());
-        assertEquals(9, crashes.size());
+        assertEquals(8, crashes.size());
     }
 
     @Test

@@ -21,23 +21,15 @@ public class CountJunctionTypeServiceImpl extends BaseCountService implements Co
     @Override
     public List<CountResult> countCrashes(List<Crash> crashes) {
         List<CountResult> countResults = new ArrayList<>();
-        List<JunctionType> junctionTypes = junctionTypeManager.getAllDistinct();
+        List<NameIdModel> junctionTypes = this.prepareAttributes(junctionTypeManager.getAllDistinct());
         junctionTypes.forEach(junctionType -> countResults.add(countOccurrences(junctionType, crashes)));
-        countResults.add(countNotSpecified(crashes));
         return countResults;
     }
 
-    private CountResult countOccurrences(JunctionType junctionType, List<Crash> crashes) {
+    private CountResult countOccurrences(NameIdModel junctionType, List<Crash> crashes) {
         CountResult.CountResultBuilder countResultBuilder = new CountResult.CountResultBuilder();
-        crashes.stream().filter(crash -> junctionType.equals(crash.getJunctionType()))
+        crashes.stream().filter(crash -> this.matchAttributes(junctionType, crash.getJunctionType()))
                 .forEach(crash -> this.incrementCounts(countResultBuilder, crash));
         return countResultBuilder.setAttribute(junctionType).build();
-    }
-
-    private CountResult countNotSpecified(List<Crash> crashes) {
-        CountResult.CountResultBuilder countResultBuilder = new CountResult.CountResultBuilder();
-        crashes.stream().filter(crash -> crash.getJunctionType() == null)
-                .forEach(crash -> this.incrementCounts(countResultBuilder, crash));
-        return countResultBuilder.setAttribute(NameIdModel.createNotSpecifiedInstance()).build();
     }
 }

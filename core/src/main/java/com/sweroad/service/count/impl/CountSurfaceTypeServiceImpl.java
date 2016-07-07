@@ -21,23 +21,15 @@ public class CountSurfaceTypeServiceImpl extends BaseCountService implements Cou
     @Override
     public List<CountResult> countCrashes(List<Crash> crashes) {
         List<CountResult> countResults = new ArrayList<>();
-        List<SurfaceType> surfaceTypes = surfaceTypeManager.getAllDistinct();
+        List<NameIdModel> surfaceTypes = this.prepareAttributes(surfaceTypeManager.getAllDistinct());
         surfaceTypes.forEach(surfaceType -> countResults.add(countOccurrences(surfaceType, crashes)));
-        countResults.add(countNotSpecified(crashes));
         return countResults;
     }
 
-    private CountResult countOccurrences(SurfaceType surfaceType, List<Crash> crashes) {
+    private CountResult countOccurrences(NameIdModel surfaceType, List<Crash> crashes) {
         CountResult.CountResultBuilder countResultBuilder = new CountResult.CountResultBuilder();
-        crashes.stream().filter(crash -> surfaceType.equals(crash.getSurfaceType()))
+        crashes.stream().filter(crash -> this.matchAttributes(surfaceType, crash.getSurfaceType()))
                 .forEach(crash -> this.incrementCounts(countResultBuilder, crash));
         return countResultBuilder.setAttribute(surfaceType).build();
-    }
-
-    private CountResult countNotSpecified(List<Crash> crashes) {
-        CountResult.CountResultBuilder countResultBuilder = new CountResult.CountResultBuilder();
-        crashes.stream().filter(crash -> crash.getSurfaceType() == null)
-                .forEach(crash -> this.incrementCounts(countResultBuilder, crash));
-        return countResultBuilder.setAttribute(NameIdModel.createNotSpecifiedInstance()).build();
     }
 }

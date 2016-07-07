@@ -1,6 +1,9 @@
 package com.sweroad.service.count.impl;
 
-import com.sweroad.model.*;
+import com.sweroad.model.CountResult;
+import com.sweroad.model.Crash;
+import com.sweroad.model.NameIdModel;
+import com.sweroad.model.RoadSurface;
 import com.sweroad.service.GenericManager;
 import com.sweroad.service.count.CountAttributeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,23 +24,15 @@ public class CountRoadSurfaceServiceImpl extends BaseCountService implements Cou
     @Override
     public List<CountResult> countCrashes(List<Crash> crashes) {
         List<CountResult> countResults = new ArrayList<>();
-        List<RoadSurface> roadSurfaces = roadSurfaceManager.getAllDistinct();
+        List<NameIdModel> roadSurfaces = this.prepareAttributes(roadSurfaceManager.getAllDistinct());
         roadSurfaces.forEach(roadSurface -> countResults.add(countOccurrences(roadSurface, crashes)));
-        countResults.add(countNotSpecified(crashes));
         return countResults;
     }
 
-    private CountResult countOccurrences(RoadSurface roadSurface, List<Crash> crashes) {
+    private CountResult countOccurrences(NameIdModel roadSurface, List<Crash> crashes) {
         CountResult.CountResultBuilder countResultBuilder = new CountResult.CountResultBuilder();
-        crashes.stream().filter(crash -> roadSurface.equals(crash.getRoadSurface()))
+        crashes.stream().filter(crash -> this.matchAttributes(roadSurface, crash.getRoadSurface()))
                 .forEach(crash -> this.incrementCounts(countResultBuilder, crash));
         return countResultBuilder.setAttribute(roadSurface).build();
-    }
-
-    private CountResult countNotSpecified(List<Crash> crashes) {
-        CountResult.CountResultBuilder countResultBuilder = new CountResult.CountResultBuilder();
-        crashes.stream().filter(crash -> crash.getRoadSurface() == null)
-                .forEach(crash -> this.incrementCounts(countResultBuilder, crash));
-        return countResultBuilder.setAttribute(NameIdModel.createNotSpecifiedInstance()).build();
     }
 }

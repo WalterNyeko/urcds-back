@@ -21,23 +21,15 @@ public class CountCrashSeverityServiceImpl extends BaseCountService implements C
     @Override
     public List<CountResult> countCrashes(List<Crash> crashes) {
         List<CountResult> countResults = new ArrayList<>();
-        List<CrashSeverity> crashSeverities = crashSeverityManager.getAllDistinct();
+        List<NameIdModel> crashSeverities = this.prepareAttributes(crashSeverityManager.getAllDistinct());
         crashSeverities.forEach(crashSeverity -> countResults.add(countOccurrences(crashSeverity, crashes)));
-        countResults.add(countNotSpecified(crashes));
         return countResults;
     }
 
-    private CountResult countOccurrences(CrashSeverity crashSeverity, List<Crash> crashes) {
+    private CountResult countOccurrences(NameIdModel crashSeverity, List<Crash> crashes) {
         CountResult.CountResultBuilder countResultBuilder = new CountResult.CountResultBuilder();
-        crashes.stream().filter(crash -> crashSeverity.equals(crash.getCrashSeverity()))
+        crashes.stream().filter(crash -> this.matchAttributes(crashSeverity, crash.getCrashSeverity()))
                 .forEach(crash -> this.incrementCounts(countResultBuilder, crash));
         return countResultBuilder.setAttribute(crashSeverity).build();
-    }
-
-    private CountResult countNotSpecified(List<Crash> crashes) {
-        CountResult.CountResultBuilder countResultBuilder = new CountResult.CountResultBuilder();
-        crashes.stream().filter(crash -> crash.getCrashSeverity() == null)
-                .forEach(crash -> this.incrementCounts(countResultBuilder, crash));
-        return countResultBuilder.setAttribute(NameIdModel.createNotSpecifiedInstance()).build();
     }
 }

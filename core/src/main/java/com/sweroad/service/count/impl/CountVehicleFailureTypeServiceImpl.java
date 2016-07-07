@@ -24,23 +24,15 @@ public class CountVehicleFailureTypeServiceImpl extends BaseCountService impleme
     @Override
     public List<CountResult> countCrashes(List<Crash> crashes) {
         List<CountResult> countResults = new ArrayList<>();
-        List<VehicleFailureType> vehicleFailureTypes = vehicleFailureTypeManager.getAllDistinct();
+        List<NameIdModel> vehicleFailureTypes = this.prepareAttributes(vehicleFailureTypeManager.getAllDistinct());
         vehicleFailureTypes.forEach(vehicleFailureType -> countResults.add(countOccurrences(vehicleFailureType, crashes)));
-        countResults.add(countNotSpecified(crashes));
         return countResults;
     }
 
-    private CountResult countOccurrences(VehicleFailureType vehicleFailureType, List<Crash> crashes) {
+    private CountResult countOccurrences(NameIdModel vehicleFailureType, List<Crash> crashes) {
         CountResult.CountResultBuilder countResultBuilder = new CountResult.CountResultBuilder();
-        crashes.stream().filter(crash -> vehicleFailureType.equals(crash.getVehicleFailureType()))
+        crashes.stream().filter(crash -> this.matchAttributes(vehicleFailureType, crash.getVehicleFailureType()))
                 .forEach(crash -> this.incrementCounts(countResultBuilder, crash));
         return countResultBuilder.setAttribute(vehicleFailureType).build();
-    }
-
-    private CountResult countNotSpecified(List<Crash> crashes) {
-        CountResult.CountResultBuilder countResultBuilder = new CountResult.CountResultBuilder();
-        crashes.stream().filter(crash -> crash.getVehicleFailureType() == null)
-                .forEach(crash -> this.incrementCounts(countResultBuilder, crash));
-        return countResultBuilder.setAttribute(NameIdModel.createNotSpecifiedInstance()).build();
     }
 }

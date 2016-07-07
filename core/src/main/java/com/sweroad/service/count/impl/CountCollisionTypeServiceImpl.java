@@ -21,23 +21,15 @@ public class CountCollisionTypeServiceImpl extends BaseCountService implements C
     @Override
     public List<CountResult> countCrashes(List<Crash> crashes) {
         List<CountResult> countResults = new ArrayList<>();
-        List<CollisionType> collisionTypes = collisionTypeManager.getAllDistinct();
+        List<NameIdModel> collisionTypes = this.prepareAttributes(collisionTypeManager.getAllDistinct());
         collisionTypes.forEach(collisionType -> countResults.add(countOccurrences(collisionType, crashes)));
-        countResults.add(countNotSpecified(crashes));
         return countResults;
     }
 
-    private CountResult countOccurrences(CollisionType collisionType, List<Crash> crashes) {
+    private CountResult countOccurrences(NameIdModel collisionType, List<Crash> crashes) {
         CountResult.CountResultBuilder countResultBuilder = new CountResult.CountResultBuilder();
-        crashes.stream().filter(crash -> collisionType.equals(crash.getCollisionType()))
+        crashes.stream().filter(crash -> this.matchAttributes(collisionType, crash.getCollisionType()))
                 .forEach(crash -> this.incrementCounts(countResultBuilder, crash));
         return countResultBuilder.setAttribute(collisionType).build();
-    }
-
-    private CountResult countNotSpecified(List<Crash> crashes) {
-        CountResult.CountResultBuilder countResultBuilder = new CountResult.CountResultBuilder();
-        crashes.stream().filter(crash -> crash.getCollisionType() == null)
-                .forEach(crash -> this.incrementCounts(countResultBuilder, crash));
-        return countResultBuilder.setAttribute(NameIdModel.createNotSpecifiedInstance()).build();
     }
 }

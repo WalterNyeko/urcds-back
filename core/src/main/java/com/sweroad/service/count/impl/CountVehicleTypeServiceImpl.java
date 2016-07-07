@@ -25,20 +25,20 @@ public class CountVehicleTypeServiceImpl extends BaseCountService implements Cou
         List<CountResult> countResults = new ArrayList<>();
         List<VehicleType> vehicleTypes = vehicleTypeManager.getAllDistinct();
         vehicleTypes.forEach(vehicleType -> countResults.add(countOccurrences(vehicleType, crashes)));
-        countResults.add(countNotSpecified(crashes));
+        countResults.add(countOccurrences(NameIdModel.createNotSpecifiedInstance(), crashes));
         return countResults;
     }
 
-    private CountResult countOccurrences(VehicleType vehicleType, List<Crash> crashes) {
+    private CountResult countOccurrences(NameIdModel vehicleType, List<Crash> crashes) {
         CountResult.CountResultBuilder countResultBuilder = new CountResult.CountResultBuilder();
         crashes.stream().forEach(crash ->
                 this.incrementCounts(countResultBuilder, this.countVehicles(vehicleType, crash)));
         return countResultBuilder.setAttribute(vehicleType).build();
     }
 
-    private Countable countVehicles(VehicleType vehicleType, Crash crash){
+    private Countable countVehicles(NameIdModel vehicleType, Crash crash) {
         List<Vehicle> vehicles = crash.getVehicles().stream().filter(vehicle ->
-                vehicleType.equals(vehicle.getVehicleType())).collect(Collectors.toList());
+                this.matchAttributes(vehicleType, vehicle.getVehicleType())).collect(Collectors.toList());
         final int vehicleCount = vehicles.size();
         final long crashCount = vehicleCount > 0 ? 1 : 0;
         final long casualtyCount = this.countCasualties(crash, vehicles);
@@ -67,12 +67,5 @@ public class CountVehicleTypeServiceImpl extends BaseCountService implements Cou
         casualtyCount += vehicles.stream().map(Vehicle::getDriver).filter(driver->
                 driver.getCasualtyType() != null && !driver.getCasualtyType().getId().equals(Constants.NOT_INJURED_ID)).count();
         return casualtyCount;
-    }
-
-    private CountResult countNotSpecified(List<Crash> crashes) {
-        CountResult.CountResultBuilder countResultBuilder = new CountResult.CountResultBuilder();
-        crashes.stream().filter(crash -> crash.getCollisionType() == null)
-                .forEach(crash -> this.incrementCounts(countResultBuilder, crash));
-        return countResultBuilder.setAttribute(NameIdModel.createNotSpecifiedInstance()).build();
     }
 }
