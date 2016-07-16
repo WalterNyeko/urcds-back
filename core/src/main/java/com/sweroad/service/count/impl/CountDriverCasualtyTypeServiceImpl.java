@@ -11,33 +11,33 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Created by Frank on 5/31/16.
+ * Created by Frank on 7/16/16.
  */
-@Service("countVehicleTypeService")
-public class CountVehicleTypeServiceImpl extends BaseCountService implements CountAttributeService {
+@Service("countDriverCasualtyTypeService")
+public class CountDriverCasualtyTypeServiceImpl extends BaseCountService implements CountAttributeService {
 
     @Autowired
-    private GenericManager<VehicleType, Long> vehicleTypeManager;
+    private GenericManager<CasualtyType, Long> casualtyTypeManager;
 
     @Override
     public List<CountResult> countCrashes(List<Crash> crashes) {
         List<CountResult> countResults = new ArrayList<>();
-        List<VehicleType> vehicleTypes = vehicleTypeManager.getAllDistinct();
-        vehicleTypes.forEach(vehicleType -> countResults.add(countOccurrences(vehicleType, crashes)));
+        List<CasualtyType> casualtyTypes = casualtyTypeManager.getAllDistinct();
+        casualtyTypes.forEach(casualtyType -> countResults.add(countOccurrences(casualtyType, crashes)));
         countResults.add(countOccurrences(NameIdModel.createNotSpecifiedInstance(), crashes));
         return countResults;
     }
 
-    private CountResult countOccurrences(NameIdModel vehicleType, List<Crash> crashes) {
+    private CountResult countOccurrences(NameIdModel casualtyType, List<Crash> crashes) {
         CountResult.CountResultBuilder countResultBuilder = new CountResult.CountResultBuilder();
         crashes.stream().forEach(crash ->
-                this.incrementCounts(countResultBuilder, this.countVehicles(vehicleType, crash)));
-        return countResultBuilder.setAttribute(vehicleType).build();
+                this.incrementCounts(countResultBuilder, this.countVehicles(casualtyType, crash)));
+        return countResultBuilder.setAttribute(casualtyType).build();
     }
 
-    private Countable countVehicles(NameIdModel vehicleType, Crash crash) {
+    private Countable countVehicles(NameIdModel casualtyType, Crash crash) {
         List<Vehicle> vehicles = crash.getVehicles().stream().filter(vehicle ->
-                this.matchAttributes(vehicleType, vehicle.getVehicleType()))
+                this.matchAttributes(casualtyType, vehicle.getDriver().getCasualtyType()))
                 .collect(Collectors.toList());
         return getCounts(crash, vehicles);
     }

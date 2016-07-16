@@ -1,8 +1,7 @@
 package com.sweroad.model;
 
-import java.util.Date;
-
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "casualty")
@@ -144,6 +143,10 @@ public class Casualty extends BaseModel {
 	public Vehicle getVehicle() {
 		return vehicle;
 	}
+
+    public boolean isPassenger() {
+        return vehicle != null;
+    }
 
 	/**
 	 * @param vehicle

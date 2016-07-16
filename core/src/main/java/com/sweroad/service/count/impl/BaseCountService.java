@@ -1,11 +1,10 @@
 package com.sweroad.service.count.impl;
 
 import com.sweroad.Constants;
-import com.sweroad.model.CountResult;
-import com.sweroad.model.Countable;
-import com.sweroad.model.NameIdModel;
+import com.sweroad.model.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Frank on 6/17/16.
@@ -29,5 +28,35 @@ public class BaseCountService {
         List<NameIdModel> attr = (List<NameIdModel>) attributes;
         attr.add(NameIdModel.createNotSpecifiedInstance());
         return attr;
+    }
+
+    protected long countCasualties(Crash crash, List<Vehicle> vehicles) {
+        List<Long> vehicleIds = vehicles.stream().map(Vehicle::getId).collect(Collectors.toList());
+        long casualtyCount = crash.getCasualties().stream().filter(casualty ->
+                casualty.isPassenger() && vehicleIds.contains(casualty.getVehicle().getId())).count();
+        casualtyCount += vehicles.stream().map(Vehicle::getDriver).filter(driver-> driver.isCasualty()).count();
+        return casualtyCount;
+    }
+
+    protected Countable getCounts(Crash crash, List<Vehicle> vehicles) {
+        final int vehicleCount = vehicles.size();
+        final long crashCount = vehicleCount > 0 ? 1 : 0;
+        final long casualtyCount = this.countCasualties(crash, vehicles);
+        return new Countable() {
+            @Override
+            public long getCrashCount() {
+                return crashCount;
+            }
+
+            @Override
+            public long getVehicleCount() {
+                return vehicleCount;
+            }
+
+            @Override
+            public long getCasualtyCount() {
+                return casualtyCount;
+            }
+        };
     }
 }

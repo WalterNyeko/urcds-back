@@ -49,6 +49,9 @@ public class CountServiceFactoryImpl implements CountServiceFactory {
     @Autowired
     private CountAttributeService countVehicleFailureTypeService;
 
+    @Autowired
+    private CountAttributeService countVehicleTypeService;
+
     public CountAttributeService getCountService(AttributeType attributeType) {
         switch(attributeType) {
             case WEATHER:
@@ -61,6 +64,8 @@ public class CountServiceFactoryImpl implements CountServiceFactory {
                 return countRoadSurfaceService;
             case SURFACE_TYPE:
                 return countSurfaceTypeService;
+            case VEHICLE_TYPE:
+                return countVehicleTypeService;
             case JUNCTION_TYPE:
                 return countJunctionTypeService;
             case COLLISION_TYPE:
