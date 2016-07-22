@@ -15,7 +15,7 @@ import java.util.Comparator;
  *
  * @see org.apache.struts.util.LabelValueBean
  */
-public class LabelValue extends BaseModel implements Comparable<Object>, Serializable, Queryable {
+public class LabelValue extends NameIdModel implements Comparable<Object>, Serializable, Queryable {
 
     /**
      * The property which supplies the option label visible to the end user.
@@ -27,6 +27,7 @@ public class LabelValue extends BaseModel implements Comparable<Object>, Seriali
     private String value;
     private String entityName;
     private String nameForQuery;
+    private boolean active;
 
     private static final long serialVersionUID = 3689355407466181430L;
 
@@ -90,6 +91,26 @@ public class LabelValue extends BaseModel implements Comparable<Object>, Seriali
         } catch(NumberFormatException nfe) {
             return null;
         }
+    }
+
+    @Override
+    public String getName() {
+        return this.getLabel();
+    }
+
+    @Override
+    public void setName(String name) {
+        this.setLabel(name);
+    }
+
+    @Override
+    public boolean isActive() {
+        return this.active;
+    }
+
+    @Override
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     @Override

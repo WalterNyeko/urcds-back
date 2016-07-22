@@ -24,6 +24,13 @@ public class BaseCountService {
         return candidate.equals(attribute);
     }
 
+    protected boolean matchAgeRange(NameIdModel candidate, Integer age) {
+        if (candidate.isSpecified()) {
+            return ((AgeRange) candidate).contains(age);
+        }
+        return age == null;
+    }
+
     protected List<NameIdModel> prepareAttributes(List<? extends NameIdModel> attributes) {
         List<NameIdModel> attr = (List<NameIdModel>) attributes;
         attr.add(NameIdModel.createNotSpecifiedInstance());
@@ -34,7 +41,7 @@ public class BaseCountService {
         List<Long> vehicleIds = vehicles.stream().map(Vehicle::getId).collect(Collectors.toList());
         long casualtyCount = crash.getCasualties().stream().filter(casualty ->
                 casualty.isPassenger() && vehicleIds.contains(casualty.getVehicle().getId())).count();
-        casualtyCount += vehicles.stream().map(Vehicle::getDriver).filter(driver-> driver.isCasualty()).count();
+        casualtyCount += vehicles.stream().map(Vehicle::getDriver).filter(driver -> driver.isCasualty()).count();
         return casualtyCount;
     }
 

@@ -113,7 +113,7 @@ public class ReportBuilderImpl implements ReportBuilder {
         buildCrashSeverityReport(new ReportDefinition
                 .ReportDefinitionBuilder()
                 .addRowGroupName("surfaceCondition")
-                .addRowGroupTitle("Surface Condtion")
+                .addRowGroupTitle("Surface Condition")
                 .addDataSource(dataSourceBuilder.buildSurfaceConditionDataSource(crashes))
                 .addFileName(fileName).build());
     }

@@ -834,7 +834,7 @@
         <column>date_created</column>
         <row>
             <value description="id">3</value>
-            <value description="age">37</value>
+            <null/>
             <value description="gender">F</value>
             <value description="belt_used">0</value>
             <value description="license_number">12342356</value>

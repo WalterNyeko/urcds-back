@@ -3,17 +3,19 @@ package com.sweroad.service.impl;
 import com.sweroad.Constants;
 import com.sweroad.dao.LookupDao;
 import com.sweroad.model.*;
-import com.sweroad.query.service.AgeQueryableService;
 import com.sweroad.service.LookupManager;
 import com.sweroad.util.DateUtil;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 
 /**
@@ -23,6 +25,9 @@ import java.util.List;
  */
 @Service("lookupManager")
 public class LookupManagerImpl implements LookupManager {
+
+    private final Log log = LogFactory.getLog(getClass());
+
     @Autowired
     LookupDao dao;
 
@@ -31,18 +36,14 @@ public class LookupManagerImpl implements LookupManager {
      */
     public List<LabelValue> getAllRoles() {
         List<Role> roles = dao.getRoles();
-        List<LabelValue> list = new ArrayList<LabelValue>();
-
-        for (Role role1 : roles) {
-            list.add(new LabelValue(role1.getName(), role1.getName()));
-        }
-
+        List<LabelValue> list = new ArrayList<>();
+        roles.forEach(role -> list.add(new LabelValue(role.getName(), role.getName())));
         return list;
     }
 
     @Override
     public List<LabelValue> getAllLicenseTypes() {
-        List<LabelValue> licenseTypes = new ArrayList<LabelValue>();
+        List<LabelValue> licenseTypes = new ArrayList<>();
         licenseTypes.add(new LicenseType("Valid License", "1"));
         licenseTypes.add(new LicenseType("No Valid License", "0"));
         licenseTypes.add(new LicenseType("Unknown", "-1"));
@@ -51,20 +52,14 @@ public class LookupManagerImpl implements LookupManager {
 
     @Override
     public List<LabelValue> getFilteredLicenseTypes(List<LabelValue> selectedValues) {
-        List<LabelValue> filteredLicenseTypes = new ArrayList<LabelValue>();
-        for(LabelValue labelValue : getAllLicenseTypes()) {
-            for(LabelValue selectedValue : selectedValues) {
-                if(selectedValue.getValue() != null && selectedValue.getValue().equals(labelValue.getValue())) {
-                    filteredLicenseTypes.add(labelValue);
-                }
-            }
-        }
-        return filteredLicenseTypes;
+        return getAllLicenseTypes().stream()
+                .filter(licenseType -> selectedValues.contains(licenseType))
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<LabelValue> getAllGenders() {
-        List<LabelValue> genders = new ArrayList<LabelValue>();
+        List<LabelValue> genders = new ArrayList<>();
         genders.add(new Gender("Male", "M"));
         genders.add(new Gender("Female", "F"));
         genders.add(new Gender("Unknown", "-1"));
@@ -73,12 +68,10 @@ public class LookupManagerImpl implements LookupManager {
 
     @Override
     public List<Quadrian> getAllQuadrianOptions(boolean includeNotApplicable) {
-        List<Quadrian> quadrians = new ArrayList();
+        List<Quadrian> quadrians = new ArrayList<>();
         for(Quadrian quadrian : Quadrian.values()) {
-            if (quadrian.equals(Quadrian.NOT_APPLICABLE)) {
-                if (includeNotApplicable) {
-                    quadrians.add(quadrian);
-                }
+            if (quadrian.equals(Quadrian.NOT_APPLICABLE) && includeNotApplicable) {
+                quadrians.add(quadrian);
             } else {
                 quadrians.add(quadrian);
             }
@@ -88,42 +81,30 @@ public class LookupManagerImpl implements LookupManager {
 
     @Override
     public List<LabelValue> getFilteredGenders(List<LabelValue> selectedValues) {
-        List<LabelValue> filteredGenders = new ArrayList<LabelValue>();
-        for(LabelValue labelValue : getAllGenders()) {
-            for(LabelValue selectedValue : selectedValues) {
-                if(selectedValue.getValue() != null && selectedValue.getValue().equals(labelValue.getValue())) {
-                    filteredGenders.add(labelValue);
-                }
-            }
-        }
-        return filteredGenders;
+        return getAllGenders().stream()
+                .filter(gender -> selectedValues.contains(gender))
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<LabelValue> getAllBeltUsedOptions() {
-        List<LabelValue> beltusedOptions = new ArrayList<LabelValue>();
-        beltusedOptions.add(new BeltUsedOption("Yes", "1"));
-        beltusedOptions.add(new BeltUsedOption("No", "0"));
-        beltusedOptions.add(new BeltUsedOption("Unknown", "-1"));
-        return beltusedOptions;
+        List<LabelValue> beltUsedOptions = new ArrayList<>();
+        beltUsedOptions.add(new BeltUsedOption("Yes", "1"));
+        beltUsedOptions.add(new BeltUsedOption("No", "0"));
+        beltUsedOptions.add(new BeltUsedOption("Unknown", "-1"));
+        return beltUsedOptions;
     }
 
     @Override
     public List<LabelValue> getFilteredBeltUsedOptions(List<LabelValue> selectedValues) {
-        List<LabelValue> filteredBeltUsedOptions = new ArrayList<LabelValue>();
-        for(LabelValue labelValue : getAllBeltUsedOptions()) {
-            for(LabelValue selectedValue : selectedValues) {
-                if(selectedValue.getValue() != null && selectedValue.getValue().equals(labelValue.getValue())) {
-                    filteredBeltUsedOptions.add(labelValue);
-                }
-            }
-        }
-        return filteredBeltUsedOptions;
+        return getAllBeltUsedOptions().stream()
+                .filter(option -> selectedValues.contains(option))
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<LabelValue> getAllAgeRanges() {
-        List<LabelValue> ageRanges = new ArrayList<LabelValue>();
+        List<LabelValue> ageRanges = new ArrayList<>();
         ageRanges.add(new AgeRange(1L, 0, 4));
         ageRanges.add(new AgeRange(2L, 5, 14));
         ageRanges.add(new AgeRange(3L, 15, 17));
@@ -139,31 +120,26 @@ public class LookupManagerImpl implements LookupManager {
 
     @Override
     public List<LabelValue> getFilteredAgeRanges(List<LabelValue> selectedValues) {
-        List<LabelValue> filteredAgeRanges = new ArrayList<LabelValue>();
-        for(LabelValue labelValue : getAllAgeRanges()) {
-            for(LabelValue selectedValue : selectedValues) {
-                if(selectedValue.getValue() != null && selectedValue.getValue().equals(labelValue.getValue())) {
-                    filteredAgeRanges.add(labelValue);
-                }
-            }
-        }
-        return filteredAgeRanges;
+        return getAllAgeRanges().stream()
+                .filter(range -> selectedValues.contains(range))
+                .collect(Collectors.toList());
     }
 
     @Override
     public AgeRange getAgeRangeByAge(int age) {
-        for(LabelValue range : getAllAgeRanges()) {
-            AgeRange ageRange = (AgeRange)range;
-            if (ageRange.getMinAge() >= age && (ageRange.getMaxAge() == null || ageRange.getMaxAge() >= age)) {
-                return ageRange;
-            }
+        try {
+            return (AgeRange)getAllAgeRanges().stream()
+                    .filter(range -> ((AgeRange)range).contains(age))
+                    .findFirst().get();
+        } catch (NoSuchElementException e) {
+            log.error("Invalid age '" + age + "' detected: " + e.getMessage());
+            return null;
         }
-        return null;
     }
 
     @Override
     public List<LabelValue> getAllWeightRanges() {
-        List<LabelValue> weightRanges = new ArrayList<LabelValue>();
+        List<LabelValue> weightRanges = new ArrayList<>();
         weightRanges.add(new WeightRange(1L, new BigDecimal(0), new BigDecimal(9999)));
         weightRanges.add(new WeightRange(2L, new BigDecimal(10000), new BigDecimal(19999)));
         weightRanges.add(new WeightRange(3L, new BigDecimal(20000), new BigDecimal(29999)));
@@ -180,7 +156,7 @@ public class LookupManagerImpl implements LookupManager {
 
     @Override
     public List<LabelValue> getAllTimeRanges() {
-        List<LabelValue> timeRanges = new ArrayList<LabelValue>();
+        List<LabelValue> timeRanges = new ArrayList<>();
         for(int i = 0; i < Constants.HOURS_IN_DAY; i++) {
             timeRanges.add(new TimeRange(i));
         }

@@ -17,6 +17,10 @@ public abstract class NameIdModel extends BaseModel {
 
     public abstract void setActive(boolean active);
 
+    public boolean isSpecified() {
+        return !this.getId().equals(Constants.NOT_SPECIFIED_ID);
+    }
+
     @Override
     public String toJSON() {
         StringBuilder json = new StringBuilder("{");

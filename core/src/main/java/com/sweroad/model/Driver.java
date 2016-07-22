@@ -231,10 +231,7 @@ public class Driver extends BaseModel {
         if (this.casualtyType == null) {
             return false;
         }
-        if (this.casualtyType.getId().equals(Constants.NOT_INJURED_ID)) {
-            return false;
-        }
-        return true;
+        return !this.casualtyType.getId().equals(Constants.NOT_INJURED_ID);
     }
 
     @Override

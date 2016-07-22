@@ -35,6 +35,10 @@ public class AgeRange extends LabelValue {
         return super.getLabel();
     }
 
+    public boolean contains(Integer age) {
+        return age != null && this.minAge <= age && (this.maxAge == null || this.maxAge >= age);
+    }
+
     private String padZeroes(int num) {
         return num > 9 ? "" + num : "0" + num;
     }

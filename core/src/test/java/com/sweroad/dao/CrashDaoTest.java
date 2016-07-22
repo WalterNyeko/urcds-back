@@ -196,7 +196,7 @@ public class CrashDaoTest extends BaseDaoTestCase {
 
     @Test
     public void testFindAllCrashesInvolvingMediumOmnibusesAndMotorcycles() {
-        vehicleTypes = new ArrayList<VehicleType>();
+        vehicleTypes = new ArrayList<>();
         vehicleTypes.add(vehicleTypeManager.get(7L));
         vehicleTypes.add(vehicleTypeManager.get(10L));
         CrashQuery crashQuery = new CrashQuery.CrashQueryBuilder()
@@ -209,7 +209,7 @@ public class CrashDaoTest extends BaseDaoTestCase {
 
     @Test
     public void testFindAllCrashesInvolvingPedestrians() {
-        List<CasualtyClass> casualtyClasses = new ArrayList<CasualtyClass>();
+        List<CasualtyClass> casualtyClasses = new ArrayList<>();
         casualtyClasses.add(casualtyClassManager.get(1L));
         CrashQuery crashQuery = new CrashQuery.CrashQueryBuilder()
                 .addQueryable(casualtyClasses)
@@ -243,7 +243,7 @@ public class CrashDaoTest extends BaseDaoTestCase {
                 .addCustomQueryable(customQueryableFemaleDriver)
                 .build();
         List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashQuery);
-        assertEquals(3, crashes.size());
+        assertEquals(2, crashes.size());
     }
 
     @Test
@@ -337,7 +337,7 @@ public class CrashDaoTest extends BaseDaoTestCase {
                 .joinCasualties(true)
                 .build();
         List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashQuery);
-        assertEquals(3, crashes.size());
+        assertEquals(2, crashes.size());
     }
 
     @Test
@@ -416,7 +416,7 @@ public class CrashDaoTest extends BaseDaoTestCase {
 
     @Test
     public void testFindAllCrashesInvolvingFemaleDrivers() {
-        List<LabelValue> driverGenders = new ArrayList<LabelValue>();
+        List<LabelValue> driverGenders = new ArrayList<>();
         driverGenders.add(new LabelValue());
         driverGenders.get(0).setValue("F");
         CrashSearch crashSearch = new CrashSearch();
@@ -427,7 +427,7 @@ public class CrashDaoTest extends BaseDaoTestCase {
 
     @Test
     public void testFindAllCrashesInvolvingMaleDrivers() {
-        List<LabelValue> driverGenders = new ArrayList<LabelValue>();
+        List<LabelValue> driverGenders = new ArrayList<>();
         driverGenders.add(new LabelValue());
         driverGenders.get(0).setValue("M");
         CrashSearch crashSearch = new CrashSearch();
@@ -438,7 +438,7 @@ public class CrashDaoTest extends BaseDaoTestCase {
 
     @Test
     public void testFindAllCrashesInvolvingDriversWithNullGender() {
-        List<LabelValue> driverGenders = new ArrayList<LabelValue>();
+        List<LabelValue> driverGenders = new ArrayList<>();
         driverGenders.add(new LabelValue());
         driverGenders.get(0).setValue("-1");
         CrashSearch crashSearch = new CrashSearch();
@@ -449,7 +449,7 @@ public class CrashDaoTest extends BaseDaoTestCase {
 
     @Test
     public void testFindAllCrashesInvolvingFemaleOrDriversWithNullGender() {
-        List<LabelValue> driverGenders = new ArrayList<LabelValue>();
+        List<LabelValue> driverGenders = new ArrayList<>();
         driverGenders.add(new LabelValue());
         driverGenders.get(0).setValue("F");
         driverGenders.add(new LabelValue());
