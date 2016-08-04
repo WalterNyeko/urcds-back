@@ -160,8 +160,8 @@ public class PatientAuditTest {
     public void testThatBeltHelmetChangeIsDetected() {
         Patient patient1 = new Patient(1L);
         Patient patient2 = new Patient(1L);
-        patient1.setBeltUsedOption(Quadrian.NO);
-        patient2.setBeltUsedOption(Quadrian.YES);
+        patient1.setBeltUsedOption(Quadstate.NO);
+        patient2.setBeltUsedOption(Quadstate.YES);
         assertTrue(PatientAudit.hasChanges(patient1, patient2));
     }
 

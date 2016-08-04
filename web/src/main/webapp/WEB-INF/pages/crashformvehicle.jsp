@@ -74,13 +74,14 @@
                                 </tr>
                                 <tr>
                                     <td style="border-style: none solid solid none;">
-                                        <form:radiobutton path="driver.licenseValid" value="1" />&nbsp;
-                                        <label for="driver.licenseValid1" class="form-label"><fmt:message key="rcds.validLicense" /></label><br/>
-                                        <form:input cssClass="form-control" path="driver.licenseNumber" id="licenseNumber" placeholder="${enterLicenseNumber}" />
-                                        <form:radiobutton path="driver.licenseValid" value="0" />&nbsp;
-                                        <label for="driver.licenseValid2" class="form-label"><fmt:message key="rcds.noValidLicense" /></label><br/>
-                                        <form:radiobutton path="driver.licenseValid" value="" />&nbsp;
-                                        <label for="driver.licenseValid3" class="form-label"><fmt:message key="rcds.unknown" /></label>
+                                        <c:forEach var="licenseValid" items="${tristates}" varStatus="status">
+                                            &nbsp;<form:radiobutton path="driver.licenseValid" value="${licenseValid.quadstate.value}" />&nbsp;
+                                            <label for="licenseValid${licenseValid.quadstate.value}" class="form-label">${licenseValid.quadstate.label}</label>
+                                            <br/>
+                                            <c:if test="${licenseValid.quadstate.value eq 1}">
+                                                <form:input cssClass="form-control" path="driver.licenseNumber" id="licenseNumber" placeholder="${enterLicenseNumber}" />
+                                            </c:if>
+                                        </c:forEach>
                                     </td>
                                     <td>
                                         <form:radiobutton path="driver.gender" value="M" />&nbsp;
@@ -94,12 +95,11 @@
                                         <form:input cssClass="form-control right-al int-val" path="driver.age" id="age" placeholder="${enterDriverAge}" />
                                     </td>
                                     <td>
-                                        <form:radiobutton path="driver.beltUsed" value="1" />&nbsp;
-                                        <label for="driver.beltUsed1" class="form-label"><fmt:message key="rcds.yes" /></label><br/>
-                                        <form:radiobutton path="driver.beltUsed" value="0" />&nbsp;
-                                        <label for="driver.beltUsed2" class="form-label"><fmt:message key="rcds.no" /></label><br/>
-                                        <form:radiobutton path="driver.beltUsed" value="" />&nbsp;
-                                        <label for="driver.beltUsed3" class="form-label"><fmt:message key="rcds.unknown" /></label>
+                                        <c:forEach var="beltUsed" items="${tristates}" varStatus="status">
+                                            &nbsp;<form:radiobutton path="driver.beltUsed" value="${beltUsed.quadstate.value}" />&nbsp;
+                                            <label for="beltUsed${beltUsed.quadstate.value}" class="form-label">${beltUsed.quadstate.label}</label>
+                                            <br/>
+                                        </c:forEach>
                                     </td>
                                     <td style="border: none none solid none;">
                                         <c:forEach var="casualtyType"

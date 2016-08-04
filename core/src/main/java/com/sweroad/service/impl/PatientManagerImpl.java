@@ -57,7 +57,7 @@ public class PatientManagerImpl extends GenericManagerImpl<Patient, Long> implem
         referenceData.put("roadUserTypes", roadUserTypeManager.getAllDistinct());
         referenceData.put("transportModes", transportModeManager.getAllDistinct());
         referenceData.put("patientStatuses", patientStatusManager.getAllDistinct());
-        referenceData.put("beltUsedOptions", lookupManager.getAllQuadrianOptions(true));
+        referenceData.put("beltUsedOptions", lookupManager.getAllQuadstateOptions(true));
         referenceData.put("patientDispositions", patientDispositionManager.getAllDistinct());
         return referenceData;
     }

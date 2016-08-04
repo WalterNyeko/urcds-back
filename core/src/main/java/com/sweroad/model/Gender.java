@@ -5,8 +5,16 @@ package com.sweroad.model;
  */
 public class Gender extends LabelValue {
 
-    public Gender(String label, String value) {
+    private Long id;
+
+    public Gender(String label, String value, Long id) {
         this.setLabel(label);
         this.setValue(value);
+        this.id = id;
+    }
+
+    @Override
+    public Long getId() {
+        return id;
     }
 }

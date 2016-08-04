@@ -66,7 +66,7 @@ public class Patient extends BaseModel implements IXMLConvertible, IAuditable {
     @Column(name = "belt_used")
     private Integer beltUsed;
     @Transient
-    private Quadrian beltUsedOption;
+    private Quadstate beltUsedOption;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "pk.patient", cascade = CascadeType.ALL)
     private List<PatientInjuryType> patientInjuryTypes = new ArrayList<>(0);
     @Transient
@@ -230,18 +230,14 @@ public class Patient extends BaseModel implements IXMLConvertible, IAuditable {
         this.beltUsed = beltUsed;
     }
 
-    public Quadrian getBeltUsedOption() {
+    public Quadstate getBeltUsedOption() {
         if (this.beltUsedOption == null && this.beltUsed != null) {
-            for(Quadrian option : Quadrian.values()) {
-                if (option.getValue() == this.beltUsed.intValue()) {
-                    this.beltUsedOption = option;
-                }
-            }
+            beltUsedOption = Quadstate.getByValue(this.beltUsed);
         }
         return beltUsedOption;
     }
 
-    public void setBeltUsedOption(Quadrian beltUsedOption) {
+    public void setBeltUsedOption(Quadstate beltUsedOption) {
         this.beltUsedOption = beltUsedOption;
         this.beltUsed = beltUsedOption.getValue();
     }

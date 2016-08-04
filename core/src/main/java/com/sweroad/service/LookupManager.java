@@ -2,7 +2,6 @@ package com.sweroad.service;
 
 import com.sweroad.model.*;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -21,17 +20,17 @@ public interface LookupManager {
 
     List<LabelValue> getAllLicenseTypes();
 
-    List<LabelValue> getFilteredLicenseTypes(List<LabelValue> selectedValues);
+    List<Quadstate> getFilteredLicenseTypes(List<QuadstateWrapper> selectedStates);
 
     List<LabelValue> getAllGenders();
 
-    List<Quadrian> getAllQuadrianOptions(boolean includeNotApplicable);
+    List<QuadstateWrapper> getAllQuadstateOptions(boolean includeNA);
 
     List<LabelValue> getFilteredGenders(List<LabelValue> selectedValues);
 
     List<LabelValue> getAllBeltUsedOptions();
 
-    List<LabelValue> getFilteredBeltUsedOptions(List<LabelValue> selectedValues);
+    List<Quadstate> getFilteredBeltUsedOptions(List<QuadstateWrapper> selectedStates);
 
     List<LabelValue> getAllAgeRanges();
 

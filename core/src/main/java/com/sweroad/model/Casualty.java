@@ -20,7 +20,9 @@ public class Casualty extends BaseModel {
 	@Column(name = "age")
 	private Integer age;
 	@Column(name = "belt_or_helmet_used")
-	private Boolean beltOrHelmetUsed;
+	private Integer beltOrHelmetUsed;
+    @Transient
+    private Quadstate beltOrHelmetUsedOption;
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "casualty_type_id", nullable = false)
 	private CasualtyType casualtyType;
@@ -95,7 +97,7 @@ public class Casualty extends BaseModel {
 	/**
 	 * @return the beltOrHelmetUsed
 	 */
-	public Boolean getBeltOrHelmetUsed() {
+	public Integer getBeltOrHelmetUsed() {
 		return beltOrHelmetUsed;
 	}
 
@@ -103,11 +105,23 @@ public class Casualty extends BaseModel {
 	 * @param beltOrHelmetUsed
 	 *            the beltOrHelmetUsed to set
 	 */
-	public void setBeltOrHelmetUsed(Boolean beltOrHelmetUsed) {
+	public void setBeltOrHelmetUsed(Integer beltOrHelmetUsed) {
 		this.beltOrHelmetUsed = beltOrHelmetUsed;
 	}
 
-	/**
+    public Quadstate getBeltOrHelmetUsedOption() {
+        if (this.beltOrHelmetUsedOption == null && this.beltOrHelmetUsed != null) {
+            this.beltOrHelmetUsedOption = Quadstate.getByValue(this.beltOrHelmetUsed);
+        }
+        return beltOrHelmetUsedOption;
+    }
+
+    public void setBeltOrHelmetUsedOption(Quadstate beltOrHelmetUsedOption) {
+        this.beltOrHelmetUsedOption = beltOrHelmetUsedOption;
+        this.beltOrHelmetUsed = beltOrHelmetUsedOption.getValue();
+    }
+
+    /**
 	 * @return the casualtyType
 	 */
 	public CasualtyType getCasualtyType() {

@@ -58,32 +58,16 @@
                         <td>${vehicle.number}</td>
                         <td>${vehicle.vehicleType.name}</td>
                         <td>
-                            <c:choose>
-                                <c:when test="${vehicle.driver.licenseValid eq true}">
-                                    Valid
-                                </c:when>
-                                <c:when test="${vehicle.driver.licenseValid eq false}">
-                                    Not Valid
-                                </c:when>
-                                <c:otherwise>
-                                    Unknown
-                                </c:otherwise>
-                            </c:choose>
+                            <c:if test="${vehicle.driver.licenseValidOption ne null}">
+                                ${vehicle.driver.licenseValidOption.label}
+                            </c:if>
                         </td>
                         <td align="center">${vehicle.driver.gender}</td>
                         <td align="right">${vehicle.driver.age}</td>
                         <td>
-                            <c:choose>
-                                <c:when test="${vehicle.driver.beltUsed eq true}">
-                                    Yes
-                                </c:when>
-                                <c:when test="${vehicle.driver.beltUsed eq false}">
-                                    No
-                                </c:when>
-                                <c:otherwise>
-                                    Unknown
-                                </c:otherwise>
-                            </c:choose>
+                            <c:if test="${vehicle.driver.beltUsedOption ne null}">
+                                ${vehicle.driver.beltUsedOption.label}
+                            </c:if>
                         </td>
                         <td>${vehicle.driver.casualtyType.name}</td>
                     </tr>

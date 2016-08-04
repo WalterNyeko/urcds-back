@@ -524,10 +524,10 @@
                                         </tr>
                                         <tr>
                                             <td id="licenseType" style="border-top: none; border-left: none;">
-                                                <c:forEach var="licenseType" items="${licenseTypes}" varStatus="status">
+                                                <c:forEach var="licenseType" items="${tristates}" varStatus="status">
                                                     <form:checkbox
-                                                            path="driverLicenseTypes[${status.index}].value" value="${licenseType.value}" id="licenseType${licenseType.value}" />&nbsp;
-                                                    <label for="licenseType${licenseType.value}" class="form-label">${licenseType.label}</label>
+                                                            path="driverLicenseTypeValues[${status.index}].id" value="${licenseType.quadstate.value}" id="licenseType${licenseType.quadstate.value}" />&nbsp;
+                                                    <label for="licenseType${licenseType.quadstate.value}" class="form-label">${licenseType.quadstate.label}</label>
                                                     <br/>
                                                 </c:forEach>
                                             </td>
@@ -547,10 +547,10 @@
                                                 </c:forEach>
                                             </td>
                                             <td id="driverBeltUsed" style="border-top: none; border-left: none;">
-                                                <c:forEach var="driverBeltUsed" items="${beltUseds}" varStatus="status">
+                                                <c:forEach var="driverBeltUsed" items="${tristates}" varStatus="status">
                                                     <form:checkbox
-                                                            path="driverBeltUsedOptions[${status.index}].value" value="${driverBeltUsed.value}" id="driverBeltUsed${driverBeltUsed.value}" />&nbsp;
-                                                    <label for="driverBeltUsed${driverBeltUsed.value}" class="form-label">${driverBeltUsed.label}</label>
+                                                            path="driverBeltUsedOptionValues[${status.index}].id" value="${driverBeltUsed.quadstate.value}" id="driverBeltUsed${driverBeltUsed.quadstate.value}" />&nbsp;
+                                                    <label for="driverBeltUsed${driverBeltUsed.quadstate.value}" class="form-label">${driverBeltUsed.quadstate.label}</label>
                                                     <br/>
                                                 </c:forEach>
                                             </td>
@@ -627,10 +627,10 @@
                                     </c:forEach>
                                 </td>
                                 <td id="casualtyBeltUsed" class="padd2" style="border-top: none; border-left: none;">
-                                    <c:forEach var="casualtyBeltUsed" items="${beltUseds}" varStatus="status">
+                                    <c:forEach var="casualtyBeltUsed" items="${quadstates}" varStatus="status">
                                         <form:checkbox
-                                                path="casualtyBeltUsedOptions[${status.index}].value" value="${casualtyBeltUsed.value}" id="casualtyBeltUsed${casualtyBeltUsed.value}" />&nbsp;
-                                        <label for="casualtyBeltUsed${casualtyBeltUsed.value}" class="form-label">${casualtyBeltUsed.label}</label>
+                                                path="casualtyBeltUsedOptionValues[${status.index}].id" value="${casualtyBeltUsed.quadstate.value}" id="casualtyBeltUsed${casualtyBeltUsed.quadstate.value}" />&nbsp;
+                                        <label for="casualtyBeltUsed${casualtyBeltUsed.quadstate.value}" class="form-label">${casualtyBeltUsed.quadstate.label}</label>
                                         <br/>
                                     </c:forEach>
                                 </td>

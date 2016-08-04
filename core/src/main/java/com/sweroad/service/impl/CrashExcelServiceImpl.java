@@ -283,8 +283,8 @@ public class CrashExcelServiceImpl implements CrashExcelService {
         if (vehicle.getDriver() != null) {
             addRowCell(row, cellIndex++,
                     vehicle.getDriver().getLicenseValid() != null ? vehicle
-                            .getDriver().getLicenseValid() ? "Yes" : "No"
-                            : "Uknown", Cell.CELL_TYPE_STRING, null, color);
+                            .getDriver().getLicenseValidOption().getLabel()
+                            : "", Cell.CELL_TYPE_STRING, null, color);
             addRowCell(row, cellIndex++,
                     vehicle.getDriver().getLicenseNumber(),
                     Cell.CELL_TYPE_STRING, null, color);
@@ -296,8 +296,8 @@ public class CrashExcelServiceImpl implements CrashExcelService {
                     getRightAlignStyle(), color);
             addRowCell(row, cellIndex++,
                     vehicle.getDriver().getBeltUsed() != null ? vehicle
-                            .getDriver().getBeltUsed() ? "Yes" : "No"
-                            : "Uknown", Cell.CELL_TYPE_STRING, null, color);
+                            .getDriver().getBeltUsedOption().getLabel()
+                            : "", Cell.CELL_TYPE_STRING, null, color);
             addRowCell(row, cellIndex++,
                     vehicle.getDriver().getCasualtyType() != null ? vehicle
                             .getDriver().getCasualtyType().getName() : "",
@@ -348,7 +348,7 @@ public class CrashExcelServiceImpl implements CrashExcelService {
                 row,
                 cellIndex++,
                 casualty.getBeltOrHelmetUsed() != null ? casualty
-                        .getBeltOrHelmetUsed() ? "Yes" : "No" : "Uknown",
+                        .getBeltOrHelmetUsedOption().getLabel() : "",
                 Cell.CELL_TYPE_STRING, null, color);
     }
 

@@ -724,7 +724,7 @@
 			<value description="id">1</value>
 			<value description="age">25</value>
 			<value description="gender">F</value>
-			<value description="belt_or_helmet_used">1</value>
+			<value description="belt_or_helmet_used">0</value>
 			<value description="casualty_class_id">4</value>
 			<value description="casualty_type_id">3</value>
 			<value description="vehicle_id">1</value>
@@ -734,7 +734,7 @@
 			<value description="id">2</value>
 			<value description="age">30</value>
 			<value description="gender">M</value>
-			<value description="belt_or_helmet_used">0</value>
+			<value description="belt_or_helmet_used">3</value>
 			<value description="casualty_class_id">1</value>
 			<value description="casualty_type_id">2</value>
 			<null/>
@@ -890,7 +890,7 @@
             <value description="id">3</value>
             <value description="age">15</value>
             <value description="gender">F</value>
-            <value description="belt_or_helmet_used">1</value>
+            <value description="belt_or_helmet_used">0</value>
             <value description="casualty_class_id">4</value>
             <value description="casualty_type_id">3</value>
             <value description="vehicle_id">3</value>
@@ -900,7 +900,7 @@
             <value description="id">4</value>
             <value description="age">11</value>
             <value description="gender">M</value>
-            <value description="belt_or_helmet_used">0</value>
+            <value description="belt_or_helmet_used">3</value>
             <value description="casualty_class_id">1</value>
             <value description="casualty_type_id">2</value>
             <null/>
@@ -1004,7 +1004,7 @@
             <value description="gender">M</value>
             <value description="belt_used">0</value>
             <value description="license_number">12342356</value>
-            <null/>
+            <value description="license_valid">2</value>
             <value description="casualty_type_id">4</value>
             <value description="date_created">2014-06-03 18:15:00</value>
         </row>
@@ -1014,7 +1014,7 @@
             <value description="gender">M</value>
             <value description="belt_used">1</value>
             <value description="license_number">12378459</value>
-            <null/>
+            <value description="license_valid">2</value>
             <value description="casualty_type_id">4</value>
             <value description="date_created">2014-06-04 18:15:00</value>
         </row>
@@ -1024,7 +1024,7 @@
             <value description="gender">F</value>
             <value description="belt_used">0</value>
             <value description="license_number">12342356</value>
-            <null/>
+            <value description="license_valid">2</value>
             <value description="casualty_type_id">4</value>
             <value description="date_created">2014-06-03 18:15:00</value>
         </row>
@@ -1337,7 +1337,7 @@
         <row>
             <value description="id">13</value>
             <value description="age">18</value>
-            <value description="gender">M</value>
+            <value description="gender">-1</value>
             <value description="belt_used">0</value>
             <value description="license_number">123456</value>
             <value description="license_valid">1</value>
@@ -1402,7 +1402,7 @@
             <value description="id">6</value>
             <value description="age">30</value>
             <value description="gender">M</value>
-            <value description="belt_or_helmet_used">0</value>
+            <value description="belt_or_helmet_used">3</value>
             <value description="casualty_class_id">1</value>
             <value description="casualty_type_id">1</value>
             <null/>
@@ -1504,7 +1504,7 @@
             <value description="id">15</value>
             <value description="age">37</value>
             <value description="gender">F</value>
-            <null/>
+            <value description="belt_used">2</value>
             <value description="license_number">12342356</value>
             <value description="license_valid">1</value>
             <value description="casualty_type_id">2</value>
@@ -1514,7 +1514,7 @@
             <value description="id">16</value>
             <value description="age">33</value>
             <value description="gender">M</value>
-            <null/>
+            <value description="belt_used">2</value>
             <value description="license_number">12378459</value>
             <value description="license_valid">1</value>
             <value description="casualty_type_id">1</value>
@@ -1558,7 +1558,7 @@
             <value description="id">7</value>
             <value description="age">25</value>
             <value description="gender">F</value>
-            <null/>
+            <value description="belt_or_helmet_used">2</value>
             <value description="casualty_class_id">4</value>
             <value description="casualty_type_id">3</value>
             <value description="vehicle_id">15</value>
@@ -1568,7 +1568,7 @@
             <value description="id">8</value>
             <value description="age">11</value>
             <value description="gender">M</value>
-            <null/>
+            <value description="belt_or_helmet_used">3</value>
             <value description="casualty_class_id">1</value>
             <value description="casualty_type_id">1</value>
             <value description="vehicle_id">15</value>
@@ -1836,7 +1836,7 @@
             <value description="id">10</value>
             <value description="age">11</value>
             <null/>
-            <value description="belt_or_helmet_used">0</value>
+            <value description="belt_or_helmet_used">3</value>
             <value description="casualty_class_id">1</value>
             <value description="casualty_type_id">1</value>
             <value description="vehicle_id">19</value>
@@ -2002,7 +2002,7 @@
             <value description="id">12</value>
             <value description="age">30</value>
             <value description="gender">M</value>
-            <value description="belt_or_helmet_used">0</value>
+            <value description="belt_or_helmet_used">3</value>
             <value description="casualty_class_id">1</value>
             <value description="casualty_type_id">1</value>
             <null/>

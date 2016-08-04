@@ -2,7 +2,7 @@ package com.sweroad.query;
 
 import com.sweroad.model.*;
 import com.sweroad.query.service.AgeQueryableService;
-import com.sweroad.query.service.BooleanTypeQueryableService;
+import com.sweroad.query.service.QuadstateQueryableService;
 import com.sweroad.query.service.CustomQueryableService;
 import com.sweroad.query.service.GenderQueryableService;
 import com.sweroad.service.DateRangeManager;
@@ -32,29 +32,32 @@ public class CrashSearch implements DateRangable {
     private Integer endHour;
     private String startDateString;
     private String endDateString;
-    private List<CrashSeverity> crashSeverities = new ArrayList<CrashSeverity>();
-    private List<CollisionType> collisionTypes = new ArrayList<CollisionType>();
-    private List<CrashCause> crashCauses = new ArrayList<CrashCause>();
-    private List<VehicleFailureType> vehicleFailureTypes = new ArrayList<VehicleFailureType>();
-    private List<Weather> weathers = new ArrayList<Weather>();
-    private List<SurfaceCondition> surfaceConditions = new ArrayList<SurfaceCondition>();
-    private List<RoadSurface> roadSurfaces = new ArrayList<RoadSurface>();
-    private List<SurfaceType> surfaceTypes = new ArrayList<SurfaceType>();
-    private List<RoadwayCharacter> roadwayCharacters = new ArrayList<RoadwayCharacter>();
-    private List<JunctionType> junctionTypes = new ArrayList<JunctionType>();
-    private List<VehicleType> vehicleTypes = new ArrayList<VehicleType>();
-    private List<LabelValue> driverLicenseTypes = new ArrayList<LabelValue>();
-    private List<LabelValue> driverGenders = new ArrayList<LabelValue>();
-    private List<LabelValue> driverBeltUsedOptions = new ArrayList<LabelValue>();
-    private List<LabelValue> driverAgeRanges = new ArrayList<LabelValue>();
-    private List<CasualtyType> driverCasualtyTypes = new ArrayList<CasualtyType>();
-    private List<CasualtyType> casualtyTypes = new ArrayList<CasualtyType>();
-    private List<CasualtyClass> casualtyClasses = new ArrayList<CasualtyClass>();
-    private List<LabelValue> casualtyGenders = new ArrayList<LabelValue>();
-    private List<LabelValue> casualtyAgeRanges = new ArrayList<LabelValue>();
-    private List<LabelValue> casualtyBeltUsedOptions = new ArrayList<LabelValue>();
-    private List<District> districts = new ArrayList<District>();
-    private List<PoliceStation> policeStations = new ArrayList<PoliceStation>();
+    private List<Weather> weathers = new ArrayList<>();
+    private List<District> districts = new ArrayList<>();
+    private List<CrashCause> crashCauses = new ArrayList<>();
+    private List<RoadSurface> roadSurfaces = new ArrayList<>();
+    private List<SurfaceType> surfaceTypes = new ArrayList<>();
+    private List<VehicleType> vehicleTypes = new ArrayList<>();
+    private List<LabelValue> driverGenders = new ArrayList<>();
+    private List<LabelValue> driverAgeRanges = new ArrayList<>();
+    private List<JunctionType> junctionTypes = new ArrayList<>();
+    private List<CasualtyType> casualtyTypes = new ArrayList<>();
+    private List<LabelValue> casualtyGenders = new ArrayList<>();
+    private List<Quadstate> driverLicenseTypes = new ArrayList<>();
+    private List<CollisionType> collisionTypes = new ArrayList<>();
+    private List<LabelValue> casualtyAgeRanges = new ArrayList<>();
+    private List<PoliceStation> policeStations = new ArrayList<>();
+    private List<CrashSeverity> crashSeverities = new ArrayList<>();
+    private List<CasualtyClass> casualtyClasses = new ArrayList<>();
+    private List<Quadstate> driverBeltUsedOptions = new ArrayList<>();
+    private List<CasualtyType> driverCasualtyTypes = new ArrayList<>();
+    private List<Quadstate> casualtyBeltUsedOptions = new ArrayList<>();
+    private List<RoadwayCharacter> roadwayCharacters = new ArrayList<>();
+    private List<SurfaceCondition> surfaceConditions = new ArrayList<>();
+    private List<VehicleFailureType> vehicleFailureTypes = new ArrayList<>();
+    private List<QuadstateWrapper> driverLicenseTypeValues = new ArrayList();
+    private List<QuadstateWrapper> driverBeltUsedOptionValues = new ArrayList();
+    private List<QuadstateWrapper> casualtyBeltUsedOptionValues = new ArrayList();
 
     public CrashSearch() {
         this.dateRangeManager = new DateRangeManagerImpl();
@@ -247,12 +250,20 @@ public class CrashSearch implements DateRangable {
         this.casualtyClasses = casualtyClasses;
     }
 
-    public List<LabelValue> getDriverLicenseTypes() {
-        return driverLicenseTypes;
+    public List<Quadstate> getDriverLicenseTypes() {
+        return this.driverLicenseTypes;
     }
 
-    public void setDriverLicenseTypes(List<LabelValue> driverLicenseTypes) {
+    public void setDriverLicenseTypes(List<Quadstate> driverLicenseTypes) {
         this.driverLicenseTypes = driverLicenseTypes;
+    }
+
+    public List<QuadstateWrapper> getDriverLicenseTypeValues() { return this.driverLicenseTypeValues; }
+
+    public void setDriverLicenseTypeValues(List<QuadstateWrapper> driverLicenseTypeValues) {
+        this.driverLicenseTypeValues = driverLicenseTypeValues;
+        this.driverLicenseTypes.clear();
+        this.driverLicenseTypeValues.forEach(value -> this.driverLicenseTypes.add(value.getQuadstate()));
     }
 
     public List<LabelValue> getDriverGenders() {
@@ -263,12 +274,22 @@ public class CrashSearch implements DateRangable {
         this.driverGenders = driverGenders;
     }
 
-    public List<LabelValue> getDriverBeltUsedOptions() {
+    public List<Quadstate> getDriverBeltUsedOptions() {
         return driverBeltUsedOptions;
     }
 
-    public void setDriverBeltUsedOptions(List<LabelValue> driverBeltUsedOptions) {
+    public void setDriverBeltUsedOptions(List<Quadstate> driverBeltUsedOptions) {
         this.driverBeltUsedOptions = driverBeltUsedOptions;
+    }
+
+    public List<QuadstateWrapper> getDriverBeltUsedOptionValues() {
+        return this.driverBeltUsedOptionValues;
+    }
+
+    public void setDriverBeltUsedOptionValues(List<QuadstateWrapper> driverBeltUsedOptionValues) {
+        this.driverBeltUsedOptionValues = driverBeltUsedOptionValues;
+        this.driverBeltUsedOptions.clear();
+        this.driverBeltUsedOptionValues.forEach(value -> this.driverBeltUsedOptions.add(value.getQuadstate()));
     }
 
     public List<LabelValue> getDriverAgeRanges() {
@@ -303,12 +324,22 @@ public class CrashSearch implements DateRangable {
         this.casualtyAgeRanges = casualtyAgeRanges;
     }
 
-    public List<LabelValue> getCasualtyBeltUsedOptions() {
+    public List<Quadstate> getCasualtyBeltUsedOptions() {
         return casualtyBeltUsedOptions;
     }
 
-    public void setCasualtyBeltUsedOptions(List<LabelValue> casualtyBeltUsedOptions) {
+    public void setCasualtyBeltUsedOptions(List<Quadstate> casualtyBeltUsedOptions) {
         this.casualtyBeltUsedOptions = casualtyBeltUsedOptions;
+    }
+
+    public List<QuadstateWrapper> getCasualtyBeltUsedOptionValues() {
+        return this.casualtyBeltUsedOptionValues;
+    }
+
+    public void setCasualtyBeltUsedOptionValues(List<QuadstateWrapper> casualtyBeltUsedOptionValues) {
+        this.casualtyBeltUsedOptionValues = casualtyBeltUsedOptionValues;
+        this.casualtyBeltUsedOptions.clear();
+        this.casualtyBeltUsedOptionValues.forEach(value -> this.casualtyBeltUsedOptions.add(value.getQuadstate()));
     }
 
     public List<District> getDistricts() {
@@ -428,15 +459,15 @@ public class CrashSearch implements DateRangable {
 
         private void addCustomQueryableServices() {
             customQueryableServices = new ArrayList<>();
-            customQueryableServices.add(new BooleanTypeQueryableService(driverLicenseTypes, lookupManager.getAllLicenseTypes(),
+            customQueryableServices.add(new QuadstateQueryableService(driverLicenseTypes,
                     CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE, "licenseValid", "driver"));
             customQueryableServices.add(new GenderQueryableService(driverGenders, lookupManager,
                     CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE));
             customQueryableServices.add(new GenderQueryableService(casualtyGenders, lookupManager,
                     CrashQuery.CrashQueryBuilder.CrashJoinType.CASUALTY));
-            customQueryableServices.add(new BooleanTypeQueryableService(driverBeltUsedOptions, lookupManager.getAllBeltUsedOptions(),
+            customQueryableServices.add(new QuadstateQueryableService(driverBeltUsedOptions,
                     CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE, "beltUsed", "driver"));
-            customQueryableServices.add(new BooleanTypeQueryableService(casualtyBeltUsedOptions, lookupManager.getAllBeltUsedOptions(),
+            customQueryableServices.add(new QuadstateQueryableService(casualtyBeltUsedOptions,
                     CrashQuery.CrashQueryBuilder.CrashJoinType.CASUALTY, "beltOrHelmetUsed", ""));
         }
 

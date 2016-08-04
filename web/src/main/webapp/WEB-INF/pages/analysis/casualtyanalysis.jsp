@@ -71,20 +71,9 @@
                             </c:choose>
                         </td>
                         <td>
-                            <c:choose>
-                                <c:when test="${casualty.casualtyClass.id eq 1}">
-                                    N/A
-                                </c:when>
-                                <c:when test="${casualty.beltOrHelmetUsed eq true}">
-                                    Yes
-                                </c:when>
-                                <c:when test="${casualty.beltOrHelmetUsed eq false}">
-                                    No
-                                </c:when>
-                                <c:otherwise>
-                                    Unknown
-                                </c:otherwise>
-                            </c:choose>
+                            <c:if test="${casualty.beltOrHelmetUsedOption ne null}">
+                                ${casualty.beltOrHelmetUsedOption.label}
+                            </c:if>
                         </td>
                         <td>
 

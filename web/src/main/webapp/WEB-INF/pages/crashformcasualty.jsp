@@ -81,14 +81,11 @@
                                         </c:forEach>
                                     </td>
                                     <td>
-                                        <form:radiobutton path="beltOrHelmetUsed" value="1" />&nbsp;
-                                        <label for="beltOrHelmetUsed1" class="form-label"><fmt:message key="rcds.yes" /></label><br/>
-                                        <form:radiobutton path="beltOrHelmetUsed" value="0" />&nbsp;
-                                        <label for="beltOrHelmetUsed2" class="form-label"><fmt:message key="rcds.no" /></label><br/>
-                                        <form:radiobutton path="beltOrHelmetUsed" value="" />&nbsp;
-                                        <label for="beltOrHelmetUsed3" class="form-label"><fmt:message key="rcds.unknown" /></label><br/>
-                                        <form:radiobutton path="beltOrHelmetUsed" value="" />&nbsp;
-                                        <label for="beltOrHelmetUsed4" class="form-label"><fmt:message key="rcds.na" /></label><br/>
+                                        <c:forEach var="beltUsed" items="${quadstates}" varStatus="status">
+                                            &nbsp;<form:radiobutton path="beltOrHelmetUsed" value="${beltUsed.quadstate.value}" />&nbsp;
+                                            <label for="beltUsed${beltUsed.quadstate.value}" class="form-label">${beltUsed.quadstate.label}</label>
+                                            <br/>
+                                        </c:forEach>
                                     </td>
                                 </tr>
                             </table>

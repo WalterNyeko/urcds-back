@@ -36,8 +36,8 @@ public class CasualtyAuditTest {
     public void testThatBeltHelmetChangeIsDetected() {
         Casualty casualty1 = new Casualty(1L);
         Casualty casualty2 = new Casualty(1L);
-        casualty1.setBeltOrHelmetUsed(true);
-        casualty2.setBeltOrHelmetUsed(false);
+        casualty1.setBeltOrHelmetUsed(1);
+        casualty2.setBeltOrHelmetUsed(0);
         assertTrue(CasualtyAudit.hasChanges(casualty1, casualty2));
     }
 

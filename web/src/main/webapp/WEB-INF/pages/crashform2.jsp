@@ -68,26 +68,16 @@
                                             </c:if>
                                         </td>
                                         <td class="padd2">
-                                            <c:choose>
-                                                <c:when
-                                                        test="${vehicle.driver ne null and vehicle.driver.licenseValid ne null and vehicle.driver.licenseValid eq true}">
-                                                    <appfuse:label styleClass="form-label"
-                                                                   key="rcds.validLicense" />
+                                            <c:if test="${vehicle.driver ne null and vehicle.driver.licenseValidOption ne null}">
+                                                ${vehicle.driver.licenseValidOption.label}
+                                                <c:if test="${vehicle.driver.licenseValidOption.value eq 1}">
                                                     <br />
                                                     <i>
                                                         <b style="font-weight: bold"><appfuse:label styleClass="form-label" key="crash.licenseNumber" />:</b>
-                                                        &nbsp;${vehicle.driver.licenseNumber}</i>
-                                                </c:when>
-                                                <c:when
-                                                        test="${vehicle.driver ne null and vehicle.driver.licenseValid ne null and vehicle.driver.licenseValid eq false}">
-                                                    <appfuse:label styleClass="form-label"
-                                                                   key="rcds.noValidLicense" />
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <appfuse:label styleClass="form-label"
-                                                                   key="rcds.unknown" />
-                                                </c:otherwise>
-                                            </c:choose>
+                                                        &nbsp;${vehicle.driver.licenseNumber}
+                                                    </i>
+                                                </c:if>
+                                            </c:if>
                                         </td>
                                         <td class="padd2">
                                             <c:choose>
@@ -107,20 +97,9 @@
                                         </td>
                                         <td class="padd2" align="right">${vehicle.driver.age}</td>
                                         <td class="padd2">
-                                            <c:choose>
-                                                <c:when
-                                                        test="${vehicle.driver ne null and vehicle.driver.beltUsed ne null and vehicle.driver.beltUsed eq true}">
-                                                    <appfuse:label styleClass="form-label" key="rcds.yes" />
-                                                </c:when>
-                                                <c:when
-                                                        test="${vehicle.driver ne null and vehicle.driver.beltUsed ne null and vehicle.driver.beltUsed eq false}">
-                                                    <appfuse:label styleClass="form-label" key="rcds.no" />
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <appfuse:label styleClass="form-label"
-                                                                   key="rcds.unknown" />
-                                                </c:otherwise>
-                                            </c:choose>
+                                            <c:if test="${vehicle.driver ne null and vehicle.driver.beltUsedOption ne null}">
+                                                ${vehicle.driver.beltUsedOption.label}
+                                            </c:if>
                                         </td>
                                         <td class="padd2">
                                             <c:if test="${vehicle.driver ne null and vehicle.driver.casualtyType ne null }">
@@ -200,14 +179,11 @@
                                                     <appfuse:label styleClass="form-label"
                                                         key="crash.vehicle" />&nbsp;${casualty.vehicle.number}
                                                 </c:if></td>
-                                            <td class="padd2"><c:choose>
-                                                    <c:when test="${casualty.beltOrHelmetUsed ne null}">
-                                                        ${casualty.beltOrHelmetUsed eq true ? "Yes" : "No"}
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        Unknown
-                                                    </c:otherwise>
-                                                </c:choose></td>
+                                            <td class="padd2">
+                                                <c:if test="${casualty.beltOrHelmetUsedOption ne null}">
+                                                    ${casualty.beltOrHelmetUsedOption.label}
+                                                </c:if>
+                                            </td>
                                             <td class="padd2" align="center">
                                                 <a href="" onclick="util.unbindBeforeUnload(); return ui.loadCasualtyForm({url: '<c:url value="/crashformcasualty?id=${casualty.id}"/>'});">
                                                     <i class="icon-edit"></i>

@@ -25,8 +25,8 @@ public class DriverAuditTest {
     public void testThatBeltHelmetChangeIsDetected() {
         Driver driver1 = new Driver(1L);
         Driver driver2 = new Driver(1L);
-        driver1.setBeltUsed(true);
-        driver2.setBeltUsed(false);
+        driver1.setBeltUsed(1);
+        driver2.setBeltUsed(0);
         assertTrue(DriverAudit.hasChanges(driver1, driver2));
     }
 
@@ -52,8 +52,8 @@ public class DriverAuditTest {
     public void testThatLicenseValidChangeIsDetected() {
         Driver driver1 = new Driver(1L);
         Driver driver2 = new Driver(1L);
-        driver1.setLicenseValid(true);
-        driver2.setLicenseValid(false);
+        driver1.setLicenseValid(1);
+        driver2.setLicenseValid(0);
         assertTrue(DriverAudit.hasChanges(driver1, driver2));
     }
 

@@ -325,6 +325,8 @@ public class CrashServiceImpl extends GenericManagerImpl<Crash, Long> implements
         referenceData.put("collisionTypes", collisionTypeManager.getAllActive());
         referenceData.put("crashSeverities", crashSeverityManager.getAllActive());
         referenceData.put("casualtyClasses", casualtyClassManager.getAllActive());
+        referenceData.put("tristates", lookupManager.getAllQuadstateOptions(false));
+        referenceData.put("quadstates", lookupManager.getAllQuadstateOptions(true));
         referenceData.put("surfaceConditions", surfaceConditionManager.getAllActive());
         referenceData.put("roadwayCharacters", roadwayCharacterManager.getAllActive());
         referenceData.put("vehicleFailureTypes", vehicleFailureTypeManager.getAllActive());

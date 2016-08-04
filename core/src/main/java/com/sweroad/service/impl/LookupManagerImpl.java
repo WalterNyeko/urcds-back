@@ -51,32 +51,33 @@ public class LookupManagerImpl implements LookupManager {
     }
 
     @Override
-    public List<LabelValue> getFilteredLicenseTypes(List<LabelValue> selectedValues) {
-        return getAllLicenseTypes().stream()
-                .filter(licenseType -> selectedValues.contains(licenseType))
+    public List<Quadstate> getFilteredLicenseTypes(List<QuadstateWrapper> selectedStates) {
+        return getAllQuadstateOptions(true).stream()
+                .filter(licenseType -> selectedStates.contains(licenseType))
+                .map(QuadstateWrapper::getQuadstate)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<LabelValue> getAllGenders() {
         List<LabelValue> genders = new ArrayList<>();
-        genders.add(new Gender("Male", "M"));
-        genders.add(new Gender("Female", "F"));
-        genders.add(new Gender("Unknown", "-1"));
+        genders.add(new Gender("Male", "M", 1L));
+        genders.add(new Gender("Female", "F", 2L));
+        genders.add(new Gender("Unknown", "-1", 3L));
         return genders;
     }
 
     @Override
-    public List<Quadrian> getAllQuadrianOptions(boolean includeNotApplicable) {
-        List<Quadrian> quadrians = new ArrayList<>();
-        for(Quadrian quadrian : Quadrian.values()) {
-            if (quadrian.equals(Quadrian.NOT_APPLICABLE) && includeNotApplicable) {
-                quadrians.add(quadrian);
-            } else {
-                quadrians.add(quadrian);
+    public List<QuadstateWrapper> getAllQuadstateOptions(boolean includeNA) {
+        List<QuadstateWrapper> quadstates = new ArrayList<>();
+        for(Quadstate quadstate : Quadstate.values()) {
+            if (includeNA) {
+                quadstates.add(new QuadstateWrapper(quadstate));
+            } else if (!quadstate.equals(Quadstate.NOT_APPLICABLE)) {
+                quadstates.add(new QuadstateWrapper(quadstate));
             }
         }
-        return quadrians;
+        return quadstates;
     }
 
     @Override
@@ -96,9 +97,10 @@ public class LookupManagerImpl implements LookupManager {
     }
 
     @Override
-    public List<LabelValue> getFilteredBeltUsedOptions(List<LabelValue> selectedValues) {
-        return getAllBeltUsedOptions().stream()
-                .filter(option -> selectedValues.contains(option))
+    public List<Quadstate> getFilteredBeltUsedOptions(List<QuadstateWrapper> selectedStates) {
+        return getAllQuadstateOptions(true).stream()
+                .filter(option -> selectedStates.contains(option))
+                .map(QuadstateWrapper::getQuadstate)
                 .collect(Collectors.toList());
     }
 

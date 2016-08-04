@@ -31,6 +31,13 @@ public class BaseCountService {
         return age == null;
     }
 
+    protected boolean matchGender(NameIdModel candidate, String gender) {
+        if (candidate.isSpecified() && candidate instanceof Gender) {
+            return ((Gender)candidate).getValue().equalsIgnoreCase(gender);
+        }
+        return gender == null;
+    }
+
     protected List<NameIdModel> prepareAttributes(List<? extends NameIdModel> attributes) {
         List<NameIdModel> attr = (List<NameIdModel>) attributes;
         attr.add(NameIdModel.createNotSpecifiedInstance());

@@ -83,26 +83,26 @@ public class CrashQueryManagerImpl implements CrashQueryManager {
         crashSearch.setPoliceStations(GenericManagerHelper.filterForCrashSearch(crashSearch.getPoliceStations(), policeStationManager));
         crashSearch.setDistricts(GenericManagerHelper.filterForCrashSearch(crashSearch.getDistricts(), districtManager));
         crashSearch.setVehicleTypes(GenericManagerHelper.filterForCrashSearch(crashSearch.getVehicleTypes(), vehicleTypeManager));
-        crashSearch.setDriverLicenseTypes(lookupManager.getFilteredLicenseTypes(crashSearch.getDriverLicenseTypes()));
+        crashSearch.setDriverLicenseTypes(lookupManager.getFilteredLicenseTypes(crashSearch.getDriverLicenseTypeValues()));
         crashSearch.setDriverGenders(lookupManager.getFilteredGenders(crashSearch.getDriverGenders()));
         crashSearch.setDriverAgeRanges(lookupManager.getFilteredAgeRanges(crashSearch.getDriverAgeRanges()));
-        crashSearch.setDriverBeltUsedOptions(lookupManager.getFilteredBeltUsedOptions(crashSearch.getDriverBeltUsedOptions()));
+        crashSearch.setDriverBeltUsedOptions(lookupManager.getFilteredBeltUsedOptions(crashSearch.getDriverBeltUsedOptionValues()));
         crashSearch.setDriverCasualtyTypes(GenericManagerHelper.filterForCrashSearch(crashSearch.getDriverCasualtyTypes(), casualtyTypeManager));
         crashSearch.setCasualtyClasses(GenericManagerHelper.filterForCrashSearch(crashSearch.getCasualtyClasses(), casualtyClassManager));
         crashSearch.setCasualtyTypes(GenericManagerHelper.filterForCrashSearch(crashSearch.getCasualtyTypes(), casualtyTypeManager));
         crashSearch.setCasualtyGenders(lookupManager.getFilteredGenders(crashSearch.getCasualtyGenders()));
         crashSearch.setCasualtyAgeRanges(lookupManager.getFilteredAgeRanges(crashSearch.getCasualtyAgeRanges()));
-        crashSearch.setCasualtyBeltUsedOptions(lookupManager.getFilteredBeltUsedOptions(crashSearch.getCasualtyBeltUsedOptions()));
+        crashSearch.setCasualtyBeltUsedOptions(lookupManager.getFilteredBeltUsedOptions(crashSearch.getCasualtyBeltUsedOptionValues()));
         processDates(crashSearch);
     }
 
     @Override
     public Map<String, List> getCrashQueryReferenceData() {
         Map<String, List> queryCrashReferenceData = crashService.getReferenceData();
-        queryCrashReferenceData.put("licenseTypes", lookupManager.getAllLicenseTypes());
         queryCrashReferenceData.put("genders", lookupManager.getAllGenders());
-        queryCrashReferenceData.put("beltUseds", lookupManager.getAllBeltUsedOptions());
         queryCrashReferenceData.put("ageRanges", lookupManager.getAllAgeRanges());
+        queryCrashReferenceData.put("quadstates", lookupManager.getAllQuadstateOptions(true));
+        queryCrashReferenceData.put("tristates", lookupManager.getAllQuadstateOptions(false));
         return queryCrashReferenceData;
     }
 

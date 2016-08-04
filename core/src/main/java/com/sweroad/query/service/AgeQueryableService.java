@@ -27,12 +27,12 @@ public class AgeQueryableService implements CustomQueryableService {
     }
 
     private void initAndSortAgeRanges(List<LabelValue> ageRanges) {
-        this.ageRanges = new ArrayList<AgeRange>();
-        for (LabelValue ageRange : ageRanges) {
+        this.ageRanges = new ArrayList<>();
+        ageRanges.forEach(ageRange ->  {
             if (ageRange instanceof AgeRange) {
                 this.ageRanges.add((AgeRange) ageRange);
             }
-        }
+        });
         Collections.sort(this.ageRanges);
     }
 
@@ -75,7 +75,7 @@ public class AgeQueryableService implements CustomQueryableService {
     }
 
     private List<AgeRange> getCombinedAgeRages() {
-        List<AgeRange> combinedAgeRanges = new ArrayList<AgeRange>();
+        List<AgeRange> combinedAgeRanges = new ArrayList<>();
         AgeRange combinedAgeRange = null;
         for (int i = 0; i < ageRanges.size() - 1; i++) {
             if (combinedAgeRange == null) {

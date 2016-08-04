@@ -2,14 +2,7 @@ package com.sweroad.model;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 import com.sweroad.Constants;
 
@@ -25,7 +18,9 @@ public class Driver extends BaseModel {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(name = "license_valid")
-    private Boolean licenseValid;
+    private Integer licenseValid;
+    @Transient
+    private Quadstate licenseValidOption;
     @Column(name = "license_number")
     private String licenseNumber;
     @Column(name = "gender")
@@ -33,7 +28,9 @@ public class Driver extends BaseModel {
     @Column(name = "age")
     private Integer age;
     @Column(name = "belt_used")
-    private Boolean beltUsed;
+    private Integer beltUsed;
+    @Transient
+    private Quadstate beltUsedOption;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "casualty_type_id")
     private CasualtyType casualtyType;
@@ -111,29 +108,53 @@ public class Driver extends BaseModel {
     /**
      * @return the beltUsed
      */
-    public Boolean getBeltUsed() {
+    public Integer getBeltUsed() {
         return beltUsed;
     }
 
     /**
      * @param beltUsed the beltUsed to set
      */
-    public void setBeltUsed(Boolean beltUsed) {
+    public void setBeltUsed(Integer beltUsed) {
         this.beltUsed = beltUsed;
+    }
+
+    public Quadstate getBeltUsedOption() {
+        if (this.beltUsedOption == null && this.beltUsed != null) {
+            this.beltUsedOption = Quadstate.getByValue(this.beltUsed);
+        }
+        return beltUsedOption;
+    }
+
+    public void setBeltUsedOption(Quadstate beltUsedOption) {
+        this.beltUsedOption = beltUsedOption;
+        this.beltUsed = beltUsedOption.getValue();
     }
 
     /**
      * @return the licenseValid
      */
-    public Boolean getLicenseValid() {
+    public Integer getLicenseValid() {
         return licenseValid;
     }
 
     /**
      * @param licenseValid the licenseValid to set
      */
-    public void setLicenseValid(Boolean licenseValid) {
+    public void setLicenseValid(Integer licenseValid) {
         this.licenseValid = licenseValid;
+    }
+
+    public Quadstate getLicenseValidOption() {
+        if (this.licenseValidOption == null && this.licenseValid != null) {
+            licenseValidOption = Quadstate.getByValue(this.licenseValid);
+        }
+        return licenseValidOption;
+    }
+
+    public void setLicenseValidOption(Quadstate licenseValidOption) {
+        this.licenseValidOption = licenseValidOption;
+        this.licenseValid = licenseValidOption.getValue();
     }
 
     /**

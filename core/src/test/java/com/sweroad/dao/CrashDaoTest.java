@@ -311,7 +311,7 @@ public class CrashDaoTest extends BaseDaoTestCase {
 
     @Test
     public void testFindAllCrashesInvolvingFemaleDriversAbove30YearsAndPedestrians() {
-        List<CasualtyClass> casualtyClasses = new ArrayList<CasualtyClass>();
+        List<CasualtyClass> casualtyClasses = new ArrayList<>();
         casualtyClasses.add(casualtyClassManager.get(1L));
         CustomQueryable customQueryableGreaterThan30 = new CustomQueryable.CustomQueryableBuilder()
                 .addCrashJoinType(CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE)
@@ -342,9 +342,8 @@ public class CrashDaoTest extends BaseDaoTestCase {
 
     @Test
     public void testFindAllCrashesInvolvingMotorVehiclesWithDriversHavingValidLicense() {
-        List<LabelValue> driverLicenseTypes = new ArrayList<>();
-        driverLicenseTypes.add(new LabelValue());
-        driverLicenseTypes.get(0).setValue("1");
+        List<Quadstate> driverLicenseTypes = new ArrayList<>();
+        driverLicenseTypes.add(Quadstate.YES);
         CrashSearch crashSearch = new CrashSearch();
         crashSearch.setDriverLicenseTypes(driverLicenseTypes);
         vehicleTypes = new ArrayList<>();
@@ -356,9 +355,8 @@ public class CrashDaoTest extends BaseDaoTestCase {
 
     @Test
     public void testFindAllCrashesInvolvingMotorVehiclesWithDriversHavingInvalidLicense() {
-        List<LabelValue> driverLicenseTypes = new ArrayList<>();
-        driverLicenseTypes.add(new LabelValue());
-        driverLicenseTypes.get(0).setValue("0");
+        List<Quadstate> driverLicenseTypes = new ArrayList<>();
+        driverLicenseTypes.add(Quadstate.NO);
         CrashSearch crashSearch = new CrashSearch();
         crashSearch.setDriverLicenseTypes(driverLicenseTypes);
         vehicleTypes = new ArrayList<>();
@@ -370,11 +368,9 @@ public class CrashDaoTest extends BaseDaoTestCase {
 
     @Test
     public void testFindAllCrashesInvolvingMotorVehiclesWithDriversHavingValidOrInvalidLicense() {
-        List<LabelValue> driverLicenseTypes = new ArrayList<>();
-        driverLicenseTypes.add(new LabelValue());
-        driverLicenseTypes.get(0).setValue("1");
-        driverLicenseTypes.add(new LabelValue());
-        driverLicenseTypes.get(1).setValue("0");
+        List<Quadstate> driverLicenseTypes = new ArrayList<>();
+        driverLicenseTypes.add(Quadstate.YES);
+        driverLicenseTypes.add(Quadstate.NO);
         CrashSearch crashSearch = new CrashSearch();
         crashSearch.setDriverLicenseTypes(driverLicenseTypes);
         vehicleTypes = new ArrayList<>();
@@ -386,9 +382,8 @@ public class CrashDaoTest extends BaseDaoTestCase {
 
     @Test
     public void testFindAllCrashesInvolvingMotorVehiclesWithDriversHavingNullLicenseType() {
-        List<LabelValue> driverLicenseTypes = new ArrayList<>();
-        driverLicenseTypes.add(new LabelValue());
-        driverLicenseTypes.get(0).setValue("-1");
+        List<Quadstate> driverLicenseTypes = new ArrayList<>();
+        driverLicenseTypes.add(Quadstate.UNKNOWN);
         CrashSearch crashSearch = new CrashSearch();
         crashSearch.setDriverLicenseTypes(driverLicenseTypes);
         vehicleTypes = new ArrayList<>();
@@ -399,12 +394,10 @@ public class CrashDaoTest extends BaseDaoTestCase {
     }
 
     @Test
-    public void testFindAllCrashesInvolvingMotorVehiclesWithDriversHavingValidOrNullLicense() {
-        List<LabelValue> driverLicenseTypes = new ArrayList<LabelValue>();
-        driverLicenseTypes.add(new LabelValue());
-        driverLicenseTypes.get(0).setValue("1");
-        driverLicenseTypes.add(new LabelValue());
-        driverLicenseTypes.get(1).setValue("-1");
+    public void testFindAllCrashesInvolvingMotorVehiclesWithDriversHavingValidOrUnknownLicense() {
+        List<Quadstate> driverLicenseTypes = new ArrayList<>();
+        driverLicenseTypes.add(Quadstate.YES);
+        driverLicenseTypes.add(Quadstate.UNKNOWN);
         CrashSearch crashSearch = new CrashSearch();
         crashSearch.setDriverLicenseTypes(driverLicenseTypes);
         vehicleTypes = new ArrayList<>();
@@ -463,11 +456,11 @@ public class CrashDaoTest extends BaseDaoTestCase {
     @Test
     public void testFindAllCrashesInvolvingFemaleDriversAndFemaleOrCasualtiesWithUnknownGender() {
         CrashSearch crashSearch = new CrashSearch();
-        crashSearch.setDriverGenders(new ArrayList<LabelValue>());
+        crashSearch.setDriverGenders(new ArrayList<>());
         crashSearch.getDriverGenders().add(new LabelValue());
         crashSearch.getDriverGenders().get(0).setValue("F");
 
-        crashSearch.setCasualtyGenders(new ArrayList<LabelValue>());
+        crashSearch.setCasualtyGenders(new ArrayList<>());
         crashSearch.getCasualtyGenders().add(new LabelValue());
         crashSearch.getCasualtyGenders().get(0).setValue("F");
         crashSearch.getCasualtyGenders().add(new LabelValue());
@@ -479,9 +472,8 @@ public class CrashDaoTest extends BaseDaoTestCase {
     @Test
     public void testFindAllCrashesInvolvingDriversNotWearingBelts() {
         CrashSearch crashSearch = new CrashSearch();
-        crashSearch.setDriverBeltUsedOptions(new ArrayList<LabelValue>());
-        crashSearch.getDriverBeltUsedOptions().add(new LabelValue());
-        crashSearch.getDriverBeltUsedOptions().get(0).setValue("0");
+        crashSearch.setDriverBeltUsedOptions(new ArrayList<>());
+        crashSearch.getDriverBeltUsedOptions().add(Quadstate.NO);
         List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashSearch.toQuery());
         assertEquals(9, crashes.size());
     }
@@ -489,9 +481,8 @@ public class CrashDaoTest extends BaseDaoTestCase {
     @Test
     public void testFindAllCrashesInvolvingDriversWearingBelts() {
         CrashSearch crashSearch = new CrashSearch();
-        crashSearch.setDriverBeltUsedOptions(new ArrayList<LabelValue>());
-        crashSearch.getDriverBeltUsedOptions().add(new LabelValue());
-        crashSearch.getDriverBeltUsedOptions().get(0).setValue("1");
+        crashSearch.setDriverBeltUsedOptions(new ArrayList<>());
+        crashSearch.getDriverBeltUsedOptions().add(Quadstate.YES);
         List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashSearch.toQuery());
         assertEquals(8, crashes.size());
     }
@@ -499,9 +490,8 @@ public class CrashDaoTest extends BaseDaoTestCase {
     @Test
     public void testFindAllCrashesInvolvingDriversWearingBeltsUnknown() {
         CrashSearch crashSearch = new CrashSearch();
-        crashSearch.setDriverBeltUsedOptions(new ArrayList<LabelValue>());
-        crashSearch.getDriverBeltUsedOptions().add(new LabelValue());
-        crashSearch.getDriverBeltUsedOptions().get(0).setValue("-1");
+        crashSearch.setDriverBeltUsedOptions(new ArrayList<>());
+        crashSearch.getDriverBeltUsedOptions().add(Quadstate.UNKNOWN);
         List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashSearch.toQuery());
         assertEquals(1, crashes.size());
     }
@@ -509,29 +499,26 @@ public class CrashDaoTest extends BaseDaoTestCase {
     @Test
     public void testFindAllCrashesInvolvingCasualtiesNotWearingBelts() {
         CrashSearch crashSearch = new CrashSearch();
-        crashSearch.setCasualtyBeltUsedOptions(new ArrayList<LabelValue>());
-        crashSearch.getCasualtyBeltUsedOptions().add(new LabelValue());
-        crashSearch.getCasualtyBeltUsedOptions().get(0).setValue("0");
+        crashSearch.setCasualtyBeltUsedOptions(new ArrayList<>());
+        crashSearch.getCasualtyBeltUsedOptions().add(Quadstate.NO);
         List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashSearch.toQuery());
-        assertEquals(5, crashes.size());
+        assertEquals(2, crashes.size());
     }
 
     @Test
     public void testFindAllCrashesInvolvingCasualtiesWearingBelts() {
         CrashSearch crashSearch = new CrashSearch();
-        crashSearch.setCasualtyBeltUsedOptions(new ArrayList<LabelValue>());
-        crashSearch.getCasualtyBeltUsedOptions().add(new LabelValue());
-        crashSearch.getCasualtyBeltUsedOptions().get(0).setValue("1");
+        crashSearch.setCasualtyBeltUsedOptions(new ArrayList<>());
+        crashSearch.getCasualtyBeltUsedOptions().add(Quadstate.YES);
         List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashSearch.toQuery());
-        assertEquals(5, crashes.size());
+        assertEquals(3, crashes.size());
     }
 
     @Test
     public void testFindAllCrashesInvolvingCasualtiesWearingBeltsUnknown() {
         CrashSearch crashSearch = new CrashSearch();
-        crashSearch.setCasualtyBeltUsedOptions(new ArrayList<LabelValue>());
-        crashSearch.getCasualtyBeltUsedOptions().add(new LabelValue());
-        crashSearch.getCasualtyBeltUsedOptions().get(0).setValue("-1");
+        crashSearch.setCasualtyBeltUsedOptions(new ArrayList<>());
+        crashSearch.getCasualtyBeltUsedOptions().add(Quadstate.UNKNOWN);
         List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashSearch.toQuery());
         assertEquals(1, crashes.size());
     }
@@ -539,9 +526,9 @@ public class CrashDaoTest extends BaseDaoTestCase {
     @Test
     public void testFindAllCrashesInvolvingSeriouslyInjuredPedestrians() {
         CrashSearch crashSearch = new CrashSearch();
-        crashSearch.setCasualtyTypes(new ArrayList<CasualtyType>());
+        crashSearch.setCasualtyTypes(new ArrayList<>());
         crashSearch.getCasualtyTypes().add(casualtyTypeManager.get(2L));
-        crashSearch.setCasualtyClasses(new ArrayList<CasualtyClass>());
+        crashSearch.setCasualtyClasses(new ArrayList<>());
         crashSearch.getCasualtyClasses().add(casualtyClassManager.get(1L));
         List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashSearch.toQuery());
         assertEquals(2, crashes.size());
@@ -550,7 +537,7 @@ public class CrashDaoTest extends BaseDaoTestCase {
     @Test
     public void testHqlQueryGeneratedForDriverBelow20Years() {
         CrashSearch crashSearch = new CrashSearch();
-        crashSearch.setDriverAgeRanges(new ArrayList<LabelValue>());
+        crashSearch.setDriverAgeRanges(new ArrayList<>());
         crashSearch.getDriverAgeRanges().add(new AgeRange(1L, 0, 9));
         crashSearch.getDriverAgeRanges().add(new AgeRange(2L, 10, 19));
         List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashSearch.toQuery());
@@ -560,7 +547,7 @@ public class CrashDaoTest extends BaseDaoTestCase {
     @Test
     public void testHqlQueryGeneratedForDriverBelow30YrsAndBetween50And59Years() {
         CrashSearch crashSearch = new CrashSearch();
-        crashSearch.setDriverAgeRanges(new ArrayList<LabelValue>());
+        crashSearch.setDriverAgeRanges(new ArrayList<>());
         crashSearch.getDriverAgeRanges().add(new AgeRange(1L, 0, 9));
         crashSearch.getDriverAgeRanges().add(new AgeRange(2L, 10, 19));
         crashSearch.getDriverAgeRanges().add(new AgeRange(3L, 20, 29));
@@ -572,7 +559,7 @@ public class CrashDaoTest extends BaseDaoTestCase {
     @Test
     public void testHqlQueryGeneratedForCasualtiesBetween20And59Years() {
         CrashSearch crashSearch = new CrashSearch();
-        crashSearch.setCasualtyAgeRanges(new ArrayList<LabelValue>());
+        crashSearch.setCasualtyAgeRanges(new ArrayList<>());
         crashSearch.getCasualtyAgeRanges().add(new AgeRange(3L, 20, 29));
         crashSearch.getCasualtyAgeRanges().add(new AgeRange(4L, 30, 39));
         crashSearch.getCasualtyAgeRanges().add(new AgeRange(5L, 40, 49));
