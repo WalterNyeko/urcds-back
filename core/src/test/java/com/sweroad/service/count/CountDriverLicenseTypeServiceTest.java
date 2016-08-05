@@ -17,12 +17,12 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by Frank on 7/18/16.
  */
-public class CountDriverBeltUseServiceTest extends BaseManagerTestCase {
+public class CountDriverLicenseTypeServiceTest extends BaseManagerTestCase {
 
     @Autowired
     private CrashService crashService;
     @Autowired
-    private CountAttributeService countDriverBeltUseService;
+    private CountAttributeService countDriverLicenseTypeService;
     private List<Crash> crashes;
 
     @Before
@@ -32,56 +32,56 @@ public class CountDriverBeltUseServiceTest extends BaseManagerTestCase {
 
     @Test
     public void testThatCountCrashesReturnsCorrectNumberOfRecords() {
-        List<CountResult> crashCount = countDriverBeltUseService.countCrashes(crashes);
+        List<CountResult> crashCount = countDriverLicenseTypeService.countCrashes(crashes);
         assertEquals(4, crashCount.size());
     }
 
     @Test
-    public void testThatCountCrashesWithDriversWearingSeatBeltsReturnsCorrectNumber() {
-        List<CountResult> crashCount = countDriverBeltUseService.countCrashes(crashes);
+    public void testThatCountCrashesWithDriversWithValidLicenseReturnsCorrectNumber() {
+        List<CountResult> crashCount = countDriverLicenseTypeService.countCrashes(crashes);
         Optional<CountResult> result = crashCount.stream().filter(c -> c.getAttribute().getId() == 1).findFirst();
         assertEquals(8, result.get().getCrashCount());
     }
 
     @Test
-    public void testThatCountCrashesWithDriversNotWearingSeatBeltsReturnsCorrectNumber() {
-        List<CountResult> crashCount = countDriverBeltUseService.countCrashes(crashes);
+    public void testThatCountCrashesWithDriversWithNoValidLicenseReturnsCorrectNumber() {
+        List<CountResult> crashCount = countDriverLicenseTypeService.countCrashes(crashes);
         Optional<CountResult> result = crashCount.stream().filter(c -> c.getAttribute().getId() == 0).findFirst();
-        assertEquals(8, result.get().getCrashCount());
+        assertEquals(3, result.get().getCrashCount());
     }
 
     @Test
-    public void testThatCountCrashesWithUnknownDriversSeatBeltSituationReturnsCorrectNumber() {
-        List<CountResult> crashCount = countDriverBeltUseService.countCrashes(crashes);
+    public void testThatCountCrashesWithUnknownDriverLicenseSituationReturnsCorrectNumber() {
+        List<CountResult> crashCount = countDriverLicenseTypeService.countCrashes(crashes);
         Optional<CountResult> result = crashCount.stream().filter(c -> c.getAttribute().getId() == 2).findFirst();
         assertEquals(1, result.get().getCrashCount());
     }
 
     @Test
-    public void testThatCountCrashesWithUnspecifiedDriverSeatBeltSituationReturnsCorrectNumber() {
-        List<CountResult> crashCount = countDriverBeltUseService.countCrashes(crashes);
+    public void testThatCountCrashesWithUnspecifiedDriverLicenseTypeReturnsCorrectNumber() {
+        List<CountResult> crashCount = countDriverLicenseTypeService.countCrashes(crashes);
         Optional<CountResult> result = crashCount.stream().filter(c -> c.getAttribute().getId() == Constants.NOT_SPECIFIED_ID).findFirst();
         assertEquals(1, result.get().getCrashCount());
     }
 
     @Test
-    public void testThatCountVehiclesWithDriversWearingSeatBeltsReturnsCorrectNumber() {
-        List<CountResult> crashCount = countDriverBeltUseService.countCrashes(crashes);
+    public void testThatCountVehiclesWithDriversWithValidLicenseReturnsCorrectNumber() {
+        List<CountResult> crashCount = countDriverLicenseTypeService.countCrashes(crashes);
         Optional<CountResult> result = crashCount.stream().filter(c -> c.getAttribute().getId() == 1).findFirst();
-        assertEquals(11, result.get().getVehicleCount());
+        assertEquals(17, result.get().getVehicleCount());
     }
 
     @Test
-    public void testThatCountVehiclesWithDriversNotWearingSeatsBeltReturnsCorrectNumber() {
-        List<CountResult> crashCount = countDriverBeltUseService.countCrashes(crashes);
+    public void testThatCountVehiclesWithDriversWithNoValidLicenseReturnsCorrectNumber() {
+        List<CountResult> crashCount = countDriverLicenseTypeService.countCrashes(crashes);
         Optional<CountResult> result = crashCount.stream().filter(c -> c.getAttribute().getId() == 0).findFirst();
-        assertEquals(11, result.get().getVehicleCount());
+        assertEquals(4, result.get().getVehicleCount());
     }
 
     @Test
-    public void testThatCountCasualtiesInVehiclesWithDriversWearingSeatBeltsReturnsCorrectNumber() {
-        List<CountResult> crashCount = countDriverBeltUseService.countCrashes(crashes);
+    public void testThatCountCasualtiesInVehiclesWithDriversWithValidLicenseReturnsCorrectNumber() {
+        List<CountResult> crashCount = countDriverLicenseTypeService.countCrashes(crashes);
         Optional<CountResult> result = crashCount.stream().filter(c -> c.getAttribute().getId() == 1).findFirst();
-        assertEquals(8, result.get().getCasualtyCount());
+        assertEquals(13, result.get().getCasualtyCount());
     }
 }

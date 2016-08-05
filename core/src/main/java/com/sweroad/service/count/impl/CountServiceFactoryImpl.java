@@ -20,7 +20,13 @@ public class CountServiceFactoryImpl implements CountServiceFactory {
     private CountAttributeService countDistrictService;
 
     @Autowired
+    private CountAttributeService countDriverAgeService;
+
+    @Autowired
     private CountAttributeService countCrashCauseService;
+
+    @Autowired
+    private CountAttributeService countVehicleTypeService;
 
     @Autowired
     private CountAttributeService countRoadSurfaceService;
@@ -29,10 +35,16 @@ public class CountServiceFactoryImpl implements CountServiceFactory {
     private CountAttributeService countSurfaceTypeService;
 
     @Autowired
+    private CountAttributeService countDriverGenderService;
+
+    @Autowired
     private CountAttributeService countJunctionTypeService;
 
     @Autowired
     private CountAttributeService countCollisionTypeService;
+
+    @Autowired
+    private CountAttributeService countDriverBeltUseService;
 
     @Autowired
     private CountAttributeService countCrashSeverityService;
@@ -47,10 +59,14 @@ public class CountServiceFactoryImpl implements CountServiceFactory {
     private CountAttributeService countSurfaceConditionService;
 
     @Autowired
-    private CountAttributeService countVehicleFailureTypeService;
+    private CountAttributeService countDriverLicenseTypeService;
 
     @Autowired
-    private CountAttributeService countVehicleTypeService;
+    private CountAttributeService countDriverCasualtyTypeService;
+
+    @Autowired
+    private CountAttributeService countVehicleFailureTypeService;
+
 
     public CountAttributeService getCountService(AttributeType attributeType) {
         switch(attributeType) {
@@ -58,6 +74,8 @@ public class CountServiceFactoryImpl implements CountServiceFactory {
                 return countWeatherService;
             case DISTRICT:
                 return countDistrictService;
+            case DRIVER_AGE:
+                return countDriverAgeService;
             case CRASH_CAUSE:
                 return countCrashCauseService;
             case ROAD_SURFACE:
@@ -66,10 +84,14 @@ public class CountServiceFactoryImpl implements CountServiceFactory {
                 return countSurfaceTypeService;
             case VEHICLE_TYPE:
                 return countVehicleTypeService;
+            case DRIVER_GENDER:
+                return countDriverGenderService;
             case JUNCTION_TYPE:
                 return countJunctionTypeService;
             case COLLISION_TYPE:
                 return countCollisionTypeService;
+            case DRIVER_BELT_USE:
+                return countDriverBeltUseService;
             case CRASH_SEVERITY:
                 return countCrashSeverityService;
             case POLICE_STATION:
@@ -78,6 +100,10 @@ public class CountServiceFactoryImpl implements CountServiceFactory {
                 return countRoadwayCharacterService;
             case SURFACE_CONDITION:
                 return countSurfaceConditionService;
+            case DRIVER_LICENSE_TYPE:
+                return countDriverLicenseTypeService;
+            case DRIVER_CASUALTY_TYPE:
+                return countDriverCasualtyTypeService;
             case VEHICLE_FAILURE_TYPE:
                 return countVehicleFailureTypeService;
             default:

@@ -32,10 +32,17 @@ public class BaseCountService {
     }
 
     protected boolean matchGender(NameIdModel candidate, String gender) {
-        if (candidate.isSpecified() && candidate instanceof Gender) {
+        if (candidate.isSpecified()) {
             return ((Gender)candidate).getValue().equalsIgnoreCase(gender);
         }
         return gender == null;
+    }
+
+    protected boolean matchQuadstateOptions(NameIdModel candidate, Integer value) {
+        if (candidate.isSpecified()) {
+            return value != null && candidate.getId().intValue() == value.intValue();
+        }
+        return value == null;
     }
 
     protected List<NameIdModel> prepareAttributes(List<? extends NameIdModel> attributes) {

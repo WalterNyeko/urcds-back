@@ -13,8 +13,8 @@ import java.util.stream.Collectors;
 /**
  * Created by Frank on 7/16/16.
  */
-@Service("countDriverAgeService")
-public class CountDriverAgeImpl extends BaseCountService implements CountAttributeService {
+@Service("countDriverBeltUseService")
+public class CountDriverBeltUseServiceImpl extends BaseCountService implements CountAttributeService {
 
     @Autowired
     private LookupManager lookupManager;
@@ -22,22 +22,22 @@ public class CountDriverAgeImpl extends BaseCountService implements CountAttribu
     @Override
     public List<CountResult> countCrashes(List<Crash> crashes) {
         List<CountResult> countResults = new ArrayList<>();
-        List<LabelValue> ageRanges = lookupManager.getAllAgeRanges();
-        ageRanges.forEach(ageRange -> countResults.add(countOccurrences(ageRange, crashes)));
+        List<QuadstateWrapper> beltUseOptions = lookupManager.getAllQuadstateOptions(false);
+        beltUseOptions.forEach(option -> countResults.add(countOccurrences(option, crashes)));
         countResults.add(countOccurrences(NameIdModel.createNotSpecifiedInstance(), crashes));
         return countResults;
     }
 
-    private CountResult countOccurrences(NameIdModel ageRange, List<Crash> crashes) {
+    private CountResult countOccurrences(NameIdModel beltUseOption, List<Crash> crashes) {
         CountResult.CountResultBuilder countResultBuilder = new CountResult.CountResultBuilder();
         crashes.stream().forEach(crash ->
-                this.incrementCounts(countResultBuilder, this.countVehicles(ageRange, crash)));
-        return countResultBuilder.setAttribute(ageRange).build();
+                this.incrementCounts(countResultBuilder, this.countVehicles(beltUseOption, crash)));
+        return countResultBuilder.setAttribute(beltUseOption).build();
     }
 
-    private Countable countVehicles(NameIdModel ageRange, Crash crash) {
+    private Countable countVehicles(NameIdModel beltUseOption, Crash crash) {
         List<Vehicle> vehicles = crash.getVehicles().stream().filter(vehicle ->
-                this.matchAgeRange(ageRange, vehicle.getDriver().getAge()))
+                this.matchQuadstateOptions(beltUseOption, vehicle.getDriver().getBeltUsed()))
                 .collect(Collectors.toList());
         return getCounts(crash, vehicles);
     }

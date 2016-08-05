@@ -350,7 +350,7 @@ public class CrashDaoTest extends BaseDaoTestCase {
         vehicleTypes.add(vehicleTypeManager.get(1L));
         crashSearch.setVehicleTypes(vehicleTypes);
         List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashSearch.toQuery());
-        assertEquals(7, crashes.size());
+        assertEquals(6, crashes.size());
     }
 
     @Test
@@ -377,7 +377,7 @@ public class CrashDaoTest extends BaseDaoTestCase {
         vehicleTypes.add(vehicleTypeManager.get(1L));
         crashSearch.setVehicleTypes(vehicleTypes);
         List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashSearch.toQuery());
-        assertEquals(9, crashes.size());
+        assertEquals(8, crashes.size());
     }
 
     @Test
@@ -404,7 +404,7 @@ public class CrashDaoTest extends BaseDaoTestCase {
         vehicleTypes.add(vehicleTypeManager.get(1L));
         crashSearch.setVehicleTypes(vehicleTypes);
         List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashSearch.toQuery());
-        assertEquals(8, crashes.size());
+        assertEquals(7, crashes.size());
     }
 
     @Test
@@ -475,7 +475,7 @@ public class CrashDaoTest extends BaseDaoTestCase {
         crashSearch.setDriverBeltUsedOptions(new ArrayList<>());
         crashSearch.getDriverBeltUsedOptions().add(Quadstate.NO);
         List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashSearch.toQuery());
-        assertEquals(9, crashes.size());
+        assertEquals(8, crashes.size());
     }
 
     @Test

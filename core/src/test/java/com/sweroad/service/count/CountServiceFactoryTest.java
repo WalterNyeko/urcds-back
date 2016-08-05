@@ -27,8 +27,18 @@ public class CountServiceFactoryTest extends BaseManagerTestCase {
     }
 
     @Test
+    public void testThatFactoryGetsCountDriverAgeService() {
+        assertTrue(countServiceFactory.getCountService(AttributeType.DRIVER_AGE) instanceof CountDriverAgeServiceImpl);
+    }
+
+    @Test
     public void testThatFactoryGetsCountCrashCauseService() {
         assertTrue(countServiceFactory.getCountService(AttributeType.CRASH_CAUSE) instanceof CountCrashCauseServiceImpl);
+    }
+
+    @Test
+    public void testThatFactoryGetsCountVehicleTypeService() {
+        assertTrue(countServiceFactory.getCountService(AttributeType.VEHICLE_TYPE) instanceof CountVehicleTypeServiceImpl);
     }
 
     @Test
@@ -39,6 +49,11 @@ public class CountServiceFactoryTest extends BaseManagerTestCase {
     @Test
     public void testThatFactoryGetsCountSurfaceTypeService() {
         assertTrue(countServiceFactory.getCountService(AttributeType.SURFACE_TYPE) instanceof CountSurfaceTypeServiceImpl);
+    }
+
+    @Test
+    public void testThatFactoryGetsCountDriverGenderervice() {
+        assertTrue(countServiceFactory.getCountService(AttributeType.DRIVER_GENDER) instanceof CountDriverGenderServiceImpl);
     }
 
     @Test
@@ -62,6 +77,11 @@ public class CountServiceFactoryTest extends BaseManagerTestCase {
     }
 
     @Test
+    public void testThatFactoryGetsCountDriverBeltUseService() {
+        assertTrue(countServiceFactory.getCountService(AttributeType.DRIVER_BELT_USE) instanceof CountDriverBeltUseServiceImpl);
+    }
+
+    @Test
     public void testThatFactoryGetsCountRoadwayCharacterService() {
         assertTrue(countServiceFactory.getCountService(AttributeType.ROADWAY_CHARACTER) instanceof CountRoadwayCharacterServiceImpl);
     }
@@ -72,7 +92,17 @@ public class CountServiceFactoryTest extends BaseManagerTestCase {
     }
 
     @Test
+    public void testThatFactoryGetsCountDriverLicenseTypeService() {
+        assertTrue(countServiceFactory.getCountService(AttributeType.DRIVER_LICENSE_TYPE) instanceof CountDriverLicenseTypeServiceImpl);
+    }
+
+    @Test
     public void testThatFactoryGetsCountVehicleFailureTypeService() {
         assertTrue(countServiceFactory.getCountService(AttributeType.VEHICLE_FAILURE_TYPE) instanceof CountVehicleFailureTypeServiceImpl);
+    }
+
+    @Test
+    public void testThatFactoryGetsCountDriverCasualtyTypeService() {
+        assertTrue(countServiceFactory.getCountService(AttributeType.DRIVER_CASUALTY_TYPE) instanceof CountDriverCasualtyTypeServiceImpl);
     }
 }

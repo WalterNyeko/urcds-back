@@ -3,14 +3,34 @@ package com.sweroad.model;
 /**
  * Created by Frank on 8/4/16.
  */
-public class QuadstateWrapper extends BaseModel implements Comparable {
+public class QuadstateWrapper extends NameIdModel implements Comparable {
 
-    private Integer id;
+    private Long id;
 
     private Quadstate quadstate;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
+    }
+
+    @Override
+    public String getName() {
+        return this.quadstate.getLabel();
+    }
+
+    @Override
+    public void setName(String name) {
+
+    }
+
+    @Override
+    public boolean isActive() {
+        return false;
+    }
+
+    @Override
+    public void setActive(boolean active) {
+
     }
 
     public QuadstateWrapper() {}
@@ -19,9 +39,9 @@ public class QuadstateWrapper extends BaseModel implements Comparable {
         this.setQuadstate(quadstate);
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
-        this.quadstate = Quadstate.getByValue(this.id);
+        this.quadstate = Quadstate.getByValue(this.id.intValue());
     }
 
     public Quadstate getQuadstate() {
@@ -30,7 +50,7 @@ public class QuadstateWrapper extends BaseModel implements Comparable {
 
     public void setQuadstate(Quadstate quadstate) {
         this.quadstate = quadstate;
-        this.id = quadstate.getValue();
+        this.id = Long.valueOf(quadstate.getValue());
     }
 
     @Override

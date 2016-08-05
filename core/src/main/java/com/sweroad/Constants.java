@@ -130,5 +130,5 @@ public final class Constants {
 
     public static final String NOT_SPECIFIED = "Not Specified";
 
-    public static final long NOT_SPECIFIED_ID = 0L;
+    public static final long NOT_SPECIFIED_ID = -1L;
 }

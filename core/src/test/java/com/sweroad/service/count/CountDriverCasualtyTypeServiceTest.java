@@ -1,5 +1,6 @@
 package com.sweroad.service.count;
 
+import com.sweroad.Constants;
 import com.sweroad.model.CountResult;
 import com.sweroad.model.Crash;
 import com.sweroad.service.BaseManagerTestCase;
@@ -47,6 +48,13 @@ public class CountDriverCasualtyTypeServiceTest extends BaseManagerTestCase {
         List<CountResult> crashCount = countDriverCasualtyTypeService.countCrashes(crashes);
         Optional<CountResult> result = crashCount.stream().filter(c -> c.getAttribute().getId() == 2).findFirst();
         assertEquals(3, result.get().getCrashCount());
+    }
+
+    @Test
+    public void testThatCountCrashesWithUnspecifiedDriverInjuryReturnsCorrectNumber() {
+        List<CountResult> crashCount = countDriverCasualtyTypeService.countCrashes(crashes);
+        Optional<CountResult> result = crashCount.stream().filter(c -> c.getAttribute().getId() == Constants.NOT_SPECIFIED_ID).findFirst();
+        assertEquals(1, result.get().getCrashCount());
     }
 
     @Test
