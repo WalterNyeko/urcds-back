@@ -726,7 +726,7 @@
 			<value description="gender">F</value>
 			<value description="belt_or_helmet_used">0</value>
 			<value description="casualty_class_id">4</value>
-			<value description="casualty_type_id">3</value>
+			<value description="casualty_type_id">5</value>
 			<value description="vehicle_id">1</value>
 			<value description="date_created">2014-06-05 18:15:00</value>
 		</row>
