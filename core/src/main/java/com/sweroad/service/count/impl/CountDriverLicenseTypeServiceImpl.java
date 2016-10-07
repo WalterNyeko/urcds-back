@@ -39,6 +39,6 @@ public class CountDriverLicenseTypeServiceImpl extends BaseCountService implemen
         List<Vehicle> vehicles = crash.getVehicles().stream().filter(vehicle ->
                 this.matchQuadstateOptions(licenseType, vehicle.getDriver().getLicenseValid()))
                 .collect(Collectors.toList());
-        return getCounts(crash, vehicles);
+        return getCountsFromVehicles(crash, vehicles);
     }
 }

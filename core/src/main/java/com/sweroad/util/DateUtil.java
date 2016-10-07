@@ -198,7 +198,7 @@ public final class DateUtil {
 
     public static Date createDateFromYearMonthDay(int year, int month, int day) {
         Calendar calender = Calendar.getInstance();
-        calender.set(year, month - 1, day);
+        calender.set(year, month - 1, day, 0, 0, 0);
         return calender.getTime();
     }
 

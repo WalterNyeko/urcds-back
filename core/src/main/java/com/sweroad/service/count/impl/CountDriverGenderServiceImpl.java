@@ -39,6 +39,6 @@ public class CountDriverGenderServiceImpl extends BaseCountService implements Co
         List<Vehicle> vehicles = crash.getVehicles().stream().filter(vehicle ->
                 this.matchGender(gender, vehicle.getDriver().getGender()))
                 .collect(Collectors.toList());
-        return getCounts(crash, vehicles);
+        return getCountsFromVehicles(crash, vehicles);
     }
 }

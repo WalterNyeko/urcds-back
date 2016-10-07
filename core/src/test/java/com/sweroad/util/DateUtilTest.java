@@ -91,8 +91,8 @@ public class DateUtilTest extends TestCase {
 
     public void testCreateDateFromYearMonthDay() {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(2015, 1, 1);
-        assertEquals(calendar.getTime(), DateUtil.createDateFromYearMonthDay(2015, 2, 1));
+        calendar.set(2015, 1, 1, 0, 0, 0);
+        assertEquals(calendar.getTime().toString(), DateUtil.createDateFromYearMonthDay(2015, 2, 1).toString());
     }
 
     public void testGetMaximumDateInYearMonth() {

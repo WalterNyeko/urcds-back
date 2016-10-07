@@ -47,34 +47,34 @@ public class CountCasualtyTypeServiceTest extends BaseManagerTestCase {
     public void testThatCountCrashesWithSeriouslyInjuredCasualtiesReturnsCorrectNumber() {
         List<CountResult> crashCount = countCasualtyTypeService.countCrashes(crashes);
         Optional<CountResult> result = crashCount.stream().filter(c -> c.getAttribute().getId() == 2).findFirst();
-        assertEquals(2, result.get().getCrashCount());
+        assertEquals(4, result.get().getCrashCount());
     }
 
     @Test
     public void testThatCountCrashesWithCasualtiesWithUnknownCasualtyTypeReturnsCorrectNumber() {
         List<CountResult> crashCount = countCasualtyTypeService.countCrashes(crashes);
         Optional<CountResult> result = crashCount.stream().filter(c -> c.getAttribute().getId() == 5).findFirst();
-        assertEquals(0, result.get().getCrashCount());
+        assertEquals(1, result.get().getCrashCount());
     }
 
     @Test
     public void testThatCountVehiclesWithFatallyInjuredCasualtiesReturnsCorrectNumber() {
         List<CountResult> crashCount = countCasualtyTypeService.countCrashes(crashes);
         Optional<CountResult> result = crashCount.stream().filter(c -> c.getAttribute().getId() == 1).findFirst();
-        assertEquals(2, result.get().getVehicleCount());
+        assertEquals(3, result.get().getVehicleCount());
     }
 
     @Test
     public void testThatCountVehiclesWithSlightlyInjuredCasualtiesReturnsCorrectNumber() {
         List<CountResult> crashCount = countCasualtyTypeService.countCrashes(crashes);
         Optional<CountResult> result = crashCount.stream().filter(c -> c.getAttribute().getId() == 3).findFirst();
-        assertEquals(5, result.get().getVehicleCount());
+        assertEquals(8, result.get().getVehicleCount());
     }
 
     @Test
     public void testThatCountSlightlyInjuredCasualtiesReturnsCorrectNumber() {
         List<CountResult> crashCount = countCasualtyTypeService.countCrashes(crashes);
         Optional<CountResult> result = crashCount.stream().filter(c -> c.getAttribute().getId() == 3).findFirst();
-        assertEquals(5, result.get().getCasualtyCount());
+        assertEquals(10, result.get().getCasualtyCount());
     }
 }

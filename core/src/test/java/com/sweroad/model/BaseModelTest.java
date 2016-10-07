@@ -60,7 +60,7 @@ public class BaseModelTest extends BaseManagerTestCase {
     @Test
     public void testCasualtyJSON() {
         Casualty casualty = casualtyManager.get(1L);
-        String expected = "{\"id\":1,\"age\":25,\"gender\":\"F\",\"beltOrHelmetUsed\":0,\"casualtyType\":{\"id\":3,\"name\":\"Slight\"}," +
+        String expected = "{\"id\":1,\"age\":25,\"gender\":\"F\",\"beltOrHelmetUsed\":0,\"casualtyType\":{\"id\":5,\"name\":\"Unknown\"}," +
                 "\"casualtyClass\":{\"id\":4,\"name\":\"Car passenger\"},\"vehicle\":{\"id\":1,\"number\":1," +
                 "\"driver\":{\"id\":1,\"age\":27,\"gender\":\"M\",\"licenseValid\":1,\"beltOrHelmetUsed\":0,\"licenseNumber\":\"123456\"," +
                 "\"casualtyType\":{\"id\":4,\"name\":\"Not injured\"}},\"vehicleType\":null,\"companyName\":\"\"}}";
@@ -84,7 +84,7 @@ public class BaseModelTest extends BaseManagerTestCase {
                 "\"licenseValid\":0,\"beltOrHelmetUsed\":1,\"licenseNumber\":\"123789\",\"casualtyType\":{\"id\":3,\"name\":\"Slight\"}}," +
                 "\"vehicleType\":{\"id\":7,\"name\":\"Medium Omnibus\"},\"companyName\":\"Total Uganda\"}],\"latitude\":\"N00 23.000\"," +
                 "\"longitude\":\"E032 55.270\",\"casualties\":[{\"id\":1,\"age\":25,\"gender\":\"F\",\"beltOrHelmetUsed\":0," +
-                "\"casualtyType\":{\"id\":3,\"name\":\"Slight\"},\"casualtyClass\":{\"id\":4,\"name\":\"Car passenger\"}," +
+                "\"casualtyType\":{\"id\":5,\"name\":\"Unknown\"},\"casualtyClass\":{\"id\":4,\"name\":\"Car passenger\"}," +
                 "\"vehicle\":{\"id\":1,\"number\":1,\"driver\":{\"id\":1,\"age\":27,\"gender\":\"M\",\"licenseValid\":1,\"beltOrHelmetUsed\":0," +
                 "\"licenseNumber\":\"123456\",\"casualtyType\":{\"id\":4,\"name\":\"Not injured\"}},\"vehicleType\":null," +
                 "\"companyName\":\"\"}},{\"id\":2,\"age\":30,\"gender\":\"M\",\"beltOrHelmetUsed\":3," +

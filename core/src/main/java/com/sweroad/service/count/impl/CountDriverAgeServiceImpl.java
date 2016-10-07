@@ -39,6 +39,6 @@ public class CountDriverAgeServiceImpl extends BaseCountService implements Count
         List<Vehicle> vehicles = crash.getVehicles().stream().filter(vehicle ->
                 this.matchAgeRange(ageRange, vehicle.getDriver().getAge()))
                 .collect(Collectors.toList());
-        return getCounts(crash, vehicles);
+        return getCountsFromVehicles(crash, vehicles);
     }
 }

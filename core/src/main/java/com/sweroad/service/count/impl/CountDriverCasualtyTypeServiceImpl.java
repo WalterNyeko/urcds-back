@@ -39,6 +39,6 @@ public class CountDriverCasualtyTypeServiceImpl extends BaseCountService impleme
         List<Vehicle> vehicles = crash.getVehicles().stream().filter(vehicle ->
                 this.matchAttributes(casualtyType, vehicle.getDriver().getCasualtyType()))
                 .collect(Collectors.toList());
-        return getCounts(crash, vehicles);
+        return getCountsFromVehicles(crash, vehicles);
     }
 }

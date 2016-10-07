@@ -31,14 +31,22 @@ public class CountCasualtyTypeServiceImpl extends BaseCountService implements Co
     private CountResult countOccurrences(NameIdModel casualtyType, List<Crash> crashes) {
         CountResult.CountResultBuilder countResultBuilder = new CountResult.CountResultBuilder();
         crashes.stream().forEach(crash ->
-                this.incrementCounts(countResultBuilder, this.countVehicles(casualtyType, crash)));
+                this.incrementCounts(countResultBuilder, this.countCasualties(casualtyType, crash)));
         return countResultBuilder.setAttribute(casualtyType).build();
     }
 
-    private Countable countVehicles(NameIdModel casualtyType, Crash crash) {
-        List<Vehicle> vehicles = crash.getVehicles().stream().filter(vehicle ->
-                this.matchAttributes(casualtyType, vehicle.getDriver().getCasualtyType()))
+    private Countable countCasualties(NameIdModel casualtyType, Crash crash) {
+        List<Casualty> casualties = crash.getCasualties().stream().filter(casualty ->
+                this.matchAttributes(casualtyType, casualty.getCasualtyType()))
                 .collect(Collectors.toList());
-        return getCounts(crash, vehicles);
+        crash.getVehicles().forEach(vehicle -> this.appendDriver(casualties, casualtyType, vehicle));
+        return getCountsFromCasualties(casualties);
+    }
+
+    private void appendDriver(List<Casualty> casualties, NameIdModel casualtyType, Vehicle vehicle) {
+        Driver driver = vehicle.getDriver();
+        if (casualtyType.equals(driver.getCasualtyType())) {
+            casualties.add(driver.toCasualty(vehicle));
+        }
     }
 }

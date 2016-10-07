@@ -39,6 +39,6 @@ public class CountDriverBeltUseServiceImpl extends BaseCountService implements C
         List<Vehicle> vehicles = crash.getVehicles().stream().filter(vehicle ->
                 this.matchQuadstateOptions(beltUseOption, vehicle.getDriver().getBeltUsed()))
                 .collect(Collectors.toList());
-        return getCounts(crash, vehicles);
+        return getCountsFromVehicles(crash, vehicles);
     }
 }

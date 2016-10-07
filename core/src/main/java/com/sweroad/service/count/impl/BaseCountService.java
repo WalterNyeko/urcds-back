@@ -3,7 +3,10 @@ package com.sweroad.service.count.impl;
 import com.sweroad.Constants;
 import com.sweroad.model.*;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -51,7 +54,7 @@ public class BaseCountService {
         return attr;
     }
 
-    protected long countCasualties(Crash crash, List<Vehicle> vehicles) {
+    private long countCasualties(Crash crash, List<Vehicle> vehicles) {
         List<Long> vehicleIds = vehicles.stream().map(Vehicle::getId).collect(Collectors.toList());
         long casualtyCount = crash.getCasualties().stream().filter(casualty ->
                 casualty.isPassenger() && vehicleIds.contains(casualty.getVehicle().getId())).count();
@@ -59,10 +62,42 @@ public class BaseCountService {
         return casualtyCount;
     }
 
-    protected Countable getCounts(Crash crash, List<Vehicle> vehicles) {
+    private long countVehicles(List<Casualty> casualties) {
+        Set<Long> vehicleIds = new HashSet<>();
+        casualties.forEach(casualty -> {
+            if (casualty != null && casualty.getVehicle() != null) {
+                vehicleIds.add(casualty.getVehicle().getId());
+            }
+        });
+        return vehicleIds.size();
+    }
+
+    protected Countable getCountsFromVehicles(Crash crash, List<Vehicle> vehicles) {
         final int vehicleCount = vehicles.size();
         final long crashCount = vehicleCount > 0 ? 1 : 0;
         final long casualtyCount = this.countCasualties(crash, vehicles);
+        return new Countable() {
+            @Override
+            public long getCrashCount() {
+                return crashCount;
+            }
+
+            @Override
+            public long getVehicleCount() {
+                return vehicleCount;
+            }
+
+            @Override
+            public long getCasualtyCount() {
+                return casualtyCount;
+            }
+        };
+    }
+
+    protected Countable getCountsFromCasualties(List<Casualty> casualties) {
+        final int casualtyCount = casualties.size();
+        final long crashCount = casualtyCount > 0 ? 1 : 0;
+        final long vehicleCount = this.countVehicles(casualties);
         return new Countable() {
             @Override
             public long getCrashCount() {

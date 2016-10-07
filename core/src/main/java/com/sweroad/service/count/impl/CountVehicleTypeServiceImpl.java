@@ -39,6 +39,6 @@ public class CountVehicleTypeServiceImpl extends BaseCountService implements Cou
         List<Vehicle> vehicles = crash.getVehicles().stream().filter(vehicle ->
                 this.matchAttributes(vehicleType, vehicle.getVehicleType()))
                 .collect(Collectors.toList());
-        return getCounts(crash, vehicles);
+        return getCountsFromVehicles(crash, vehicles);
     }
 }
