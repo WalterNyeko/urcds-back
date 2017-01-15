@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Created by Frank on 10/23/15.
  */
-public interface PatientManager extends GenericManager<Patient, Long> {
+public interface PatientService extends GenericManager<Patient, Long> {
 
     List<Patient> getPatients();
 

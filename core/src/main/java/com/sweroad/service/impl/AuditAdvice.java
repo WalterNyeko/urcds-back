@@ -99,7 +99,7 @@ public class AuditAdvice {
         return auditSave(joinPoint);
     }
 
-    @Around("execution(* com.sweroad.service.PatientManager.sav*(..))")
+    @Around("execution(* com.sweroad.service.PatientService.sav*(..))")
     public Object auditPatient(ProceedingJoinPoint joinPoint) {
         return auditSave(joinPoint);
     }

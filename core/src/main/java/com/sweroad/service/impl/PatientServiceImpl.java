@@ -4,7 +4,7 @@ import com.sweroad.dao.GenericDao;
 import com.sweroad.model.*;
 import com.sweroad.service.GenericManager;
 import com.sweroad.service.LookupService;
-import com.sweroad.service.PatientManager;
+import com.sweroad.service.PatientService;
 import com.sweroad.service.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,8 +14,8 @@ import java.util.*;
 /**
  * Created by Frank on 10/23/15.
  */
-@Service("patientManager")
-public class PatientManagerImpl extends GenericManagerImpl<Patient, Long> implements PatientManager {
+@Service("patientService")
+public class PatientServiceImpl extends GenericManagerImpl<Patient, Long> implements PatientService {
 
     @Autowired
     private UserManager userManager;
@@ -39,7 +39,7 @@ public class PatientManagerImpl extends GenericManagerImpl<Patient, Long> implem
     private GenericManager<PatientInjuryType, PatientInjuryTypeId> patientInjuryManager;
 
     @Autowired
-    public PatientManagerImpl(GenericDao<Patient, Long> patientDao) {
+    public PatientServiceImpl(GenericDao<Patient, Long> patientDao) {
         super(patientDao);
     }
 
