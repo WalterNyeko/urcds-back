@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sweroad.Constants;
 import com.sweroad.model.User;
-import com.sweroad.service.RoleManager;
+import com.sweroad.service.RoleService;
 import com.sweroad.service.UserExistsException;
 import com.sweroad.webapp.util.RequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +30,11 @@ import org.tuckey.web.filters.urlrewrite.utils.StringUtils;
 @Controller
 @RequestMapping("/signup*")
 public class SignupController extends BaseFormController {
-    private RoleManager roleManager;
+    private RoleService roleService;
 
     @Autowired
-    public void setRoleManager(final RoleManager roleManager) {
-        this.roleManager = roleManager;
+    public void setRoleService(final RoleService roleService) {
+        this.roleService = roleService;
     }
 
     public SignupController() {
@@ -73,7 +73,7 @@ public class SignupController extends BaseFormController {
         user.setEnabled(true);
 
         // Set the default user role on this new user
-        user.addRole(roleManager.getRole(Constants.USER_ROLE));
+        user.addRole(roleService.getRole(Constants.USER_ROLE));
 
         // unencrypted users password to log in user automatically
         final String password = user.getPassword();

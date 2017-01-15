@@ -2,23 +2,23 @@ package com.sweroad.service.impl;
 
 import com.sweroad.dao.RoleDao;
 import com.sweroad.model.Role;
-import com.sweroad.service.RoleManager;
+import com.sweroad.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
- * Implementation of RoleManager interface.
+ * Implementation of RoleService interface.
  *
  * @author <a href="mailto:dan@getrolling.com">Dan Kibler</a>
  */
-@Service("roleManager")
-public class RoleManagerImpl extends GenericManagerImpl<Role, Long> implements RoleManager {
+@Service("roleService")
+public class RoleServiceImpl extends GenericManagerImpl<Role, Long> implements RoleService {
     RoleDao roleDao;
 
     @Autowired
-    public RoleManagerImpl(RoleDao roleDao) {
+    public RoleServiceImpl(RoleDao roleDao) {
         super(roleDao);
         this.roleDao = roleDao;
     }

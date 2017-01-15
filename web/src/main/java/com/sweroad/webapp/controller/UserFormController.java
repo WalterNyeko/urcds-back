@@ -1,19 +1,13 @@
 package com.sweroad.webapp.controller;
 
-import java.util.Locale;
-import java.util.UUID;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.lang.StringUtils;
 import com.sweroad.Constants;
 import com.sweroad.model.Role;
 import com.sweroad.model.User;
-import com.sweroad.service.RoleManager;
+import com.sweroad.service.RoleService;
 import com.sweroad.service.UserExistsException;
 import com.sweroad.service.UserManager;
 import com.sweroad.webapp.util.RequestUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.security.access.AccessDeniedException;
@@ -25,10 +19,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Locale;
+import java.util.UUID;
+
 /**
  * Implementation of <strong>SimpleFormController</strong> that interacts with
  * the {@link UserManager} to retrieve/persist values to the database.
- *
+ * <p>
  * <p><a href="UserFormController.java.html"><i>View Source</i></a>
  *
  * @author <a href="mailto:matt@raibledesigns.com">Matt Raible</a>
@@ -37,11 +36,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/userform*")
 public class UserFormController extends BaseFormController {
 
-    private RoleManager roleManager;
+    private RoleService roleService;
 
     @Autowired
-    public void setRoleManager(final RoleManager roleManager) {
-        this.roleManager = roleManager;
+    public void setRoleService(final RoleService roleService) {
+        this.roleService = roleService;
     }
 
     public UserFormController() {
@@ -58,7 +57,7 @@ public class UserFormController extends BaseFormController {
 
     /**
      * Load user object from db before web data binding in order to keep properties not populated from web post.
-     * 
+     *
      * @param request
      * @return
      */
@@ -73,7 +72,7 @@ public class UserFormController extends BaseFormController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String onSubmit(@ModelAttribute("user") final User user, final BindingResult errors, final HttpServletRequest request,
-            final HttpServletResponse response)
+                           final HttpServletResponse response)
             throws Exception {
         if (request.getParameter("cancel") != null) {
             if (!StringUtils.equals(request.getParameter("from"), "list")) {
@@ -110,7 +109,7 @@ public class UserFormController extends BaseFormController {
                 if (userRoles != null) {
                     user.getRoles().clear();
                     for (final String roleName : userRoles) {
-                        user.addRole(roleManager.getRole(roleName));
+                        user.addRole(roleService.getRole(roleName));
                     }
                 }
             } else {
@@ -141,12 +140,12 @@ public class UserFormController extends BaseFormController {
                 return null;
             } catch (final UserExistsException e) {
                 errors.rejectValue("username", "errors.existing.user",
-                        new Object[] { user.getUsername(), user.getEmail() }, "duplicate user");
+                        new Object[]{user.getUsername(), user.getEmail()}, "duplicate user");
 
                 // reset the version # to what was passed in
                 user.setVersion(originalVersion);
                 return "userform";
-            } 
+            }
 
             if (!StringUtils.equals(request.getParameter("from"), "list")) {
                 saveMessage(request, getText("user.saved", user.getFullName(), locale));

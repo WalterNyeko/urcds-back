@@ -16,7 +16,7 @@ public class UserManagerTest extends BaseManagerTestCase {
     @Autowired
     private UserManager mgr;
     @Autowired
-    private RoleManager roleManager;
+    private RoleService roleService;
     private User user;
 
     @Test
@@ -48,7 +48,7 @@ public class UserManagerTest extends BaseManagerTestCase {
         // from a properties file matching this class name
         user = (User) populate(user);
 
-        user.addRole(roleManager.getRole(Constants.USER_ROLE));
+        user.addRole(roleService.getRole(Constants.USER_ROLE));
 
         user = mgr.saveUser(user);
         assertEquals("john", user.getUsername());
