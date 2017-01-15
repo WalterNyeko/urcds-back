@@ -20,8 +20,8 @@ import java.util.stream.Collectors;
 /**
  * Created by Frank on 12/16/14.
  */
-@Service("crashQueryManager")
-public class CrashQueryManagerImpl implements CrashQueryManager {
+@Service("crashQueryService")
+public class CrashQueryServiceImpl implements CrashQueryService {
     @Autowired
     private CrashDao crashDao;
     @Autowired

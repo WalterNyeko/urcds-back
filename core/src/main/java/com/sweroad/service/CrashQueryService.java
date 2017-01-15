@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * Created by Frank on 12/16/14.
  */
-public interface CrashQueryManager {
+public interface CrashQueryService {
 
     /**
      * Gets crashes that meet crashQuery criteria.

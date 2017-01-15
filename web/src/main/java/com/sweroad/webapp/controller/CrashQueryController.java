@@ -5,7 +5,7 @@ import com.sweroad.model.PoliceStation;
 import com.sweroad.model.Query;
 import com.sweroad.query.CrashQuery;
 import com.sweroad.query.CrashSearch;
-import com.sweroad.service.CrashQueryManager;
+import com.sweroad.service.CrashQueryService;
 import com.sweroad.webapp.util.CrashAnalysisHelper;
 import com.sweroad.webapp.util.SessionHelper;
 import org.apache.commons.lang3.StringUtils;
@@ -29,12 +29,12 @@ import java.util.List;
 public class CrashQueryController extends BaseFormController {
 
     @Autowired
-    private CrashQueryManager crashQueryManager;
+    private CrashQueryService crashQueryService;
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView showQueries() {
         ModelAndView mav = new ModelAndView("analysis/queries");
-        mav.addObject("queries", crashQueryManager.getCurrentUserQueries());
+        mav.addObject("queries", crashQueryService.getCurrentUserQueries());
         return mav;
     }
 
@@ -46,11 +46,11 @@ public class CrashQueryController extends BaseFormController {
         String id = request.getParameter("id");
         if (!StringUtils.isBlank(id)) {
             Long queryId = new Long(id);
-            Query query = crashQueryManager.getQueryById(queryId);
+            Query query = crashQueryService.getQueryById(queryId);
             request.getSession().setAttribute("query", query);
             mav.addObject("query", query);
         }
-        mav.addAllObjects(crashQueryManager.getCrashQueryReferenceData());
+        mav.addAllObjects(crashQueryService.getCrashQueryReferenceData());
         mav.addObject("years", CrashAnalysisHelper.getYearsForSearch());
         mav.addObject("months", CrashAnalysisHelper.getMonthsForSearch(request));
         SessionHelper.persistPoliceStationsInSession(request, (List<PoliceStation>) mav.getModelMap().get("policeStations"));
@@ -59,11 +59,11 @@ public class CrashQueryController extends BaseFormController {
 
     @RequestMapping(value = "/crashqueryrun", method = RequestMethod.POST)
     public void runQuery(CrashSearch crashSearch, BindingResult errors, HttpServletRequest request,
-                                 HttpServletResponse response) throws Exception {
+                         HttpServletResponse response) throws Exception {
         try {
-            crashQueryManager.processCrashSearch(crashSearch);
+            crashQueryService.processCrashSearch(crashSearch);
             CrashQuery crashQuery = crashSearch.toQuery();
-            List<Crash> crashes = crashQueryManager.getCrashesByQuery(crashQuery);
+            List<Crash> crashes = crashQueryService.getCrashesByQuery(crashQuery);
             SessionHelper.persistCrashesInSession(request, crashes, crashQuery);
         } catch (ParseException e) {
             logException(request, e, "Date provided was in wrong format.");
@@ -73,14 +73,14 @@ public class CrashQueryController extends BaseFormController {
         response.sendRedirect(request.getContextPath() + "/analysis");
     }
 
-    @RequestMapping(value="/crashquerysave", method = RequestMethod.POST)
+    @RequestMapping(value = "/crashquerysave", method = RequestMethod.POST)
     public ModelAndView saveQuery(HttpServletRequest request, Query query) throws Exception {
         if (request.getSession().getAttribute("query") != null) {
             Query sessionQuery = (Query) request.getSession().getAttribute("query");
             query.setId(sessionQuery.getId());
             query.setDateCreated(sessionQuery.getDateCreated());
         }
-        crashQueryManager.saveQuery(query);
+        crashQueryService.saveQuery(query);
         clearSession(request);
         return showQueries();
     }
@@ -89,7 +89,7 @@ public class CrashQueryController extends BaseFormController {
     public ModelAndView deleteQuery(HttpServletRequest request) throws Exception {
         try {
             String id = request.getParameter("id");
-            crashQueryManager.removeQueryById(new Long(id));
+            crashQueryService.removeQueryById(new Long(id));
             saveMessage(request, "Query was deleted successfully");
         } catch (Exception e) {
             logException(request, e, "Delete query failed");

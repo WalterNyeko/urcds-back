@@ -3,8 +3,8 @@ package com.sweroad.webapp.controller;
 import com.sweroad.model.*;
 import com.sweroad.query.CrashQuery;
 import com.sweroad.query.CrashSearch;
+import com.sweroad.service.CrashQueryService;
 import com.sweroad.service.CrashService;
-import com.sweroad.service.CrashQueryManager;
 import com.sweroad.webapp.util.SessionHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,7 +28,7 @@ public class CrashSelectionController extends BaseFormController {
     @Autowired
     private CrashService crashService;
     @Autowired
-    private CrashQueryManager crashQueryManager;
+    private CrashQueryService crashQueryService;
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView crashSelection() throws Exception {
@@ -44,7 +44,7 @@ public class CrashSelectionController extends BaseFormController {
         response.sendRedirect(request.getContextPath() + "/analysis");
     }
 
-    @RequestMapping(value="/crashselectionseverity", method = RequestMethod.GET)
+    @RequestMapping(value = "/crashselectionseverity", method = RequestMethod.GET)
     public void selectCrashesBySeverity(HttpServletRequest request, HttpServletResponse response,
                                         @RequestParam("id") Long id) throws Exception {
         if (id == null) {
@@ -56,9 +56,9 @@ public class CrashSelectionController extends BaseFormController {
         }
     }
 
-    @RequestMapping(value="/crashselectioncollisiontype", method = RequestMethod.GET)
+    @RequestMapping(value = "/crashselectioncollisiontype", method = RequestMethod.GET)
     public void selectCrashesByCollisionType(HttpServletRequest request, HttpServletResponse response,
-                                        @RequestParam("id") Long id) throws Exception {
+                                             @RequestParam("id") Long id) throws Exception {
         if (id == null) {
             response.sendRedirect(request.getContextPath() + "/crashselection");
         } else {
@@ -68,9 +68,9 @@ public class CrashSelectionController extends BaseFormController {
         }
     }
 
-    @RequestMapping(value="/crashselectioncause", method = RequestMethod.GET)
+    @RequestMapping(value = "/crashselectioncause", method = RequestMethod.GET)
     public void selectCrashesByCause(HttpServletRequest request, HttpServletResponse response,
-                                        @RequestParam("id") Long id) throws Exception {
+                                     @RequestParam("id") Long id) throws Exception {
         if (id == null) {
             response.sendRedirect(request.getContextPath() + "/crashselection");
         } else {
@@ -80,7 +80,7 @@ public class CrashSelectionController extends BaseFormController {
         }
     }
 
-    @RequestMapping(value="/crashselectiondistrict", method = RequestMethod.GET)
+    @RequestMapping(value = "/crashselectiondistrict", method = RequestMethod.GET)
     public void selectCrashesByDistrict(HttpServletRequest request, HttpServletResponse response,
                                         @RequestParam("id") Long id) throws Exception {
         if (id == null) {
@@ -92,9 +92,9 @@ public class CrashSelectionController extends BaseFormController {
         }
     }
 
-    @RequestMapping(value="/crashselectionvehicletype", method = RequestMethod.GET)
+    @RequestMapping(value = "/crashselectionvehicletype", method = RequestMethod.GET)
     public void selectCrashesByVehicleType(HttpServletRequest request, HttpServletResponse response,
-                                             @RequestParam("id") Long id) throws Exception {
+                                           @RequestParam("id") Long id) throws Exception {
         if (id == null) {
             response.sendRedirect(request.getContextPath() + "/crashselection");
         } else {
@@ -104,9 +104,9 @@ public class CrashSelectionController extends BaseFormController {
         }
     }
 
-    @RequestMapping(value="/crashselectioncasualtyclass", method = RequestMethod.GET)
+    @RequestMapping(value = "/crashselectioncasualtyclass", method = RequestMethod.GET)
     public void selectCrashesByCasualtyClass(HttpServletRequest request, HttpServletResponse response,
-                                     @RequestParam("id") Long id) throws Exception {
+                                             @RequestParam("id") Long id) throws Exception {
         if (id == null) {
             response.sendRedirect(request.getContextPath() + "/crashselection");
         } else {
@@ -118,7 +118,7 @@ public class CrashSelectionController extends BaseFormController {
 
     private void getCrashes(HttpServletRequest request, HttpServletResponse response, CrashSearch crashSearch) throws IOException {
         CrashQuery crashQuery = crashSearch.toQuery();
-        SessionHelper.persistCrashesInSession(request, crashQueryManager.getCrashesByQuery(crashQuery), crashQuery);
+        SessionHelper.persistCrashesInSession(request, crashQueryService.getCrashesByQuery(crashQuery), crashQuery);
         response.sendRedirect(request.getContextPath() + "/analysis");
     }
 }
