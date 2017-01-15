@@ -5,7 +5,7 @@ import com.sweroad.model.DateRangable;
 /**
  * Created by Frank on 4/18/15.
  */
-public interface DateRangeManager {
+public interface DateRangeService {
     void setDatesBasedOnYearMonthCriteria(DateRangable dateRangable);
     boolean bothMonthProvidedButNoYears(DateRangable dateRangable);
     boolean onlyStartMonthProvided(DateRangable dateRangable);

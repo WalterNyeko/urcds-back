@@ -2,13 +2,12 @@ package com.sweroad.service.impl;
 
 import com.sweroad.model.*;
 import com.sweroad.service.CrashService;
-import com.sweroad.service.DateRangeManager;
+import com.sweroad.service.DateRangeService;
 import com.sweroad.service.SearchCriteriaService;
 import com.sweroad.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,7 +20,7 @@ public class SearchCriteriaServiceImpl implements SearchCriteriaService {
     @Autowired
     private CrashService crashService;
     @Autowired
-    private DateRangeManager dateRangeManager;
+    private DateRangeService dateRangeService;
 
     @Override
     public List<Crash> getCrashesByCriteria(SearchCriteria searchCriteria) {
@@ -57,12 +56,12 @@ public class SearchCriteriaServiceImpl implements SearchCriteriaService {
 
     private boolean meetsDateCriteria(SearchCriteria searchCriteria, Crash crash) {
         boolean meets;
-        if (dateRangeManager.atLeastOneYearMonthProvided(searchCriteria)) {
+        if (dateRangeService.atLeastOneYearMonthProvided(searchCriteria)) {
             meets = meetsMonthOnlyCriteria(searchCriteria, crash);
             if (!meets) {
                 return false;
             }
-            dateRangeManager.setDatesBasedOnYearMonthCriteria(searchCriteria);
+            dateRangeService.setDatesBasedOnYearMonthCriteria(searchCriteria);
         }
         if ((searchCriteria.getStartDate() != null || searchCriteria.getEndDate() != null)
                 && crash.getCrashDateTime() == null) {
@@ -84,7 +83,7 @@ public class SearchCriteriaServiceImpl implements SearchCriteriaService {
     }
 
     private boolean meetsMonthOnlyCriteria(SearchCriteria searchCriteria, Crash crash) {
-        if (dateRangeManager.bothMonthProvidedButNoYears(searchCriteria)) {
+        if (dateRangeService.bothMonthProvidedButNoYears(searchCriteria)) {
             if (crash.getCrashDateTime() == null) {
                 return false;
             }

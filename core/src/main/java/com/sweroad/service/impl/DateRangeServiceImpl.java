@@ -1,8 +1,7 @@
 package com.sweroad.service.impl;
 
 import com.sweroad.model.DateRangable;
-import com.sweroad.model.DateRangable;
-import com.sweroad.service.DateRangeManager;
+import com.sweroad.service.DateRangeService;
 import com.sweroad.util.DateUtil;
 import org.springframework.stereotype.Service;
 
@@ -11,8 +10,8 @@ import java.util.Date;
 /**
  * Created by Frank on 4/18/15.
  */
-@Service("dateRangeManager")
-public class DateRangeManagerImpl implements DateRangeManager {
+@Service("dateRangeService")
+public class DateRangeServiceImpl implements DateRangeService {
 
     public void setDatesBasedOnYearMonthCriteria(DateRangable dateRangable) {
         if (bothYearsMonthsProvided(dateRangable)) {

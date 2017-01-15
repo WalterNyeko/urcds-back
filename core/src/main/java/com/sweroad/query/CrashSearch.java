@@ -5,9 +5,9 @@ import com.sweroad.query.service.AgeQueryableService;
 import com.sweroad.query.service.QuadstateQueryableService;
 import com.sweroad.query.service.CustomQueryableService;
 import com.sweroad.query.service.GenderQueryableService;
-import com.sweroad.service.DateRangeManager;
+import com.sweroad.service.DateRangeService;
 import com.sweroad.service.LookupManager;
-import com.sweroad.service.impl.DateRangeManagerImpl;
+import com.sweroad.service.impl.DateRangeServiceImpl;
 import com.sweroad.service.impl.LookupManagerImpl;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class CrashSearch implements DateRangable {
 
-    private DateRangeManager dateRangeManager;
+    private DateRangeService dateRangeService;
     private LookupManager lookupManager;
     private List<CustomQueryableService> customQueryableServices;
     private Date startDate;
@@ -60,7 +60,7 @@ public class CrashSearch implements DateRangable {
     private List<QuadstateWrapper> casualtyBeltUsedOptionValues = new ArrayList();
 
     public CrashSearch() {
-        this.dateRangeManager = new DateRangeManagerImpl();
+        this.dateRangeService = new DateRangeServiceImpl();
         this.lookupManager = new LookupManagerImpl();
     }
 
@@ -393,15 +393,15 @@ public class CrashSearch implements DateRangable {
         }
 
         private void addDateRange(CrashQuery.CrashQueryBuilder crashQueryBuilder) {
-            if (dateRangeManager.bothMonthProvidedButNoYears(CrashSearch.this)) {
+            if (dateRangeService.bothMonthProvidedButNoYears(CrashSearch.this)) {
                 crashQueryBuilder.addStartMonth(CrashSearch.this.getStartMonth())
                         .addEndMonth(CrashSearch.this.getEndMonth());
-            } else if (dateRangeManager.onlyStartMonthProvided(CrashSearch.this)) {
+            } else if (dateRangeService.onlyStartMonthProvided(CrashSearch.this)) {
                 crashQueryBuilder.addStartMonth(CrashSearch.this.getStartMonth());
-            } else if (dateRangeManager.onlyEndMonthProvided(CrashSearch.this)) {
+            } else if (dateRangeService.onlyEndMonthProvided(CrashSearch.this)) {
                 crashQueryBuilder.addEndMonth(CrashSearch.this.getEndMonth());
-            } else if (dateRangeManager.atLeastOneYearMonthProvided(CrashSearch.this)) {
-                dateRangeManager.setDatesBasedOnYearMonthCriteria(CrashSearch.this);
+            } else if (dateRangeService.atLeastOneYearMonthProvided(CrashSearch.this)) {
+                dateRangeService.setDatesBasedOnYearMonthCriteria(CrashSearch.this);
                 crashQueryBuilder.addStartDate(CrashSearch.this.getStartDate())
                         .addEndDate(CrashSearch.this.getEndDate());
             } else {
