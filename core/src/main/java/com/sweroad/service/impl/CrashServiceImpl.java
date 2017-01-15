@@ -22,7 +22,7 @@ public class CrashServiceImpl extends GenericManagerImpl<Crash, Long> implements
     @Autowired
     private UserManager userManager;
     @Autowired
-    private LookupManager lookupManager;
+    private LookupService lookupService;
     @Autowired
     private VehicleService vehicleService;
     @Autowired
@@ -325,8 +325,8 @@ public class CrashServiceImpl extends GenericManagerImpl<Crash, Long> implements
         referenceData.put("collisionTypes", collisionTypeManager.getAllActive());
         referenceData.put("crashSeverities", crashSeverityManager.getAllActive());
         referenceData.put("casualtyClasses", casualtyClassManager.getAllActive());
-        referenceData.put("tristates", lookupManager.getAllQuadstateOptions(false));
-        referenceData.put("quadstates", lookupManager.getAllQuadstateOptions(true));
+        referenceData.put("tristates", lookupService.getAllQuadstateOptions(false));
+        referenceData.put("quadstates", lookupService.getAllQuadstateOptions(true));
         referenceData.put("surfaceConditions", surfaceConditionManager.getAllActive());
         referenceData.put("roadwayCharacters", roadwayCharacterManager.getAllActive());
         referenceData.put("vehicleFailureTypes", vehicleFailureTypeManager.getAllActive());
@@ -337,14 +337,14 @@ public class CrashServiceImpl extends GenericManagerImpl<Crash, Long> implements
     public Map<String, List> getOrderedRefData() {
         Map<String, List> refData = this.getReferenceData();
         refData.keySet().forEach(key -> this.sortRefData(refData, key));
-        refData.put("genders", lookupManager.getAllGenders());
-        refData.put("ageRanges", lookupManager.getAllAgeRanges());
-        refData.put("timeRanges", lookupManager.getAllTimeRanges());
-        refData.put("licenseTypes", lookupManager.getAllLicenseTypes());
+        refData.put("genders", lookupService.getAllGenders());
+        refData.put("ageRanges", lookupService.getAllAgeRanges());
+        refData.put("timeRanges", lookupService.getAllTimeRanges());
+        refData.put("licenseTypes", lookupService.getAllLicenseTypes());
         refData.put("casualtyTypes", casualtyTypeManager.getAllActive());
         refData.put("casualtyClass", casualtyClassManager.getAllActive());
-        refData.put("crashWeightRanges", lookupManager.getAllWeightRanges());
-        refData.put("beltUsedOptions", lookupManager.getAllBeltUsedOptions());
+        refData.put("crashWeightRanges", lookupService.getAllWeightRanges());
+        refData.put("beltUsedOptions", lookupService.getAllBeltUsedOptions());
         return refData;
     }
 

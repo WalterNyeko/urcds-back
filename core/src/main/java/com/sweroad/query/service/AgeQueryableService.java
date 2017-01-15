@@ -3,9 +3,7 @@ package com.sweroad.query.service;
 import com.sweroad.model.AgeRange;
 import com.sweroad.model.LabelValue;
 import com.sweroad.query.CrashQuery;
-import com.sweroad.query.CustomQueryable;
 import com.sweroad.query.LiteralQueryable;
-import com.sweroad.service.LookupManager;
 
 import java.util.ArrayList;
 import java.util.Collections;

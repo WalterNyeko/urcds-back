@@ -1,10 +1,10 @@
 package com.sweroad.webapp.listener;
 
+import com.sweroad.service.LookupService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import com.sweroad.Constants;
 import com.sweroad.service.GenericManager;
-import com.sweroad.service.LookupManager;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -53,7 +53,7 @@ public class StartupListener implements ServletContextListener {
         Map<String, Object> config = (HashMap<String, Object>) context.getAttribute(Constants.CONFIG);
 
         if (config == null) {
-            config = new HashMap<String, Object>();
+            config = new HashMap<>();
         }
 
         ApplicationContext ctx =
@@ -117,13 +117,13 @@ public class StartupListener implements ServletContextListener {
     }
 
     /**
-     * This method uses the LookupManager to lookup available roles from the data layer.
+     * This method uses the lookupService to lookup available roles from the data layer.
      *
      * @param context The servlet context
      */
     public static void setupContext(ServletContext context) {
         ApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(context);
-        LookupManager mgr = (LookupManager) ctx.getBean("lookupManager");
+        LookupService mgr = (LookupService) ctx.getBean("lookupService");
 
         // get list of possible roles
         context.setAttribute(Constants.AVAILABLE_ROLES, mgr.getAllRoles());

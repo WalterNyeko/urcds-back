@@ -3,7 +3,7 @@ package com.sweroad.service.impl;
 import com.sweroad.dao.GenericDao;
 import com.sweroad.model.*;
 import com.sweroad.service.GenericManager;
-import com.sweroad.service.LookupManager;
+import com.sweroad.service.LookupService;
 import com.sweroad.service.PatientManager;
 import com.sweroad.service.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class PatientManagerImpl extends GenericManagerImpl<Patient, Long> implem
     @Autowired
     private UserManager userManager;
     @Autowired
-    private LookupManager lookupManager;
+    private LookupService lookupService;
     @Autowired
     private GenericManager<Hospital, Long> hospitalManager;
     @Autowired
@@ -52,12 +52,12 @@ public class PatientManagerImpl extends GenericManagerImpl<Patient, Long> implem
         Collections.sort(hospitals);
         referenceData.put("districts", districts);
         referenceData.put("hospitals", hospitals);
-        referenceData.put("genders", lookupManager.getAllGenders());
+        referenceData.put("genders", lookupService.getAllGenders());
         referenceData.put("injuryTypes", injuryTypeManager.getAllDistinct());
         referenceData.put("roadUserTypes", roadUserTypeManager.getAllDistinct());
         referenceData.put("transportModes", transportModeManager.getAllDistinct());
         referenceData.put("patientStatuses", patientStatusManager.getAllDistinct());
-        referenceData.put("beltUsedOptions", lookupManager.getAllQuadstateOptions(true));
+        referenceData.put("beltUsedOptions", lookupService.getAllQuadstateOptions(true));
         referenceData.put("patientDispositions", patientDispositionManager.getAllDistinct());
         return referenceData;
     }

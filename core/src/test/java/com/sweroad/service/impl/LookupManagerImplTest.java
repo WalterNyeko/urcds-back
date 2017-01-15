@@ -21,7 +21,7 @@ public class LookupManagerImplTest extends BaseManagerMockTestCase {
     private LookupDao lookupDao;
 
     @InjectMocks
-    private LookupManagerImpl mgr = new LookupManagerImpl();
+    private LookupServiceImpl mgr = new LookupServiceImpl();
 
 
     @Test

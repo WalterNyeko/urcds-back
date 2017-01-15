@@ -6,9 +6,9 @@ import com.sweroad.query.service.QuadstateQueryableService;
 import com.sweroad.query.service.CustomQueryableService;
 import com.sweroad.query.service.GenderQueryableService;
 import com.sweroad.service.DateRangeService;
-import com.sweroad.service.LookupManager;
+import com.sweroad.service.LookupService;
 import com.sweroad.service.impl.DateRangeServiceImpl;
-import com.sweroad.service.impl.LookupManagerImpl;
+import com.sweroad.service.impl.LookupServiceImpl;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,7 +20,7 @@ import java.util.List;
 public class CrashSearch implements DateRangable {
 
     private DateRangeService dateRangeService;
-    private LookupManager lookupManager;
+    private LookupService lookupService;
     private List<CustomQueryableService> customQueryableServices;
     private Date startDate;
     private Date endDate;
@@ -61,7 +61,7 @@ public class CrashSearch implements DateRangable {
 
     public CrashSearch() {
         this.dateRangeService = new DateRangeServiceImpl();
-        this.lookupManager = new LookupManagerImpl();
+        this.lookupService = new LookupServiceImpl();
     }
 
     public Date getStartDate() {
@@ -461,9 +461,9 @@ public class CrashSearch implements DateRangable {
             customQueryableServices = new ArrayList<>();
             customQueryableServices.add(new QuadstateQueryableService(driverLicenseTypes,
                     CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE, "licenseValid", "driver"));
-            customQueryableServices.add(new GenderQueryableService(driverGenders, lookupManager,
+            customQueryableServices.add(new GenderQueryableService(driverGenders, lookupService,
                     CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE));
-            customQueryableServices.add(new GenderQueryableService(casualtyGenders, lookupManager,
+            customQueryableServices.add(new GenderQueryableService(casualtyGenders, lookupService,
                     CrashQuery.CrashQueryBuilder.CrashJoinType.CASUALTY));
             customQueryableServices.add(new QuadstateQueryableService(driverBeltUsedOptions,
                     CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE, "beltUsed", "driver"));

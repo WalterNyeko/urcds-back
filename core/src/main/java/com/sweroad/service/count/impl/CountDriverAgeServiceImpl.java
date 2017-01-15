@@ -1,7 +1,7 @@
 package com.sweroad.service.count.impl;
 
 import com.sweroad.model.*;
-import com.sweroad.service.LookupManager;
+import com.sweroad.service.LookupService;
 import com.sweroad.service.count.CountAttributeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,12 +17,12 @@ import java.util.stream.Collectors;
 public class CountDriverAgeServiceImpl extends BaseCountService implements CountAttributeService {
 
     @Autowired
-    private LookupManager lookupManager;
+    private LookupService lookupService;
 
     @Override
     public List<CountResult> countCrashes(List<Crash> crashes) {
         List<CountResult> countResults = new ArrayList<>();
-        List<LabelValue> ageRanges = lookupManager.getAllAgeRanges();
+        List<LabelValue> ageRanges = lookupService.getAllAgeRanges();
         ageRanges.forEach(ageRange -> countResults.add(countOccurrences(ageRange, crashes)));
         countResults.add(countOccurrences(NameIdModel.createNotSpecifiedInstance(), crashes));
         return countResults;

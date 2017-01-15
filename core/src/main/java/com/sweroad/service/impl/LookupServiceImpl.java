@@ -3,7 +3,7 @@ package com.sweroad.service.impl;
 import com.sweroad.Constants;
 import com.sweroad.dao.LookupDao;
 import com.sweroad.model.*;
-import com.sweroad.service.LookupManager;
+import com.sweroad.service.LookupService;
 import com.sweroad.util.DateUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -19,12 +19,12 @@ import java.util.stream.Collectors;
 
 
 /**
- * Implementation of LookupManager interface to talk to the persistence layer.
+ * Implementation of LookupService interface to talk to the persistence layer.
  *
  * @author <a href="mailto:matt@raibledesigns.com">Matt Raible</a>
  */
-@Service("lookupManager")
-public class LookupManagerImpl implements LookupManager {
+@Service("lookupService")
+public class LookupServiceImpl implements LookupService {
 
     private final Log log = LogFactory.getLog(getClass());
 

@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author <a href="mailto:matt@raibledesigns.com">Matt Raible</a>
  */
-public interface LookupManager {
+public interface LookupService {
     /**
      * Retrieves all possible roles from persistence layer
      * @return List of LabelValue objects

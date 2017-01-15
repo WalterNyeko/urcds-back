@@ -3,7 +3,7 @@ package com.sweroad.reporting.builder.impl;
 import com.sweroad.model.*;
 import com.sweroad.reporting.builder.MapBuilder;
 import com.sweroad.service.GenericManager;
-import com.sweroad.service.LookupManager;
+import com.sweroad.service.LookupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,7 +42,7 @@ public class MapBuilderImpl implements MapBuilder {
     @Autowired
     private GenericManager<District, Long> districtManager;
     @Autowired
-    private LookupManager lookupManager;
+    private LookupService lookupService;
 
     public Map<CollisionType, Map<CrashSeverity, Integer>> buildCollisionTypeMap(List<Crash> crashes) {
         Map<CollisionType, Map<CrashSeverity, Integer>> collisionTypeMap = new HashMap<>();
@@ -163,7 +163,7 @@ public class MapBuilderImpl implements MapBuilder {
     @Override
     public Map<String, Map<CrashSeverity, Integer>> buildTimeRangeMap(List<Crash> crashes) {
         Map<String, Map<CrashSeverity, Integer>> timeRangeMap = new HashMap<>();
-        List<LabelValue> timeRanges = lookupManager.getAllTimeRanges();
+        List<LabelValue> timeRanges = lookupService.getAllTimeRanges();
         List<CrashSeverity> crashSeverities = crashSeverityManager.getAllDistinct();
         Collections.sort(timeRanges);
         Collections.sort(crashSeverities);
@@ -175,7 +175,7 @@ public class MapBuilderImpl implements MapBuilder {
         }
         for (Crash crash : crashes) {
             if (crash.getCrashDateTime() != null && crash.getCrashSeverity() != null) {
-                TimeRange timeRange = lookupManager.getTimeRangeByTime(crash.getCrashDateTime());
+                TimeRange timeRange = lookupService.getTimeRangeByTime(crash.getCrashDateTime());
                 Map<CrashSeverity, Integer> crashSeverityMap = timeRangeMap.get(timeRange.getLabel());
                 Integer count = crashSeverityMap.get(crash.getCrashSeverity()) + 1;
                 crashSeverityMap.put(crash.getCrashSeverity(), count);
@@ -210,7 +210,7 @@ public class MapBuilderImpl implements MapBuilder {
     @Override
     public Map<String, Map<CrashSeverity, int[]>> buildCasualtyAgeGenderMap(List<Crash> crashes) {
         Map<String, Map<CrashSeverity, int[]>> casualtyAgeGenderMap = new HashMap<>();
-        List<LabelValue> ageRanges = lookupManager.getAllAgeRanges();
+        List<LabelValue> ageRanges = lookupService.getAllAgeRanges();
         List<CrashSeverity> crashSeverities = crashSeverityManager.getAllDistinct();
         Collections.sort(crashSeverities);
         for (LabelValue ageRange : ageRanges) {
@@ -223,7 +223,7 @@ public class MapBuilderImpl implements MapBuilder {
             if (crash.getCasualties() != null && crash.getCrashSeverity() != null) {
                 for (Casualty casualty : crash.getCasualties()) {
                     if (casualty.getAge() != null) {
-                        AgeRange ageRange = lookupManager.getAgeRangeByAge(casualty.getAge());
+                        AgeRange ageRange = lookupService.getAgeRangeByAge(casualty.getAge());
                         if (ageRange == null) {
                             continue;
                         }

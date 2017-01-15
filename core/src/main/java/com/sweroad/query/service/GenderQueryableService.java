@@ -4,7 +4,7 @@ import com.sweroad.model.LabelValue;
 import com.sweroad.query.Comparison;
 import com.sweroad.query.CrashQuery;
 import com.sweroad.query.CustomQueryable;
-import com.sweroad.service.LookupManager;
+import com.sweroad.service.LookupService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,21 +13,21 @@ import java.util.List;
  * Created by Frank on 3/10/15.
  */
 public class GenderQueryableService implements CustomQueryableService {
-    private LookupManager lookupManager;
+    private LookupService lookupService;
     private List<LabelValue> genderTypes;
     private CrashQuery.CrashQueryBuilder.CrashJoinType joinType;
 
-    public GenderQueryableService(List<LabelValue> genderTypes, LookupManager lookupManager,
+    public GenderQueryableService(List<LabelValue> genderTypes, LookupService lookupService,
                                   CrashQuery.CrashQueryBuilder.CrashJoinType joinType) {
         this.genderTypes = genderTypes;
-        this.lookupManager = lookupManager;
+        this.lookupService = lookupService;
         this.joinType = joinType;
     }
 
     @Override
     public void addToCrashQueryBuilder(CrashQuery.CrashQueryBuilder crashQueryBuilder) {
         if (genderTypes != null && genderTypes.size() > 0 &&
-                genderTypes.size() < lookupManager.getAllGenders().size()) {
+                genderTypes.size() < lookupService.getAllGenders().size()) {
             List<String> genderOptions = new ArrayList<String>();
             boolean includeNull = false;
             for (LabelValue gender : genderTypes) {
