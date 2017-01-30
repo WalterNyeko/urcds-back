@@ -30,44 +30,44 @@ public class CrashServiceImpl extends GenericManagerImpl<Crash, Long> implements
     @Autowired
     private CrashExcelService crashExcelService;
     @Autowired
-    private GenericManager<Driver, Long> driverManager;
+    private GenericManager<Driver, Long> driverService;
     @Autowired
-    private GenericManager<Weather, Long> weatherManager;
+    private GenericManager<Weather, Long> weatherService;
     @Autowired
-    private GenericManager<District, Long> districtManager;
+    private GenericManager<District, Long> districtService;
     @Autowired
-    private GenericManager<CrashCause, Long> crashCauseManager;
+    private GenericManager<CrashCause, Long> crashCauseService;
     @Autowired
-    private GenericManager<VehicleType, Long> vehicleTypeManager;
+    private GenericManager<VehicleType, Long> vehicleTypeService;
     @Autowired
-    private GenericManager<RoadSurface, Long> roadSurfaceManager;
+    private GenericManager<RoadSurface, Long> roadSurfaceService;
     @Autowired
-    private GenericManager<SurfaceType, Long> surfaceTypeManager;
+    private GenericManager<SurfaceType, Long> surfaceTypeService;
     @Autowired
-    private GenericManager<JunctionType, Long> junctionTypeManager;
+    private GenericManager<JunctionType, Long> junctionTypeService;
     @Autowired
-    private GenericManager<CasualtyType, Long> casualtyTypeManager;
+    private GenericManager<CasualtyType, Long> casualtyTypeService;
     @Autowired
-    private GenericManager<PoliceStation, Long> policeStationManager;
+    private GenericManager<PoliceStation, Long> policeStationService;
     @Autowired
-    private GenericManager<CasualtyClass, Long> casualtyClassManager;
+    private GenericManager<CasualtyClass, Long> casualtyClassService;
     @Autowired
-    private GenericManager<CrashSeverity, Long> crashSeverityManager;
+    private GenericManager<CrashSeverity, Long> crashSeverityService;
     @Autowired
-    private GenericManager<CollisionType, Long> collisionTypeManager;
+    private GenericManager<CollisionType, Long> collisionTypeService;
     @Autowired
-    private GenericManager<SurfaceCondition, Long> surfaceConditionManager;
+    private GenericManager<SurfaceCondition, Long> surfaceConditionService;
     @Autowired
-    private GenericManager<RoadwayCharacter, Long> roadwayCharacterManager;
+    private GenericManager<RoadwayCharacter, Long> roadwayCharacterService;
     @Autowired
-    private GenericManager<VehicleFailureType, Long> vehicleFailureTypeManager;
+    private GenericManager<VehicleFailureType, Long> vehicleFailureTypeService;
 
     /**
      * Will be used instead of this so that we can intercept calls to save using
      * audit trail aop classes
      */
     @Autowired
-    private GenericManager<Crash, Long> genericCrashManager;
+    private GenericManager<Crash, Long> genericCrashService;
 
     @Autowired
     public CrashServiceImpl(CrashDao crashDao) {
@@ -192,7 +192,7 @@ public class CrashServiceImpl extends GenericManagerImpl<Crash, Long> implements
                 driver.setDateUpdated(new Date());
                 driver.setUpdatedBy(user);
             }
-            driver = driverManager.save(driver);
+            driver = driverService.save(driver);
             vehicle.setDriver(driver);
         }
     }
@@ -218,47 +218,47 @@ public class CrashServiceImpl extends GenericManagerImpl<Crash, Long> implements
 
     private void setCrashParams(Crash crash) {
         if (crash.getCollisionType() != null && crash.getCollisionType().getId() != null) {
-            crash.setCollisionType(collisionTypeManager.get(crash
+            crash.setCollisionType(collisionTypeService.get(crash
                     .getCollisionType().getId()));
         }
         if (crash.getCrashSeverity() != null && crash.getCrashSeverity().getId() != null) {
-            crash.setCrashSeverity(crashSeverityManager.get(crash
+            crash.setCrashSeverity(crashSeverityService.get(crash
                     .getCrashSeverity().getId()));
         }
         if (crash.getJunctionType() != null && crash.getJunctionType().getId() != null) {
-            crash.setJunctionType(junctionTypeManager.get(crash
+            crash.setJunctionType(junctionTypeService.get(crash
                     .getJunctionType().getId()));
         }
         if (crash.getCrashCause() != null && crash.getCrashCause().getId() != null) {
-            crash.setCrashCause(crashCauseManager.get(crash
+            crash.setCrashCause(crashCauseService.get(crash
                     .getCrashCause().getId()));
         }
         if (crash.getPoliceStation() != null && crash.getPoliceStation().getId() != null) {
-            crash.setPoliceStation(policeStationManager.get(crash
+            crash.setPoliceStation(policeStationService.get(crash
                     .getPoliceStation().getId()));
         }
         if (crash.getRoadSurface() != null && crash.getRoadSurface().getId() != null) {
-            crash.setRoadSurface(roadSurfaceManager.get(crash.getRoadSurface()
+            crash.setRoadSurface(roadSurfaceService.get(crash.getRoadSurface()
                     .getId()));
         }
         if (crash.getRoadwayCharacter() != null && crash.getRoadwayCharacter().getId() != null) {
-            crash.setRoadwayCharacter(roadwayCharacterManager.get(crash
+            crash.setRoadwayCharacter(roadwayCharacterService.get(crash
                     .getRoadwayCharacter().getId()));
         }
         if (crash.getSurfaceCondition() != null && crash.getSurfaceCondition().getId() != null) {
-            crash.setSurfaceCondition(surfaceConditionManager.get(crash
+            crash.setSurfaceCondition(surfaceConditionService.get(crash
                     .getSurfaceCondition().getId()));
         }
         if (crash.getSurfaceType() != null && crash.getSurfaceType().getId() != null) {
-            crash.setSurfaceType(surfaceTypeManager.get(crash.getSurfaceType()
+            crash.setSurfaceType(surfaceTypeService.get(crash.getSurfaceType()
                     .getId()));
         }
         if (crash.getVehicleFailureType() != null && crash.getVehicleFailureType().getId() != null) {
-            crash.setVehicleFailureType(vehicleFailureTypeManager.get(crash
+            crash.setVehicleFailureType(vehicleFailureTypeService.get(crash
                     .getVehicleFailureType().getId()));
         }
         if (crash.getWeather() != null && crash.getWeather().getId() != null) {
-            crash.setWeather(weatherManager.get(crash.getWeather().getId()));
+            crash.setWeather(weatherService.get(crash.getWeather().getId()));
         }
         setCrashWeight(crash);
         setGpsCoordinates(crash);
@@ -289,18 +289,18 @@ public class CrashServiceImpl extends GenericManagerImpl<Crash, Long> implements
 
     private void setVehicleParams(Vehicle vehicle) {
         if (vehicle.getVehicleType() != null) {
-            vehicle.setVehicleType(vehicleTypeManager.get(vehicle
+            vehicle.setVehicleType(vehicleTypeService.get(vehicle
                     .getVehicleType().getId()));
         }
     }
 
     private void setCasualtyParams(Casualty casualty) {
         if (casualty.getCasualtyClass() != null) {
-            casualty.setCasualtyClass(casualtyClassManager.get(casualty
+            casualty.setCasualtyClass(casualtyClassService.get(casualty
                     .getCasualtyClass().getId()));
         }
         if (casualty.getCasualtyType() != null) {
-            casualty.setCasualtyType(casualtyTypeManager.get(casualty
+            casualty.setCasualtyType(casualtyTypeService.get(casualty
                     .getCasualtyType().getId()));
         }
     }
@@ -309,27 +309,27 @@ public class CrashServiceImpl extends GenericManagerImpl<Crash, Long> implements
     @SuppressWarnings("rawtypes")
     public Map<String, List> getReferenceData() {
         Map<String, List> referenceData = new HashMap<>();
-        List<District> districts = districtManager.getAllActive();
+        List<District> districts = districtService.getAllActive();
         Collections.sort(districts);
-        List<PoliceStation> policeStations = policeStationManager.getAllActive();
+        List<PoliceStation> policeStations = policeStationService.getAllActive();
         Collections.sort(policeStations);
         referenceData.put("districts", districts);
         referenceData.put("policeStations", policeStations);
-        referenceData.put("weathers", weatherManager.getAllActive());
-        referenceData.put("crashCauses", crashCauseManager.getAllActive());
-        referenceData.put("roadSurfaces", roadSurfaceManager.getAllActive());
-        referenceData.put("surfaceTypes", surfaceTypeManager.getAllActive());
-        referenceData.put("vehicleTypes", vehicleTypeManager.getAllActive());
-        referenceData.put("junctionTypes", junctionTypeManager.getAllActive());
-        referenceData.put("casualtyTypes", casualtyTypeManager.getAllActive());
-        referenceData.put("collisionTypes", collisionTypeManager.getAllActive());
-        referenceData.put("crashSeverities", crashSeverityManager.getAllActive());
-        referenceData.put("casualtyClasses", casualtyClassManager.getAllActive());
+        referenceData.put("weathers", weatherService.getAllActive());
+        referenceData.put("crashCauses", crashCauseService.getAllActive());
+        referenceData.put("roadSurfaces", roadSurfaceService.getAllActive());
+        referenceData.put("surfaceTypes", surfaceTypeService.getAllActive());
+        referenceData.put("vehicleTypes", vehicleTypeService.getAllActive());
+        referenceData.put("junctionTypes", junctionTypeService.getAllActive());
+        referenceData.put("casualtyTypes", casualtyTypeService.getAllActive());
+        referenceData.put("collisionTypes", collisionTypeService.getAllActive());
+        referenceData.put("crashSeverities", crashSeverityService.getAllActive());
+        referenceData.put("casualtyClasses", casualtyClassService.getAllActive());
         referenceData.put("tristates", lookupService.getAllQuadstateOptions(false));
         referenceData.put("quadstates", lookupService.getAllQuadstateOptions(true));
-        referenceData.put("surfaceConditions", surfaceConditionManager.getAllActive());
-        referenceData.put("roadwayCharacters", roadwayCharacterManager.getAllActive());
-        referenceData.put("vehicleFailureTypes", vehicleFailureTypeManager.getAllActive());
+        referenceData.put("surfaceConditions", surfaceConditionService.getAllActive());
+        referenceData.put("roadwayCharacters", roadwayCharacterService.getAllActive());
+        referenceData.put("vehicleFailureTypes", vehicleFailureTypeService.getAllActive());
         return referenceData;
     }
 
@@ -341,8 +341,8 @@ public class CrashServiceImpl extends GenericManagerImpl<Crash, Long> implements
         refData.put("ageRanges", lookupService.getAllAgeRanges());
         refData.put("timeRanges", lookupService.getAllTimeRanges());
         refData.put("licenseTypes", lookupService.getAllLicenseTypes());
-        refData.put("casualtyTypes", casualtyTypeManager.getAllActive());
-        refData.put("casualtyClass", casualtyClassManager.getAllActive());
+        refData.put("casualtyTypes", casualtyTypeService.getAllActive());
+        refData.put("casualtyClass", casualtyClassService.getAllActive());
         refData.put("crashWeightRanges", lookupService.getAllWeightRanges());
         refData.put("beltUsedOptions", lookupService.getAllBeltUsedOptions());
         return refData;
@@ -395,7 +395,7 @@ public class CrashServiceImpl extends GenericManagerImpl<Crash, Long> implements
         vehiclesToDelete.forEach(vehicle -> {
             dbCrash.getVehicles().remove(vehicle);
             vehicleService.remove(vehicle);
-            driverManager.remove(vehicle.getDriver());
+            driverService.remove(vehicle.getDriver());
         });
     }
 
@@ -420,14 +420,14 @@ public class CrashServiceImpl extends GenericManagerImpl<Crash, Long> implements
     public void removeCrashById(Long id) {
         Crash crash = this.get(id);
         crash.setRemoved(true);
-        genericCrashManager.save(crash);
+        genericCrashService.save(crash);
     }
 
     @Override
     public void restoreCrashById(Long id) {
         Crash crash = this.get(id);
         crash.setRemoved(false);
-        genericCrashManager.save(crash);
+        genericCrashService.save(crash);
     }
 
     @Override

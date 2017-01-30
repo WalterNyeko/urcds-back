@@ -29,7 +29,14 @@ public class SurfaceType extends NameIdModel implements Comparable<SurfaceType>,
 
     public SurfaceType() { }
 
-    public SurfaceType(Long id) { this.setId(id); }
+    public SurfaceType(Long id) {
+        this.setId(id);
+    }
+
+    public SurfaceType(String name) {
+        this.setName(name);
+        this.setActive(true);
+    }
 
 	/**
 	 * @return the id

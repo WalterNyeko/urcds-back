@@ -30,13 +30,13 @@ public class CrashFormController extends BaseFormController {
     @Autowired
     private CrashService crashService;
     @Autowired
-    private GenericManager<VehicleType, Long> vehicleTypeManager;
+    private GenericManager<VehicleType, Long> vehicleTypeService;
     @Autowired
-    private GenericManager<CasualtyClass, Long> casualtyClassManager;
+    private GenericManager<CasualtyClass, Long> casualtyClassService;
     @Autowired
-    private GenericManager<CasualtyType, Long> casualtyTypeManager;
+    private GenericManager<CasualtyType, Long> casualtyTypeService;
     @Autowired
-    private GenericManager<PoliceStation, Long> policeStationManager;
+    private GenericManager<PoliceStation, Long> policeStationService;
     private final static Long DEFAULT_ID = 0L;
 
     public CrashFormController() {
@@ -76,7 +76,7 @@ public class CrashFormController extends BaseFormController {
                     "crash");
             if (sessionCrash != null && sessionCrash.getId().equals(crashId)) {
                 crash = sessionCrash;
-                crash.setPoliceStation(policeStationManager.get(crash.getPoliceStation().getId()));
+                crash.setPoliceStation(policeStationService.get(crash.getPoliceStation().getId()));
             } else {
                 crash = crashService.get(crashId);
             }
@@ -369,7 +369,7 @@ public class CrashFormController extends BaseFormController {
 
     private void setVehicleType(Vehicle vehicle) {
         if (vehicle.getVehicleType() != null) {
-            VehicleType vt = vehicleTypeManager.get(vehicle.getVehicleType()
+            VehicleType vt = vehicleTypeService.get(vehicle.getVehicleType()
                     .getId());
             vehicle.setVehicleType(vt);
         }
@@ -377,7 +377,7 @@ public class CrashFormController extends BaseFormController {
 
     private void setDriverCasualtyType(Driver driver) {
         if (driver.getCasualtyType() != null) {
-            CasualtyType casualtyType = casualtyTypeManager.get(driver
+            CasualtyType casualtyType = casualtyTypeService.get(driver
                     .getCasualtyType().getId());
             driver.setCasualtyType(casualtyType);
         }
@@ -385,12 +385,12 @@ public class CrashFormController extends BaseFormController {
 
     private void setCasualtyParams(Casualty casualty, Crash crash) {
         if (casualty.getCasualtyClass() != null) {
-            CasualtyClass casualtyClass = casualtyClassManager.get(casualty
+            CasualtyClass casualtyClass = casualtyClassService.get(casualty
                     .getCasualtyClass().getId());
             casualty.setCasualtyClass(casualtyClass);
         }
         if (casualty.getCasualtyType() != null) {
-            CasualtyType casualtyType = casualtyTypeManager.get(casualty
+            CasualtyType casualtyType = casualtyTypeService.get(casualty
                     .getCasualtyType().getId());
             casualty.setCasualtyType(casualtyType);
         }

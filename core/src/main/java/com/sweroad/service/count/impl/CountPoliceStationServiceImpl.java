@@ -16,12 +16,12 @@ import java.util.List;
 public class CountPoliceStationServiceImpl extends BaseCountService implements CountAttributeService {
 
     @Autowired
-    private GenericManager<PoliceStation, Long> policeStationManager;
+    private GenericManager<PoliceStation, Long> policeStationService;
 
     @Override
     public List<CountResult> countCrashes(List<Crash> crashes) {
         List<CountResult> countResults = new ArrayList<>();
-        List<PoliceStation> policeStations = policeStationManager.getAllDistinct();
+        List<PoliceStation> policeStations = policeStationService.getAllDistinct();
         policeStations.forEach(policeStation -> countResults.add(countOccurrences(policeStation, crashes)));
         return countResults;
     }

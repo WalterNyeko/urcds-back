@@ -17,12 +17,12 @@ import java.util.stream.Collectors;
 public class CountVehicleTypeServiceImpl extends BaseCountService implements CountAttributeService {
 
     @Autowired
-    private GenericManager<VehicleType, Long> vehicleTypeManager;
+    private GenericManager<VehicleType, Long> vehicleTypeService;
 
     @Override
     public List<CountResult> countCrashes(List<Crash> crashes) {
         List<CountResult> countResults = new ArrayList<>();
-        List<VehicleType> vehicleTypes = vehicleTypeManager.getAllDistinct();
+        List<VehicleType> vehicleTypes = vehicleTypeService.getAllDistinct();
         vehicleTypes.forEach(vehicleType -> countResults.add(countOccurrences(vehicleType, crashes)));
         countResults.add(countOccurrences(NameIdModel.createNotSpecifiedInstance(), crashes));
         return countResults;

@@ -16,12 +16,12 @@ import java.util.List;
 public class CountSurfaceConditionServiceImpl extends BaseCountService implements CountAttributeService {
 
     @Autowired
-    private GenericManager<SurfaceCondition, Long> surfaceConditionManager;
+    private GenericManager<SurfaceCondition, Long> surfaceConditionService;
 
     @Override
     public List<CountResult> countCrashes(List<Crash> crashes) {
         List<CountResult> countResults = new ArrayList<>();
-        List<NameIdModel> surfaceConditions = this.prepareAttributes(surfaceConditionManager.getAllDistinct());
+        List<NameIdModel> surfaceConditions = this.prepareAttributes(surfaceConditionService.getAllDistinct());
         surfaceConditions.forEach(surfaceType -> countResults.add(countOccurrences(surfaceType, crashes)));
         return countResults;
     }

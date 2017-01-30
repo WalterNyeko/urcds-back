@@ -22,7 +22,7 @@ import java.util.Date;
 @Component
 public class AuditAdvice {
     @Autowired
-    private GenericManager<Audit, Long> auditManager;
+    private GenericManager<Audit, Long> auditService;
     @Autowired
     private UserManager userManager;
 
@@ -86,7 +86,7 @@ public class AuditAdvice {
                         auditLog.setEntityName(postImage.getClassAlias());
                         auditLog.setUser(currentUser);
                         auditLog.setAuditDate(new Date());
-                        auditManager.save(auditLog);
+                        auditService.save(auditLog);
                     }
                 }
             }

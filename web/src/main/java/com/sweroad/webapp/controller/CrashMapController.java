@@ -19,14 +19,14 @@ import java.util.List;
 public class CrashMapController extends BaseFormController {
 
     @Autowired
-    private GenericManager<CrashSeverity, Long> crashSeverityManager;
+    private GenericManager<CrashSeverity, Long> crashSeverityService;
     @Autowired
     private CrashService crashService;
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView showMap(HttpServletRequest request) throws Exception {
         ModelAndView mav = new ModelAndView("mapping/crashmap");
-        mav.addObject("crashSeverities", crashSeverityManager.getAll());
+        mav.addObject("crashSeverities", crashSeverityService.getAll());
         List<Crash> crashes = (List<Crash>) request.getSession().getAttribute("crashes");
         if (crashes == null) {
             crashes = crashService.getAvailableCrashes(true);

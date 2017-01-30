@@ -25,43 +25,43 @@ public class CrashQueryServiceImpl implements CrashQueryService {
     @Autowired
     private CrashDao crashDao;
     @Autowired
+    private UserManager userManager;
+    @Autowired
     private CrashService crashService;
-    @Autowired
-    private GenericManager<CrashSeverity, Long> crashSeverityManager;
-    @Autowired
-    private GenericManager<CollisionType, Long> collisionTypeManager;
-    @Autowired
-    private GenericManager<CrashCause, Long> crashCauseManager;
-    @Autowired
-    private GenericManager<VehicleFailureType, Long> vehicleFailureTypeManager;
-    @Autowired
-    private GenericManager<Weather, Long> weatherManager;
-    @Autowired
-    private GenericManager<SurfaceCondition, Long> surfaceConditionManager;
-    @Autowired
-    private GenericManager<RoadSurface, Long> roadSurfaceManager;
-    @Autowired
-    private GenericManager<SurfaceType, Long> surfaceTypeManager;
-    @Autowired
-    private GenericManager<RoadwayCharacter, Long> roadwayCharacterManager;
-    @Autowired
-    private GenericManager<JunctionType, Long> junctionTypeManager;
-    @Autowired
-    private GenericManager<PoliceStation, Long> policeStationManager;
-    @Autowired
-    private GenericManager<District, Long> districtManager;
-    @Autowired
-    private GenericManager<VehicleType, Long> vehicleTypeManager;
-    @Autowired
-    private GenericManager<CasualtyClass, Long> casualtyClassManager;
-    @Autowired
-    private GenericManager<CasualtyType, Long> casualtyTypeManager;
     @Autowired
     private LookupService lookupService;
     @Autowired
-    private GenericManager<Query, Long> queryManager;
+    private GenericManager<Query, Long> queryService;
     @Autowired
-    private UserManager userManager;
+    private GenericManager<Weather, Long> weatherService;
+    @Autowired
+    private GenericManager<District, Long> districtService;
+    @Autowired
+    private GenericManager<CrashCause, Long> crashCauseService;
+    @Autowired
+    private GenericManager<RoadSurface, Long> roadSurfaceService;
+    @Autowired
+    private GenericManager<SurfaceType, Long> surfaceTypeService;
+    @Autowired
+    private GenericManager<VehicleType, Long> vehicleTypeService;
+    @Autowired
+    private GenericManager<CasualtyType, Long> casualtyTypeService;
+    @Autowired
+    private GenericManager<JunctionType, Long> junctionTypeService;
+    @Autowired
+    private GenericManager<CasualtyClass, Long> casualtyClassService;
+    @Autowired
+    private GenericManager<PoliceStation, Long> policeStationService;
+    @Autowired
+    private GenericManager<CrashSeverity, Long> crashSeverityService;
+    @Autowired
+    private GenericManager<CollisionType, Long> collisionTypeService;
+    @Autowired
+    private GenericManager<SurfaceCondition, Long> surfaceConditionService;
+    @Autowired
+    private GenericManager<RoadwayCharacter, Long> roadwayCharacterService;
+    @Autowired
+    private GenericManager<VehicleFailureType, Long> vehicleFailureTypeService;
 
     @Override
     public List<Crash> getCrashesByQuery(CrashQuery crashQuery) {
@@ -70,26 +70,26 @@ public class CrashQueryServiceImpl implements CrashQueryService {
 
     @Override
     public void processCrashSearch(CrashSearch crashSearch) throws ParseException {
-        crashSearch.setCrashSeverities(GenericManagerHelper.filterForCrashSearch(crashSearch.getCrashSeverities(), crashSeverityManager));
-        crashSearch.setCollisionTypes(GenericManagerHelper.filterForCrashSearch(crashSearch.getCollisionTypes(), collisionTypeManager));
-        crashSearch.setCrashCauses(GenericManagerHelper.filterForCrashSearch(crashSearch.getCrashCauses(), crashCauseManager));
-        crashSearch.setVehicleFailureTypes(GenericManagerHelper.filterForCrashSearch(crashSearch.getVehicleFailureTypes(), vehicleFailureTypeManager));
-        crashSearch.setWeathers(GenericManagerHelper.filterForCrashSearch(crashSearch.getWeathers(), weatherManager));
-        crashSearch.setSurfaceConditions(GenericManagerHelper.filterForCrashSearch(crashSearch.getSurfaceConditions(), surfaceConditionManager));
-        crashSearch.setRoadSurfaces(GenericManagerHelper.filterForCrashSearch(crashSearch.getRoadSurfaces(), roadSurfaceManager));
-        crashSearch.setSurfaceTypes(GenericManagerHelper.filterForCrashSearch(crashSearch.getSurfaceTypes(), surfaceTypeManager));
-        crashSearch.setRoadwayCharacters(GenericManagerHelper.filterForCrashSearch(crashSearch.getRoadwayCharacters(), roadwayCharacterManager));
-        crashSearch.setJunctionTypes(GenericManagerHelper.filterForCrashSearch(crashSearch.getJunctionTypes(), junctionTypeManager));
-        crashSearch.setPoliceStations(GenericManagerHelper.filterForCrashSearch(crashSearch.getPoliceStations(), policeStationManager));
-        crashSearch.setDistricts(GenericManagerHelper.filterForCrashSearch(crashSearch.getDistricts(), districtManager));
-        crashSearch.setVehicleTypes(GenericManagerHelper.filterForCrashSearch(crashSearch.getVehicleTypes(), vehicleTypeManager));
+        crashSearch.setCrashSeverities(GenericManagerHelper.filterForCrashSearch(crashSearch.getCrashSeverities(), crashSeverityService));
+        crashSearch.setCollisionTypes(GenericManagerHelper.filterForCrashSearch(crashSearch.getCollisionTypes(), collisionTypeService));
+        crashSearch.setCrashCauses(GenericManagerHelper.filterForCrashSearch(crashSearch.getCrashCauses(), crashCauseService));
+        crashSearch.setVehicleFailureTypes(GenericManagerHelper.filterForCrashSearch(crashSearch.getVehicleFailureTypes(), vehicleFailureTypeService));
+        crashSearch.setWeathers(GenericManagerHelper.filterForCrashSearch(crashSearch.getWeathers(), weatherService));
+        crashSearch.setSurfaceConditions(GenericManagerHelper.filterForCrashSearch(crashSearch.getSurfaceConditions(), surfaceConditionService));
+        crashSearch.setRoadSurfaces(GenericManagerHelper.filterForCrashSearch(crashSearch.getRoadSurfaces(), roadSurfaceService));
+        crashSearch.setSurfaceTypes(GenericManagerHelper.filterForCrashSearch(crashSearch.getSurfaceTypes(), surfaceTypeService));
+        crashSearch.setRoadwayCharacters(GenericManagerHelper.filterForCrashSearch(crashSearch.getRoadwayCharacters(), roadwayCharacterService));
+        crashSearch.setJunctionTypes(GenericManagerHelper.filterForCrashSearch(crashSearch.getJunctionTypes(), junctionTypeService));
+        crashSearch.setPoliceStations(GenericManagerHelper.filterForCrashSearch(crashSearch.getPoliceStations(), policeStationService));
+        crashSearch.setDistricts(GenericManagerHelper.filterForCrashSearch(crashSearch.getDistricts(), districtService));
+        crashSearch.setVehicleTypes(GenericManagerHelper.filterForCrashSearch(crashSearch.getVehicleTypes(), vehicleTypeService));
         crashSearch.setDriverLicenseTypes(lookupService.getFilteredLicenseTypes(crashSearch.getDriverLicenseTypeValues()));
         crashSearch.setDriverGenders(lookupService.getFilteredGenders(crashSearch.getDriverGenders()));
         crashSearch.setDriverAgeRanges(lookupService.getFilteredAgeRanges(crashSearch.getDriverAgeRanges()));
         crashSearch.setDriverBeltUsedOptions(lookupService.getFilteredBeltUsedOptions(crashSearch.getDriverBeltUsedOptionValues()));
-        crashSearch.setDriverCasualtyTypes(GenericManagerHelper.filterForCrashSearch(crashSearch.getDriverCasualtyTypes(), casualtyTypeManager));
-        crashSearch.setCasualtyClasses(GenericManagerHelper.filterForCrashSearch(crashSearch.getCasualtyClasses(), casualtyClassManager));
-        crashSearch.setCasualtyTypes(GenericManagerHelper.filterForCrashSearch(crashSearch.getCasualtyTypes(), casualtyTypeManager));
+        crashSearch.setDriverCasualtyTypes(GenericManagerHelper.filterForCrashSearch(crashSearch.getDriverCasualtyTypes(), casualtyTypeService));
+        crashSearch.setCasualtyClasses(GenericManagerHelper.filterForCrashSearch(crashSearch.getCasualtyClasses(), casualtyClassService));
+        crashSearch.setCasualtyTypes(GenericManagerHelper.filterForCrashSearch(crashSearch.getCasualtyTypes(), casualtyTypeService));
         crashSearch.setCasualtyGenders(lookupService.getFilteredGenders(crashSearch.getCasualtyGenders()));
         crashSearch.setCasualtyAgeRanges(lookupService.getFilteredAgeRanges(crashSearch.getCasualtyAgeRanges()));
         crashSearch.setCasualtyBeltUsedOptions(lookupService.getFilteredBeltUsedOptions(crashSearch.getCasualtyBeltUsedOptionValues()));
@@ -108,7 +108,7 @@ public class CrashQueryServiceImpl implements CrashQueryService {
 
     @Override
     public List<Query> getCurrentUserQueries() {
-        return queryManager.getAllDistinct().stream().filter(query -> query.getOwner().equals(userManager.getCurrentUser())).collect(Collectors.toList());
+        return queryService.getAllDistinct().stream().filter(query -> query.getOwner().equals(userManager.getCurrentUser())).collect(Collectors.toList());
     }
 
     @Override
@@ -119,17 +119,17 @@ public class CrashQueryServiceImpl implements CrashQueryService {
             query.setDateUpdated(new Date());
         }
         query.setOwner(userManager.getCurrentUser());
-        queryManager.save(query);
+        queryService.save(query);
     }
 
     @Override
     public Query getQueryById(Long queryId) {
-        return queryManager.get(queryId);
+        return queryService.get(queryId);
     }
 
     @Override
     public void removeQueryById(Long queryId) {
-        queryManager.remove(queryId);
+        queryService.remove(queryId);
     }
 
     private void processDates(CrashSearch crashSearch) throws ParseException {

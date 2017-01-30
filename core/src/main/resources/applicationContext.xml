@@ -24,15 +24,15 @@
     </bean>
 
 	<!-- Add new Managers here -->
-	<bean id="crashSeverityManager" class="com.sweroad.service.impl.GenericManagerImpl">
-		<constructor-arg>
-			<bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
-				<constructor-arg value="com.sweroad.model.CrashSeverity" />
-				<property name="sessionFactory" ref="sessionFactory" />
-			</bean>
-		</constructor-arg>
-	</bean>
-	<bean id="collisionTypeManager" class="com.sweroad.service.impl.GenericManagerImpl">
+    <bean id="crashSeverityService" class="com.sweroad.service.impl.GenericManagerImpl">
+        <constructor-arg>
+            <bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
+                <constructor-arg value="com.sweroad.model.CrashSeverity" />
+                <property name="sessionFactory" ref="sessionFactory" />
+            </bean>
+        </constructor-arg>
+    </bean>
+	<bean id="collisionTypeService" class="com.sweroad.service.impl.GenericManagerImpl">
 		<constructor-arg>
 			<bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
 				<constructor-arg value="com.sweroad.model.CollisionType" />
@@ -40,7 +40,7 @@
 			</bean>
 		</constructor-arg>
 	</bean>
-	<bean id="crashCauseManager" class="com.sweroad.service.impl.GenericManagerImpl">
+	<bean id="crashCauseService" class="com.sweroad.service.impl.GenericManagerImpl">
 		<constructor-arg>
 			<bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
 				<constructor-arg value="com.sweroad.model.CrashCause" />
@@ -48,7 +48,7 @@
 			</bean>
 		</constructor-arg>
 	</bean>
-	<bean id="vehicleFailureTypeManager" class="com.sweroad.service.impl.GenericManagerImpl">
+	<bean id="vehicleFailureTypeService" class="com.sweroad.service.impl.GenericManagerImpl">
 		<constructor-arg>
 			<bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
 				<constructor-arg value="com.sweroad.model.VehicleFailureType" />
@@ -56,7 +56,7 @@
 			</bean>
 		</constructor-arg>
 	</bean>
-	<bean id="weatherManager" class="com.sweroad.service.impl.GenericManagerImpl">
+	<bean id="weatherService" class="com.sweroad.service.impl.GenericManagerImpl">
 		<constructor-arg>
 			<bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
 				<constructor-arg value="com.sweroad.model.Weather" />
@@ -64,7 +64,7 @@
 			</bean>
 		</constructor-arg>
 	</bean>
-	<bean id="surfaceConditionManager" class="com.sweroad.service.impl.GenericManagerImpl">
+	<bean id="surfaceConditionService" class="com.sweroad.service.impl.GenericManagerImpl">
 		<constructor-arg>
 			<bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
 				<constructor-arg value="com.sweroad.model.SurfaceCondition" />
@@ -72,7 +72,7 @@
 			</bean>
 		</constructor-arg>
 	</bean>
-	<bean id="roadSurfaceManager" class="com.sweroad.service.impl.GenericManagerImpl">
+	<bean id="roadSurfaceService" class="com.sweroad.service.impl.GenericManagerImpl">
 		<constructor-arg>
 			<bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
 				<constructor-arg value="com.sweroad.model.RoadSurface" />
@@ -80,7 +80,7 @@
 			</bean>
 		</constructor-arg>
 	</bean>
-	<bean id="surfaceTypeManager" class="com.sweroad.service.impl.GenericManagerImpl">
+	<bean id="surfaceTypeService" class="com.sweroad.service.impl.GenericManagerImpl">
 		<constructor-arg>
 			<bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
 				<constructor-arg value="com.sweroad.model.SurfaceType" />
@@ -88,7 +88,7 @@
 			</bean>
 		</constructor-arg>
 	</bean>
-	<bean id="roadwayCharacterManager" class="com.sweroad.service.impl.GenericManagerImpl">
+	<bean id="roadwayCharacterService" class="com.sweroad.service.impl.GenericManagerImpl">
 		<constructor-arg>
 			<bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
 				<constructor-arg value="com.sweroad.model.RoadwayCharacter" />
@@ -96,7 +96,7 @@
 			</bean>
 		</constructor-arg>
 	</bean>
-	<bean id="junctionTypeManager" class="com.sweroad.service.impl.GenericManagerImpl">
+	<bean id="junctionTypeService" class="com.sweroad.service.impl.GenericManagerImpl">
 		<constructor-arg>
 			<bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
 				<constructor-arg value="com.sweroad.model.JunctionType" />
@@ -104,7 +104,7 @@
 			</bean>
 		</constructor-arg>
 	</bean>
-	<bean id="vehicleTypeManager" class="com.sweroad.service.impl.GenericManagerImpl">
+	<bean id="vehicleTypeService" class="com.sweroad.service.impl.GenericManagerImpl">
 		<constructor-arg>
 			<bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
 				<constructor-arg value="com.sweroad.model.VehicleType" />
@@ -112,7 +112,7 @@
 			</bean>
 		</constructor-arg>
 	</bean>
-	<bean id="casualtyClassManager" class="com.sweroad.service.impl.GenericManagerImpl">
+	<bean id="casualtyClassService" class="com.sweroad.service.impl.GenericManagerImpl">
 		<constructor-arg>
 			<bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
 				<constructor-arg value="com.sweroad.model.CasualtyClass" />
@@ -120,7 +120,7 @@
 			</bean>
 		</constructor-arg>
 	</bean>
-	<bean id="casualtyTypeManager" class="com.sweroad.service.impl.GenericManagerImpl">
+	<bean id="casualtyTypeService" class="com.sweroad.service.impl.GenericManagerImpl">
 		<constructor-arg>
 			<bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
 				<constructor-arg value="com.sweroad.model.CasualtyType" />
@@ -128,7 +128,7 @@
 			</bean>
 		</constructor-arg>
 	</bean>
-	<bean id="policeStationManager" class="com.sweroad.service.impl.GenericManagerImpl">
+	<bean id="policeStationService" class="com.sweroad.service.impl.GenericManagerImpl">
 		<constructor-arg>
 			<bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
 				<constructor-arg value="com.sweroad.model.PoliceStation" />
@@ -136,7 +136,7 @@
 			</bean>
 		</constructor-arg>
 	</bean>
-	<bean id="districtManager" class="com.sweroad.service.impl.GenericManagerImpl">
+	<bean id="districtService" class="com.sweroad.service.impl.GenericManagerImpl">
 		<constructor-arg>
 			<bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
 				<constructor-arg value="com.sweroad.model.District" />
@@ -144,7 +144,7 @@
 			</bean>
 		</constructor-arg>
 	</bean>
-	<bean id="driverManager" class="com.sweroad.service.impl.GenericManagerImpl">
+	<bean id="driverService" class="com.sweroad.service.impl.GenericManagerImpl">
 		<constructor-arg>
 			<bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
 				<constructor-arg value="com.sweroad.model.Driver" />
@@ -152,7 +152,7 @@
 			</bean>
 		</constructor-arg>
 	</bean>
-    <bean id="auditManager" class="com.sweroad.service.impl.GenericManagerImpl">
+    <bean id="auditService" class="com.sweroad.service.impl.GenericManagerImpl">
         <constructor-arg>
             <bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
                 <constructor-arg value="com.sweroad.model.Audit" />
@@ -160,7 +160,7 @@
             </bean>
         </constructor-arg>
     </bean>
-    <bean id="genericCrashManager" class="com.sweroad.service.impl.GenericManagerImpl">
+    <bean id="genericCrashService" class="com.sweroad.service.impl.GenericManagerImpl">
         <constructor-arg>
             <bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
                 <constructor-arg value="com.sweroad.model.Crash" />
@@ -168,7 +168,7 @@
             </bean>
         </constructor-arg>
     </bean>
-    <bean id="queryManager" class="com.sweroad.service.impl.GenericManagerImpl">
+    <bean id="queryService" class="com.sweroad.service.impl.GenericManagerImpl">
         <constructor-arg>
             <bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
                 <constructor-arg value="com.sweroad.model.Query" />
@@ -176,7 +176,7 @@
             </bean>
         </constructor-arg>
     </bean>
-    <bean id="injuryTypeManager" class="com.sweroad.service.impl.GenericManagerImpl">
+    <bean id="injuryTypeService" class="com.sweroad.service.impl.GenericManagerImpl">
         <constructor-arg>
             <bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
                 <constructor-arg value="com.sweroad.model.InjuryType" />
@@ -184,7 +184,7 @@
             </bean>
         </constructor-arg>
     </bean>
-    <bean id="hospitalManager" class="com.sweroad.service.impl.GenericManagerImpl">
+    <bean id="hospitalService" class="com.sweroad.service.impl.GenericManagerImpl">
         <constructor-arg>
             <bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
                 <constructor-arg value="com.sweroad.model.Hospital" />
@@ -192,7 +192,7 @@
             </bean>
         </constructor-arg>
     </bean>
-    <bean id="patientDispositionManager" class="com.sweroad.service.impl.GenericManagerImpl">
+    <bean id="patientDispositionService" class="com.sweroad.service.impl.GenericManagerImpl">
         <constructor-arg>
             <bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
                 <constructor-arg value="com.sweroad.model.PatientDisposition" />
@@ -200,7 +200,7 @@
             </bean>
         </constructor-arg>
     </bean>
-    <bean id="patientStatusManager" class="com.sweroad.service.impl.GenericManagerImpl">
+    <bean id="patientStatusService" class="com.sweroad.service.impl.GenericManagerImpl">
         <constructor-arg>
             <bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
                 <constructor-arg value="com.sweroad.model.PatientStatus" />
@@ -208,7 +208,7 @@
             </bean>
         </constructor-arg>
     </bean>
-    <bean id="roadUserTypeManager" class="com.sweroad.service.impl.GenericManagerImpl">
+    <bean id="roadUserTypeService" class="com.sweroad.service.impl.GenericManagerImpl">
         <constructor-arg>
             <bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
                 <constructor-arg value="com.sweroad.model.RoadUserType" />
@@ -216,7 +216,7 @@
             </bean>
         </constructor-arg>
     </bean>
-    <bean id="transportModeManager" class="com.sweroad.service.impl.GenericManagerImpl">
+    <bean id="transportModeService" class="com.sweroad.service.impl.GenericManagerImpl">
         <constructor-arg>
             <bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
                 <constructor-arg value="com.sweroad.model.TransportMode" />
@@ -224,7 +224,7 @@
             </bean>
         </constructor-arg>
     </bean>
-    <bean id="patientInjuryManager" class="com.sweroad.service.impl.GenericManagerImpl">
+    <bean id="patientInjuryService" class="com.sweroad.service.impl.GenericManagerImpl">
         <constructor-arg>
             <bean class="com.sweroad.dao.hibernate.GenericDaoHibernate">
                 <constructor-arg value="com.sweroad.model.PatientInjuryType" />

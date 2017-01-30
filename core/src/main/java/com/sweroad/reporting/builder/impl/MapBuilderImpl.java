@@ -16,38 +16,38 @@ import java.util.*;
 public class MapBuilderImpl implements MapBuilder {
 
     @Autowired
-    private GenericManager<CrashSeverity, Long> crashSeverityManager;
+    private GenericManager<CrashSeverity, Long> crashSeverityService;
     @Autowired
-    private GenericManager<CollisionType, Long> collisionTypeManager;
+    private GenericManager<CollisionType, Long> collisionTypeService;
     @Autowired
-    private GenericManager<CrashCause, Long> crashCauseManager;
+    private GenericManager<CrashCause, Long> crashCauseService;
     @Autowired
-    private GenericManager<VehicleFailureType, Long> vehicleFailureTypeManager;
+    private GenericManager<VehicleFailureType, Long> vehicleFailureTypeService;
     @Autowired
-    private GenericManager<VehicleType, Long> vehicleTypeManager;
+    private GenericManager<VehicleType, Long> vehicleTypeService;
     @Autowired
-    private GenericManager<Weather, Long> weatherManager;
+    private GenericManager<Weather, Long> weatherService;
     @Autowired
-    private GenericManager<SurfaceCondition, Long> surfaceConditionManager;
+    private GenericManager<SurfaceCondition, Long> surfaceConditionService;
     @Autowired
-    private GenericManager<RoadSurface, Long> roadSurfaceManager;
+    private GenericManager<RoadSurface, Long> roadSurfaceService;
     @Autowired
-    private GenericManager<SurfaceType, Long> surfaceTypeManager;
+    private GenericManager<SurfaceType, Long> surfaceTypeService;
     @Autowired
-    private GenericManager<RoadwayCharacter, Long> roadwayCharacterManager;
+    private GenericManager<RoadwayCharacter, Long> roadwayCharacterService;
     @Autowired
-    private GenericManager<JunctionType, Long> junctionTypeManager;
+    private GenericManager<JunctionType, Long> junctionTypeService;
     @Autowired
-    private GenericManager<PoliceStation, Long> policeStationManager;
+    private GenericManager<PoliceStation, Long> policeStationService;
     @Autowired
-    private GenericManager<District, Long> districtManager;
+    private GenericManager<District, Long> districtService;
     @Autowired
     private LookupService lookupService;
 
     public Map<CollisionType, Map<CrashSeverity, Integer>> buildCollisionTypeMap(List<Crash> crashes) {
         Map<CollisionType, Map<CrashSeverity, Integer>> collisionTypeMap = new HashMap<>();
-        List<CollisionType> collisionTypes = collisionTypeManager.getAllDistinct();
-        List<CrashSeverity> crashSeverities = crashSeverityManager.getAllDistinct();
+        List<CollisionType> collisionTypes = collisionTypeService.getAllDistinct();
+        List<CrashSeverity> crashSeverities = crashSeverityService.getAllDistinct();
         Collections.sort(collisionTypes);
         Collections.sort(crashSeverities);
         for (CollisionType collisionType : collisionTypes) {
@@ -68,8 +68,8 @@ public class MapBuilderImpl implements MapBuilder {
 
     @Override
     public Map<PoliceStation, Map<CrashSeverity, Integer>> buildPoliceStationMap(List<Crash> crashes) {
-        List<PoliceStation> policeStations = policeStationManager.getAllDistinct();
-        List<CrashSeverity> crashSeverities = crashSeverityManager.getAllDistinct();
+        List<PoliceStation> policeStations = policeStationService.getAllDistinct();
+        List<CrashSeverity> crashSeverities = crashSeverityService.getAllDistinct();
         Collections.sort(policeStations);
         Collections.sort(crashSeverities);
         Map<PoliceStation, Map<CrashSeverity, Integer>> policeStationMap = new HashMap<>();
@@ -91,8 +91,8 @@ public class MapBuilderImpl implements MapBuilder {
 
     public Map<CrashCause, Map<CrashSeverity, Integer>> buildCrashCauseMap(List<Crash> crashes) {
         Map<CrashCause, Map<CrashSeverity, Integer>> crashCauseMap = new HashMap<>();
-        List<CrashCause> crashCauses = crashCauseManager.getAllDistinct();
-        List<CrashSeverity> crashSeverities = crashSeverityManager.getAllDistinct();
+        List<CrashCause> crashCauses = crashCauseService.getAllDistinct();
+        List<CrashSeverity> crashSeverities = crashSeverityService.getAllDistinct();
         Collections.sort(crashCauses);
         Collections.sort(crashSeverities);
         for (CrashCause crashCause : crashCauses) {
@@ -113,8 +113,8 @@ public class MapBuilderImpl implements MapBuilder {
 
     public Map<VehicleFailureType, Map<CrashSeverity, Integer>> buildVehicleFailureTypeMap(List<Crash> crashes) {
         Map<VehicleFailureType, Map<CrashSeverity, Integer>> vehicleFailureTypeMap = new HashMap<>();
-        List<CrashSeverity> crashSeverities = crashSeverityManager.getAllDistinct();
-        List<VehicleFailureType> vehicleFailureTypes = vehicleFailureTypeManager.getAllDistinct();
+        List<CrashSeverity> crashSeverities = crashSeverityService.getAllDistinct();
+        List<VehicleFailureType> vehicleFailureTypes = vehicleFailureTypeService.getAllDistinct();
         Collections.sort(crashSeverities);
         Collections.sort(vehicleFailureTypes);
         for (VehicleFailureType vehicleFailureType : vehicleFailureTypes) {
@@ -136,8 +136,8 @@ public class MapBuilderImpl implements MapBuilder {
     @Override
     public Map<VehicleType, Map<CrashSeverity, Integer>> buildVehicleTypeMap(List<Crash> crashes) {
         Map<VehicleType, Map<CrashSeverity, Integer>> vehicleTypeMap = new HashMap<>();
-        List<CrashSeverity> crashSeverities = crashSeverityManager.getAllDistinct();
-        List<VehicleType> vehicleTypes = vehicleTypeManager.getAllDistinct();
+        List<CrashSeverity> crashSeverities = crashSeverityService.getAllDistinct();
+        List<VehicleType> vehicleTypes = vehicleTypeService.getAllDistinct();
         Collections.sort(crashSeverities);
         Collections.sort(vehicleTypes);
         for (VehicleType vehicleType : vehicleTypes) {
@@ -164,7 +164,7 @@ public class MapBuilderImpl implements MapBuilder {
     public Map<String, Map<CrashSeverity, Integer>> buildTimeRangeMap(List<Crash> crashes) {
         Map<String, Map<CrashSeverity, Integer>> timeRangeMap = new HashMap<>();
         List<LabelValue> timeRanges = lookupService.getAllTimeRanges();
-        List<CrashSeverity> crashSeverities = crashSeverityManager.getAllDistinct();
+        List<CrashSeverity> crashSeverities = crashSeverityService.getAllDistinct();
         Collections.sort(timeRanges);
         Collections.sort(crashSeverities);
         for (LabelValue timeRange : timeRanges) {
@@ -186,8 +186,8 @@ public class MapBuilderImpl implements MapBuilder {
 
     @Override
     public Map<District, Map<CrashSeverity, Integer>> buildDistrictMap(List<Crash> crashes) {
-        List<District> districts = districtManager.getAllDistinct();
-        List<CrashSeverity> crashSeverities = crashSeverityManager.getAllDistinct();
+        List<District> districts = districtService.getAllDistinct();
+        List<CrashSeverity> crashSeverities = crashSeverityService.getAllDistinct();
         Collections.sort(districts);
         Collections.sort(crashSeverities);
         Map<District, Map<CrashSeverity, Integer>> districtMap = new HashMap<District, Map<CrashSeverity, Integer>>();
@@ -211,7 +211,7 @@ public class MapBuilderImpl implements MapBuilder {
     public Map<String, Map<CrashSeverity, int[]>> buildCasualtyAgeGenderMap(List<Crash> crashes) {
         Map<String, Map<CrashSeverity, int[]>> casualtyAgeGenderMap = new HashMap<>();
         List<LabelValue> ageRanges = lookupService.getAllAgeRanges();
-        List<CrashSeverity> crashSeverities = crashSeverityManager.getAllDistinct();
+        List<CrashSeverity> crashSeverities = crashSeverityService.getAllDistinct();
         Collections.sort(crashSeverities);
         for (LabelValue ageRange : ageRanges) {
             casualtyAgeGenderMap.put(ageRange.getLabel(), new HashMap<>());
@@ -248,8 +248,8 @@ public class MapBuilderImpl implements MapBuilder {
 
     public Map<Weather, Map<CrashSeverity, Integer>> buildWeatherMap(List<Crash> crashes) {
         Map<Weather, Map<CrashSeverity, Integer>> weatherMap = new HashMap<>();
-        List<Weather> weathers = weatherManager.getAllDistinct();
-        List<CrashSeverity> crashSeverities = crashSeverityManager.getAllDistinct();
+        List<Weather> weathers = weatherService.getAllDistinct();
+        List<CrashSeverity> crashSeverities = crashSeverityService.getAllDistinct();
         Collections.sort(weathers);
         Collections.sort(crashSeverities);
         for (Weather weather : weathers) {
@@ -270,8 +270,8 @@ public class MapBuilderImpl implements MapBuilder {
 
     public Map<SurfaceCondition, Map<CrashSeverity, Integer>> buildSurfaceConditionMap(List<Crash> crashes) {
         Map<SurfaceCondition, Map<CrashSeverity, Integer>> surfaceConditionMap = new HashMap<SurfaceCondition, Map<CrashSeverity, Integer>>();
-        List<CrashSeverity> crashSeverities = crashSeverityManager.getAllDistinct();
-        List<SurfaceCondition> surfaceConditions = surfaceConditionManager.getAllDistinct();
+        List<CrashSeverity> crashSeverities = crashSeverityService.getAllDistinct();
+        List<SurfaceCondition> surfaceConditions = surfaceConditionService.getAllDistinct();
         Collections.sort(crashSeverities);
         Collections.sort(surfaceConditions);
         for (SurfaceCondition surfaceCondition : surfaceConditions) {
@@ -292,8 +292,8 @@ public class MapBuilderImpl implements MapBuilder {
 
     public Map<RoadSurface, Map<CrashSeverity, Integer>> buildRoadSurfaceMap(List<Crash> crashes) {
         Map<RoadSurface, Map<CrashSeverity, Integer>> roadSurfaceMap = new HashMap<>();
-        List<RoadSurface> roadSurfaces = roadSurfaceManager.getAllDistinct();
-        List<CrashSeverity> crashSeverities = crashSeverityManager.getAllDistinct();
+        List<RoadSurface> roadSurfaces = roadSurfaceService.getAllDistinct();
+        List<CrashSeverity> crashSeverities = crashSeverityService.getAllDistinct();
         Collections.sort(roadSurfaces);
         Collections.sort(crashSeverities);
         for (RoadSurface roadSurface : roadSurfaces) {
@@ -314,8 +314,8 @@ public class MapBuilderImpl implements MapBuilder {
 
     public Map<SurfaceType, Map<CrashSeverity, Integer>> buildSurfaceTypeMap(List<Crash> crashes) {
         Map<SurfaceType, Map<CrashSeverity, Integer>> surfaceTypeMap = new HashMap<SurfaceType, Map<CrashSeverity, Integer>>();
-        List<SurfaceType> surfaceTypes = surfaceTypeManager.getAllDistinct();
-        List<CrashSeverity> crashSeverities = crashSeverityManager.getAllDistinct();
+        List<SurfaceType> surfaceTypes = surfaceTypeService.getAllDistinct();
+        List<CrashSeverity> crashSeverities = crashSeverityService.getAllDistinct();
         Collections.sort(surfaceTypes);
         Collections.sort(crashSeverities);
         for (SurfaceType surfaceType : surfaceTypes) {
@@ -336,8 +336,8 @@ public class MapBuilderImpl implements MapBuilder {
 
     public Map<RoadwayCharacter, Map<CrashSeverity, Integer>> buildRoadwayCharacterMap(List<Crash> crashes) {
         Map<RoadwayCharacter, Map<CrashSeverity, Integer>> roadwayCharacterMap = new HashMap<RoadwayCharacter, Map<CrashSeverity, Integer>>();
-        List<CrashSeverity> crashSeverities = crashSeverityManager.getAllDistinct();
-        List<RoadwayCharacter> roadwayCharacters = roadwayCharacterManager.getAllDistinct();
+        List<CrashSeverity> crashSeverities = crashSeverityService.getAllDistinct();
+        List<RoadwayCharacter> roadwayCharacters = roadwayCharacterService.getAllDistinct();
         Collections.sort(crashSeverities);
         Collections.sort(roadwayCharacters);
         for (RoadwayCharacter roadwayCharacter : roadwayCharacters) {
@@ -358,8 +358,8 @@ public class MapBuilderImpl implements MapBuilder {
 
     public Map<JunctionType, Map<CrashSeverity, Integer>> buildJunctionTypeMap(List<Crash> crashes) {
         Map<JunctionType, Map<CrashSeverity, Integer>> junctionTypeMap = new HashMap<>();
-        List<JunctionType> junctionTypes = junctionTypeManager.getAllDistinct();
-        List<CrashSeverity> crashSeverities = crashSeverityManager.getAllDistinct();
+        List<JunctionType> junctionTypes = junctionTypeService.getAllDistinct();
+        List<CrashSeverity> crashSeverities = crashSeverityService.getAllDistinct();
         Collections.sort(junctionTypes);
         Collections.sort(crashSeverities);
         junctionTypes.forEach(junctionType -> {

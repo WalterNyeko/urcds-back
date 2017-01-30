@@ -24,9 +24,9 @@ public class ChartController extends BaseFormController {
     @Autowired
     private CrashService crashService;
     @Autowired
-    private GenericManager<CrashSeverity, Long> crashSeverityManager;
+    private GenericManager<CrashSeverity, Long> crashSeverityService;
     @Autowired
-    private GenericManager<CrashCause, Long> crashCauseManager;
+    private GenericManager<CrashCause, Long> crashCauseService;
 
     @RequestMapping(value = "/crashchartseverity", method = RequestMethod.GET)
     public
@@ -73,7 +73,7 @@ public class ChartController extends BaseFormController {
     }
 
     private Map<String, Integer> getCrashSeverityNumbers(List<Crash> crashes) {
-        List<CrashSeverity> severities = crashSeverityManager.getAllDistinct();
+        List<CrashSeverity> severities = crashSeverityService.getAllDistinct();
         Map<String, Integer> severityNumbers = new HashMap<String, Integer>();
         for (CrashSeverity severity : severities) {
             severityNumbers.put(severity.getName(),
@@ -115,7 +115,7 @@ public class ChartController extends BaseFormController {
     }
 
     private Map<String, Integer> getCrashCauseNumbers() {
-        List<CrashCause> causes = crashCauseManager.getAllDistinct();
+        List<CrashCause> causes = crashCauseService.getAllDistinct();
         List<Crash> crashes = crashService.getAvailableCrashes(false);
         Map<String, Integer> causeNumbers = new HashMap<String, Integer>();
         for (CrashCause cause : causes) {

@@ -19,12 +19,12 @@ import java.util.List;
 public class CountRoadSurfaceServiceImpl extends BaseCountService implements CountAttributeService {
 
     @Autowired
-    private GenericManager<RoadSurface, Long> roadSurfaceManager;
+    private GenericManager<RoadSurface, Long> roadSurfaceService;
 
     @Override
     public List<CountResult> countCrashes(List<Crash> crashes) {
         List<CountResult> countResults = new ArrayList<>();
-        List<NameIdModel> roadSurfaces = this.prepareAttributes(roadSurfaceManager.getAllDistinct());
+        List<NameIdModel> roadSurfaces = this.prepareAttributes(roadSurfaceService.getAllDistinct());
         roadSurfaces.forEach(roadSurface -> countResults.add(countOccurrences(roadSurface, crashes)));
         return countResults;
     }

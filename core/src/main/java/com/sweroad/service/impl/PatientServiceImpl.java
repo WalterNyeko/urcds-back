@@ -22,21 +22,21 @@ public class PatientServiceImpl extends GenericManagerImpl<Patient, Long> implem
     @Autowired
     private LookupService lookupService;
     @Autowired
-    private GenericManager<Hospital, Long> hospitalManager;
+    private GenericManager<Hospital, Long> hospitalService;
     @Autowired
-    private GenericManager<District, Long> districtManager;
+    private GenericManager<District, Long> districtService;
     @Autowired
-    private GenericManager<InjuryType, Long> injuryTypeManager;
+    private GenericManager<InjuryType, Long> injuryTypeService;
     @Autowired
-    private GenericManager<RoadUserType, Long> roadUserTypeManager;
+    private GenericManager<RoadUserType, Long> roadUserTypeService;
     @Autowired
-    private GenericManager<TransportMode, Long> transportModeManager;
+    private GenericManager<TransportMode, Long> transportModeService;
     @Autowired
-    private GenericManager<PatientStatus, Long> patientStatusManager;
+    private GenericManager<PatientStatus, Long> patientStatusService;
     @Autowired
-    private GenericManager<PatientDisposition, Long> patientDispositionManager;
+    private GenericManager<PatientDisposition, Long> patientDispositionService;
     @Autowired
-    private GenericManager<PatientInjuryType, PatientInjuryTypeId> patientInjuryManager;
+    private GenericManager<PatientInjuryType, PatientInjuryTypeId> patientInjuryService;
 
     @Autowired
     public PatientServiceImpl(GenericDao<Patient, Long> patientDao) {
@@ -46,19 +46,19 @@ public class PatientServiceImpl extends GenericManagerImpl<Patient, Long> implem
     @Override
     public Map<String, List> getReferenceData() {
         Map<String, List> referenceData = new HashMap<>();
-        List<District> districts = districtManager.getAllDistinct();
-        List<Hospital> hospitals = hospitalManager.getAllDistinct();
+        List<District> districts = districtService.getAllDistinct();
+        List<Hospital> hospitals = hospitalService.getAllDistinct();
         Collections.sort(districts);
         Collections.sort(hospitals);
         referenceData.put("districts", districts);
         referenceData.put("hospitals", hospitals);
         referenceData.put("genders", lookupService.getAllGenders());
-        referenceData.put("injuryTypes", injuryTypeManager.getAllDistinct());
-        referenceData.put("roadUserTypes", roadUserTypeManager.getAllDistinct());
-        referenceData.put("transportModes", transportModeManager.getAllDistinct());
-        referenceData.put("patientStatuses", patientStatusManager.getAllDistinct());
+        referenceData.put("injuryTypes", injuryTypeService.getAllDistinct());
+        referenceData.put("roadUserTypes", roadUserTypeService.getAllDistinct());
+        referenceData.put("transportModes", transportModeService.getAllDistinct());
+        referenceData.put("patientStatuses", patientStatusService.getAllDistinct());
         referenceData.put("beltUsedOptions", lookupService.getAllQuadstateOptions(true));
-        referenceData.put("patientDispositions", patientDispositionManager.getAllDistinct());
+        referenceData.put("patientDispositions", patientDispositionService.getAllDistinct());
         return referenceData;
     }
 
@@ -82,7 +82,7 @@ public class PatientServiceImpl extends GenericManagerImpl<Patient, Long> implem
             Patient dbPatient = this.get(patient.getId());
             for (PatientInjuryType patientInjuryType : dbPatient.getPatientInjuryTypes()) {
                 if (!patient.getPatientInjuryTypes().contains(patientInjuryType)) {
-                    patientInjuryManager.remove(patientInjuryType);
+                    patientInjuryService.remove(patientInjuryType);
                 }
             }
             patient.setDateCreated(dbPatient.getDateCreated());
@@ -110,25 +110,25 @@ public class PatientServiceImpl extends GenericManagerImpl<Patient, Long> implem
 
     private void processPatient(Patient patient) {
         if (patient.getHospital() != null && patient.getHospital().getId() != null) {
-            patient.setHospital(hospitalManager.get(patient.getHospital().getId()));
+            patient.setHospital(hospitalService.get(patient.getHospital().getId()));
         }
         if (patient.getDistrict() != null && patient.getDistrict().getId() != null) {
-            patient.setDistrict(districtManager.get(patient.getDistrict().getId()));
+            patient.setDistrict(districtService.get(patient.getDistrict().getId()));
         }
         if (patient.getTransportMode() != null && patient.getTransportMode().getId() != null) {
-            patient.setTransportMode(transportModeManager.get(patient.getTransportMode().getId()));
+            patient.setTransportMode(transportModeService.get(patient.getTransportMode().getId()));
         }
         if (patient.getRoadUserType() != null && patient.getRoadUserType().getId() != null) {
-            patient.setRoadUserType(roadUserTypeManager.get(patient.getRoadUserType().getId()));
+            patient.setRoadUserType(roadUserTypeService.get(patient.getRoadUserType().getId()));
         }
         if (patient.getCounterpartTransportMode() != null && patient.getCounterpartTransportMode().getId() != null) {
-            patient.setCounterpartTransportMode(transportModeManager.get(patient.getCounterpartTransportMode().getId()));
+            patient.setCounterpartTransportMode(transportModeService.get(patient.getCounterpartTransportMode().getId()));
         }
         if (patient.getPatientDisposition() != null && patient.getPatientDisposition().getId() != null) {
-            patient.setPatientDisposition(patientDispositionManager.get(patient.getPatientDisposition().getId()));
+            patient.setPatientDisposition(patientDispositionService.get(patient.getPatientDisposition().getId()));
         }
         if (patient.getPatientStatus() != null && patient.getPatientStatus().getId() != null) {
-            patient.setPatientStatus(patientStatusManager.get(patient.getPatientStatus().getId()));
+            patient.setPatientStatus(patientStatusService.get(patient.getPatientStatus().getId()));
         }
         List<PatientInjuryType> patientInjuryTypes = new ArrayList<>();
         patientInjuryTypes.addAll(patient.getPatientInjuryTypes());
@@ -137,12 +137,13 @@ public class PatientServiceImpl extends GenericManagerImpl<Patient, Long> implem
     }
 
     private void setPatientInjuries(Patient patient, List<PatientInjuryType> patientInjuryTypes) {
-        for (PatientInjuryType patientInjuryType : patientInjuryTypes) {
-            if (patientInjuryType.getInjuryType() != null && patientInjuryType.getInjuryType().getId() != null) {
-                patientInjuryType.setInjuryType(injuryTypeManager.get(patientInjuryType.getInjuryType().getId()));
-                patientInjuryType.setPatient(patient);
-                patient.addPatientInjuryType(patientInjuryType);
-            }
-        }
+        patientInjuryTypes.stream()
+                .filter(patientInjuryType -> patientInjuryType.getInjuryType() != null
+                        && patientInjuryType.getInjuryType().getId() != null)
+                .forEach(patientInjuryType -> {
+                    patientInjuryType.setInjuryType(injuryTypeService.get(patientInjuryType.getInjuryType().getId()));
+                    patientInjuryType.setPatient(patient);
+                    patient.addPatientInjuryType(patientInjuryType);
+                });
     }
 }

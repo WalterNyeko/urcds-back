@@ -16,12 +16,12 @@ import java.util.List;
 public class CountJunctionTypeServiceImpl extends BaseCountService implements CountAttributeService {
 
     @Autowired
-    private GenericManager<JunctionType, Long> junctionTypeManager;
+    private GenericManager<JunctionType, Long> junctionTypeService;
 
     @Override
     public List<CountResult> countCrashes(List<Crash> crashes) {
         List<CountResult> countResults = new ArrayList<>();
-        List<NameIdModel> junctionTypes = this.prepareAttributes(junctionTypeManager.getAllDistinct());
+        List<NameIdModel> junctionTypes = this.prepareAttributes(junctionTypeService.getAllDistinct());
         junctionTypes.forEach(junctionType -> countResults.add(countOccurrences(junctionType, crashes)));
         return countResults;
     }

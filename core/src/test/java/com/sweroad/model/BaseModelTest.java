@@ -16,33 +16,33 @@ public class BaseModelTest extends BaseManagerTestCase {
     @Autowired
     private CrashService crashService;
     @Autowired
-    private GenericManager<Driver, Long> driverManager;
+    private GenericManager<Driver, Long> driverService;
     @Autowired
     private GenericManager<Vehicle, Long> vehicleManager;
     @Autowired
     private GenericManager<Casualty, Long> casualtyManager;
     @Autowired
-    private GenericManager<CasualtyClass, Long> casualtyClassManager;
+    private GenericManager<CasualtyClass, Long> casualtyClassService;
     @Autowired
-    private GenericManager<PoliceStation, Long> policeStationManager;
+    private GenericManager<PoliceStation, Long> policeStationService;
 
     @Test
     public void testNameIdModelJSON() {
-        CasualtyClass casualtyClass = casualtyClassManager.get(1L);
+        CasualtyClass casualtyClass = casualtyClassService.get(1L);
         String expected = "{\"id\":1,\"name\":\"Pedestrian\"}";
         assertEquals(expected, casualtyClass.toJSON());
     }
 
     @Test
     public void testPoliceStationJSON() {
-        PoliceStation policeStation = policeStationManager.get(1L);
+        PoliceStation policeStation = policeStationService.get(1L);
         String expected = "{\"id\":1,\"name\":\"Lugazi Police Station\",\"district\":{\"id\":1,\"name\":\"Lugazi\"}}";
         assertEquals(expected, policeStation.toJSON());
     }
 
     @Test
     public void testDriverJSON() {
-        Driver driver = driverManager.get(1L);
+        Driver driver = driverService.get(1L);
         String expected = "{\"id\":1,\"age\":27,\"gender\":\"M\",\"licenseValid\":1,\"beltOrHelmetUsed\":0," +
                 "\"licenseNumber\":\"123456\",\"casualtyType\":{\"id\":4,\"name\":\"Not injured\"}}";
         assertEquals(expected, driver.toJSON());

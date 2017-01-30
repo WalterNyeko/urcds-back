@@ -16,12 +16,12 @@ import java.util.List;
 public class CountCollisionTypeServiceImpl extends BaseCountService implements CountAttributeService {
 
     @Autowired
-    private GenericManager<CollisionType, Long> collisionTypeManager;
+    private GenericManager<CollisionType, Long> collisionTypeService;
 
     @Override
     public List<CountResult> countCrashes(List<Crash> crashes) {
         List<CountResult> countResults = new ArrayList<>();
-        List<NameIdModel> collisionTypes = this.prepareAttributes(collisionTypeManager.getAllDistinct());
+        List<NameIdModel> collisionTypes = this.prepareAttributes(collisionTypeService.getAllDistinct());
         collisionTypes.forEach(collisionType -> countResults.add(countOccurrences(collisionType, crashes)));
         return countResults;
     }

@@ -19,12 +19,12 @@ import java.util.List;
 public class CountCrashCauseServiceImpl extends BaseCountService implements CountAttributeService {
 
     @Autowired
-    private GenericManager<CrashCause, Long> crashCauseManager;
+    private GenericManager<CrashCause, Long> crashCauseService;
 
     @Override
     public List<CountResult> countCrashes(List<Crash> crashes) {
         List<CountResult> countResults = new ArrayList<>();
-        List<NameIdModel> crashCauses = this.prepareAttributes(crashCauseManager.getAllDistinct());
+        List<NameIdModel> crashCauses = this.prepareAttributes(crashCauseService.getAllDistinct());
         crashCauses.forEach(crashCause -> countResults.add(countOccurrences(crashCause, crashes)));
         return countResults;
     }

@@ -19,12 +19,12 @@ import java.util.List;
 public class CountRoadwayCharacterServiceImpl extends BaseCountService implements CountAttributeService {
 
     @Autowired
-    private GenericManager<RoadwayCharacter, Long> roadwayCharacterManager;
+    private GenericManager<RoadwayCharacter, Long> roadwayCharacterService;
 
     @Override
     public List<CountResult> countCrashes(List<Crash> crashes) {
         List<CountResult> countResults = new ArrayList<>();
-        List<NameIdModel> roadwayCharacters = this.prepareAttributes(roadwayCharacterManager.getAllDistinct());
+        List<NameIdModel> roadwayCharacters = this.prepareAttributes(roadwayCharacterService.getAllDistinct());
         roadwayCharacters.forEach(roadwayCharacter -> countResults.add(countOccurrences(roadwayCharacter, crashes)));
         return countResults;
     }

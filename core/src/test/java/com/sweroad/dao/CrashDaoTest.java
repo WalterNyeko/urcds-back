@@ -22,11 +22,11 @@ public class CrashDaoTest extends BaseDaoTestCase {
     @Autowired
     private CrashDao crashDao;
     @Autowired
-    private GenericManager<VehicleType, Long> vehicleTypeManager;
+    private GenericManager<VehicleType, Long> vehicleTypeService;
     @Autowired
-    private GenericManager<CasualtyType, Long> casualtyTypeManager;
+    private GenericManager<CasualtyType, Long> casualtyTypeService;
     @Autowired
-    private GenericManager<CasualtyClass, Long> casualtyClassManager;
+    private GenericManager<CasualtyClass, Long> casualtyClassService;
 
     private List<CrashSeverity> severities;
     private List<CollisionType> collisionTypes;
@@ -197,8 +197,8 @@ public class CrashDaoTest extends BaseDaoTestCase {
     @Test
     public void testFindAllCrashesInvolvingMediumOmnibusesAndMotorcycles() {
         vehicleTypes = new ArrayList<>();
-        vehicleTypes.add(vehicleTypeManager.get(7L));
-        vehicleTypes.add(vehicleTypeManager.get(10L));
+        vehicleTypes.add(vehicleTypeService.get(7L));
+        vehicleTypes.add(vehicleTypeService.get(10L));
         CrashQuery crashQuery = new CrashQuery.CrashQueryBuilder()
                 .addQueryable(vehicleTypes)
                 .joinVehicles(true)
@@ -210,7 +210,7 @@ public class CrashDaoTest extends BaseDaoTestCase {
     @Test
     public void testFindAllCrashesInvolvingPedestrians() {
         List<CasualtyClass> casualtyClasses = new ArrayList<>();
-        casualtyClasses.add(casualtyClassManager.get(1L));
+        casualtyClasses.add(casualtyClassService.get(1L));
         CrashQuery crashQuery = new CrashQuery.CrashQueryBuilder()
                 .addQueryable(casualtyClasses)
                 .joinCasualties(true)
@@ -312,7 +312,7 @@ public class CrashDaoTest extends BaseDaoTestCase {
     @Test
     public void testFindAllCrashesInvolvingFemaleDriversAbove30YearsAndPedestrians() {
         List<CasualtyClass> casualtyClasses = new ArrayList<>();
-        casualtyClasses.add(casualtyClassManager.get(1L));
+        casualtyClasses.add(casualtyClassService.get(1L));
         CustomQueryable customQueryableGreaterThan30 = new CustomQueryable.CustomQueryableBuilder()
                 .addCrashJoinType(CrashQuery.CrashQueryBuilder.CrashJoinType.VEHICLE)
                 .addProperty("driver.age")
@@ -347,7 +347,7 @@ public class CrashDaoTest extends BaseDaoTestCase {
         CrashSearch crashSearch = new CrashSearch();
         crashSearch.setDriverLicenseTypes(driverLicenseTypes);
         vehicleTypes = new ArrayList<>();
-        vehicleTypes.add(vehicleTypeManager.get(1L));
+        vehicleTypes.add(vehicleTypeService.get(1L));
         crashSearch.setVehicleTypes(vehicleTypes);
         List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashSearch.toQuery());
         assertEquals(6, crashes.size());
@@ -360,7 +360,7 @@ public class CrashDaoTest extends BaseDaoTestCase {
         CrashSearch crashSearch = new CrashSearch();
         crashSearch.setDriverLicenseTypes(driverLicenseTypes);
         vehicleTypes = new ArrayList<>();
-        vehicleTypes.add(vehicleTypeManager.get(1L));
+        vehicleTypes.add(vehicleTypeService.get(1L));
         crashSearch.setVehicleTypes(vehicleTypes);
         List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashSearch.toQuery());
         assertEquals(2, crashes.size());
@@ -374,7 +374,7 @@ public class CrashDaoTest extends BaseDaoTestCase {
         CrashSearch crashSearch = new CrashSearch();
         crashSearch.setDriverLicenseTypes(driverLicenseTypes);
         vehicleTypes = new ArrayList<>();
-        vehicleTypes.add(vehicleTypeManager.get(1L));
+        vehicleTypes.add(vehicleTypeService.get(1L));
         crashSearch.setVehicleTypes(vehicleTypes);
         List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashSearch.toQuery());
         assertEquals(8, crashes.size());
@@ -387,7 +387,7 @@ public class CrashDaoTest extends BaseDaoTestCase {
         CrashSearch crashSearch = new CrashSearch();
         crashSearch.setDriverLicenseTypes(driverLicenseTypes);
         vehicleTypes = new ArrayList<>();
-        vehicleTypes.add(vehicleTypeManager.get(1L));
+        vehicleTypes.add(vehicleTypeService.get(1L));
         crashSearch.setVehicleTypes(vehicleTypes);
         List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashSearch.toQuery());
         assertEquals(1, crashes.size());
@@ -401,7 +401,7 @@ public class CrashDaoTest extends BaseDaoTestCase {
         CrashSearch crashSearch = new CrashSearch();
         crashSearch.setDriverLicenseTypes(driverLicenseTypes);
         vehicleTypes = new ArrayList<>();
-        vehicleTypes.add(vehicleTypeManager.get(1L));
+        vehicleTypes.add(vehicleTypeService.get(1L));
         crashSearch.setVehicleTypes(vehicleTypes);
         List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashSearch.toQuery());
         assertEquals(7, crashes.size());
@@ -527,9 +527,9 @@ public class CrashDaoTest extends BaseDaoTestCase {
     public void testFindAllCrashesInvolvingSeriouslyInjuredPedestrians() {
         CrashSearch crashSearch = new CrashSearch();
         crashSearch.setCasualtyTypes(new ArrayList<>());
-        crashSearch.getCasualtyTypes().add(casualtyTypeManager.get(2L));
+        crashSearch.getCasualtyTypes().add(casualtyTypeService.get(2L));
         crashSearch.setCasualtyClasses(new ArrayList<>());
-        crashSearch.getCasualtyClasses().add(casualtyClassManager.get(1L));
+        crashSearch.getCasualtyClasses().add(casualtyClassService.get(1L));
         List<Crash> crashes = crashDao.findCrashesByQueryCrash(crashSearch.toQuery());
         assertEquals(2, crashes.size());
     }

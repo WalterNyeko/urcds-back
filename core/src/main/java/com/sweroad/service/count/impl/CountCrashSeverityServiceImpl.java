@@ -16,12 +16,12 @@ import java.util.List;
 public class CountCrashSeverityServiceImpl extends BaseCountService implements CountAttributeService {
 
     @Autowired
-    private GenericManager<CrashSeverity, Long> crashSeverityManager;
+    private GenericManager<CrashSeverity, Long> crashSeverityService;
 
     @Override
     public List<CountResult> countCrashes(List<Crash> crashes) {
         List<CountResult> countResults = new ArrayList<>();
-        List<NameIdModel> crashSeverities = this.prepareAttributes(crashSeverityManager.getAllDistinct());
+        List<NameIdModel> crashSeverities = this.prepareAttributes(crashSeverityService.getAllDistinct());
         crashSeverities.forEach(crashSeverity -> countResults.add(countOccurrences(crashSeverity, crashes)));
         return countResults;
     }

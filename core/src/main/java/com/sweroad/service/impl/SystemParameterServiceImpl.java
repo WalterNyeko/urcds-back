@@ -16,45 +16,47 @@ import java.util.List;
 public class SystemParameterServiceImpl extends GenericManagerImpl<SystemParameter, Long> implements SystemParameterService {
 
     @Autowired
-    private GenericManager<Weather, Long> weatherManager;
+    private GenericManager<Weather, Long> weatherService;
     @Autowired
-    private GenericManager<District, Long> districtManager;
+    private GenericManager<District, Long> districtService;
     @Autowired
-    private GenericManager<Hospital, Long> hospitalManager;
+    private GenericManager<Hospital, Long> hospitalService;
     @Autowired
-    private GenericManager<InjuryType, Long> injuryTypeManager;
+    private GenericManager<InjuryType, Long> injuryTypeService;
     @Autowired
-    private GenericManager<CrashCause, Long> crashCauseManager;
+    private GenericManager<CrashCause, Long> crashCauseService;
     @Autowired
-    private GenericManager<RoadSurface, Long> roadSurfaceManager;
+    private GenericManager<RoadSurface, Long> roadSurfaceService;
     @Autowired
-    private GenericManager<VehicleType, Long> vehicleTypeManager;
+    private GenericManager<VehicleType, Long> vehicleTypeService;
     @Autowired
-    private GenericManager<CasualtyType, Long> casualtyTypeManager;
+    private GenericManager<SurfaceType, Long> surfaceTypeService;
     @Autowired
-    private GenericManager<JunctionType, Long> junctionTypeManager;
+    private GenericManager<CasualtyType, Long> casualtyTypeService;
     @Autowired
-    private GenericManager<RoadUserType, Long> roadUserTypeManager;
+    private GenericManager<JunctionType, Long> junctionTypeService;
     @Autowired
-    private GenericManager<CasualtyClass, Long> casualtyClassManager;
+    private GenericManager<RoadUserType, Long> roadUserTypeService;
     @Autowired
-    private GenericManager<CollisionType, Long> collisionTypeManager;
+    private GenericManager<CasualtyClass, Long> casualtyClassService;
     @Autowired
-    private GenericManager<CrashSeverity, Long> crashSeverityManager;
+    private GenericManager<CollisionType, Long> collisionTypeService;
     @Autowired
-    private GenericManager<PatientStatus, Long> patientStatusManager;
+    private GenericManager<CrashSeverity, Long> crashSeverityService;
     @Autowired
-    private GenericManager<PoliceStation, Long> policeStationManager;
+    private GenericManager<PatientStatus, Long> patientStatusService;
     @Autowired
-    private GenericManager<TransportMode, Long> transportModeManager;
+    private GenericManager<PoliceStation, Long> policeStationService;
     @Autowired
-    private GenericManager<RoadwayCharacter, Long> roadwayCharacterManager;
+    private GenericManager<TransportMode, Long> transportModeService;
     @Autowired
-    private GenericManager<SurfaceCondition, Long> surfaceConditionManager;
+    private GenericManager<RoadwayCharacter, Long> roadwayCharacterService;
     @Autowired
-    private GenericManager<VehicleFailureType, Long> vehicleFailureTypeManager;
+    private GenericManager<SurfaceCondition, Long> surfaceConditionService;
     @Autowired
-    private GenericManager<PatientDisposition, Long> patientDispositionManager;
+    private GenericManager<VehicleFailureType, Long> vehicleFailureTypeService;
+    @Autowired
+    private GenericManager<PatientDisposition, Long> patientDispositionService;
 
     @Autowired
     public SystemParameterServiceImpl(GenericDao<SystemParameter, Long> systemParameterDao) {
@@ -65,45 +67,47 @@ public class SystemParameterServiceImpl extends GenericManagerImpl<SystemParamet
     public List<? extends NameIdModel> getParameters(AttributeType type) throws Exception{
         switch(type) {
             case WEATHER:
-                return weatherManager.getAllDistinct();
+                return weatherService.getAllDistinct();
             case DISTRICT:
-                return districtManager.getAllDistinct();
+                return districtService.getAllDistinct();
             case HOSPITAL:
-                return hospitalManager.getAllDistinct();
+                return hospitalService.getAllDistinct();
             case INJURY_TYPE:
-                return injuryTypeManager.getAllDistinct();
+                return injuryTypeService.getAllDistinct();
             case CRASH_CAUSE:
-                return crashCauseManager.getAllDistinct();
+                return crashCauseService.getAllDistinct();
             case VEHICLE_TYPE:
-                return vehicleTypeManager.getAllDistinct();
+                return vehicleTypeService.getAllDistinct();
+            case SURFACE_TYPE:
+                return surfaceTypeService.getAllDistinct();
             case ROAD_SURFACE:
-                return roadSurfaceManager.getAllDistinct();
+                return roadSurfaceService.getAllDistinct();
             case ROAD_USER_TYPE:
-                return roadUserTypeManager.getAllDistinct();
+                return roadUserTypeService.getAllDistinct();
             case JUNCTION_TYPE:
-                return junctionTypeManager.getAllDistinct();
+                return junctionTypeService.getAllDistinct();
             case CASUALTY_TYPE:
-                return casualtyTypeManager.getAllDistinct();
+                return casualtyTypeService.getAllDistinct();
             case CASUALTY_CLASS:
-                return casualtyClassManager.getAllDistinct();
+                return casualtyClassService.getAllDistinct();
             case COLLISION_TYPE:
-                return collisionTypeManager.getAllDistinct();
+                return collisionTypeService.getAllDistinct();
             case CRASH_SEVERITY:
-                return crashSeverityManager.getAllDistinct();
+                return crashSeverityService.getAllDistinct();
             case PATIENT_STATUS:
-                return patientStatusManager.getAllDistinct();
+                return patientStatusService.getAllDistinct();
             case POLICE_STATION:
-                return policeStationManager.getAllDistinct();
+                return policeStationService.getAllDistinct();
             case TRANSPORT_MODE:
-                return transportModeManager.getAllDistinct();
+                return transportModeService.getAllDistinct();
             case ROADWAY_CHARACTER:
-                return roadwayCharacterManager.getAllDistinct();
+                return roadwayCharacterService.getAllDistinct();
             case SURFACE_CONDITION:
-                return surfaceConditionManager.getAllDistinct();
+                return surfaceConditionService.getAllDistinct();
             case PATIENT_DISPOSITION:
-                return patientDispositionManager.getAllDistinct();
+                return patientDispositionService.getAllDistinct();
             case VEHICLE_FAILURE_TYPE:
-                return vehicleFailureTypeManager.getAllDistinct();
+                return vehicleFailureTypeService.getAllDistinct();
             default:
                 throw new Exception("Unknown parameter type: [" + type.getTypeCode() + "]");
         }
@@ -113,45 +117,47 @@ public class SystemParameterServiceImpl extends GenericManagerImpl<SystemParamet
     public NameIdModel addParameter(String name, AttributeType type) throws Exception {
         switch(type) {
             case WEATHER:
-                return weatherManager.save(new Weather(name));
+                return weatherService.save(new Weather(name));
             case DISTRICT:
-                return districtManager.save(new District(name));
+                return districtService.save(new District(name));
             case HOSPITAL:
-                return hospitalManager.save(new Hospital(name));
+                return hospitalService.save(new Hospital(name));
             case INJURY_TYPE:
-                return injuryTypeManager.save(new InjuryType(name));
+                return injuryTypeService.save(new InjuryType(name));
             case CRASH_CAUSE:
-                return crashCauseManager.save(new CrashCause(name));
+                return crashCauseService.save(new CrashCause(name));
             case VEHICLE_TYPE:
-                return vehicleTypeManager.save(new VehicleType(name));
+                return vehicleTypeService.save(new VehicleType(name));
+            case SURFACE_TYPE:
+                return surfaceTypeService.save(new SurfaceType(name));
             case ROAD_SURFACE:
-                return roadSurfaceManager.save(new RoadSurface(name));
+                return roadSurfaceService.save(new RoadSurface(name));
             case ROAD_USER_TYPE:
-                return roadUserTypeManager.save(new RoadUserType(name));
+                return roadUserTypeService.save(new RoadUserType(name));
             case JUNCTION_TYPE:
-                return junctionTypeManager.save(new JunctionType(name));
+                return junctionTypeService.save(new JunctionType(name));
             case CASUALTY_TYPE:
-                return casualtyTypeManager.save(new CasualtyType(name));
+                return casualtyTypeService.save(new CasualtyType(name));
             case CASUALTY_CLASS:
-                return casualtyClassManager.save(new CasualtyClass(name));
+                return casualtyClassService.save(new CasualtyClass(name));
             case COLLISION_TYPE:
-                return collisionTypeManager.save(new CollisionType(name));
+                return collisionTypeService.save(new CollisionType(name));
             case CRASH_SEVERITY:
-                return crashSeverityManager.save(new CrashSeverity(name));
+                return crashSeverityService.save(new CrashSeverity(name));
             case PATIENT_STATUS:
-                return patientStatusManager.save(new PatientStatus(name));
+                return patientStatusService.save(new PatientStatus(name));
             case POLICE_STATION:
-                return policeStationManager.save(new PoliceStation(name));
+                return policeStationService.save(new PoliceStation(name));
             case TRANSPORT_MODE:
-                return transportModeManager.save(new TransportMode(name));
+                return transportModeService.save(new TransportMode(name));
             case ROADWAY_CHARACTER:
-                return roadwayCharacterManager.save(new RoadwayCharacter(name));
+                return roadwayCharacterService.save(new RoadwayCharacter(name));
             case SURFACE_CONDITION:
-                return surfaceConditionManager.save(new SurfaceCondition(name));
+                return surfaceConditionService.save(new SurfaceCondition(name));
             case PATIENT_DISPOSITION:
-                return patientDispositionManager.save(new PatientDisposition(name));
+                return patientDispositionService.save(new PatientDisposition(name));
             case VEHICLE_FAILURE_TYPE:
-                return vehicleFailureTypeManager.save(new VehicleFailureType(name));
+                return vehicleFailureTypeService.save(new VehicleFailureType(name));
             default:
                 throw new Exception("Unknown parameter type: [" + type.getTypeCode() + "]");
         }
@@ -161,64 +167,67 @@ public class SystemParameterServiceImpl extends GenericManagerImpl<SystemParamet
     public void updateParameterName(Long id, String name, AttributeType type) throws Exception {
         switch(type) {
             case WEATHER:
-                this.updateParameter(id, name, weatherManager);
+                this.updateParameter(id, name, weatherService);
                 break;
             case DISTRICT:
-                this.updateParameter(id, name, districtManager);
+                this.updateParameter(id, name, districtService);
                 break;
             case HOSPITAL:
-                this.updateParameter(id, name, hospitalManager);
+                this.updateParameter(id, name, hospitalService);
                 break;
             case INJURY_TYPE:
-                this.updateParameter(id, name, injuryTypeManager);
+                this.updateParameter(id, name, injuryTypeService);
                 break;
             case CRASH_CAUSE:
-                this.updateParameter(id, name, crashCauseManager);
+                this.updateParameter(id, name, crashCauseService);
                 break;
             case VEHICLE_TYPE:
-                this.updateParameter(id, name, vehicleTypeManager);
+                this.updateParameter(id, name, vehicleTypeService);
+                break;
+            case SURFACE_TYPE:
+                this.updateParameter(id, name, surfaceTypeService);
                 break;
             case ROAD_SURFACE:
-                this.updateParameter(id, name, roadSurfaceManager);
+                this.updateParameter(id, name, roadSurfaceService);
                 break;
             case ROAD_USER_TYPE:
-                this.updateParameter(id, name, roadUserTypeManager);
+                this.updateParameter(id, name, roadUserTypeService);
                 break;
             case JUNCTION_TYPE:
-                this.updateParameter(id, name, junctionTypeManager);
+                this.updateParameter(id, name, junctionTypeService);
                 break;
             case CASUALTY_TYPE:
-                this.updateParameter(id, name, casualtyTypeManager);
+                this.updateParameter(id, name, casualtyTypeService);
                 break;
             case CASUALTY_CLASS:
-                this.updateParameter(id, name, casualtyClassManager);
+                this.updateParameter(id, name, casualtyClassService);
                 break;
             case COLLISION_TYPE:
-                this.updateParameter(id, name, collisionTypeManager);
+                this.updateParameter(id, name, collisionTypeService);
                 break;
             case CRASH_SEVERITY:
-                this.updateParameter(id, name, crashSeverityManager);
+                this.updateParameter(id, name, crashSeverityService);
                 break;
             case PATIENT_STATUS:
-                this.updateParameter(id, name, patientStatusManager);
+                this.updateParameter(id, name, patientStatusService);
                 break;
             case POLICE_STATION:
-                this.updateParameter(id, name, policeStationManager);
+                this.updateParameter(id, name, policeStationService);
                 break;
             case TRANSPORT_MODE:
-                this.updateParameter(id, name, transportModeManager);
+                this.updateParameter(id, name, transportModeService);
                 break;
             case ROADWAY_CHARACTER:
-                this.updateParameter(id, name, roadwayCharacterManager);
+                this.updateParameter(id, name, roadwayCharacterService);
                 break;
             case SURFACE_CONDITION:
-                this.updateParameter(id, name, surfaceConditionManager);
+                this.updateParameter(id, name, surfaceConditionService);
                 break;
             case PATIENT_DISPOSITION:
-                this.updateParameter(id, name, patientDispositionManager);
+                this.updateParameter(id, name, patientDispositionService);
                 break;
             case VEHICLE_FAILURE_TYPE:
-                this.updateParameter(id, name, vehicleFailureTypeManager);
+                this.updateParameter(id, name, vehicleFailureTypeService);
                 break;
             default:
                 throw new Exception("Unknown parameter type: [" + type.getTypeCode() + "]");
@@ -235,64 +244,67 @@ public class SystemParameterServiceImpl extends GenericManagerImpl<SystemParamet
     public void setParameterActive(Long id, boolean active, AttributeType type) throws Exception {
         switch(type) {
             case WEATHER:
-                this.setParameterActive(id, active, weatherManager);
+                this.setParameterActive(id, active, weatherService);
                 break;
             case DISTRICT:
-                this.setParameterActive(id, active, districtManager);
+                this.setParameterActive(id, active, districtService);
                 break;
             case HOSPITAL:
-                this.setParameterActive(id, active, hospitalManager);
+                this.setParameterActive(id, active, hospitalService);
                 break;
             case INJURY_TYPE:
-                this.setParameterActive(id, active, injuryTypeManager);
+                this.setParameterActive(id, active, injuryTypeService);
                 break;
             case CRASH_CAUSE:
-                this.setParameterActive(id, active, crashCauseManager);
+                this.setParameterActive(id, active, crashCauseService);
                 break;
             case VEHICLE_TYPE:
-                this.setParameterActive(id, active, vehicleTypeManager);
+                this.setParameterActive(id, active, vehicleTypeService);
+                break;
+            case SURFACE_TYPE:
+                this.setParameterActive(id, active, surfaceTypeService);
                 break;
             case ROAD_SURFACE:
-                this.setParameterActive(id, active, roadSurfaceManager);
+                this.setParameterActive(id, active, roadSurfaceService);
                 break;
             case ROAD_USER_TYPE:
-                this.setParameterActive(id, active, roadUserTypeManager);
+                this.setParameterActive(id, active, roadUserTypeService);
                 break;
             case JUNCTION_TYPE:
-                this.setParameterActive(id, active, junctionTypeManager);
+                this.setParameterActive(id, active, junctionTypeService);
                 break;
             case CASUALTY_TYPE:
-                this.setParameterActive(id, active, casualtyTypeManager);
+                this.setParameterActive(id, active, casualtyTypeService);
                 break;
             case CASUALTY_CLASS:
-                this.setParameterActive(id, active, casualtyClassManager);
+                this.setParameterActive(id, active, casualtyClassService);
                 break;
             case COLLISION_TYPE:
-                this.setParameterActive(id, active, collisionTypeManager);
+                this.setParameterActive(id, active, collisionTypeService);
                 break;
             case CRASH_SEVERITY:
-                this.setParameterActive(id, active, crashSeverityManager);
+                this.setParameterActive(id, active, crashSeverityService);
                 break;
             case PATIENT_STATUS:
-                this.setParameterActive(id, active, patientStatusManager);
+                this.setParameterActive(id, active, patientStatusService);
                 break;
             case POLICE_STATION:
-                this.setParameterActive(id, active, policeStationManager);
+                this.setParameterActive(id, active, policeStationService);
                 break;
             case TRANSPORT_MODE:
-                this.setParameterActive(id, active, transportModeManager);
+                this.setParameterActive(id, active, transportModeService);
                 break;
             case ROADWAY_CHARACTER:
-                this.setParameterActive(id, active, roadwayCharacterManager);
+                this.setParameterActive(id, active, roadwayCharacterService);
                 break;
             case SURFACE_CONDITION:
-                this.setParameterActive(id, active, surfaceConditionManager);
+                this.setParameterActive(id, active, surfaceConditionService);
                 break;
             case PATIENT_DISPOSITION:
-                this.setParameterActive(id, active, patientDispositionManager);
+                this.setParameterActive(id, active, patientDispositionService);
                 break;
             case VEHICLE_FAILURE_TYPE:
-                this.setParameterActive(id, active, vehicleFailureTypeManager);
+                this.setParameterActive(id, active, vehicleFailureTypeService);
                 break;
             default:
                 throw new Exception("Unknown parameter type: [" + type.getTypeCode() + "]");

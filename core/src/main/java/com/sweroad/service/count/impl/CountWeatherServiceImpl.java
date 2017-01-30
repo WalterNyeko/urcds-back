@@ -19,12 +19,12 @@ import java.util.List;
 public class CountWeatherServiceImpl extends BaseCountService implements CountAttributeService {
 
     @Autowired
-    private GenericManager<Weather, Long> weatherManager;
+    private GenericManager<Weather, Long> weatherService;
 
     @Override
     public List<CountResult> countCrashes(List<Crash> crashes) {
         List<CountResult> countResults = new ArrayList<>();
-        List<NameIdModel> weatherList = this.prepareAttributes(weatherManager.getAllDistinct());
+        List<NameIdModel> weatherList = this.prepareAttributes(weatherService.getAllDistinct());
         weatherList.forEach(weather -> countResults.add(countOccurrences(weather, crashes)));
         return countResults;
     }

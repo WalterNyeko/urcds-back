@@ -19,7 +19,7 @@ import java.util.List;
 public class CountDistrictServiceImpl extends BaseCountService implements CountAttributeService {
 
     @Autowired
-    private GenericManager<District, Long> districtManager;
+    private GenericManager<District, Long> districtService;
     @Autowired
     private CountAttributeService countPoliceStationService;
 
@@ -27,7 +27,7 @@ public class CountDistrictServiceImpl extends BaseCountService implements CountA
     public List<CountResult> countCrashes(List<Crash> crashes) {
         List<CountResult> countResults = new ArrayList<>();
         List<CountResult> policeStationCounts = countPoliceStationService.countCrashes(crashes);
-        List<District> districts = districtManager.getAllDistinct();
+        List<District> districts = districtService.getAllDistinct();
         districts.forEach(district -> countResults.add(countOccurrences(district, policeStationCounts)));
         return countResults;
     }
