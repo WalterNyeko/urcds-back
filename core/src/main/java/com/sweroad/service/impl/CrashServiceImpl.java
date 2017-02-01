@@ -15,12 +15,12 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service("crashService")
-public class CrashServiceImpl extends GenericManagerImpl<Crash, Long> implements
+public class CrashServiceImpl extends GenericServiceImpl<Crash, Long> implements
         CrashService {
 
     private CrashDao crashDao;
     @Autowired
-    private UserManager userManager;
+    private UserService userService;
     @Autowired
     private LookupService lookupService;
     @Autowired
@@ -30,44 +30,44 @@ public class CrashServiceImpl extends GenericManagerImpl<Crash, Long> implements
     @Autowired
     private CrashExcelService crashExcelService;
     @Autowired
-    private GenericManager<Driver, Long> driverService;
+    private GenericService<Driver, Long> driverService;
     @Autowired
-    private GenericManager<Weather, Long> weatherService;
+    private GenericService<Weather, Long> weatherService;
     @Autowired
-    private GenericManager<District, Long> districtService;
+    private GenericService<District, Long> districtService;
     @Autowired
-    private GenericManager<CrashCause, Long> crashCauseService;
+    private GenericService<CrashCause, Long> crashCauseService;
     @Autowired
-    private GenericManager<VehicleType, Long> vehicleTypeService;
+    private GenericService<VehicleType, Long> vehicleTypeService;
     @Autowired
-    private GenericManager<RoadSurface, Long> roadSurfaceService;
+    private GenericService<RoadSurface, Long> roadSurfaceService;
     @Autowired
-    private GenericManager<SurfaceType, Long> surfaceTypeService;
+    private GenericService<SurfaceType, Long> surfaceTypeService;
     @Autowired
-    private GenericManager<JunctionType, Long> junctionTypeService;
+    private GenericService<JunctionType, Long> junctionTypeService;
     @Autowired
-    private GenericManager<CasualtyType, Long> casualtyTypeService;
+    private GenericService<CasualtyType, Long> casualtyTypeService;
     @Autowired
-    private GenericManager<PoliceStation, Long> policeStationService;
+    private GenericService<PoliceStation, Long> policeStationService;
     @Autowired
-    private GenericManager<CasualtyClass, Long> casualtyClassService;
+    private GenericService<CasualtyClass, Long> casualtyClassService;
     @Autowired
-    private GenericManager<CrashSeverity, Long> crashSeverityService;
+    private GenericService<CrashSeverity, Long> crashSeverityService;
     @Autowired
-    private GenericManager<CollisionType, Long> collisionTypeService;
+    private GenericService<CollisionType, Long> collisionTypeService;
     @Autowired
-    private GenericManager<SurfaceCondition, Long> surfaceConditionService;
+    private GenericService<SurfaceCondition, Long> surfaceConditionService;
     @Autowired
-    private GenericManager<RoadwayCharacter, Long> roadwayCharacterService;
+    private GenericService<RoadwayCharacter, Long> roadwayCharacterService;
     @Autowired
-    private GenericManager<VehicleFailureType, Long> vehicleFailureTypeService;
+    private GenericService<VehicleFailureType, Long> vehicleFailureTypeService;
 
     /**
      * Will be used instead of this so that we can intercept calls to save using
      * audit trail aop classes
      */
     @Autowired
-    private GenericManager<Crash, Long> genericCrashService;
+    private GenericService<Crash, Long> genericCrashService;
 
     @Autowired
     public CrashServiceImpl(CrashDao crashDao) {
@@ -92,7 +92,7 @@ public class CrashServiceImpl extends GenericManagerImpl<Crash, Long> implements
     }
 
     public List<Crash> getCrashes(boolean latestOnly) {
-        User user = userManager.getCurrentUser();
+        User user = userService.getCurrentUser();
         if ((user.hasRole(Constants.USER_ROLE) && user.getDistrict() != null)
                 || user.hasRole(Constants.READONLY_ROLE)) {
             return this.getAvailableCrashes(latestOnly);
@@ -115,7 +115,7 @@ public class CrashServiceImpl extends GenericManagerImpl<Crash, Long> implements
 
     public List<Crash> getAvailableCrashes(boolean latestOnly) {
         if (latestOnly) {
-            User user = userManager.getCurrentUser();
+            User user = userService.getCurrentUser();
             if (user.hasRole(Constants.USER_ROLE) && user.getDistrict() != null) {
                 Map<String, Object> parameters = new HashMap<>();
                 parameters.put("district", user.getDistrict());
@@ -138,7 +138,7 @@ public class CrashServiceImpl extends GenericManagerImpl<Crash, Long> implements
 
     @Override
     public Crash saveCrash(Crash crash) {
-        User user = userManager.getCurrentUser();
+        User user = userService.getCurrentUser();
         saveCrashVehicles(crash, user);
         saveCrashCasualties(crash, user);
         if (crash.getDateCreated() == null) {

@@ -38,7 +38,7 @@ public class UpdatePasswordController extends BaseFormController {
     {
         log.debug("Sending recovery token to user " + username);
         try {
-            getUserManager().sendPasswordRecoveryEmail(username, RequestUtil.getAppURL(request) + RECOVERY_PASSWORD_TEMPLATE);
+            getUserService().sendPasswordRecoveryEmail(username, RequestUtil.getAppURL(request) + RECOVERY_PASSWORD_TEMPLATE);
         } catch (final UsernameNotFoundException ignored) {
             // lets ignore this
         }
@@ -61,7 +61,7 @@ public class UpdatePasswordController extends BaseFormController {
         if (StringUtils.isBlank(username)) {
             username = request.getRemoteUser();
         }
-        if (StringUtils.isNotBlank(token) && !getUserManager().isRecoveryTokenValid(username, token)) {
+        if (StringUtils.isNotBlank(token) && !getUserService().isRecoveryTokenValid(username, token)) {
             saveError(request, getText("updatePassword.invalidToken", request.getLocale()));
             return new ModelAndView("redirect:/");
         }
@@ -99,7 +99,7 @@ public class UpdatePasswordController extends BaseFormController {
         final boolean usingToken = StringUtils.isNotBlank(token);
         if (usingToken) {
             log.debug("Updating Password for username " + username + ", using reset token");
-            user = getUserManager().updatePassword(username, null, token, password,
+            user = getUserService().updatePassword(username, null, token, password,
                     RequestUtil.getAppURL(request));
 
         } else {
@@ -107,7 +107,7 @@ public class UpdatePasswordController extends BaseFormController {
             if (!username.equals(request.getRemoteUser())) {
                 throw new AccessDeniedException("You do not have permission to modify other users password.");
             }
-            user = getUserManager().updatePassword(username, currentPassword, null, password,
+            user = getUserService().updatePassword(username, currentPassword, null, password,
                     RequestUtil.getAppURL(request));
         }
 

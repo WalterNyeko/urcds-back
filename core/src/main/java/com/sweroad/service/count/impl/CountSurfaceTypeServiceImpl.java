@@ -1,7 +1,7 @@
 package com.sweroad.service.count.impl;
 
 import com.sweroad.model.*;
-import com.sweroad.service.GenericManager;
+import com.sweroad.service.GenericService;
 import com.sweroad.service.count.CountAttributeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import java.util.List;
 public class CountSurfaceTypeServiceImpl extends BaseCountService implements CountAttributeService {
 
     @Autowired
-    private GenericManager<SurfaceType, Long> surfaceTypeService;
+    private GenericService<SurfaceType, Long> surfaceTypeService;
 
     @Override
     public List<CountResult> countCrashes(List<Crash> crashes) {

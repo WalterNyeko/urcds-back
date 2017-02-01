@@ -14,7 +14,7 @@ import java.util.List;
  * Created by Frank on 2/19/15.
  */
 @Service("vehicleService")
-public class VehicleServiceImpl extends GenericManagerImpl<Vehicle, Long> implements VehicleService {
+public class VehicleServiceImpl extends GenericServiceImpl<Vehicle, Long> implements VehicleService {
 
     @Autowired
     public VehicleServiceImpl(GenericDao<Vehicle, Long> vehicleDao) {

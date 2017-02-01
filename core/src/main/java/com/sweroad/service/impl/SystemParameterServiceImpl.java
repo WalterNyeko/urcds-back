@@ -2,7 +2,7 @@ package com.sweroad.service.impl;
 
 import com.sweroad.dao.GenericDao;
 import com.sweroad.model.*;
-import com.sweroad.service.GenericManager;
+import com.sweroad.service.GenericService;
 import com.sweroad.service.SystemParameterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,50 +13,50 @@ import java.util.List;
  * Created by Frank on 2/3/16.
  */
 @Service("systemParameterService")
-public class SystemParameterServiceImpl extends GenericManagerImpl<SystemParameter, Long> implements SystemParameterService {
+public class SystemParameterServiceImpl extends GenericServiceImpl<SystemParameter, Long> implements SystemParameterService {
 
     @Autowired
-    private GenericManager<Weather, Long> weatherService;
+    private GenericService<Weather, Long> weatherService;
     @Autowired
-    private GenericManager<District, Long> districtService;
+    private GenericService<District, Long> districtService;
     @Autowired
-    private GenericManager<Hospital, Long> hospitalService;
+    private GenericService<Hospital, Long> hospitalService;
     @Autowired
-    private GenericManager<InjuryType, Long> injuryTypeService;
+    private GenericService<InjuryType, Long> injuryTypeService;
     @Autowired
-    private GenericManager<CrashCause, Long> crashCauseService;
+    private GenericService<CrashCause, Long> crashCauseService;
     @Autowired
-    private GenericManager<RoadSurface, Long> roadSurfaceService;
+    private GenericService<RoadSurface, Long> roadSurfaceService;
     @Autowired
-    private GenericManager<VehicleType, Long> vehicleTypeService;
+    private GenericService<VehicleType, Long> vehicleTypeService;
     @Autowired
-    private GenericManager<SurfaceType, Long> surfaceTypeService;
+    private GenericService<SurfaceType, Long> surfaceTypeService;
     @Autowired
-    private GenericManager<CasualtyType, Long> casualtyTypeService;
+    private GenericService<CasualtyType, Long> casualtyTypeService;
     @Autowired
-    private GenericManager<JunctionType, Long> junctionTypeService;
+    private GenericService<JunctionType, Long> junctionTypeService;
     @Autowired
-    private GenericManager<RoadUserType, Long> roadUserTypeService;
+    private GenericService<RoadUserType, Long> roadUserTypeService;
     @Autowired
-    private GenericManager<CasualtyClass, Long> casualtyClassService;
+    private GenericService<CasualtyClass, Long> casualtyClassService;
     @Autowired
-    private GenericManager<CollisionType, Long> collisionTypeService;
+    private GenericService<CollisionType, Long> collisionTypeService;
     @Autowired
-    private GenericManager<CrashSeverity, Long> crashSeverityService;
+    private GenericService<CrashSeverity, Long> crashSeverityService;
     @Autowired
-    private GenericManager<PatientStatus, Long> patientStatusService;
+    private GenericService<PatientStatus, Long> patientStatusService;
     @Autowired
-    private GenericManager<PoliceStation, Long> policeStationService;
+    private GenericService<PoliceStation, Long> policeStationService;
     @Autowired
-    private GenericManager<TransportMode, Long> transportModeService;
+    private GenericService<TransportMode, Long> transportModeService;
     @Autowired
-    private GenericManager<RoadwayCharacter, Long> roadwayCharacterService;
+    private GenericService<RoadwayCharacter, Long> roadwayCharacterService;
     @Autowired
-    private GenericManager<SurfaceCondition, Long> surfaceConditionService;
+    private GenericService<SurfaceCondition, Long> surfaceConditionService;
     @Autowired
-    private GenericManager<VehicleFailureType, Long> vehicleFailureTypeService;
+    private GenericService<VehicleFailureType, Long> vehicleFailureTypeService;
     @Autowired
-    private GenericManager<PatientDisposition, Long> patientDispositionService;
+    private GenericService<PatientDisposition, Long> patientDispositionService;
 
     @Autowired
     public SystemParameterServiceImpl(GenericDao<SystemParameter, Long> systemParameterDao) {
@@ -234,7 +234,7 @@ public class SystemParameterServiceImpl extends GenericManagerImpl<SystemParamet
         }
     }
 
-    private void updateParameter(Long id, String name, GenericManager manager) {
+    private void updateParameter(Long id, String name, GenericService manager) {
         NameIdModel param = (NameIdModel)manager.get(id);
         param.setName(name);
         manager.save(param);
@@ -311,7 +311,7 @@ public class SystemParameterServiceImpl extends GenericManagerImpl<SystemParamet
         }
     }
 
-    private void setParameterActive(Long id, boolean active, GenericManager manager) {
+    private void setParameterActive(Long id, boolean active, GenericService manager) {
         NameIdModel param = (NameIdModel)manager.get(id);
         param.setActive(active);
         manager.save(param);

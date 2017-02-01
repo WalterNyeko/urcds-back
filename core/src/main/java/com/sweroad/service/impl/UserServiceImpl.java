@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.jws.WebService;
 
+import com.sweroad.service.UserWebService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,18 +25,17 @@ import com.sweroad.dao.UserDao;
 import com.sweroad.model.User;
 import com.sweroad.service.MailEngine;
 import com.sweroad.service.UserExistsException;
-import com.sweroad.service.UserManager;
 import com.sweroad.service.UserService;
 
 
 /**
- * Implementation of UserManager interface.
+ * Implementation of UserService interface.
  *
  * @author <a href="mailto:matt@raibledesigns.com">Matt Raible</a>
  */
 @Service("userManager")
-@WebService(serviceName = "UserService", endpointInterface = "com.sweroad.service.UserService")
-public class UserManagerImpl extends GenericManagerImpl<User, Long> implements UserManager, UserService {
+@WebService(serviceName = "UserWebService", endpointInterface = "com.sweroad.service.UserWebService")
+public class UserServiceImpl extends GenericServiceImpl<User, Long> implements UserService, UserWebService {
     private PasswordEncoder passwordEncoder;
     private UserDao userDao;
 

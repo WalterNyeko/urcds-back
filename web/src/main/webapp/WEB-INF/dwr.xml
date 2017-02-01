@@ -4,7 +4,7 @@
 <dwr>
 	<allow>
 		<create creator="spring" javascript="UserManager">
-			<param name="class" value="com.sweroad.service.UserManager" />
+			<param name="class" value="com.sweroad.service.UserService" />
 			<param name="beanName" value="userManager" />
 			<include method="getUsers" />
 		</create>

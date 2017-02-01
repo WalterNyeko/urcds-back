@@ -4,12 +4,11 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import com.sweroad.query.CrashQuery;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sweroad.model.Crash;
 
-public interface CrashService extends GenericManager<Crash, Long> {
+public interface CrashService extends GenericService<Crash, Long> {
 
 	/**
 	 * This method is monitored by CrashSecurityAdvice and should only be called when getting

@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.subethamail.wiser.Wiser;
 
 import com.sweroad.model.User;
-import com.sweroad.service.UserManager;
+import com.sweroad.service.UserService;
 
 @ContextConfiguration(locations = {
  "classpath:/applicationContext-test-resources.xml",
@@ -26,7 +26,7 @@ public class UpdatePasswordControllerTest extends BaseControllerTestCase {
     private UpdatePasswordController controller;
 
     @Autowired
-    private UserManager userManager;
+    private UserService userService;
 
     @Test
     public void testRequestRecoveryToken() throws Exception {
@@ -63,8 +63,8 @@ public class UpdatePasswordControllerTest extends BaseControllerTestCase {
 	@Test
     public void testShowResetPasswordForm() throws Exception {
         String username = "admin";
-        User user = userManager.getUserByUsername(username);
-        String token = userManager.generateRecoveryToken(user);
+        User user = userService.getUserByUsername(username);
+        String token = userService.generateRecoveryToken(user);
 
         MockHttpServletRequest request = newGet("/updatePassword");
         request.addParameter("username", username);
@@ -95,8 +95,8 @@ public class UpdatePasswordControllerTest extends BaseControllerTestCase {
 	@Test
     public void testResetPassword() throws Exception {
         String username = "admin";
-        User user = userManager.getUserByUsername(username);
-        String token = userManager.generateRecoveryToken(user);
+        User user = userService.getUserByUsername(username);
+        String token = userService.generateRecoveryToken(user);
         String password = "new-pass";
 
         MockHttpServletRequest request = newGet("/updatePassword");

@@ -3,7 +3,7 @@ package com.sweroad.service.impl;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import com.sweroad.model.User;
-import com.sweroad.service.UserManager;
+import com.sweroad.service.UserService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,14 +27,14 @@ public class PasswordTokenManagerTest extends AbstractTransactionalJUnit4SpringC
     protected transient final Log log = LogFactory.getLog(getClass());
     private int smtpPort = 25250;
 
-    private UserManager userManager;
+    private UserService userService;
 
     private PasswordTokenManager passwordTokenManager;
 
     @Autowired
     @Qualifier("userManager")
-    public void setUserManager(UserManager userManager) {
-	this.userManager = userManager;
+    public void setUserService(UserService userService) {
+	this.userService = userService;
     }
 
     @Autowired
@@ -56,7 +56,7 @@ public class PasswordTokenManagerTest extends AbstractTransactionalJUnit4SpringC
 
     @Test
     public void testGenerateRecoveryToken() {
-        final User user = userManager.getUserByUsername("user");
+        final User user = userService.getUserByUsername("user");
         final String token = passwordTokenManager.generateRecoveryToken(user);
         Assert.assertNotNull(token);
         Assert.assertTrue(passwordTokenManager.isRecoveryTokenValid(user, token));
@@ -64,7 +64,7 @@ public class PasswordTokenManagerTest extends AbstractTransactionalJUnit4SpringC
 
     @Test
     public void testConsumeRecoveryToken() throws Exception {
-        final User user = userManager.getUserByUsername("user");
+        final User user = userService.getUserByUsername("user");
         final Integer version = user.getVersion();
 
         final String token = passwordTokenManager.generateRecoveryToken(user);
@@ -76,7 +76,7 @@ public class PasswordTokenManagerTest extends AbstractTransactionalJUnit4SpringC
         wiser.setPort(smtpPort);
         wiser.start();
 
-        userManager.updatePassword(user.getUsername(), null, token, "user", "");
+        userService.updatePassword(user.getUsername(), null, token, "user", "");
 
         wiser.stop();
         assertTrue(wiser.getMessages().size() == 1);

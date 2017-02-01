@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 public class CrashSecurityAdvice {
 
     @Autowired
-    private UserManager userManager;
+    private UserService userService;
     private boolean editable;
     private boolean removable;
     private boolean editableOnlyForDistrict;
@@ -42,7 +42,7 @@ public class CrashSecurityAdvice {
     }
 
     private void setUserAccess() {
-        currentUser = userManager.getCurrentUser();
+        currentUser = userService.getCurrentUser();
         if (currentUser.hasRole(Constants.SUPER_USER_ROLE)
                 || currentUser.hasRole(Constants.ADMIN_ROLE)) {
             editableOnlyForDistrict = false;

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sweroad.model.Crash;
 import com.sweroad.model.CrashCause;
 import com.sweroad.model.CrashSeverity;
-import com.sweroad.service.GenericManager;
+import com.sweroad.service.GenericService;
 
 @Controller
 @RequestMapping("/crashchart*")
@@ -24,9 +24,9 @@ public class ChartController extends BaseFormController {
     @Autowired
     private CrashService crashService;
     @Autowired
-    private GenericManager<CrashSeverity, Long> crashSeverityService;
+    private GenericService<CrashSeverity, Long> crashSeverityService;
     @Autowired
-    private GenericManager<CrashCause, Long> crashCauseService;
+    private GenericService<CrashCause, Long> crashCauseService;
 
     @RequestMapping(value = "/crashchartseverity", method = RequestMethod.GET)
     public

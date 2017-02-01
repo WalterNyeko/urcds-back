@@ -5,7 +5,6 @@ import com.sweroad.model.Role;
 import com.sweroad.model.User;
 import com.sweroad.service.RoleService;
 import com.sweroad.service.UserExistsException;
-import com.sweroad.service.UserManager;
 import com.sweroad.webapp.util.RequestUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,7 @@ import java.util.UUID;
 
 /**
  * Implementation of <strong>SimpleFormController</strong> that interacts with
- * the {@link UserManager} to retrieve/persist values to the database.
+ * the {@link com.sweroad.service.UserService} to retrieve/persist values to the database.
  * <p>
  * <p><a href="UserFormController.java.html"><i>View Source</i></a>
  *
@@ -65,7 +64,7 @@ public class UserFormController extends BaseFormController {
     protected User loadUser(final HttpServletRequest request) {
         final String userId = request.getParameter("id");
         if (isFormSubmission(request) && StringUtils.isNotBlank(userId)) {
-            return getUserManager().getUser(userId);
+            return getUserService().getUser(userId);
         }
         return new User();
     }
@@ -95,7 +94,7 @@ public class UserFormController extends BaseFormController {
         final Locale locale = request.getLocale();
 
         if (request.getParameter("delete") != null) {
-            getUserManager().removeUser(user.getId().toString());
+            getUserService().removeUser(user.getId().toString());
             saveMessage(request, getText("user.deleted", user.getFullName(), locale));
 
             return getSuccessView();
@@ -116,7 +115,7 @@ public class UserFormController extends BaseFormController {
                 // if user is not an admin then load roles from the database
                 // (or any other user properties that should not be editable
                 // by users without admin role)
-                final User cleanUser = getUserManager().getUserByUsername(
+                final User cleanUser = getUserService().getUserByUsername(
                         request.getRemoteUser());
                 user.setRoles(cleanUser.getRoles());
             }
@@ -132,7 +131,7 @@ public class UserFormController extends BaseFormController {
             }
 
             try {
-                getUserManager().saveUser(user);
+                getUserService().saveUser(user);
             } catch (final AccessDeniedException ade) {
                 // thrown by UserSecurityAdvice configured in aop:advisor userManagerSecurity
                 log.warn(ade.getMessage());
@@ -160,7 +159,7 @@ public class UserFormController extends BaseFormController {
                     message.setSubject(getText("signup.email.subject", locale));
 
                     try {
-                        final String resetPasswordUrl = getUserManager().buildRecoveryPasswordUrl(user,
+                        final String resetPasswordUrl = getUserService().buildRecoveryPasswordUrl(user,
                                 UpdatePasswordController.RECOVERY_PASSWORD_TEMPLATE);
                         sendUserMessage(user, getText("newuser.email.message", user.getFullName(), locale),
                                 RequestUtil.getAppURL(request) + resetPasswordUrl);
@@ -198,9 +197,9 @@ public class UserFormController extends BaseFormController {
 
             User user;
             if (userId == null && !isAdd(request)) {
-                user = getUserManager().getUserByUsername(request.getRemoteUser());
+                user = getUserService().getUserByUsername(request.getRemoteUser());
             } else if (!StringUtils.isBlank(userId) && !"".equals(request.getParameter("version"))) {
-                user = getUserManager().getUser(userId);
+                user = getUserService().getUser(userId);
             } else {
                 user = new User();
                 user.addRole(new Role(Constants.USER_ROLE));
@@ -209,7 +208,7 @@ public class UserFormController extends BaseFormController {
             return user;
         } else {
             // populate user object from database, so all fields don't need to be hidden fields in form
-            return getUserManager().getUser(request.getParameter("id"));
+            return getUserService().getUser(request.getParameter("id"));
         }
     }
 

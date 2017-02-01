@@ -4,7 +4,7 @@ import com.sweroad.model.CountResult;
 import com.sweroad.model.Crash;
 import com.sweroad.model.CrashCause;
 import com.sweroad.model.NameIdModel;
-import com.sweroad.service.GenericManager;
+import com.sweroad.service.GenericService;
 import com.sweroad.service.count.CountAttributeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ import java.util.List;
 public class CountCrashCauseServiceImpl extends BaseCountService implements CountAttributeService {
 
     @Autowired
-    private GenericManager<CrashCause, Long> crashCauseService;
+    private GenericService<CrashCause, Long> crashCauseService;
 
     @Override
     public List<CountResult> countCrashes(List<Crash> crashes) {

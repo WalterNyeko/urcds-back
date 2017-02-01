@@ -11,10 +11,10 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class UserManagerTest extends BaseManagerTestCase {
-    private Log log = LogFactory.getLog(UserManagerTest.class);
+public class UserServiceTest extends BaseManagerTestCase {
+    private Log log = LogFactory.getLog(UserServiceTest.class);
     @Autowired
-    private UserManager mgr;
+    private UserService mgr;
     @Autowired
     private RoleService roleService;
     private User user;

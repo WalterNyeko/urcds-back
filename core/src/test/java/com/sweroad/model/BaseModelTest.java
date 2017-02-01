@@ -2,7 +2,7 @@ package com.sweroad.model;
 
 import com.sweroad.service.BaseManagerTestCase;
 import com.sweroad.service.CrashService;
-import com.sweroad.service.GenericManager;
+import com.sweroad.service.GenericService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,15 +16,15 @@ public class BaseModelTest extends BaseManagerTestCase {
     @Autowired
     private CrashService crashService;
     @Autowired
-    private GenericManager<Driver, Long> driverService;
+    private GenericService<Driver, Long> driverService;
     @Autowired
-    private GenericManager<Vehicle, Long> vehicleManager;
+    private GenericService<Vehicle, Long> vehicleManager;
     @Autowired
-    private GenericManager<Casualty, Long> casualtyManager;
+    private GenericService<Casualty, Long> casualtyManager;
     @Autowired
-    private GenericManager<CasualtyClass, Long> casualtyClassService;
+    private GenericService<CasualtyClass, Long> casualtyClassService;
     @Autowired
-    private GenericManager<PoliceStation, Long> policeStationService;
+    private GenericService<PoliceStation, Long> policeStationService;
 
     @Test
     public void testNameIdModelJSON() {

@@ -4,7 +4,7 @@ import com.sweroad.model.CountResult;
 import com.sweroad.model.Crash;
 import com.sweroad.model.District;
 import com.sweroad.model.PoliceStation;
-import com.sweroad.service.GenericManager;
+import com.sweroad.service.GenericService;
 import com.sweroad.service.count.CountAttributeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ import java.util.List;
 public class CountDistrictServiceImpl extends BaseCountService implements CountAttributeService {
 
     @Autowired
-    private GenericManager<District, Long> districtService;
+    private GenericService<District, Long> districtService;
     @Autowired
     private CountAttributeService countPoliceStationService;
 

@@ -21,7 +21,7 @@ import com.sweroad.model.Role;
 import com.sweroad.model.User;
 import com.sweroad.service.UserExistsException;
 
-public class UserManagerImplTest extends BaseManagerMockTestCase {
+public class UserServiceImplTest extends BaseManagerMockTestCase {
     //~ Instance fields ========================================================
 
     @Mock
@@ -35,7 +35,7 @@ public class UserManagerImplTest extends BaseManagerMockTestCase {
 
 
     @InjectMocks
-    private UserManagerImpl userManager = new UserManagerImpl();
+    private UserServiceImpl userService = new UserServiceImpl();
 
 
     //~ Methods ================================================================
@@ -49,7 +49,7 @@ public class UserManagerImplTest extends BaseManagerMockTestCase {
         given(userDao.get(1L)).willReturn(testData);
 
         //then
-        User user = userManager.getUser("1");
+        User user = userService.getUser("1");
 
         //then
         assertTrue(user != null);
@@ -66,14 +66,14 @@ public class UserManagerImplTest extends BaseManagerMockTestCase {
         given(userDao.get(1L)).willReturn(testData);
 
 
-        final User user = userManager.getUser("1");
+        final User user = userService.getUser("1");
         user.setPhoneNumber("303-555-1212");
 
         given(userDao.saveUser(user)).willReturn(user);
 
 
         //when
-        User returned = userManager.saveUser(user);
+        User returned = userService.saveUser(user);
 
         //then
         assertTrue(returned.getPhoneNumber().equals("303-555-1212"));
@@ -98,7 +98,7 @@ public class UserManagerImplTest extends BaseManagerMockTestCase {
 
 
         //when
-        user = userManager.saveUser(user);
+        user = userService.saveUser(user);
 
         //then
         assertTrue(user.getUsername().equals("john"));
@@ -106,12 +106,12 @@ public class UserManagerImplTest extends BaseManagerMockTestCase {
 
         //given
         willDoNothing().given(userDao).remove(5L);
-        userManager.removeUser("5");
+        userService.removeUser("5");
 
         given(userDao.get(5L)).willReturn(null);
 
         //when
-        user = userManager.getUser("5");
+        user = userService.getUser("5");
 
         //then
         assertNull(user);
@@ -128,7 +128,7 @@ public class UserManagerImplTest extends BaseManagerMockTestCase {
 
         // run test
         try {
-            userManager.saveUser(user);
+            userService.saveUser(user);
             fail("Expected UserExistsException not thrown");
         } catch (UserExistsException e) {
             log.debug("expected exception: " + e.getMessage());

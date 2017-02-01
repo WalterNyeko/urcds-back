@@ -2,7 +2,7 @@ package com.sweroad.webapp.controller;
 
 import com.sweroad.Constants;
 import com.sweroad.model.User;
-import com.sweroad.service.UserManager;
+import com.sweroad.service.UserService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -96,7 +96,7 @@ public class UserFormControllerTest extends BaseControllerTestCase {
         request = newPost("/userform.html");
         // set updated properties first since adding them later will
         // result in multiple parameters with the same name getting sent
-        User user = ((UserManager) applicationContext.getBean("userManager")).getUser("-1");
+        User user = ((UserService) applicationContext.getBean("userManager")).getUser("-1");
         user.setConfirmPassword(user.getPassword());
         user.setLastName("Updated Last Name");
 

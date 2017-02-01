@@ -15,7 +15,7 @@ import java.util.List;
  * Created by Frank on 2/19/15.
  */
 @Service("casualtyService")
-public class CasualtyServiceImpl extends GenericManagerImpl<Casualty, Long> implements CasualtyService {
+public class CasualtyServiceImpl extends GenericServiceImpl<Casualty, Long> implements CasualtyService {
 
     @Autowired
     public CasualtyServiceImpl(GenericDao<Casualty, Long> casualtyDao) {

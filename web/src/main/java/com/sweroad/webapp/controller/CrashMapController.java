@@ -3,7 +3,7 @@ package com.sweroad.webapp.controller;
 import com.sweroad.model.Crash;
 import com.sweroad.model.CrashSeverity;
 import com.sweroad.service.CrashService;
-import com.sweroad.service.GenericManager;
+import com.sweroad.service.GenericService;
 import com.sweroad.webapp.util.SessionHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +19,7 @@ import java.util.List;
 public class CrashMapController extends BaseFormController {
 
     @Autowired
-    private GenericManager<CrashSeverity, Long> crashSeverityService;
+    private GenericService<CrashSeverity, Long> crashSeverityService;
     @Autowired
     private CrashService crashService;
 

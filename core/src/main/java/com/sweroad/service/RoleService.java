@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author <a href="mailto:dan@getrolling.com">Dan Kibler </a>
  */
-public interface RoleService extends GenericManager<Role, Long> {
+public interface RoleService extends GenericService<Role, Long> {
     /**
      * {@inheritDoc}
      */

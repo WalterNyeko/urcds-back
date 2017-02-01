@@ -7,16 +7,16 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.sweroad.dao.GenericDao;
-import com.sweroad.service.GenericManager;
+import com.sweroad.service.GenericService;
 
 /**
- * This class serves as the Base class for all other Managers - namely to hold
+ * This class serves as the Base class for all other Services - namely to hold
  * common CRUD methods that they might all use. You should only need to extend
  * this class when your require custom CRUD logic.
  * <p/>
  * <p>To register this class in your Spring context file, use the following XML.
  * <pre>
- *     &lt;bean id="userManager" class="com.sweroad.service.impl.GenericManagerImpl"&gt;
+ *     &lt;bean id="userManager" class="com.sweroad.service.impl.GenericServiceImpl"&gt;
  *         &lt;constructor-arg&gt;
  *             &lt;bean class="com.sweroad.dao.hibernate.GenericDaoHibernate"&gt;
  *                 &lt;constructor-arg value="com.sweroad.model.User"/&gt;
@@ -28,7 +28,7 @@ import com.sweroad.service.GenericManager;
  * <p/>
  * <p>If you're using iBATIS instead of Hibernate, use:
  * <pre>
- *     &lt;bean id="userManager" class="com.sweroad.service.impl.GenericManagerImpl"&gt;
+ *     &lt;bean id="userManager" class="com.sweroad.service.impl.GenericServiceImpl"&gt;
  *         &lt;constructor-arg&gt;
  *             &lt;bean class="com.sweroad.dao.ibatis.GenericDaoiBatis"&gt;
  *                 &lt;constructor-arg value="com.sweroad.model.User"/&gt;
@@ -44,7 +44,7 @@ import com.sweroad.service.GenericManager;
  * @author <a href="mailto:matt@raibledesigns.com">Matt Raible</a>
  *         Updated by jgarcia: added full text search + reindexing
  */
-public class GenericManagerImpl<T, PK extends Serializable> implements GenericManager<T, PK> {
+public class GenericServiceImpl<T, PK extends Serializable> implements GenericService<T, PK> {
     /**
      * Log variable for all child classes. Uses LogFactory.getLog(getClass()) from Commons Logging
      */
@@ -56,10 +56,10 @@ public class GenericManagerImpl<T, PK extends Serializable> implements GenericMa
     protected GenericDao<T, PK> dao;
 
 
-    public GenericManagerImpl() {
+    public GenericServiceImpl() {
     }
 
-    public GenericManagerImpl(GenericDao<T, PK> genericDao) {
+    public GenericServiceImpl(GenericDao<T, PK> genericDao) {
         this.dao = genericDao;
     }
 

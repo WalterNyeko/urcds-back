@@ -5,7 +5,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.sweroad.model.User;
 import com.sweroad.service.MailEngine;
-import com.sweroad.service.UserManager;
+import com.sweroad.service.UserService;
 import com.sweroad.webapp.util.RequestUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,14 +34,14 @@ import java.util.List;
 @RequestMapping("/passwordHint*")
 public class PasswordHintController {
     private final Log log = LogFactory.getLog(PasswordHintController.class);
-    private UserManager userManager = null;
+    private UserService userService = null;
     private MessageSource messageSource = null;
     protected MailEngine mailEngine = null;
     protected SimpleMailMessage message = null;
 
     @Autowired
-    public void setUserManager(UserManager userManager) {
-        this.userManager = userManager;
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 
     @Autowired
@@ -78,7 +78,7 @@ public class PasswordHintController {
 
         // look up the user's information
         try {
-            User user = userManager.getUserByUsername(username);
+            User user = userService.getUserByUsername(username);
 
             StringBuffer msg = new StringBuffer();
             msg.append("Your password hint is: ").append(user.getPasswordHint());

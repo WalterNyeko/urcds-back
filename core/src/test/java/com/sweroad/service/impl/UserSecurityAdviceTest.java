@@ -4,7 +4,7 @@ import com.sweroad.Constants;
 import com.sweroad.dao.UserDao;
 import com.sweroad.model.Role;
 import com.sweroad.model.User;
-import com.sweroad.service.UserManager;
+import com.sweroad.service.UserService;
 import com.sweroad.service.UserSecurityAdvice;
 import org.junit.After;
 import org.junit.Assert;
@@ -65,12 +65,12 @@ public class UserSecurityAdviceTest {
     public void testAddUserWithoutAdminRole() throws Exception {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         assertTrue(auth.isAuthenticated());
-        UserManager userManager = makeInterceptedTarget();
+        UserService userService = makeInterceptedTarget();
         User user = new User("admin");
         user.setId(2L);
 
         try {
-            userManager.saveUser(user);
+            userService.saveUser(user);
             fail("AccessDeniedException not thrown");
         } catch (AccessDeniedException expected) {
             assertNotNull(expected);
@@ -91,19 +91,19 @@ public class UserSecurityAdviceTest {
         securityContext.setAuthentication(token);
         SecurityContextHolder.setContext(securityContext);
 
-        UserManager userManager = makeInterceptedTarget();
+        UserService userService = makeInterceptedTarget();
         final User adminUser = new User("admin");
         adminUser.setId(2L);
 
         given(userDao.saveUser(adminUser)).willReturn(adminUser);
         given(passwordEncoder.encode(adminUser.getPassword())).willReturn(adminUser.getPassword());
 
-        userManager.saveUser(adminUser);
+        userService.saveUser(adminUser);
     }
 
     @Test
     public void testUpdateUserProfile() throws Exception {
-        UserManager userManager = makeInterceptedTarget();
+        UserService userService = makeInterceptedTarget();
         final User user = new User("user");
         user.setId(1L);
         user.getRoles().add(new Role(Constants.USER_ROLE));
@@ -111,19 +111,19 @@ public class UserSecurityAdviceTest {
         given(userDao.saveUser(user)).willReturn(user);
         given(passwordEncoder.encode(user.getPassword())).willReturn(user.getPassword());
 
-        userManager.saveUser(user);
+        userService.saveUser(user);
     }
 
     // Test fix to http://issues.appfuse.org/browse/APF-96
     @Test
     public void testChangeToAdminRoleFromUserRole() throws Exception {
-        UserManager userManager = makeInterceptedTarget();
+        UserService userService = makeInterceptedTarget();
         User user = new User("user");
         user.setId(1L);
         user.getRoles().add(new Role(Constants.ADMIN_ROLE));
 
         try {
-            userManager.saveUser(user);
+            userService.saveUser(user);
             fail("AccessDeniedException not thrown");
         } catch (AccessDeniedException expected) {
             assertNotNull(expected);
@@ -134,14 +134,14 @@ public class UserSecurityAdviceTest {
     // Test fix to http://issues.appfuse.org/browse/APF-96
     @Test
     public void testAddAdminRoleWhenAlreadyHasUserRole() throws Exception {
-        UserManager userManager = makeInterceptedTarget();
+        UserService userService = makeInterceptedTarget();
         User user = new User("user");
         user.setId(1L);
         user.getRoles().add(new Role(Constants.ADMIN_ROLE));
         user.getRoles().add(new Role(Constants.USER_ROLE));
 
         try {
-            userManager.saveUser(user);
+            userService.saveUser(user);
             fail("AccessDeniedException not thrown");
         } catch (AccessDeniedException expected) {
             assertNotNull(expected);
@@ -163,7 +163,7 @@ public class UserSecurityAdviceTest {
         securityContext.setAuthentication(token);
         SecurityContextHolder.setContext(securityContext);
 
-        UserManager userManager = makeInterceptedTarget();
+        UserService userService = makeInterceptedTarget();
         final User user = new User("user");
         user.setId(1L);
         user.getRoles().add(new Role(Constants.ADMIN_ROLE));
@@ -172,13 +172,13 @@ public class UserSecurityAdviceTest {
         given(userDao.saveUser(user)).willReturn(user);
         given(passwordEncoder.encode(user.getPassword())).willReturn(user.getPassword());
 
-        userManager.saveUser(user);
+        userService.saveUser(user);
     }
 
     // Test fix to http://issues.appfuse.org/browse/APF-96
     @Test
     public void testUpdateUserWithUserRole() throws Exception {
-        UserManager userManager = makeInterceptedTarget();
+        UserService userService = makeInterceptedTarget();
         final User user = new User("user");
         user.setId(1L);
         user.getRoles().add(new Role(Constants.USER_ROLE));
@@ -186,15 +186,15 @@ public class UserSecurityAdviceTest {
         given(userDao.saveUser(user)).willReturn(user);
         given(passwordEncoder.encode(user.getPassword())).willReturn(user.getPassword());
 
-        userManager.saveUser(user);
+        userService.saveUser(user);
     }
 
-    private UserManager makeInterceptedTarget() {
+    private UserService makeInterceptedTarget() {
         ctx = new ClassPathXmlApplicationContext("/applicationContext-test.xml");
 
-        UserManager userManager = (UserManager) ctx.getBean("target");
-        userManager.setUserDao(userDao);
-        userManager.setPasswordEncoder(passwordEncoder);
-        return userManager;
+        UserService userService = (UserService) ctx.getBean("target");
+        userService.setUserDao(userDao);
+        userService.setPasswordEncoder(passwordEncoder);
+        return userService;
     }
 }

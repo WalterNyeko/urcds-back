@@ -14,7 +14,7 @@ import java.util.List;
  * @author <a href="mailto:dan@getrolling.com">Dan Kibler</a>
  */
 @Service("roleService")
-public class RoleServiceImpl extends GenericManagerImpl<Role, Long> implements RoleService {
+public class RoleServiceImpl extends GenericServiceImpl<Role, Long> implements RoleService {
     RoleDao roleDao;
 
     @Autowired

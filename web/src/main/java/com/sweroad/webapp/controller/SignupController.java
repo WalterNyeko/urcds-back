@@ -79,7 +79,7 @@ public class SignupController extends BaseFormController {
         final String password = user.getPassword();
 
         try {
-            this.getUserManager().saveUser(user);
+            this.getUserService().saveUser(user);
         } catch (final AccessDeniedException ade) {
             // thrown by UserSecurityAdvice configured in aop:advisor userManagerSecurity
             log.warn(ade.getMessage());

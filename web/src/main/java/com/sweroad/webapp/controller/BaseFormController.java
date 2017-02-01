@@ -28,7 +28,7 @@ import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 import com.sweroad.Constants;
 import com.sweroad.model.User;
 import com.sweroad.service.MailEngine;
-import com.sweroad.service.UserManager;
+import com.sweroad.service.UserService;
 
 /**
  * Implementation of <strong>SimpleFormController</strong> that contains
@@ -44,7 +44,7 @@ public class BaseFormController implements ServletContextAware {
     public static final String MESSAGES_KEY = "successMessages";
     public static final String ERRORS_MESSAGES_KEY = "errors";
     protected final transient Log log = LogFactory.getLog(getClass());
-    private UserManager userManager = null;
+    private UserService userService = null;
     protected MailEngine mailEngine = null;
     protected SimpleMailMessage message = null;
     protected String templateName = "accountCreated.vm";
@@ -63,12 +63,12 @@ public class BaseFormController implements ServletContextAware {
     }
 
     @Autowired
-    public void setUserManager(UserManager userManager) {
-        this.userManager = userManager;
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 
-    public UserManager getUserManager() {
-        return this.userManager;
+    public UserService getUserService() {
+        return this.userService;
     }
 
     @SuppressWarnings("unchecked")

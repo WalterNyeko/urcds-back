@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by Frank on 2/3/16.
  */
-public interface SystemParameterService extends GenericManager<SystemParameter, Long> {
+public interface SystemParameterService extends GenericService<SystemParameter, Long> {
 
     List<? extends NameIdModel> getParameters(AttributeType type) throws Exception;
 

@@ -4,8 +4,8 @@ import com.sweroad.audit.IAuditable;
 import com.sweroad.audit.IXMLConvertible;
 import com.sweroad.model.Audit;
 import com.sweroad.model.User;
-import com.sweroad.service.GenericManager;
-import com.sweroad.service.UserManager;
+import com.sweroad.service.GenericService;
+import com.sweroad.service.UserService;
 import com.sweroad.util.XStreamUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -22,11 +22,11 @@ import java.util.Date;
 @Component
 public class AuditAdvice {
     @Autowired
-    private GenericManager<Audit, Long> auditService;
+    private GenericService<Audit, Long> auditService;
     @Autowired
-    private UserManager userManager;
+    private UserService userService;
 
-    @Around("execution(* com.sweroad.service.GenericManager.save(..))")
+    @Around("execution(* com.sweroad.service.GenericService.save(..))")
     public Object auditSave(ProceedingJoinPoint joinPoint) {
         Object returnValue = null;
         Object[] arguments = joinPoint.getArgs();
@@ -44,7 +44,7 @@ public class AuditAdvice {
                 IXMLConvertible postImage = null;
                 IAuditable dbObject = null;
                 IAuditable memObject = (IAuditable) object;
-                GenericManager gm = (GenericManager) joinPoint.getTarget();
+                GenericService gm = (GenericService) joinPoint.getTarget();
                 if (memObject.getId() != null && !memObject.getId().equals(0L)) {
                     dbObject = (IAuditable) gm.get(memObject.getId());
                     try {
@@ -79,7 +79,7 @@ public class AuditAdvice {
                                 postImage.getFieldsAliases(), postImage.getFieldsToBeOmitted()));
                     }
                     if (returnValue != null) {
-                        User currentUser = userManager.getCurrentUser();
+                        User currentUser = userService.getCurrentUser();
                         auditLog.setId(0L);
                         auditLog.setOperation(operation);
                         auditLog.setEntityId(((IAuditable) returnValue).getId());

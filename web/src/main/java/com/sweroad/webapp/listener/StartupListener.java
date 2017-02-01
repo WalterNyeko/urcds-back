@@ -1,10 +1,10 @@
 package com.sweroad.webapp.listener;
 
+import com.sweroad.service.GenericService;
 import com.sweroad.service.LookupService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import com.sweroad.Constants;
-import com.sweroad.service.GenericManager;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -130,12 +130,12 @@ public class StartupListener implements ServletContextListener {
         log.debug("Drop-down initialization complete [OK]");
 
         // Any manager extending GenericManager will do:
-        GenericManager<?, ?> manager = (GenericManager<?, ?>) ctx.getBean("userManager");
+        GenericService<?, ?> manager = (GenericService<?, ?>) ctx.getBean("userManager");
         doReindexing(manager);
         log.debug("Full text search reindexing complete [OK]");
     }
 
-    private static void doReindexing(GenericManager<?, ?> manager) {
+    private static void doReindexing(GenericService<?, ?> manager) {
         manager.reindexAll(false);
     }
 

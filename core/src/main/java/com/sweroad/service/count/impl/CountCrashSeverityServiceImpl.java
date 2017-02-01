@@ -1,7 +1,7 @@
 package com.sweroad.service.count.impl;
 
 import com.sweroad.model.*;
-import com.sweroad.service.GenericManager;
+import com.sweroad.service.GenericService;
 import com.sweroad.service.count.CountAttributeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import java.util.List;
 public class CountCrashSeverityServiceImpl extends BaseCountService implements CountAttributeService {
 
     @Autowired
-    private GenericManager<CrashSeverity, Long> crashSeverityService;
+    private GenericService<CrashSeverity, Long> crashSeverityService;
 
     @Override
     public List<CountResult> countCrashes(List<Crash> crashes) {

@@ -16,8 +16,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.ldap.userdetails.LdapUserDetails;
 
 import java.lang.reflect.Method;
 import java.util.Collection;
@@ -71,8 +69,8 @@ public class UserSecurityAdvice implements MethodBeforeAdvice, AfterReturningAdv
 			boolean signupUser = resolver.isAnonymous(auth);
 
 			if (!signupUser) {
-				UserManager userManager = (UserManager) target;
-				User currentUser = userManager.getCurrentUser();
+				UserService userService = (UserService) target;
+				User currentUser = userService.getCurrentUser();
 
 				if (user.getId() != null && !user.getId().equals(currentUser.getId()) && !administrator) {
 					log.warn("Access Denied: '" + currentUser.getUsername() + "' tried to modify '"
@@ -133,8 +131,8 @@ public class UserSecurityAdvice implements MethodBeforeAdvice, AfterReturningAdv
 			// allow new users to signup - this is OK b/c Signup doesn't allow setting of roles
 			boolean signupUser = resolver.isAnonymous(auth);
 			if (auth != null && !signupUser) {
-				UserManager userManager = (UserManager) target;
-				User currentUser = userManager.getCurrentUser();
+				UserService userService = (UserService) target;
+				User currentUser = userService.getCurrentUser();
 				if (currentUser.getId().equals(user.getId())) {
 					auth = new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities());
 					SecurityContextHolder.getContext().setAuthentication(auth);

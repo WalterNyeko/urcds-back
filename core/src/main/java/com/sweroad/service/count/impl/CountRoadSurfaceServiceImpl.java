@@ -4,7 +4,7 @@ import com.sweroad.model.CountResult;
 import com.sweroad.model.Crash;
 import com.sweroad.model.NameIdModel;
 import com.sweroad.model.RoadSurface;
-import com.sweroad.service.GenericManager;
+import com.sweroad.service.GenericService;
 import com.sweroad.service.count.CountAttributeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ import java.util.List;
 public class CountRoadSurfaceServiceImpl extends BaseCountService implements CountAttributeService {
 
     @Autowired
-    private GenericManager<RoadSurface, Long> roadSurfaceService;
+    private GenericService<RoadSurface, Long> roadSurfaceService;
 
     @Override
     public List<CountResult> countCrashes(List<Crash> crashes) {

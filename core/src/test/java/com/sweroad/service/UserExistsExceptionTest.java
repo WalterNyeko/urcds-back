@@ -17,7 +17,7 @@ import static org.junit.Assert.assertNotNull;
                      "classpath:/applicationContext-dao.xml"})
 public class UserExistsExceptionTest extends AbstractTransactionalJUnit4SpringContextTests {
     @Autowired
-    private UserManager manager;
+    private UserService manager;
     private Log log = LogFactory.getLog(UserExistsExceptionTest.class);
 
     @Test(expected = UserExistsException.class)

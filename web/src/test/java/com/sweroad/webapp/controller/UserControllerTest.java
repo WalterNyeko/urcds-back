@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 import java.util.Map;
 
-import com.sweroad.service.UserManager;
+import com.sweroad.service.UserService;
 
 import static org.junit.Assert.*;
 
@@ -30,8 +30,8 @@ public class UserControllerTest extends BaseControllerTestCase {
 	@Test
     public void testSearch() throws Exception {
         // reindex before searching
-        UserManager userManager = (UserManager) applicationContext.getBean("userManager");
-        userManager.reindex();
+        UserService userService = (UserService) applicationContext.getBean("userManager");
+        userService.reindex();
 
         ModelAndView mav = c.handleRequest("admin");
         Map m = mav.getModel();

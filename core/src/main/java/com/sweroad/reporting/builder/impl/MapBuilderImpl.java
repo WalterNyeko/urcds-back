@@ -2,7 +2,7 @@ package com.sweroad.reporting.builder.impl;
 
 import com.sweroad.model.*;
 import com.sweroad.reporting.builder.MapBuilder;
-import com.sweroad.service.GenericManager;
+import com.sweroad.service.GenericService;
 import com.sweroad.service.LookupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,31 +16,31 @@ import java.util.*;
 public class MapBuilderImpl implements MapBuilder {
 
     @Autowired
-    private GenericManager<CrashSeverity, Long> crashSeverityService;
+    private GenericService<CrashSeverity, Long> crashSeverityService;
     @Autowired
-    private GenericManager<CollisionType, Long> collisionTypeService;
+    private GenericService<CollisionType, Long> collisionTypeService;
     @Autowired
-    private GenericManager<CrashCause, Long> crashCauseService;
+    private GenericService<CrashCause, Long> crashCauseService;
     @Autowired
-    private GenericManager<VehicleFailureType, Long> vehicleFailureTypeService;
+    private GenericService<VehicleFailureType, Long> vehicleFailureTypeService;
     @Autowired
-    private GenericManager<VehicleType, Long> vehicleTypeService;
+    private GenericService<VehicleType, Long> vehicleTypeService;
     @Autowired
-    private GenericManager<Weather, Long> weatherService;
+    private GenericService<Weather, Long> weatherService;
     @Autowired
-    private GenericManager<SurfaceCondition, Long> surfaceConditionService;
+    private GenericService<SurfaceCondition, Long> surfaceConditionService;
     @Autowired
-    private GenericManager<RoadSurface, Long> roadSurfaceService;
+    private GenericService<RoadSurface, Long> roadSurfaceService;
     @Autowired
-    private GenericManager<SurfaceType, Long> surfaceTypeService;
+    private GenericService<SurfaceType, Long> surfaceTypeService;
     @Autowired
-    private GenericManager<RoadwayCharacter, Long> roadwayCharacterService;
+    private GenericService<RoadwayCharacter, Long> roadwayCharacterService;
     @Autowired
-    private GenericManager<JunctionType, Long> junctionTypeService;
+    private GenericService<JunctionType, Long> junctionTypeService;
     @Autowired
-    private GenericManager<PoliceStation, Long> policeStationService;
+    private GenericService<PoliceStation, Long> policeStationService;
     @Autowired
-    private GenericManager<District, Long> districtService;
+    private GenericService<District, Long> districtService;
     @Autowired
     private LookupService lookupService;
 

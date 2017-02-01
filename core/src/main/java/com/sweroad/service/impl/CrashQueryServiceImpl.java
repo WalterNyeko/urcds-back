@@ -25,43 +25,43 @@ public class CrashQueryServiceImpl implements CrashQueryService {
     @Autowired
     private CrashDao crashDao;
     @Autowired
-    private UserManager userManager;
+    private UserService userService;
     @Autowired
     private CrashService crashService;
     @Autowired
     private LookupService lookupService;
     @Autowired
-    private GenericManager<Query, Long> queryService;
+    private GenericService<Query, Long> queryService;
     @Autowired
-    private GenericManager<Weather, Long> weatherService;
+    private GenericService<Weather, Long> weatherService;
     @Autowired
-    private GenericManager<District, Long> districtService;
+    private GenericService<District, Long> districtService;
     @Autowired
-    private GenericManager<CrashCause, Long> crashCauseService;
+    private GenericService<CrashCause, Long> crashCauseService;
     @Autowired
-    private GenericManager<RoadSurface, Long> roadSurfaceService;
+    private GenericService<RoadSurface, Long> roadSurfaceService;
     @Autowired
-    private GenericManager<SurfaceType, Long> surfaceTypeService;
+    private GenericService<SurfaceType, Long> surfaceTypeService;
     @Autowired
-    private GenericManager<VehicleType, Long> vehicleTypeService;
+    private GenericService<VehicleType, Long> vehicleTypeService;
     @Autowired
-    private GenericManager<CasualtyType, Long> casualtyTypeService;
+    private GenericService<CasualtyType, Long> casualtyTypeService;
     @Autowired
-    private GenericManager<JunctionType, Long> junctionTypeService;
+    private GenericService<JunctionType, Long> junctionTypeService;
     @Autowired
-    private GenericManager<CasualtyClass, Long> casualtyClassService;
+    private GenericService<CasualtyClass, Long> casualtyClassService;
     @Autowired
-    private GenericManager<PoliceStation, Long> policeStationService;
+    private GenericService<PoliceStation, Long> policeStationService;
     @Autowired
-    private GenericManager<CrashSeverity, Long> crashSeverityService;
+    private GenericService<CrashSeverity, Long> crashSeverityService;
     @Autowired
-    private GenericManager<CollisionType, Long> collisionTypeService;
+    private GenericService<CollisionType, Long> collisionTypeService;
     @Autowired
-    private GenericManager<SurfaceCondition, Long> surfaceConditionService;
+    private GenericService<SurfaceCondition, Long> surfaceConditionService;
     @Autowired
-    private GenericManager<RoadwayCharacter, Long> roadwayCharacterService;
+    private GenericService<RoadwayCharacter, Long> roadwayCharacterService;
     @Autowired
-    private GenericManager<VehicleFailureType, Long> vehicleFailureTypeService;
+    private GenericService<VehicleFailureType, Long> vehicleFailureTypeService;
 
     @Override
     public List<Crash> getCrashesByQuery(CrashQuery crashQuery) {
@@ -108,7 +108,7 @@ public class CrashQueryServiceImpl implements CrashQueryService {
 
     @Override
     public List<Query> getCurrentUserQueries() {
-        return queryService.getAllDistinct().stream().filter(query -> query.getOwner().equals(userManager.getCurrentUser())).collect(Collectors.toList());
+        return queryService.getAllDistinct().stream().filter(query -> query.getOwner().equals(userService.getCurrentUser())).collect(Collectors.toList());
     }
 
     @Override
@@ -118,7 +118,7 @@ public class CrashQueryServiceImpl implements CrashQueryService {
         } else {
             query.setDateUpdated(new Date());
         }
-        query.setOwner(userManager.getCurrentUser());
+        query.setOwner(userService.getCurrentUser());
         queryService.save(query);
     }
 

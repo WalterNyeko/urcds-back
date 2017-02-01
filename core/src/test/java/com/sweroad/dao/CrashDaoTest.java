@@ -5,7 +5,7 @@ import com.sweroad.query.Comparison;
 import com.sweroad.query.CrashQuery;
 import com.sweroad.query.CrashSearch;
 import com.sweroad.query.CustomQueryable;
-import com.sweroad.service.GenericManager;
+import com.sweroad.service.GenericService;
 import com.sweroad.util.DateUtil;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +22,11 @@ public class CrashDaoTest extends BaseDaoTestCase {
     @Autowired
     private CrashDao crashDao;
     @Autowired
-    private GenericManager<VehicleType, Long> vehicleTypeService;
+    private GenericService<VehicleType, Long> vehicleTypeService;
     @Autowired
-    private GenericManager<CasualtyType, Long> casualtyTypeService;
+    private GenericService<CasualtyType, Long> casualtyTypeService;
     @Autowired
-    private GenericManager<CasualtyClass, Long> casualtyClassService;
+    private GenericService<CasualtyClass, Long> casualtyClassService;
 
     private List<CrashSeverity> severities;
     private List<CollisionType> collisionTypes;

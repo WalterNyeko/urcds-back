@@ -2,10 +2,10 @@ package com.sweroad.service.impl;
 
 import com.sweroad.dao.GenericDao;
 import com.sweroad.model.*;
-import com.sweroad.service.GenericManager;
+import com.sweroad.service.GenericService;
 import com.sweroad.service.LookupService;
 import com.sweroad.service.PatientService;
-import com.sweroad.service.UserManager;
+import com.sweroad.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,28 +15,28 @@ import java.util.*;
  * Created by Frank on 10/23/15.
  */
 @Service("patientService")
-public class PatientServiceImpl extends GenericManagerImpl<Patient, Long> implements PatientService {
+public class PatientServiceImpl extends GenericServiceImpl<Patient, Long> implements PatientService {
 
     @Autowired
-    private UserManager userManager;
+    private UserService userService;
     @Autowired
     private LookupService lookupService;
     @Autowired
-    private GenericManager<Hospital, Long> hospitalService;
+    private GenericService<Hospital, Long> hospitalService;
     @Autowired
-    private GenericManager<District, Long> districtService;
+    private GenericService<District, Long> districtService;
     @Autowired
-    private GenericManager<InjuryType, Long> injuryTypeService;
+    private GenericService<InjuryType, Long> injuryTypeService;
     @Autowired
-    private GenericManager<RoadUserType, Long> roadUserTypeService;
+    private GenericService<RoadUserType, Long> roadUserTypeService;
     @Autowired
-    private GenericManager<TransportMode, Long> transportModeService;
+    private GenericService<TransportMode, Long> transportModeService;
     @Autowired
-    private GenericManager<PatientStatus, Long> patientStatusService;
+    private GenericService<PatientStatus, Long> patientStatusService;
     @Autowired
-    private GenericManager<PatientDisposition, Long> patientDispositionService;
+    private GenericService<PatientDisposition, Long> patientDispositionService;
     @Autowired
-    private GenericManager<PatientInjuryType, PatientInjuryTypeId> patientInjuryService;
+    private GenericService<PatientInjuryType, PatientInjuryTypeId> patientInjuryService;
 
     @Autowired
     public PatientServiceImpl(GenericDao<Patient, Long> patientDao) {
@@ -69,7 +69,7 @@ public class PatientServiceImpl extends GenericManagerImpl<Patient, Long> implem
 
     @Override
     public Patient savePatient(Patient patient) {
-        User currentUser = userManager.getCurrentUser();
+        User currentUser = userService.getCurrentUser();
         this.processPatient(patient);
         if (patient.getDateCreated() == null) {
             patient.setDateCreated(new Date());

@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Generic Manager that talks to GenericDao to CRUD POJOs.
+ * Generic Service that talks to GenericDao to CRUD POJOs.
  * <p/>
- * <p>Extend this interface if you want typesafe (no casting necessary) managers
+ * <p>Extend this interface if you want type safe (no casting necessary) managers
  * for your domain objects.
  *
  * @param <T>  a type variable
@@ -14,7 +14,7 @@ import java.util.List;
  * @author <a href="mailto:matt@raibledesigns.com">Matt Raible</a>
  *         Updated by jgarcia: added full text search + reindexing
  */
-public interface GenericManager<T, PK extends Serializable> {
+public interface GenericService<T, PK extends Serializable> {
 
     /**
      * Generic method used to get all objects of a particular type. This

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sweroad.model.*;
 import com.sweroad.service.CrashService;
+import com.sweroad.service.GenericService;
 import com.sweroad.util.DateUtil;
 import com.sweroad.webapp.util.SessionHelper;
 import org.apache.commons.lang3.StringUtils;
@@ -20,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.sweroad.service.GenericManager;
 import com.sweroad.webapp.util.CrashFormHelper;
 
 @Controller
@@ -30,13 +30,13 @@ public class CrashFormController extends BaseFormController {
     @Autowired
     private CrashService crashService;
     @Autowired
-    private GenericManager<VehicleType, Long> vehicleTypeService;
+    private GenericService<VehicleType, Long> vehicleTypeService;
     @Autowired
-    private GenericManager<CasualtyClass, Long> casualtyClassService;
+    private GenericService<CasualtyClass, Long> casualtyClassService;
     @Autowired
-    private GenericManager<CasualtyType, Long> casualtyTypeService;
+    private GenericService<CasualtyType, Long> casualtyTypeService;
     @Autowired
-    private GenericManager<PoliceStation, Long> policeStationService;
+    private GenericService<PoliceStation, Long> policeStationService;
     private final static Long DEFAULT_ID = 0L;
 
     public CrashFormController() {
