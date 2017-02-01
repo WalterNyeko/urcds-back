@@ -80,11 +80,11 @@ public class PatientServiceImpl extends GenericManagerImpl<Patient, Long> implem
             patient.setId(null);
         } else {
             Patient dbPatient = this.get(patient.getId());
-            for (PatientInjuryType patientInjuryType : dbPatient.getPatientInjuryTypes()) {
+            dbPatient.getPatientInjuryTypes().forEach(patientInjuryType -> {
                 if (!patient.getPatientInjuryTypes().contains(patientInjuryType)) {
                     patientInjuryService.remove(patientInjuryType);
                 }
-            }
+            });
             patient.setDateCreated(dbPatient.getDateCreated());
             patient.setCreatedBy(dbPatient.getCreatedBy());
             patient.setDateUpdated(new Date());
