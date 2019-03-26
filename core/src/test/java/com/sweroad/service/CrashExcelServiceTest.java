@@ -54,7 +54,7 @@ public class CrashExcelServiceTest extends BaseManagerTestCase {
 	}
 
 	@Test
-	public void testThatGenerateExcelWorkbookDoesntReturnNull() {
+	public void testThatGenerateExcelWorkbookDoesNotReturnNull() {
 		assertNotNull(crashExcelService.generateCrashExcelWorkBook(crashes));
 	}
 

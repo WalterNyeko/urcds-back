@@ -39,59 +39,68 @@ public class AuditAdvice {
                 }
                 return returnValue;
             } else {
-                Object object = arguments[0];
-                IXMLConvertible preImage = null;
-                IXMLConvertible postImage = null;
-                IAuditable dbObject = null;
-                IAuditable memObject = (IAuditable) object;
-                GenericService gm = (GenericService) joinPoint.getTarget();
-                if (memObject.getId() != null && !memObject.getId().equals(0L)) {
-                    dbObject = (IAuditable) gm.get(memObject.getId());
-                    try {
-                        dbObject = dbObject.clone();
-                    } catch (CloneNotSupportedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                String operation = inferOperation(memObject, dbObject);
-                if (!operation.equalsIgnoreCase(IAuditable.OPERATION_INSERT)
-                        && object instanceof IXMLConvertible) {
-                    preImage = (IXMLConvertible) object;
-                }
-                try {
-                    returnValue = joinPoint.proceed();
-                    if (returnValue instanceof IAuditable
-                            && returnValue instanceof IXMLConvertible) {
-                        postImage = (IXMLConvertible) returnValue;
-                    }
-                } catch (Throwable e) {
-                    e.printStackTrace();
-                }
-                if (shouldAudit(operation, dbObject, memObject)) {
-                    Audit auditLog = new Audit();
-                    auditLog.setOperation(operation);
-                    if (preImage != null) {
-                        auditLog.setPreImage(XStreamUtils.getXMLFromObject(preImage, preImage.getClass().getName(),
-                                preImage.getFieldsAliases(), preImage.getFieldsToBeOmitted()));
-                    }
-                    if (postImage != null) {
-                        auditLog.setPostImage(XStreamUtils.getXMLFromObject(postImage, postImage.getClass().getName(),
-                                postImage.getFieldsAliases(), postImage.getFieldsToBeOmitted()));
-                    }
-                    if (returnValue != null) {
-                        User currentUser = userService.getCurrentUser();
-                        auditLog.setId(0L);
-                        auditLog.setOperation(operation);
-                        auditLog.setEntityId(((IAuditable) returnValue).getId());
-                        auditLog.setEntityName(postImage.getClassAlias());
-                        auditLog.setUser(currentUser);
-                        auditLog.setAuditDate(new Date());
-                        auditService.save(auditLog);
-                    }
-                }
+                returnValue = generateAuditLog(joinPoint, returnValue, arguments[0]);
             }
         }
         return returnValue;
+    }
+
+    private Object generateAuditLog(ProceedingJoinPoint joinPoint, Object returnValue, Object argument) {
+        Object object = argument;
+        IXMLConvertible preImage = null;
+        IXMLConvertible postImage = null;
+        IAuditable dbObject = null;
+        IAuditable memObject = (IAuditable) object;
+        GenericService gm = (GenericService) joinPoint.getTarget();
+        if (memObject.getId() != null && !memObject.getId().equals(0L)) {
+            dbObject = (IAuditable) gm.get(memObject.getId());
+            try {
+                dbObject = dbObject.clone();
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+        }
+        String operation = inferOperation(memObject, dbObject);
+        if (!operation.equalsIgnoreCase(IAuditable.OPERATION_INSERT)
+                && object instanceof IXMLConvertible) {
+            preImage = (IXMLConvertible) object;
+        }
+        try {
+            returnValue = joinPoint.proceed();
+            if (returnValue instanceof IAuditable
+                    && returnValue instanceof IXMLConvertible) {
+                postImage = (IXMLConvertible) returnValue;
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        if (shouldAudit(operation, dbObject, memObject)) {
+            saveAuditLog(returnValue, preImage, postImage, operation);
+        }
+        return returnValue;
+    }
+
+    private void saveAuditLog(Object returnValue, IXMLConvertible preImage, IXMLConvertible postImage, String operation) {
+        Audit auditLog = new Audit();
+        auditLog.setOperation(operation);
+        if (preImage != null) {
+            auditLog.setPreImage(XStreamUtils.getXMLFromObject(preImage, preImage.getClass().getName(),
+                    preImage.getFieldsAliases(), preImage.getFieldsToBeOmitted()));
+        }
+        if (postImage != null) {
+            auditLog.setPostImage(XStreamUtils.getXMLFromObject(postImage, postImage.getClass().getName(),
+                    postImage.getFieldsAliases(), postImage.getFieldsToBeOmitted()));
+        }
+        if (returnValue != null) {
+            User currentUser = userService.getCurrentUser();
+            auditLog.setId(0L);
+            auditLog.setOperation(operation);
+            auditLog.setEntityId(((IAuditable) returnValue).getId());
+            auditLog.setEntityName(postImage.getClassAlias());
+            auditLog.setUser(currentUser);
+            auditLog.setAuditDate(new Date());
+            auditService.save(auditLog);
+        }
     }
 
     @Around("execution(* com.sweroad.service.CrashService.sav*(..))")

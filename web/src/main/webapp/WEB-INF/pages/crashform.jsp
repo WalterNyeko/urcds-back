@@ -4,7 +4,7 @@
 <head>
     <title><fmt:message key="crashForm.title" /></title>
     <meta name="menu" content="CrashMenu" />
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdGBHIqR--XabhAy6UddDj4toKlEyJzAA"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCnIO95EOX4IeudLneOaQhtc21d9GFMWww"></script>
     <script type="text/javascript" src="<c:url value='/scripts/crash-validator.js' />"></script>
     <script type="text/javascript">
         $(document).ready(function() {

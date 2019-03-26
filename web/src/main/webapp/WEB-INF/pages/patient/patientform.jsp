@@ -3,6 +3,7 @@
 <head>
     <title><fmt:message key="patient.patientForm" /></title>
     <meta name="menu" content="PatientMenu" />
+    <script type="text/javascript" src="<c:url value='/scripts/crash-validator.js' />"></script>
     <script type="text/javascript" src="<c:url value='/scripts/patient/patient.js' />"></script>
     <script type="text/javascript">
         var patient;
@@ -153,8 +154,8 @@
                     </td>
                     <td>
                         <c:forEach var="beltUsed" items="${beltUsedOptions}" varStatus="status">
-                            &nbsp;<form:radiobutton path="beltUsed" value="${beltUsed.value}" />&nbsp;
-                            <label for="beltUsed${beltUsed.value}" class="form-label">${beltUsed.label}</label>
+                            &nbsp;<form:radiobutton path="beltUsed" value="${beltUsed.id}" />&nbsp;
+                            <label for="beltUsed${beltUsed.id}" class="form-label">${beltUsed.name}</label>
                             <br/>
                         </c:forEach>
                     </td>

@@ -49,12 +49,16 @@ public class TransportMode extends NameIdModel {
         this.active = active;
     }
 
-    @Override
-    public String toString() {
-        return null;
-    }
+	@Override
+	public String toString() {
+		return "TransportMode{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				", active=" + active +
+				'}';
+	}
 
-    @Override
+	@Override
     public boolean equals(Object o) {
         if (!(o instanceof TransportMode)) {
             return false;

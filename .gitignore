@@ -10,3 +10,5 @@ web/src/main/webapp/genexcel/
 *.iws
 .idea/
 *.patch
+*.DS_Store
+velocity.log

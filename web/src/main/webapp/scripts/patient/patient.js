@@ -4,7 +4,7 @@
 
 var Patient = (function() {
     function Patient(json, document) {
-        this.model = JSON.parse(json);
+        this.model = json ? JSON.parse(json) : {};
         this.view = new PatientView(this.model, document);
     }
     return Patient;
@@ -19,11 +19,13 @@ var PatientView = (function() {
         var ctx = this;
         var doc = $(this.document);
         doc.find('.injury-types input[type=checkbox]').prop('checked', false);
-        this.patient.patientInjuryTypes.map(function(x) {
-            var id = x.injuryType.id;
-            ctx.document.getElementById('injuryType' + id).checked = true;
-            ctx.document.getElementById('injuryTypeAis' + id).checked = x.ais;
-        });
+		if (this.patient.patientInjuryTypes) {
+			this.patient.patientInjuryTypes.map(function (x) {
+				var id = x.injuryType.id;
+				ctx.document.getElementById('injuryType' + id).checked = true;
+				ctx.document.getElementById('injuryTypeAis' + id).checked = x.ais;
+			});
+		}
         if (this.patient.injuryDateTime) {
             var injuryDateTime = this.patient.injuryDateTime.split(' ');
             this.document.getElementById('injuryDate').value = injuryDateTime[0] || '';
@@ -47,7 +49,7 @@ var PatientView = (function() {
             $(injuryTypeElement).parent().next().find('.ais').prop('disabled', false);
         else
             $(injuryTypeElement).parent().next().find('.ais').prop('checked', false).prop('disabled', true);
-    }
+    };
     PatientView.prototype.set30DayStatusReadonly = function() {
         var date = this.document.getElementById('injuryDate').value;
         if (date) {
@@ -59,6 +61,6 @@ var PatientView = (function() {
             else
                 $(this.document).find('input[name="patientStatus.id"]').prop('disabled', false);
         }
-    }
+    };
     return PatientView;
 })();

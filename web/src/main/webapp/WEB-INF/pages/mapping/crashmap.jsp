@@ -4,7 +4,7 @@
     <title><fmt:message key="crashMapping.heading" /></title>
     <meta name="menu" content="MappingMenu" />
     <script type="text/javascript"
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdGBHIqR--XabhAy6UddDj4toKlEyJzAA&v=3.exp&libraries=drawing,geometry">
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCnIO95EOX4IeudLneOaQhtc21d9GFMWww&v=3.exp&libraries=drawing,geometry">
     </script>
     <script type="text/javascript" src="<c:url value='/scripts/marker-constants.js'/>"></script>
     <script type="text/javascript" src="<c:url value='/scripts/StyledMarker.js'/>"></script>

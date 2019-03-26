@@ -74,8 +74,8 @@ public class CrashExcelServiceImpl implements CrashExcelService {
     }
 
     private void createHeaderRowForCasualties(Sheet casualtySheet) {
-        Row row = casualtySheet.createRow(0);
-        int index = 0;
+	    int index = 0;
+        Row row = casualtySheet.createRow(index);
         addHeaderCell(row, index++, "No.");
         addHeaderCell(row, index++, "Crash No.");
         addHeaderCell(row, index++, "Casualty Type");
@@ -88,8 +88,8 @@ public class CrashExcelServiceImpl implements CrashExcelService {
     }
 
     private void createHeaderRowForVehicles(Sheet vehicleSheet) {
-        Row row = vehicleSheet.createRow(0);
-        int index = 0;
+	    int index = 0;
+        Row row = vehicleSheet.createRow(index);
         addHeaderCell(row, index++, "No.");
         addHeaderCell(row, index++, "Crash No.");
         addHeaderCell(row, index++, "Vehicle No.");
@@ -104,8 +104,8 @@ public class CrashExcelServiceImpl implements CrashExcelService {
     }
 
     private void createHeaderRowForCrashes(Sheet crashSheet) {
-        Row row = crashSheet.createRow(0);
-        int index = 0;
+	    int index = 0;
+        Row row = crashSheet.createRow(index);
         addHeaderCell(row, index++, "No.");
         addHeaderCell(row, index++, "Crash No.");
         addHeaderCell(row, index++, "TAR No.");

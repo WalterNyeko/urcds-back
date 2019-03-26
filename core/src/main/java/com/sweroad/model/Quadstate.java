@@ -35,4 +35,12 @@ public enum Quadstate {
         }
         throw new IllegalArgumentException("No enum Quadstate with value '" + value + "'");
     }
+
+	@Override
+	public String toString() {
+		return "Quadstate{" +
+				"value=" + value +
+				", label='" + label + '\'' +
+				'}';
+	}
 }

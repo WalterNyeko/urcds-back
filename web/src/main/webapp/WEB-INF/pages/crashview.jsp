@@ -6,7 +6,7 @@
 <title><fmt:message key="crashView.title" /></title>
 <meta name="menu" content="CrashMenu" />
     <script type="text/javascript"
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdGBHIqR--XabhAy6UddDj4toKlEyJzAA">
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCnIO95EOX4IeudLneOaQhtc21d9GFMWww">
     </script>
 </head>
 

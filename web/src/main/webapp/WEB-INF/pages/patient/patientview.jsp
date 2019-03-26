@@ -169,9 +169,9 @@
                             <td>
                                 <c:forEach var="beltUsed" items="${beltUsedOptions}" varStatus="status">
                                     &nbsp;
-                                    <input type="radio" disabled value="${beltUsed.value}"
-                                        ${patient.beltUsed eq beltUsed.value ? "checked" : ""} />&nbsp;
-                                    ${beltUsed.label}
+                                    <input type="radio" disabled value="${beltUsed.id}"
+                                        ${patient.beltUsed eq beltUsed.id ? "checked" : ""} />&nbsp;
+                                    ${beltUsed.name}
                                     <br/>
                                 </c:forEach>
                             </td>
