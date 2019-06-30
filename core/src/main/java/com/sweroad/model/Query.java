@@ -19,8 +19,6 @@ public class Query extends NameIdModel {
     private String description;
     @Column(name = "query_data", columnDefinition = "text")
     private String queryData;
-    @Column(columnDefinition = "bit not null default 1")
-    private boolean active;
     @ManyToOne
     @JoinColumn
     private User owner;
@@ -67,12 +65,12 @@ public class Query extends NameIdModel {
 
     @Override
     public boolean isActive() {
-        return active;
+        return true;
     }
 
     @Override
     public void setActive(boolean active) {
-        this.active = active;
+
     }
 
     public void setQueryData(String queryData) {
