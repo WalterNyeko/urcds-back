@@ -259,7 +259,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.35</version>
+            <version>8.0.16</version>
         </dependency>
         <dependency>
             <groupId>org.subethamail</groupId>
@@ -507,7 +507,7 @@
         <hibernate.dialect>org.hibernate.dialect.MySQLDialect</hibernate.dialect>
         <jdbc.groupId>mysql</jdbc.groupId>
         <jdbc.artifactId>mysql-connector-java</jdbc.artifactId>
-        <jdbc.version>5.1.35</jdbc.version>
+        <jdbc.version>8.0.16</jdbc.version>
         <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
         <jdbc.url>jdbc:mysql://localhost:3306/rcds</jdbc.url>
         <jdbc.username>root</jdbc.username>
